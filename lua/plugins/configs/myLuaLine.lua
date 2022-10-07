@@ -135,7 +135,15 @@ end
 local function format_messages(messages)
   local result = {}
   local spinners = {
-    "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"
+    --"⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"
+    "⣾",
+    "⣽",
+    "⣻",
+    "⢿",
+    "⡿",
+    "⣟",
+    "⣯",
+    "⣷",
   }
   local ms = vim.loop.hrtime() / 1000000
   local frame = math.floor(ms / 120) % #spinners
@@ -188,16 +196,25 @@ local function format_messages_2(messages)
   -- local spinners = {"", " "}
   --- More Spinners: https://github.com/j-hui/fidget.nvim/blob/main/lua/fidget/spinners.lua
   local spinners = {
---    "∙∙∙",
---    "●∙∙",
---    "∙●∙",
---    "∙∙●",
---    "∙∙∙",
-    "∙∙∙∙",
-    " ∙∙",
-    "∙ ∙",
-    "∙∙ ",
-    "∙∙∙∙",
+    --    "∙∙∙",
+    --    "●∙∙",
+    --    "∙●∙",
+    --    "∙∙●",
+    --    "∙∙∙",
+    "⠋",
+    "⠙",
+    "⠹",
+    "⠸",
+    "⠼",
+    "⠴",
+    "⠦",
+    "⠧",
+    "⠇",
+    "⠏",    -- "∙∙∙∙",
+    -- "∙∙",
+    -- "∙∙",
+    -- "∙∙",
+    -- "∙∙∙∙",
   }
   local ms       = vim.loop.hrtime() / 1000000
   local frame    = math.floor(ms / 120) % #spinners
@@ -218,7 +235,7 @@ end
 -- REQUIRES LSP
 local function Icon_LSP_Progress()
   local messages = vim.lsp.util.get_progress_messages()
-  if #messages == 0 then return "" end
+  if #messages == 0 then return "" end
   return format_messages_2(messages)
 end
 
@@ -263,7 +280,7 @@ custom_onedark.inactive.b.bg = '#343a43'
 custom_onedark.inactive.c.bg = '#343a43'
 -- Configuations for the colors of the Normal mode
 --custom_onedark.normal.a.fg= '#00A9A5'    -- background color
-custom_onedark.normal.a.bg = '#94C9A9'     -- lightgreen
+custom_onedark.normal.a.bg = '#94C9A9' -- lightgreen
 
 
 function M.setup()

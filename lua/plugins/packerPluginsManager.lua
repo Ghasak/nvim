@@ -574,8 +574,9 @@ return packer.startup(function(use)
     config = function() require("plugins.configs.myNotify") end
   })
 
-  use({ "SmiteshP/nvim-navic",
-    wants = "neovim/nvim-lspconfig"
+  use({ "SmiteshP/nvim-navic", -- We have already this in lsp-saga
+    wants = "neovim/nvim-lspconfig",
+    disable = true,
   })
   -- ===========================================================================
   --                         For Editor

@@ -138,3 +138,26 @@ vim.api.nvim_create_autocmd("BufEnter", {
     end
   end
 })
+
+
+
+-- ----------------------------------------------------------------------------------------
+--                  Functions can show the directory at startup
+--                  Dependencies: notify, plenary
+-- ----------------------------------------------------------------------------------------
+-- Function to show the full path in nvim when you open a given file
+local function show_full_path()
+    local file = vim.fn.expand("%:p")
+    local async = require("plenary.async")
+    local notify = require("notify").async
+    -- vim.notify(file)
+    async.run(function()
+        local messege = string.format(" %s at %s ... ", file,
+                                      os.date("%H:%M:%S"))
+        notify(messege, "INFO", {
+            title = " Initializing file"
+        })
+    end)
+end
+
+

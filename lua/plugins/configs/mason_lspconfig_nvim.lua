@@ -54,6 +54,8 @@ M.setup = function()
   -- =                                                                        =
   -- ==========================================================================
   -- Read more Here: https://github.com/williamboman/mason.nvim/discussions/92#discussioncomment-3173425
+  --         flags = {debounce_text_changes = 500},
+
 
   local opts = {
     on_attach    = require("plugins.configs.lsp.lsp_attach").custom_attach,
@@ -80,6 +82,7 @@ M.setup = function()
         on_attach    = opts.on_attach,
         capabilities = opts.capabilities,
         handlers     = opts.handlers,
+        flags = {debounce_text_changes = 500},
         settings     = opts.settings
       })
     end,
