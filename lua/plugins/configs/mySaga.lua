@@ -22,14 +22,14 @@ diagnostic_header = { " ", " ", " ", "ﴞ " },
 -- preview lines of lsp_finder and definition preview
 max_preview_lines = 10,
 -- use emoji lightbulb in default
---code_action_icon = "💡",
+code_action_icon = "💡",
 --code_action_icon = " ",
-code_action_icon = "盛",
+--code_action_icon = "盛",
 -- if true can press number to execute the codeaction in codeaction window
 code_action_num_shortcut = true,
 -- same as nvim-lightbulb but async
 code_action_lightbulb = {
-    enable = true,
+    enable = false,
     enable_in_insert = true,
     cache_code_action = true,
     sign = true,

@@ -58,9 +58,10 @@ M.setup = function()
 
 
   local opts = {
-    on_attach    = require("plugins.configs.lsp.lsp_attach").custom_attach,
-    capabilities = require("plugins.configs.lsp.lsp_capabilities").capabilities,
-    handlers     = require("plugins.configs.lsp.lsp_handlers").handlers
+    on_attach      = require("plugins.configs.lsp.lsp_attach").custom_attach,
+    capabilities   = require("plugins.configs.lsp.lsp_capabilities").capabilities,
+    handlers       = require("plugins.configs.lsp.lsp_handlers").handlers,
+    special_attach = require("plugins.configs.lsp.lsp_special_attach").custom_attach
   }
   --
   mason_lspconfig.setup_handlers({
@@ -82,7 +83,7 @@ M.setup = function()
         on_attach    = opts.on_attach,
         capabilities = opts.capabilities,
         handlers     = opts.handlers,
-        flags = {debounce_text_changes = 500},
+        flags        = { debounce_text_changes = 500 },
         settings     = opts.settings
       })
     end,
@@ -91,11 +92,11 @@ M.setup = function()
     -- For example, a handler override for the `rust_analyzer`:
     ["rust_analyzer"] = function()
 
-  -- Requesting rust_tools: for Rust analyzer
-  local rust_tools_status_ok, rust_tools = pcall(require, "rust-tools")
-  if not rust_tools_status_ok then
-    return
-  end
+      -- Requesting rust_tools: for Rust analyzer
+      local rust_tools_status_ok, rust_tools = pcall(require, "rust-tools")
+      if not rust_tools_status_ok then
+        return
+      end
       rust_tools.setup { -- Defined above
         tools = {
           on_initialized = function()
@@ -126,16 +127,7 @@ M.setup = function()
             highlight = "Comment",
           },
           hover_actions = {
-            border = {
-              { "╭", "FloatBorder" },
-              { "─", "FloatBorder" },
-              { "╮", "FloatBorder" },
-              { "│", "FloatBorder" },
-              { "╯", "FloatBorder" },
-              { "─", "FloatBorder" },
-              { "╰", "FloatBorder" },
-              { "│", "FloatBorder" },
-            },
+            border = "rounded",
             auto_focus = true,
           },
         },

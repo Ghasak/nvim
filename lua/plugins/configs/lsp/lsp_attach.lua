@@ -95,7 +95,7 @@ M.custom_attach = function(client, bufnr)
 
   if client.name == "tsserver" then
     -- client.resolved_capabilities.document_formatting = false  -- deperated since nvim 0.8
-    client.server_capabilities.document_formatting = false
+    client.server_capabilities.document_formatting = true
   end
 
   if client.name == "sumneko_lua" then
