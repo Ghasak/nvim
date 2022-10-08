@@ -75,8 +75,8 @@ local lsp_func = function(msg)
     elseif buff_ft == "tex" and server.name == "texlab" or server.name == "ltex" then
       return string.format("%s :latex ", server_icon)
     else
-      return string.format("%s : %s-lsp*: %s", server_icon_not_not_known,
-        buff_ft, server.name)
+      --return string.format("%s : %s-lsp*: %s", server_icon_not_not_known, buff_ft, server.name)
+      return string.format("%s :latex ", server_icon)
     end
   end
 end

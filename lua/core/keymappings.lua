@@ -27,7 +27,8 @@ vim.bo.softtabstop = 2
 
 
 -- Source our init.lua file
-vim.api.nvim_set_keymap("n", "<space><CR>", ":source ~/.config/nvim/init.lua<CR>", { noremap = true, silent = true, })
+--vim.api.nvim_set_keymap("n", "<space><CR>", ":source ~/.config/nvim/init.lua<CR>", { noremap = true, silent = true, })
+vim.api.nvim_set_keymap("n", "<space><CR>", ":w!<CR>", { noremap = true, silent = true, })
 
 vim.api.nvim_set_keymap("n", "<c-s>", ":w<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("i", "<c-s>", "<Esc>:w<CR>", { noremap = true, silent = true })
