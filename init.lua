@@ -53,4 +53,3 @@ local init_modules = {
 }
 
 for _, module in ipairs(init_modules) do load_module(module) end
-

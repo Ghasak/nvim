@@ -106,7 +106,7 @@ M.setup = function()
             vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "CursorHold", "InsertLeave" }, {
               pattern = { "*.rs" },
               callback = function()
-                vim.lsp.codelens.refresh()
+                local _, _ = pcall(vim.lsp.codelens.refresh)
               end
 
             })
