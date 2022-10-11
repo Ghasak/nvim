@@ -331,7 +331,7 @@ local createdir = function()
 		global.cache_dir .. "undo",
 	}
 	for key, dirx in pairs(data_dir) do
-		if vim.fn.empty(vim.fn.glob(dirx)) > 0 then
+		-- if vim.fn.empty(vim.fn.glob(dirx)) > 0 then
 			vim.api.nvim_command(
 				([[echohl WarningMsg | echomsg "[-] The directory:%s is not existed, will be created ." | echohl None]]):format(
 					dirx
@@ -340,4 +340,3 @@ local createdir = function()
 			os.execute("mkdir -p " .. dirx)
 		end
 	end
-end

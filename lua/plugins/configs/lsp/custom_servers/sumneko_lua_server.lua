@@ -1,5 +1,8 @@
-return {
+local runtime_path = vim.split("package.path", ";")
+table.insert(runtime_path, "lua/?.lua")
+table.insert(runtime_path, "lua/?/init.lua")
 
+return {
   settings = {
     Lua = {
       runtime = {
@@ -11,7 +14,9 @@ return {
       workspace = {
         library = {
           [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-          [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true
+          [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+          vim.api.nvim_get_runtime_file("", true),
+          --require("lua-dev.sumneko").types(),
         },
         maxPreload = 100000,
         preloadFileSize = 10000

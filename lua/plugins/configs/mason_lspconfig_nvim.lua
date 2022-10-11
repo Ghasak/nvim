@@ -7,10 +7,17 @@ M.setup = function()
   ---- *****************************************************************************************
   -- Pre settings for Rust language servers
   local rust_tools_settings = require("plugins.configs.lsp.custom_servers.rust_analyzer_server")
+  -- ------------------------------------------------
   -- Configurations for the lsp, offers varities of settings for the diagnostics
   -- messages and Icons on the gutters. (custom the erro icons mainly)
   require("plugins.configs.lsp.lsp_settings").setup()
-
+  -- ------------------------------------------------
+  -- Lua additional support from lua-dev
+  -- IMPORTANT: make sure to setup lua-dev BEFORE lspconfig
+  local lua_dev_status, lua_dev = pcall(require, "lua-dev")
+  if lua_dev_status then
+    lua_dev.setup({})
+  end
   ---- *****************************************************************************************
   ----                     Mason Loader (similar to nvim-lsp-installer)
   ---- *****************************************************************************************
@@ -100,12 +107,10 @@ M.setup = function()
       rust_tools.setup { -- Defined above
         tools = {
           on_initialized = function()
-            --   vim.cmd [[
-            --   autocmd BufEnter,CursorHold,InsertLeave,BufWritePost *.rs silent! lua vim.lsp.codelens.refresh()
-            -- ]]
             vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "CursorHold", "InsertLeave" }, {
               pattern = { "*.rs" },
               callback = function()
+                -- Getting loading the codelens without popup an error message.
                 local _, _ = pcall(vim.lsp.codelens.refresh)
               end
 
@@ -182,6 +187,5 @@ M.setup = function()
       })
     end,
   })
-
 end
 return M

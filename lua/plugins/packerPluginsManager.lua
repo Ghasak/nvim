@@ -459,7 +459,10 @@ return packer.startup(function(use)
   -- ==========================================================================
   -- 	                      Programming Language Servers
   -- ==========================================================================
-
+  use({"folke/lua-dev.nvim",
+     module = "lua-dev",
+    event = "InsertEnter"
+  })
   -- lsp_signature.nvim
   use({
     "glepnir/lspsaga.nvim",
@@ -611,3 +614,4 @@ return packer.startup(function(use)
     require("packer").sync()
   end
 end)
+

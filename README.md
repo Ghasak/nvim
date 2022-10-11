@@ -14,6 +14,8 @@ the startup time.
 - [Introduction mason.nvim](https://www.reddit.com/r/neovim/comments/w6w5ij/introducing_masonnvim/)
 - [How to configure LSP with mason](https://github.com/williamboman/mason.nvim/discussions/92#discussioncomment-3173425)
 
+## General Configuration helper
+- [configure nvim using lua](https://icyphox.sh/blog/nvim-lua/)
 ## USEFUL COMMANDS
 The following command are super handy and useful when developign `lua` plugins.
 ```lua
@@ -40,8 +42,8 @@ will be loaded to the color-scheme, which can be checked using `:colorscheme
 - [Read Useful Information](https://github.com/j-hui/fidget.nvim/blob/main/lua/fidget.lua)
 
 5. Since 0.8 we can now create
-
 ```vim
+
       vim.cmd [[
       autocmd BufEnter,CursorHold,InsertLeave,BufWritePost *.rs silent! lua vim.lsp.codelens.refresh()
     ]]
@@ -376,4 +378,6 @@ Notice: to change the color, you need to consider to which level you want to alt
 
 ## MEASURE SPEED OF NEOVIM
 - [Speedup Neovim ](https://aca.github.io/neovim_startuptime.html)
+
+
 
