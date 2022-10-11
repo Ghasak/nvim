@@ -3,7 +3,7 @@
 ## Configurations
 ## To do
 - [?] Configuration for the dap
-- https://github.com/alpha2phi/neovim-for-beginner/blob/50-package-manager/lua/config/lsp/installer.lua
+- [install dap for rust-analyzer, integrated with rust-tools](https://github.com/alpha2phi/neovim-for-beginner/blob/50-package-manager/lua/config/lsp/installer.lua)
 
 The current configurations are from the needs of getting the best optimized `IDE` for
 the startup time.
@@ -378,6 +378,3 @@ Notice: to change the color, you need to consider to which level you want to alt
 
 ## MEASURE SPEED OF NEOVIM
 - [Speedup Neovim ](https://aca.github.io/neovim_startuptime.html)
-
-
-
