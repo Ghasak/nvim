@@ -53,7 +53,8 @@ vim.g.mapleader = " "
 -- Explorer with Nvim-tree( ensure first the undotree is not toggled )
 vim.api.nvim_set_keymap("n", "<Leader>e", ":<cmd>UndotreeHide<CR>:NvimTreeToggle<CR>", { noremap = true, silent = true })
 -- this will be source with setting directory which shoould be put at the end of the loaded dictionaries
-vim.api.nvim_set_keymap("n", "<leader>u", ":<cmd>NvimTreeClose<CR> :UndotreeToggle<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>u", ":<cmd>NvimTreeClose<CR> :UndotreeToggle<CR>",
+  { noremap = true, silent = true })
 -- Ctrl + P to open the the navigator faster
 vim.api.nvim_set_keymap('n', '<leader>p', "<cmd>lua require('fzf-lua').files()<CR>", { noremap = true, silent = true })
 --vim.api.nvim_set_keymap('n', '<leader>p',"<cmd>lua require('fzf-lua').files({ fzf_opts = {['--layout'] = 'reverse-list'} })<CR>",{ noremap = true, silent = true })
@@ -164,7 +165,16 @@ vim.cmd([[
 -- :lua vim.lsp.buf.hover() or  implementation(), ..etc.
 
 
-
+---- *****************************************************************************************
+----                    Checking spelling - Builtin suggesions
+---- *****************************************************************************************
+vim.api.nvim_set_keymap('n', '<F6>', ':set spell! spelllang=en<CR>', { noremap = true, silent = true })
+-- Add a spell word to your custom dictionary using
+-- -> zg (as z for spell and g for good word)
+-- -> zw (as z for spell and w for bad word)
+-- -> zuw (as z for spell and u as undo and w for bad word)
+-- -> z= (to see the suggestions, must put the cursor under the word for spell suggestions)
+-- -> [s ,[S, ]s and ]S are for navigating the words for spelling checking
 
 ---- *****************************************************************************************
 ----                     Lspsaga KeyMapping
@@ -178,7 +188,7 @@ vim.keymap.set("n", "<leader>gh", "<cmd>Lspsaga peek_definition<CR>", { silent =
 -- Code action
 vim.keymap.set({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<CR>", { silent = true })
 -- Check
-vim.keymap.set("n", "<leader><F2>", "<cmd>Lspsaga lsp_finder<CR>", {silent = true})
+vim.keymap.set("n", "<leader><F2>", "<cmd>Lspsaga lsp_finder<CR>", { silent = true })
 -- Rename
 vim.keymap.set("n", "<leader>gr", "<cmd>Lspsaga rename<CR>", { silent = true })
 -- Peek Definition
@@ -201,15 +211,3 @@ end, { silent = true })
 
 -- Outline
 vim.keymap.set("n", "<leader>o", "<cmd>LSoutlineToggle<CR>", { silent = true, })
-
-
-
-
-
-
-
-
-
-
-
-

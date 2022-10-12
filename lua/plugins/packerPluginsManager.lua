@@ -462,7 +462,7 @@ return packer.startup(function(use)
   use({"folke/lua-dev.nvim",
      module = "lua-dev",
     ft = "lua",
-    --event = "InsertEnter"
+    event = "InsertEnter"
   })
   -- lsp_signature.nvim
   use({

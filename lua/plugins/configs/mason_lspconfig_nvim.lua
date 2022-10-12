@@ -186,7 +186,18 @@ M.setup = function()
         },
       })
     end,
-
+    ["tsserver"] = function()
+      lspconfig.tsserver.setup({
+        on_attach    = opts.on_attach,
+        capabilities = opts.capabilities,
+        handlers     = opts.handlers,
+        -- Language Server JavaScript/TypScript, npm install -g typescript-language-server typescript
+        -- Already installed with Mason, so if you don't want to use this, you should uncomment cmd
+        -- https://www.npmjs.com/package/typescript-language-server
+        cmd          = { "typescript-language-server", "--stdio" },
+        filetypes    = { "typescript", "typescriptreact", "typescript.tsx", "javascript" },
+      })
+    end,
   })
 end
 return M

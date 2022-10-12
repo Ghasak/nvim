@@ -5,6 +5,9 @@
 - [?] Configuration for the dap
 - [install dap for rust-analyzer, integrated with rust-tools](https://github.com/alpha2phi/neovim-for-beginner/blob/50-package-manager/lua/config/lsp/installer.lua)
 
+Confiuration
+
+
 The current configurations are from the needs of getting the best optimized `IDE` for
 the startup time.
 ## Major Changes in Nvim 0.8
