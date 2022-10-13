@@ -21,8 +21,21 @@ if not status_ok then
   return
 end
 
+-- This will set a limit to the maximum jobs in packer to not freeze the packer.sync.
+local max_job_limit = function()
+  local max_jobs = 100
+  if vim.fn.has "mac" == 1 then
+    max_jobs = 50
+  else
+    max_jobs = 100
+  end
+  return max_jobs
+end
+
+
 -- Have packer use a popup window
 packer.init {
+  max_jobs = max_job_limit(),
   display = {
     open_fn = function()
       return require("packer.util").float { border = "rounded" }
@@ -57,7 +70,10 @@ packer.init {
         get_rev = "rev-parse --short HEAD",
         get_msg = "log --color=never --pretty=format:FMT --no-show-signature HEAD -n 1",
         submodules = "submodule update --init --recursive --progress"
-      }
+      },
+      depth = 1, -- Git clone depth
+      clone_timeout = 60, -- Timeout, in seconds, for git clones
+      default_url_format = 'https://github.com/%s' -- Lua format string used for "aaa/bbb" style plugins
     },
 
 
@@ -459,8 +475,8 @@ return packer.startup(function(use)
   -- ==========================================================================
   -- 	                      Programming Language Servers
   -- ==========================================================================
-  use({"folke/lua-dev.nvim",
-     module = "lua-dev",
+  use({ "folke/lua-dev.nvim",
+    module = "lua-dev",
     ft = "lua",
     event = "InsertEnter"
   })
@@ -601,7 +617,7 @@ return packer.startup(function(use)
   --                          Other Plugins
   -- ===========================================================================
   use({ "terrortylor/nvim-comment",
-    event= "CursorMoved",
+    event = "CursorMoved",
     config = function()
       require('nvim_comment').setup()
     end
@@ -615,4 +631,3 @@ return packer.startup(function(use)
     require("packer").sync()
   end
 end)
-
