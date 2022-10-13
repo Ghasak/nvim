@@ -265,7 +265,7 @@ function M.setup()
   -- Database completion
   vim.api.nvim_exec(
     [[
-autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })
+      autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })
 ]]   ,
     false
   )
@@ -287,11 +287,11 @@ autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ 
   })
 
   -- cmp.setup.cmdline(":", {
-  -- 	sources = cmp.config.sources({
-  -- 		{ name = "path" },
-  -- 	}, {
-  -- 		{ name = "cmdline" },
-  -- 	}),
+  --   sources = cmp.config.sources({
+  --     { name = "path" },
+  --   }, {
+  --     { name = "cmdline" },
+  --   }),
   -- })
 end
 

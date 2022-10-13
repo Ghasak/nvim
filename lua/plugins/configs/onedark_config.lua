@@ -44,6 +44,7 @@ M.setup = function()
       Isbelline           = '#F2EFEA',
       Platinum            = '#E7E5DF',
       bright_orange       = "#ff8800", -- define a new color
+      light_roange        = "#FFC53A",
       green               = '#C6EBC5',
       --cyan                = "#2E86AB",
       cyan                = "#56b6c2",
@@ -90,7 +91,7 @@ M.setup = function()
       --Normal = { fg = '$beautiful_black', bg = '$beautiful_black' }, -- backgorund default color
       --Normal = { fg = '#C3C3C3', bg = '$beautiful_black' }, -- backgorund default color
       Normal = { fg = '$Platinum', bg = '$beautiful_black' }, -- backgorund default color
-      IncSearch = { fg = '$bright_orange', bg = '$Davys_Grey', fmt = 'reverse' },
+      IncSearch = { fg = '$light_roange', bg = '$Davys_Grey', fmt = 'reverse' },
       Search = { fg = '$Davys_Grey', bg = '$Mindaro', fmt = 'bold' },
       CursorLineNr = { fg = '$light_green', fmt = 'bold' },
 

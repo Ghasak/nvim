@@ -16,7 +16,6 @@ return {
           [vim.fn.expand("$VIMRUNTIME/lua")] = true,
           [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
           vim.api.nvim_get_runtime_file("", true),
-          --require("lua-dev.sumneko").types(),
         },
         maxPreload = 100000,
         preloadFileSize = 10000

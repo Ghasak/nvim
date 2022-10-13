@@ -25,6 +25,14 @@ vim.bo.expandtab = true
 vim.bo.shiftwidth = 2
 vim.bo.softtabstop = 2
 
+local mode_adapters = {
+  insert_mode = "i",
+  normal_mode = "n",
+  term_mode = "t",
+  visual_mode = "v",
+  visual_block_mode = "x",
+  command_mode = "c",
+}
 
 -- Require Neovide configurations
 --require("units.neovideConfig").neovide_config()
@@ -35,26 +43,25 @@ vim.api.nvim_set_keymap("n", "<C-h>", "<C-w>h", { noremap = true, silent = true 
 vim.api.nvim_set_keymap("n", "<C-j>", "<C-w>j", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<C-l>", "<C-w>l", { noremap = true, silent = true })
 
-vim.cmd([[
-" set moving between windows to ctrl+arrows
-nnoremap <silent> <C-Right> <c-w>l
-nnoremap <silent> <C-Left> <c-w>h
-nnoremap <silent> <C-Up> <c-w>k
-nnoremap <silent> <C-Down> <c-w>j
+-- Arrow  mapping for navigation among opened windows
+vim.api.nvim_set_keymap("n", "<C-Right>", "<C-w>l", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-Left>", "<C-w>h", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-Up>", "<C-w>k", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-Down>", "<C-w>j", { noremap = true, silent = true })
 
-" set moving between windows to ctrl+hjkl
-noremap <silent> <C-l> <C-w>l
-noremap <silent> <C-h> <C-w>h
-noremap <silent> <C-k> <C-w>k
-noremap <silent> <C-j> <C-w>j
-
-]])
-
--- Terminal window navigation -> Allow you to freely move to terminal in/out
+-- These will causing a problem with the lua-fzf when you select choices up and down.
+-- vim.api.nvim_set_keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", { noremap = true, silent = true })
+-- These have no problem
 vim.api.nvim_set_keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", { noremap = true, silent = true })
+
+
+-- navigate tab completion with <c-j> and <c-k>
+-- runs conditionally, in command mode only
+vim.api.nvim_set_keymap("c", "<C-j>", 'pumvisible() ? "\\<C-n>" : "\\<C-j>"', { noremap = true, expr = true })
+vim.api.nvim_set_keymap("c", "<C-k>", 'pumvisible() ? "\\<C-p>" : "\\<C-k>"', { noremap = true, expr = true })
+
 
 -- Source our init.lua file
 --vim.api.nvim_set_keymap("n", "<space><CR>", ":source ~/.config/nvim/init.lua<CR>", { noremap = true, silent = true, })
@@ -130,8 +137,8 @@ vim.api.nvim_set_keymap("n", "<Leader>r", ":RnvimrToggle<CR>", { noremap = true,
 vim.api.nvim_set_keymap("n", "<Leader>t", ":FloatermToggle<CR>", { noremap = true, silent = false, })
 
 -- Better nav for omni-complete
-vim.api.nvim_set_keymap("i", "<c-j>", '("<C-n>")', { noremap = true, silent = true, expr = true, })
-vim.api.nvim_set_keymap("i", "<c-k>", '("<C-p>")', { noremap = true, silent = true, expr = true, })
+-- vim.api.nvim_set_keymap("i", "<c-j>", '("<C-n>")', { noremap = true, silent = true, expr = true, })
+-- vim.api.nvim_set_keymap("i", "<c-k>", '("<C-p>")', { noremap = true, silent = true, expr = true, })
 
 
 -- open a link in vim in browser: in linux use : xdg-open instead of open (for mac).

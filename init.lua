@@ -53,5 +53,9 @@ local init_modules = {
   "plugins", "core", "settings",
 }
 for _, module in ipairs(init_modules) do load_module(module) end
--- Loading the neovide configurations
-require("units.neovideConfig").neovide_config()
+
+-- Loading the neovide configurations, once it neovide is lunched.
+if vim.g.neovide  then
+  require("units.neovideConfig").neovide_config()
+end
+
