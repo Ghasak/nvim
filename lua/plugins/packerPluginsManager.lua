@@ -320,7 +320,7 @@ return packer.startup(function(use)
   -- Adding acceleration to the mouse for faster/smooth motion
   use({ "rhysd/accelerated-jk",
     opt = true,
-    event = "VimEnter"
+    event = "VimEnter",
   })
   -- Deleting a given buffer without affecting
   use({ "famiu/bufdelete.nvim",

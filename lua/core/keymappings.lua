@@ -26,18 +26,42 @@ vim.bo.shiftwidth = 2
 vim.bo.softtabstop = 2
 
 
+-- Require Neovide configurations
+--require("units.neovideConfig").neovide_config()
+
+-- Using Ctrl-jhkl to navigate splits (buffers)
+vim.api.nvim_set_keymap("n", "<C-k>", "<C-w>k", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-h>", "<C-w>h", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-j>", "<C-w>j", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-l>", "<C-w>l", { noremap = true, silent = true })
+
+vim.cmd([[
+" set moving between windows to ctrl+arrows
+nnoremap <silent> <C-Right> <c-w>l
+nnoremap <silent> <C-Left> <c-w>h
+nnoremap <silent> <C-Up> <c-w>k
+nnoremap <silent> <C-Down> <c-w>j
+
+" set moving between windows to ctrl+hjkl
+noremap <silent> <C-l> <C-w>l
+noremap <silent> <C-h> <C-w>h
+noremap <silent> <C-k> <C-w>k
+noremap <silent> <C-j> <C-w>j
+
+]])
+
+-- Terminal window navigation -> Allow you to freely move to terminal in/out
+vim.api.nvim_set_keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", { noremap = true, silent = true })
+
 -- Source our init.lua file
 --vim.api.nvim_set_keymap("n", "<space><CR>", ":source ~/.config/nvim/init.lua<CR>", { noremap = true, silent = true, })
 vim.api.nvim_set_keymap("n", "<space><CR>", ":w!<CR>", { noremap = true, silent = true, })
 
 vim.api.nvim_set_keymap("n", "<c-s>", ":w<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("i", "<c-s>", "<Esc>:w<CR>", { noremap = true, silent = true })
-
--- Using Ctrl-jhkl to navigate splits (buffers)
-vim.api.nvim_set_keymap("n", "<c-k>", "<c-w>k", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<c-h>", "<c-w>h", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<c-j>", "<c-w>j", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<c-l>", "<c-w>l", { noremap = true, silent = true })
 
 
 -- Better indenting using (<) and (>)
@@ -181,7 +205,7 @@ vim.api.nvim_set_keymap('n', '<F6>', ':set spell! spelllang=en<CR>', { noremap =
 ---- *****************************************************************************************
 
 -- Show definition of function based on nvim-lspConfig instead of K
-vim.api.nvim_set_keymap("n", "<F1>", ":lua vim.lsp.buf.hover()<CR>", { noremap = true, silent = true, })
+vim.api.nvim_set_keymap("n", "<leader><F1>", ":lua vim.lsp.buf.hover()<CR>", { noremap = true, silent = true, })
 
 -- KeyMapping
 vim.keymap.set("n", "<leader>gh", "<cmd>Lspsaga peek_definition<CR>", { silent = true })

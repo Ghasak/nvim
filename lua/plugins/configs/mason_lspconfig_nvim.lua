@@ -27,7 +27,8 @@ M.setup = function()
   -- 2.) >> Loading Mason lspconfig (mason-config) <<
   local mason_status_ok, mason_lspconfig = pcall(require, "mason-lspconfig")
   if not mason_status_ok then
-    vim.notify("Couldn't load Mason-LSP-Config" .. mason_lspconfig, "error")
+    vim.notify("Couldn't load Mason-LSP-Config" .. mason_lspconfig, vim.log.levels.ERROR)
+
     return
   end
 
@@ -46,7 +47,7 @@ M.setup = function()
   -- 4.) >> lspconfig main loader for the lsp
   local lspconfig_status_ok, lspconfig = pcall(require, "lspconfig")
   if not lspconfig_status_ok then
-    vim.notify("Couldn't load LSP-Config" .. lspconfig, "error")
+    vim.notify("Couldn't load LSP-Config" .. lspconfig, vim.log.levels.ERROR)
     return
   end
 
