@@ -41,6 +41,28 @@ nmap <key>
 
 ```
 
+## getting operation system info
+```lua
+:lua vim.pretty_print(vim.loop.os_uname())
+```
+
+## Getting variables names in lua
+
+
+```lua
+local max_job_limit = function()
+  if vim.fn.has "mac" == 1 then
+    vim.g.custom_max_jobs_limit = 50
+  else
+    vim.g.custom_max_jobs_limit = 100
+  end
+  return vim.g.custom_max_jobs_limit
+end
+
+:lua vim.pretty_print(vim.inspect(vim.g.custom_max_jobs_limit))
+-- or:
+:lua vim.pretty_print(vim.inspect(vim.api.nvim_get_var('custom_max_jobs_limit')))
+```
 
 ## References
 - [keymapping form Lunarvim](https://github.com/LunarVim/LunarVim/blob/rolling/lua/lvim/keymappings.lua)

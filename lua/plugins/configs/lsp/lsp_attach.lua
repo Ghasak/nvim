@@ -81,6 +81,12 @@ M.custom_attach = function(client, bufnr)
 "" sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl= numhl=DiagnosticLineNrInfo
 "" sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=DiagnosticLineNrHint
 ]]
+  -- Customization for at the colorscheme level (onedark)
+  -- DiagnosticVirtualTextError
+  -- DiagnosticVirtualTextWarn
+  -- DiagnosticVirtualTextInfo
+  -- DiagnosticVirtualTextHint
+
   -----------------------------------------------------------------------------------
   --          The above keymapping will be overwritten by lsp-saga
   -----------------------------------------------------------------------------------

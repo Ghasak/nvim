@@ -22,20 +22,33 @@ if not status_ok then
 end
 
 -- This will set a limit to the maximum jobs in packer to not freeze the packer.sync.
+-- Get it as: :lua vim.pretty_print(vim.inspect(vim.g.custom_max_jobs_limit))
+-- or: :lua vim.pretty_print(vim.inspect(vim.api.nvim_get_var('custom_max_jobs_limit')))
 local max_job_limit = function()
-  local max_jobs = 100
   if vim.fn.has "mac" == 1 then
-    max_jobs = 50
+    vim.g.custom_max_jobs_limit = 50
   else
-    max_jobs = 100
+    vim.g.custom_max_jobs_limit = 100
   end
-  return max_jobs
+  return vim.g.custom_max_jobs_limit
 end
+
+
+-- Adding here a autocmd that will sync your packer once you modify this file., and save
+-- This will run in nvim 0.8, using the new API,
+-- https://www.reddit.com/r/neovim/comments/vqjz87/autorun_packer_sync_but_only_when_my_plugin_list/
+local group = vim.api.nvim_create_augroup("packer_user_config", { clear = true })
+vim.api.nvim_create_autocmd("BufWritePost", {
+  command = "source <afile> | PackerSync",
+	pattern = "packerPluginsManager.lua", -- the name of your plugins file
+	group = group,
+})
+
 
 
 -- Have packer use a popup window
 packer.init {
-  max_jobs = max_job_limit(),
+  max_jobs = max_job_limit(), -- This has fixed the freezing windows in nvim when packer sync.
   display = {
     open_fn = function()
       return require("packer.util").float { border = "rounded" }

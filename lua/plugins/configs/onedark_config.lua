@@ -44,7 +44,7 @@ M.setup = function()
       Isbelline           = '#F2EFEA',
       Platinum            = '#E7E5DF',
       bright_orange       = "#ff8800", -- define a new color
-      light_roange        = "#FFC53A",
+      light_orange        = "#FFC53A",
       green               = '#C6EBC5',
       --cyan                = "#2E86AB",
       cyan                = "#56b6c2",
@@ -91,7 +91,7 @@ M.setup = function()
       --Normal = { fg = '$beautiful_black', bg = '$beautiful_black' }, -- backgorund default color
       --Normal = { fg = '#C3C3C3', bg = '$beautiful_black' }, -- backgorund default color
       Normal = { fg = '$Platinum', bg = '$beautiful_black' }, -- backgorund default color
-      IncSearch = { fg = '$light_roange', bg = '$Davys_Grey', fmt = 'reverse' },
+      IncSearch = { fg = '$light_orange', bg = '$Davys_Grey', fmt = 'reverse' },
       Search = { fg = '$Davys_Grey', bg = '$Mindaro', fmt = 'bold' },
       CursorLineNr = { fg = '$light_green', fmt = 'bold' },
 
@@ -139,15 +139,15 @@ M.setup = function()
 
       -- LSP configruations
       --  For the virtual text which is shown next to each code line
-      DiagnosticVirtualTextError = { bg = '$beautiful_black', fg = '$cadet_Grey' },
-      DiagnosticVirtualTextWarn  = { bg = '$beautiful_black', fg = '$cadet_Grey' },
-      DiagnosticVirtualTextInfo  = { bg = '$beautiful_black', fg = '$cadet_Grey' },
+      DiagnosticVirtualTextError = { bg = '$beautiful_black', fg = '$light_Fiery_Rose' },
+      DiagnosticVirtualTextWarn  = { bg = '$beautiful_black', fg = '$Light_Orange' },
+      DiagnosticVirtualTextInfo  = { bg = '$beautiful_black', fg = '$birght_navy_blue' },
       DiagnosticVirtualTextHint  = { bg = '$beautiful_black', fg = '$cadet_Grey' },
       -- Color of the line number while there is an error, Info or Hint
-      DiagnosticLineNrError      = { fg = "$light_Fiery_Rose" },
-      DiagnosticLineNrWarn       = { fg = "$Light_Yellow" },
-      DiagnosticLineNrInfo       = { fg = '$blue' },
-      DiagnosticLineNrHint       = { fg = '$purple' },
+      -- DiagnosticLineNrError      = { fg = "$light_Fiery_Rose" },
+      -- DiagnosticLineNrWarn       = { fg = "$Light_Yellow" },
+      -- DiagnosticLineNrInfo       = { fg = '$blue' },
+      -- DiagnosticLineNrHint       = { fg = '$purple' },
 
       -- Third-party plugin (fidget: show lsp message at startup of the buffer)
       FidgetTitle = { fg = '$Charm_Pink', bg = '$Blush' },
