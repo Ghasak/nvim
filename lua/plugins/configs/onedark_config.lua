@@ -82,6 +82,9 @@ M.setup = function()
       birght_navy_blue    = '#3E78B2',
       mavue               = '#896279',
       Grey_X11_Grey       = "#C0BABC",
+      light_coral         = '#F49390',
+      rose_dust           = "#A2666F",
+      apricot             = "#FFD8BE",
 
 
     }, -- Override the components of the nvim modules
@@ -140,7 +143,7 @@ M.setup = function()
       -- LSP configruations
       --  For the virtual text which is shown next to each code line
       DiagnosticVirtualTextError = { bg = '$beautiful_black', fg = '$light_Fiery_Rose' },
-      DiagnosticVirtualTextWarn  = { bg = '$beautiful_black', fg = '$Light_Orange' },
+      DiagnosticVirtualTextWarn  = { bg = '$beautiful_black', fg = '$apricot' },
       DiagnosticVirtualTextInfo  = { bg = '$beautiful_black', fg = '$birght_navy_blue' },
       DiagnosticVirtualTextHint  = { bg = '$beautiful_black', fg = '$cadet_Grey' },
       -- Color of the line number while there is an error, Info or Hint
