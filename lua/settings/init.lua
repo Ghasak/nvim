@@ -7,7 +7,7 @@ local init_modules = {
 for _, module in ipairs(init_modules) do
   local ok, err = pcall(require, module)
   if not ok then
-    vim.notify('Error loading ' .. module .. '\n\n' .. err)
+    vim.notify('Error loading ' .. module .. '\n\n' .. err, vim.log.levels.ERROR)
   end
 end
 

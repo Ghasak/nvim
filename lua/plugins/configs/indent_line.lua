@@ -12,25 +12,25 @@ function M.setup()
 
   -- extra options
   vim.opt.termguicolors = true
-  vim.opt.list = true                      -- This added a (-) at each word you type in nvim
+  vim.opt.list = true -- This added a (-) at each word you type in nvim
   --vim.opt.listchars:append "space:⋅"
   --vim.opt.listchars:append "eol:↴"
 
-require("indent_blankline").setup {
+  require("indent_blankline").setup {
     space_char_blankline = " ",
     show_current_context = true,
     show_current_context_start = true,
     show_end_of_line = true,
-  --  char_highlight_list = {
-  --      "IndentBlanklineIndent1",
-  --      "IndentBlanklineIndent2",
-  --      "IndentBlanklineIndent3",
-  --      "IndentBlanklineIndent4",
-  --      "IndentBlanklineIndent5",
-  --      "IndentBlanklineIndent6",
-  --  },
-}
-
+    --  char_highlight_list = {
+    --      "IndentBlanklineIndent1",
+    --      "IndentBlanklineIndent2",
+    --      "IndentBlanklineIndent3",
+    --      "IndentBlanklineIndent4",
+    --      "IndentBlanklineIndent5",
+    --      "IndentBlanklineIndent6",
+    --  },
+  }
 
 end
+
 return M

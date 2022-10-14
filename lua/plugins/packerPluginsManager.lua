@@ -21,8 +21,34 @@ if not status_ok then
   return
 end
 
+-- This will set a limit to the maximum jobs in packer to not freeze the packer.sync.
+-- Get it as: :lua vim.pretty_print(vim.inspect(vim.g.custom_max_jobs_limit))
+-- or: :lua vim.pretty_print(vim.inspect(vim.api.nvim_get_var('custom_max_jobs_limit')))
+local max_job_limit = function()
+  if vim.fn.has "mac" == 1 then
+    vim.g.custom_max_jobs_limit = 50
+  else
+    vim.g.custom_max_jobs_limit = 100
+  end
+  return vim.g.custom_max_jobs_limit
+end
+
+
+-- Adding here a autocmd that will sync your packer once you modify this file., and save
+-- This will run in nvim 0.8, using the new API,
+-- https://www.reddit.com/r/neovim/comments/vqjz87/autorun_packer_sync_but_only_when_my_plugin_list/
+local group = vim.api.nvim_create_augroup("packer_user_config", { clear = true })
+vim.api.nvim_create_autocmd("BufWritePost", {
+  command = "source <afile> | PackerSync",
+	pattern = "packerPluginsManager.lua", -- the name of your plugins file
+	group = group,
+})
+
+
+
 -- Have packer use a popup window
 packer.init {
+  max_jobs = max_job_limit(), -- This has fixed the freezing windows in nvim when packer sync.
   display = {
     open_fn = function()
       return require("packer.util").float { border = "rounded" }
@@ -57,7 +83,10 @@ packer.init {
         get_rev = "rev-parse --short HEAD",
         get_msg = "log --color=never --pretty=format:FMT --no-show-signature HEAD -n 1",
         submodules = "submodule update --init --recursive --progress"
-      }
+      },
+      depth = 1, -- Git clone depth
+      clone_timeout = 60, -- Timeout, in seconds, for git clones
+      default_url_format = 'https://github.com/%s' -- Lua format string used for "aaa/bbb" style plugins
     },
 
 
@@ -320,7 +349,7 @@ return packer.startup(function(use)
   -- Adding acceleration to the mouse for faster/smooth motion
   use({ "rhysd/accelerated-jk",
     opt = true,
-    event = "VimEnter"
+    event = "VimEnter",
   })
   -- Deleting a given buffer without affecting
   use({ "famiu/bufdelete.nvim",
@@ -459,7 +488,11 @@ return packer.startup(function(use)
   -- ==========================================================================
   -- 	                      Programming Language Servers
   -- ==========================================================================
-
+  use({ "folke/lua-dev.nvim",
+    module = "lua-dev",
+    ft = "lua",
+    event = "InsertEnter"
+  })
   -- lsp_signature.nvim
   use({
     "glepnir/lspsaga.nvim",
@@ -597,7 +630,7 @@ return packer.startup(function(use)
   --                          Other Plugins
   -- ===========================================================================
   use({ "terrortylor/nvim-comment",
-    event= "CursorMoved",
+    event = "CursorMoved",
     config = function()
       require('nvim_comment').setup()
     end

@@ -7,10 +7,17 @@ M.setup = function()
   ---- *****************************************************************************************
   -- Pre settings for Rust language servers
   local rust_tools_settings = require("plugins.configs.lsp.custom_servers.rust_analyzer_server")
+  -- ------------------------------------------------
   -- Configurations for the lsp, offers varities of settings for the diagnostics
   -- messages and Icons on the gutters. (custom the erro icons mainly)
   require("plugins.configs.lsp.lsp_settings").setup()
-
+  -- ------------------------------------------------
+  -- Lua additional support from lua-dev
+  -- IMPORTANT: make sure to setup lua-dev BEFORE lspconfig
+  local lua_dev_status, lua_dev = pcall(require, "lua-dev")
+  if lua_dev_status then
+    lua_dev.setup({})
+  end
   ---- *****************************************************************************************
   ----                     Mason Loader (similar to nvim-lsp-installer)
   ---- *****************************************************************************************
@@ -20,7 +27,8 @@ M.setup = function()
   -- 2.) >> Loading Mason lspconfig (mason-config) <<
   local mason_status_ok, mason_lspconfig = pcall(require, "mason-lspconfig")
   if not mason_status_ok then
-    vim.notify("Couldn't load Mason-LSP-Config" .. mason_lspconfig, "error")
+    vim.notify("Couldn't load Mason-LSP-Config" .. mason_lspconfig, vim.log.levels.ERROR)
+
     return
   end
 
@@ -39,7 +47,7 @@ M.setup = function()
   -- 4.) >> lspconfig main loader for the lsp
   local lspconfig_status_ok, lspconfig = pcall(require, "lspconfig")
   if not lspconfig_status_ok then
-    vim.notify("Couldn't load LSP-Config" .. lspconfig, "error")
+    vim.notify("Couldn't load LSP-Config" .. lspconfig, vim.log.levels.ERROR)
     return
   end
 
@@ -100,12 +108,10 @@ M.setup = function()
       rust_tools.setup { -- Defined above
         tools = {
           on_initialized = function()
-            --   vim.cmd [[
-            --   autocmd BufEnter,CursorHold,InsertLeave,BufWritePost *.rs silent! lua vim.lsp.codelens.refresh()
-            -- ]]
             vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "CursorHold", "InsertLeave" }, {
               pattern = { "*.rs" },
               callback = function()
+                -- Getting loading the codelens without popup an error message.
                 local _, _ = pcall(vim.lsp.codelens.refresh)
               end
 
@@ -181,7 +187,18 @@ M.setup = function()
         },
       })
     end,
+    ["tsserver"] = function()
+      lspconfig.tsserver.setup({
+        on_attach    = opts.on_attach,
+        capabilities = opts.capabilities,
+        handlers     = opts.handlers,
+        -- Language Server JavaScript/TypScript, npm install -g typescript-language-server typescript
+        -- Already installed with Mason, so if you don't want to use this, you should uncomment cmd
+        -- https://www.npmjs.com/package/typescript-language-server
+        cmd          = { "typescript-language-server", "--stdio" },
+        filetypes    = { "typescript", "typescriptreact", "typescript.tsx", "javascript" },
+      })
+    end,
   })
-
 end
 return M

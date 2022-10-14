@@ -16,6 +16,7 @@ vim.cmd([[
         let g:copilot_no_tab_map = v:true
 ]])
 
+
 -- b:copilot_enabled       Set to v:false to disable GitHub Copilot for the
 --                         current buffer.  Or set to v:true to force enabling
 --                         it, overriding g:copilot_filetypes.

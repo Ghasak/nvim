@@ -25,6 +25,43 @@ vim.bo.expandtab = true
 vim.bo.shiftwidth = 2
 vim.bo.softtabstop = 2
 
+local mode_adapters = {
+  insert_mode = "i",
+  normal_mode = "n",
+  term_mode = "t",
+  visual_mode = "v",
+  visual_block_mode = "x",
+  command_mode = "c",
+}
+
+-- Require Neovide configurations
+--require("units.neovideConfig").neovide_config()
+
+-- Using Ctrl-jhkl to navigate splits (buffers)
+vim.api.nvim_set_keymap("n", "<C-k>", "<C-w>k", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-h>", "<C-w>h", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-j>", "<C-w>j", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-l>", "<C-w>l", { noremap = true, silent = true })
+
+-- Arrow  mapping for navigation among opened windows
+vim.api.nvim_set_keymap("n", "<C-Right>", "<C-w>l", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-Left>", "<C-w>h", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-Up>", "<C-w>k", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-Down>", "<C-w>j", { noremap = true, silent = true })
+
+-- These will causing a problem with the lua-fzf when you select choices up and down.
+-- vim.api.nvim_set_keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", { noremap = true, silent = true })
+-- These have no problem
+vim.api.nvim_set_keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", { noremap = true, silent = true })
+
+
+-- navigate tab completion with <c-j> and <c-k>
+-- runs conditionally, in command mode only
+vim.api.nvim_set_keymap("c", "<C-j>", 'pumvisible() ? "\\<C-n>" : "\\<C-j>"', { noremap = true, expr = true })
+vim.api.nvim_set_keymap("c", "<C-k>", 'pumvisible() ? "\\<C-p>" : "\\<C-k>"', { noremap = true, expr = true })
+
 
 -- Source our init.lua file
 --vim.api.nvim_set_keymap("n", "<space><CR>", ":source ~/.config/nvim/init.lua<CR>", { noremap = true, silent = true, })
@@ -32,12 +69,6 @@ vim.api.nvim_set_keymap("n", "<space><CR>", ":w!<CR>", { noremap = true, silent 
 
 vim.api.nvim_set_keymap("n", "<c-s>", ":w<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("i", "<c-s>", "<Esc>:w<CR>", { noremap = true, silent = true })
-
--- Using Ctrl-jhkl to navigate splits (buffers)
-vim.api.nvim_set_keymap("n", "<c-k>", "<c-w>k", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<c-h>", "<c-w>h", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<c-j>", "<c-w>j", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<c-l>", "<c-w>l", { noremap = true, silent = true })
 
 
 -- Better indenting using (<) and (>)
@@ -53,7 +84,8 @@ vim.g.mapleader = " "
 -- Explorer with Nvim-tree( ensure first the undotree is not toggled )
 vim.api.nvim_set_keymap("n", "<Leader>e", ":<cmd>UndotreeHide<CR>:NvimTreeToggle<CR>", { noremap = true, silent = true })
 -- this will be source with setting directory which shoould be put at the end of the loaded dictionaries
-vim.api.nvim_set_keymap("n", "<leader>u", ":<cmd>NvimTreeClose<CR> :UndotreeToggle<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>u", ":<cmd>NvimTreeClose<CR> :UndotreeToggle<CR>",
+  { noremap = true, silent = true })
 -- Ctrl + P to open the the navigator faster
 vim.api.nvim_set_keymap('n', '<leader>p', "<cmd>lua require('fzf-lua').files()<CR>", { noremap = true, silent = true })
 --vim.api.nvim_set_keymap('n', '<leader>p',"<cmd>lua require('fzf-lua').files({ fzf_opts = {['--layout'] = 'reverse-list'} })<CR>",{ noremap = true, silent = true })
@@ -105,8 +137,8 @@ vim.api.nvim_set_keymap("n", "<Leader>r", ":RnvimrToggle<CR>", { noremap = true,
 vim.api.nvim_set_keymap("n", "<Leader>t", ":FloatermToggle<CR>", { noremap = true, silent = false, })
 
 -- Better nav for omni-complete
-vim.api.nvim_set_keymap("i", "<c-j>", '("<C-n>")', { noremap = true, silent = true, expr = true, })
-vim.api.nvim_set_keymap("i", "<c-k>", '("<C-p>")', { noremap = true, silent = true, expr = true, })
+-- vim.api.nvim_set_keymap("i", "<c-j>", '("<C-n>")', { noremap = true, silent = true, expr = true, })
+-- vim.api.nvim_set_keymap("i", "<c-k>", '("<C-p>")', { noremap = true, silent = true, expr = true, })
 
 
 -- open a link in vim in browser: in linux use : xdg-open instead of open (for mac).
@@ -164,21 +196,30 @@ vim.cmd([[
 -- :lua vim.lsp.buf.hover() or  implementation(), ..etc.
 
 
-
+---- *****************************************************************************************
+----                    Checking spelling - Builtin suggesions
+---- *****************************************************************************************
+vim.api.nvim_set_keymap('n', '<F6>', ':set spell! spelllang=en<CR>', { noremap = true, silent = true })
+-- Add a spell word to your custom dictionary using
+-- -> zg (as z for spell and g for good word)
+-- -> zw (as z for spell and w for bad word)
+-- -> zuw (as z for spell and u as undo and w for bad word)
+-- -> z= (to see the suggestions, must put the cursor under the word for spell suggestions)
+-- -> [s ,[S, ]s and ]S are for navigating the words for spelling checking
 
 ---- *****************************************************************************************
 ----                     Lspsaga KeyMapping
 ---- *****************************************************************************************
 
 -- Show definition of function based on nvim-lspConfig instead of K
-vim.api.nvim_set_keymap("n", "<F1>", ":lua vim.lsp.buf.hover()<CR>", { noremap = true, silent = true, })
+vim.api.nvim_set_keymap("n", "<leader><F1>", ":lua vim.lsp.buf.hover()<CR>", { noremap = true, silent = true, })
 
 -- KeyMapping
 vim.keymap.set("n", "<leader>gh", "<cmd>Lspsaga peek_definition<CR>", { silent = true })
 -- Code action
 vim.keymap.set({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<CR>", { silent = true })
 -- Check
-vim.keymap.set("n", "<leader><F2>", "<cmd>Lspsaga lsp_finder<CR>", {silent = true})
+vim.keymap.set("n", "<leader><F2>", "<cmd>Lspsaga lsp_finder<CR>", { silent = true })
 -- Rename
 vim.keymap.set("n", "<leader>gr", "<cmd>Lspsaga rename<CR>", { silent = true })
 -- Peek Definition
@@ -201,15 +242,3 @@ end, { silent = true })
 
 -- Outline
 vim.keymap.set("n", "<leader>o", "<cmd>LSoutlineToggle<CR>", { silent = true, })
-
-
-
-
-
-
-
-
-
-
-
-

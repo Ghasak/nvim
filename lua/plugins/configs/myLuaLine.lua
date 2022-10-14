@@ -196,28 +196,38 @@ local function format_messages_2(messages)
   -- local spinners = {"", " "}
   --- More Spinners: https://github.com/j-hui/fidget.nvim/blob/main/lua/fidget/spinners.lua
   local spinners = {
-    --    "∙∙∙",
-    --    "●∙∙",
-    --    "∙●∙",
-    --    "∙∙●",
-    --    "∙∙∙",
-    "⠋",
-    "⠙",
-    "⠹",
-    "⠸",
-    "⠼",
-    "⠴",
-    "⠦",
-    "⠧",
-    "⠇",
-    "⠏",    -- "∙∙∙∙",
-    -- "∙∙",
-    -- "∙∙",
-    -- "∙∙",
-    -- "∙∙∙∙",
+       -- "∙∙∙",
+       -- "●∙∙",
+       -- "∙●∙",
+       -- "∙∙●",
+       -- "∙∙∙",
+       "∙∙∙",
+       " ∙",
+       "∙∙",
+       "∙∙",
+       "∙∙∙",
+
+    --"", "", "", "", "", "",
+    --
+    -- "⠋",
+    -- "⠙",
+    -- "⠹",
+    -- "⠸",
+    -- "⠼",
+    -- "⠴",
+    -- "⠦",
+    -- "⠧",
+    -- "⠇",
+    -- "⠏",
+     -- "∙∙∙∙",
+     -- " ∙∙",
+     -- "∙ ∙",
+     -- "∙∙ ",
+     -- "∙∙∙∙",
   }
   local ms       = vim.loop.hrtime() / 1000000
-  local frame    = math.floor(ms / 120) % #spinners
+  --local frame    = math.floor(ms / 120) % #spinners
+  local frame    = math.floor(ms / 90) % #spinners
   --local frame    = math.floor(ms / 160) % #spinners
   local i        = 1
   -- Only display at most 2 progress messages at a time to avoid clutter
@@ -236,6 +246,8 @@ end
 local function Icon_LSP_Progress()
   local messages = vim.lsp.util.get_progress_messages()
   if #messages == 0 then return "" end
+  --if #messages == 0 then return "" end
+
   return format_messages_2(messages)
 end
 

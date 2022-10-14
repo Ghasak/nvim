@@ -593,7 +593,3 @@ fzf_lua.setup {
  -- nbsp = '\xc2\xa0',
 
 }
-
-
-
-
