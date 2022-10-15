@@ -40,8 +40,8 @@ end
 local group = vim.api.nvim_create_augroup("packer_user_config", { clear = true })
 vim.api.nvim_create_autocmd("BufWritePost", {
   command = "source <afile> | PackerSync",
-	pattern = "packerPluginsManager.lua", -- the name of your plugins file
-	group = group,
+  pattern = "packerPluginsManager.lua", -- the name of your plugins file
+  group = group,
 })
 
 
@@ -488,8 +488,8 @@ return packer.startup(function(use)
   -- ==========================================================================
   -- 	                      Programming Language Servers
   -- ==========================================================================
-  use({ "folke/lua-dev.nvim",
-    module = "lua-dev",
+  use({ "folke/neodev.nvim",
+    module = "neodev",
     ft = "lua",
     event = "InsertEnter"
   })
@@ -552,6 +552,33 @@ return packer.startup(function(use)
 
   })
 
+  -- ===========================================================================
+  --                        Debugger Tools
+  -- ===========================================================================
+  -- Debugging
+  --use({ "puremourning/vimspector", event = "BufWinEnter" })
+
+  -- Debugging
+  use {
+    "mfussenegger/nvim-dap",
+    opt = true,
+    event = "BufReadPre",
+    -- keys = { [[<leader>d]] },
+    module = { "dap" },
+    wants = { "nvim-dap-virtual-text", "nvim-dap-ui", "nvim-dap-python" },
+    requires = {
+      "theHamsta/nvim-dap-virtual-text",
+      "rcarriga/nvim-dap-ui",
+      "mfussenegger/nvim-dap-python",
+      "nvim-telescope/telescope-dap.nvim",
+      { "leoluz/nvim-dap-go", module = "dap-go" },
+      { "jbyuki/one-small-step-for-vimkind", module = "osv" },
+    },
+    config = function()
+      require("plugins.configs.dap")
+    end,
+    disable = false,
+  }
   -- ==========================================================================
   -- 	                      Programming Language Tools
   -- ==========================================================================
@@ -575,18 +602,6 @@ return packer.startup(function(use)
     end
   })
 
-  -- Debugging
-  --use({ "puremourning/vimspector", event = "BufWinEnter" })
-
-  -- DAP
-  --    use({ "mfussenegger/nvim-dap" })
-  --    use({ "mfussenegger/nvim-dap-python" })
-  --    use({ "theHamsta/nvim-dap-virtual-text" })
-  --    use({ "rcarriga/nvim-dap-ui" })
-  --    use({ "Pocco81/DAPInstall.nvim" })
-  --    use({ "jbyuki/one-small-step-for-vimkind" })
-  --    use({ "nvim-telescope/telescope-dap.nvim" })
-  --
   -- Copilot AI
   -- Technical review of copilot, an AI solution built on top of openAI
   -- Davincie.

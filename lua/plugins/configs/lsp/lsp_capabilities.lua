@@ -32,7 +32,7 @@ M.capabilities.textDocument.completion.completionItem.resolveSupport = {
 }
 -- capabilities.offsetEncoding = {'utf-8', 'utf-16'}
 M.capabilities.offsetEncoding = "utf-8"
-M.capabilities = cmp_nvim_lsp.update_capabilities(M.capabilities)
+M.capabilities = cmp_nvim_lsp.default_capabilities(M.capabilities)
 
 return M
 

@@ -151,9 +151,9 @@ M.setup = function()
       -- DiagnosticLineNrWarn       = { fg = "$Light_Yellow" },
       -- DiagnosticLineNrInfo       = { fg = '$blue' },
       -- DiagnosticLineNrHint       = { fg = '$purple' },
-
+      LspDiagnosticsSignError    = { bg = '$light_Fiery_Rose', fg = '$light_green' },
       -- Third-party plugin (fidget: show lsp message at startup of the buffer)
-      FidgetTitle = { fg = '$Charm_Pink', bg = '$Blush' },
+      FidgetTitle                = { fg = '$Charm_Pink', bg = '$Blush' },
 
       -- GGX = {fg = '#EEEDBF'}
       -- StatusLine
