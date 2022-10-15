@@ -14,9 +14,9 @@ M.setup = function()
   -- ------------------------------------------------
   -- Lua additional support from lua-dev
   -- IMPORTANT: make sure to setup lua-dev BEFORE lspconfig
-  local lua_dev_status, lua_dev = pcall(require, "lua-dev")
-  if lua_dev_status then
-    lua_dev.setup({})
+  local neodev_status, neodev = pcall(require, "neodev")
+  if neodev_status then
+    neodev.setup({})
   end
   ---- *****************************************************************************************
   ----                     Mason Loader (similar to nvim-lsp-installer)
@@ -28,7 +28,6 @@ M.setup = function()
   local mason_status_ok, mason_lspconfig = pcall(require, "mason-lspconfig")
   if not mason_status_ok then
     vim.notify("Couldn't load Mason-LSP-Config" .. mason_lspconfig, vim.log.levels.ERROR)
-
     return
   end
 

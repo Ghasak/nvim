@@ -23,10 +23,9 @@ nmap <key>
 :map
 ```
 4. Using verbose
-
+It will show you when last time got setted.
 ```vim
-:verbose map <ke>
-:verbose map <c-k>
+:verbose nmap <leader>
 
 ```
 
@@ -66,3 +65,53 @@ end
 
 ## References
 - [keymapping form Lunarvim](https://github.com/LunarVim/LunarVim/blob/rolling/lua/lvim/keymappings.lua)
+
+
+## HOW TO TO DEBUGE AND CHECK MODULES
+
+Suppose you have two modules (`*.lua` files) like
+`module_a.lua` and `module_b.lua`, then you run the modules particulary to the following
+then you required the `module_b` inside `module_b`,
+anytime you change something in `module_b` it suppose to be shown in `module_a`
+as well. But, the real case, is that, you need always to restart your nvim by
+exiting the `module_a` and then enter again the `module_a` if you want `:source
+%` or `:luafile %` to run. But, luckily, we have something can reload your modules without exisiting (you will need `plenary`)
+
+- FOR DEBUGGING PURPOSES ONLY USE THIS ON TOP OF YOUR `module_a`
+```lua
+
+require('plenary.reload').reload_module('module_b', true)
+-- For example I use in my module developement.
+require('plenary.reload').reload_module('plugins.configs.dap.dap_engine', true)
+
+```
+
+Run the following example ...
+in `module_a` which is the `init.lua` inside the `dap` directory which is inside `configs` up to `plugins`
+```lua
+require('plenary.reload').reload_module('plugins.configs.dap.dap_engine', true)
+local fn1 = require("plugins.configs.dap.dap_engine").setup()
+vim.pretty_print(fn1)
+```
+Then inside `dap_engine.lua`, put the following:
+
+```lua
+local M = {}
+
+M.setup = function()
+  local x = "Finally it is working, adding to see if it is working ?!!"
+  local y = "another series, but this time more added... -<<<<"
+  local z = x .. y
+  return z
+end
+return M
+
+```
+
+
+## REFERENCES
+- [loading the modules automatically ](https://www.reddit.com/r/neovim/comments/jxub94/reload_lua_config/)
+
+## RUNTIME PATH
+`lua` programming `runtime`  can see up to the directory you named inside the
+`lua` directory. Which means, you don't need to require(`lua.dir1.dir2`), and so on, as lua already can see `dir1`.
