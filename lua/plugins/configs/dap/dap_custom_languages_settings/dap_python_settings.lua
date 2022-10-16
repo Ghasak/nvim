@@ -2,17 +2,17 @@ local M = {}
 
 M.dap_adapters_python_fn = function()
   -- https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation
+  _G.checking_adpater_type = function()
+    if (os.getenv("VIRTUAL_ENV") == 1) then
+      vim.g.python_custom_command_path = string.format("%s/bin/python", os.getenv("VIRTUAL_ENV"))
+    else
+      vim.g.python_custom_command_path = string.format("%s/opt/anaconda3/bin/python3", os.getenv("HOME"))
+    end
+  end
+  checking_adpater_type()
   return {
     type = "executable",
-    -- Adding the current directory with the virtualenv that created with python
-    --command = "/Users/gmbp/opt/anaconda3/bin/python3",
-    -- For running using System Python
-    --command = string.format("%s/opt/anaconda3/bin/python3", os.getenv("HOME")),
-    -- For running using virtualenv (using virtualenv package not pipenv )
-    --command = vim.fn.getcwd() .. string.format("%s/bin/python", os.getenv("VIRTUAL_ENV")),
-    command = string.format("%s/bin/python", os.getenv("VIRTUAL_ENV")),
-    -- For specify the direcotry of the adapter if you know the location
-    -- command = vim.fn.input('Path to executable: '),    -- <- working
+    command = vim.g.python_custom_command_path,
     args = { "-m", "debugpy.adapter" },
   }
 end
@@ -31,11 +31,10 @@ M.dap_configurations_python_fn = function()
         local env_path = string.format("%s/bin/python3", os.getenv("VIRTUAL_ENV"))
         if vim.fn.executable(env_path) == 1 then
           vim.pretty_print("We have selected virtualenv python ... ")
-          return env_path
         else
           vim.pretty_print("We have selected system default python ... ")
-          return string.format("%s/opt/anaconda3/bin/python3", os.getenv("HOME"))
         end
+        return vim.g.python_custom_command_path
       end,
     },
   }
@@ -60,8 +59,7 @@ end
 local telescope_status_ok, telescope = pcall(require, "telescope")
 if not telescope_status_ok then
   vim.notify("Telescope is not loaded yet" .. telescope, vim.log.levels.INFO)
-  return
-  -- nvim-telescope/telescope-dap.nvim
+  return-- nvim-telescope/telescope-dap.nvim
   telescope.load_extension("dap")
 end
 
@@ -69,7 +67,8 @@ end
 require("nvim-dap-virtual-text").setup({ commented = true, })
 
 --require("dap-python").setup("/Users/gmbp/opt/anaconda3/bin/python3")
-require("dap-python").setup()
+require("dap-python").setup(vim.g.python_custom_command_path)
+--require("dap-python").setup()
 
 
 require("dapui").setup({

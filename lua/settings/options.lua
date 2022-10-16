@@ -307,9 +307,9 @@ vim.cmd [[
 -- https://www.folkstalk.com/2022/09/vim-line-numbers-background-color-with-code-examples.html
 -- :hi LineNr ctermfg=grey ctermbg=white
 -- :hi CursorLineNr ctermfg=45 cterm=bold
-vim.cmd([[
-    hi CursorLineNr term=bold cterm=bold ctermfg=green guifg=red guibg=black2
-]])
+-- vim.cmd([[
+--     hi CursorLineNr term=bold cterm=bold ctermfg=green guifg=red guibg=black2
+-- ]])
 -----------------------------------------------------------
 --  Highlight symbols with (/) search command event
 -----------------------------------------------------------

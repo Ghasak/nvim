@@ -3,10 +3,10 @@ local M = {}
 M.setup = function()
   local signs = {
 
-    { name = "DiagnosticSignError", text = "" },
-    { name = "DiagnosticSignWarn", text = "כֿ" },
-    { name = "DiagnosticSignHint", text = "" },
-    { name = "DiagnosticSignInfo", text = "" },
+    { name = "DiagnosticSignError", text = "" ,texthl=DiagnosticSignError,linehl = {}, numhl=DiagnosticLineNrError},
+    { name = "DiagnosticSignWarn",  text = "כֿ" ,texthl=DiagnosticSignWarn ,linehl = {}, numhl=DiagnosticLineNrWarn },
+    { name = "DiagnosticSignHint",  text = "" ,texthl=DiagnosticSignInfo ,linehl = {}, numhl=DiagnosticLineNrInfo },
+    { name = "DiagnosticSignInfo",  text = "" ,texthl=DiagnosticSignHint ,linehl = {}, numhl=DiagnosticLineNrHint },
   }
   for _, sign in ipairs(signs) do
     vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
