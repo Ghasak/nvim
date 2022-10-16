@@ -115,3 +115,11 @@ return M
 ## RUNTIME PATH
 `lua` programming `runtime`  can see up to the directory you named inside the
 `lua` directory. Which means, you don't need to require(`lua.dir1.dir2`), and so on, as lua already can see `dir1`.
+
+
+
+## Asking user for entry
+You can use the following, In your nvim commandline:
+```lua
+:lua vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+```

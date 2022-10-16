@@ -1,5 +1,4 @@
 local M = {}
-
 M.configs = function()
 
   -- ---------------------------------------------------------------------------------
@@ -56,7 +55,7 @@ M.configs = function()
 end
 
 -- ---------------------------------------------------------------------------------
---                          Adapter request settings
+--                          Adapter request settings - python
 -- ---------------------------------------------------------------------------------
 M.python_debuger_setup = function()
 
@@ -84,8 +83,15 @@ end
 
 
 
+-- ---------------------------------------------------------------------------------
+--                          Adapter request settings - Rust
+-- ---------------------------------------------------------------------------------
 
+M.rust_debuger_setup = function()
+  -- For rust we will use the configurations for alpha2phi
+  require("plugins.configs.dap.dap_custom_languages_settings.dap_rust_settings").setup()
 
+end
 
 
 
