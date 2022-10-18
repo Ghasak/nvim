@@ -587,6 +587,16 @@ return packer.startup(function(use)
     opt = true,
     ft = "rust"
   })
+  use({
+    'saecki/crates.nvim',
+    opt = true,
+    ft = "rust",
+    tag = 'v0.3.0',
+    requires = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      require('crates').setup()
+    end,
+  })
   -- Using formatter (instaed of null-lsp)
   use({ "sbdchd/neoformat",
     cmd = "Neoformat",

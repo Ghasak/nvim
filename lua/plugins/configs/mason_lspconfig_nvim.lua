@@ -22,7 +22,15 @@ M.setup = function()
   ----                     Mason Loader (similar to nvim-lsp-installer)
   ---- *****************************************************************************************
   -- 1.) >> Main lsp Mason LSP <<
-  require("mason").setup()
+  require("mason").setup({
+    ui = {
+      -- Whether to automatically check for new versions when opening the :Mason window.
+      check_outdated_packages_on_open = true,
+      -- The border to use for the UI window. Accepts same border values as |nvim_open_win()|.
+      border = "rounded",
+    }
+
+  })
 
   -- 2.) >> Loading Mason lspconfig (mason-config) <<
   local mason_status_ok, mason_lspconfig = pcall(require, "mason-lspconfig")
@@ -33,8 +41,14 @@ M.setup = function()
 
   -- Extension to bridge mason.nvim with the lspconfig plugin
   mason_lspconfig.setup({
-    -- A list of servers to automatically install if they're not already installed.
-    ensure_installed = { "pyright", "sumneko_lua", "rust_analyzer", "tsserver", "texlab", "clangd" }
+    -- A list of servers to automatically install if they're not already installed.,
+    ensure_installed = { "pyright", "sumneko_lua", "rust_analyzer", "tsserver", "texlab", "clangd" },
+    ui = {
+      -- Whether to automatically check for new versions when opening the :Mason window.
+      check_outdated_packages_on_open = true,
+      -- The border to use for the UI window. Accepts same border values as |nvim_open_win()|.
+      border = "rounded",
+    }
   })
   -- 3.) >> Mason-tool-installer: installing speicific linterning and tools for specific lps.
   -- Tools for serers
@@ -99,6 +113,10 @@ M.setup = function()
     -- For example, a handler override for the `rust_analyzer`:
     ["rust_analyzer"] = function()
 
+      local install_root_dir = vim.fn.stdpath "data" .. "/mason"
+      local extension_path = install_root_dir .. "/packages/codelldb/extension/"
+      local codelldb_path = extension_path .. "adapter/codelldb"
+
       -- Requesting rust_tools: for Rust analyzer
       local rust_tools_status_ok, rust_tools = pcall(require, "rust-tools")
       if not rust_tools_status_ok then
@@ -141,6 +159,14 @@ M.setup = function()
           on_attach = opts.on_attach,
           handlers = opts.handlers,
           settings = rust_tools_settings,
+        },
+        -- debugging stuff
+        dap = {
+          adapter = {
+            type = "executable",
+            command = codelldb_path,
+            name = "codelldb",
+          },
         },
       }
 
