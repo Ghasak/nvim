@@ -34,6 +34,18 @@ local mode_adapters = {
   command_mode = "c",
 }
 
+
+
+vim.keymap.set('n', 'x', '"_x')
+-- Increment/decrement
+vim.keymap.set('n', '+', '<C-a>')
+vim.keymap.set('n', '-', '<C-x>')
+-- Delete a word backwards
+vim.keymap.set('n', 'dw', 'vb"_d')
+
+-- Select all But it will affect the increament
+--vim.keymap.set('n', '<C-a>', 'gg<S-v>G')
+
 -- Require Neovide configurations
 --require("units.neovideConfig").neovide_config()
 
@@ -221,7 +233,7 @@ vim.keymap.set({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<CR>", { sil
 -- Check
 vim.keymap.set("n", "<leader><F2>", "<cmd>Lspsaga lsp_finder<CR>", { silent = true })
 -- Rename
-vim.keymap.set("n", "<leader>gr", "<cmd>Lspsaga rename<CR>", { silent = true })
+vim.keymap.set("n", "<leader>ar", "<cmd>Lspsaga rename<CR>", { silent = true })
 -- Peek Definition
 -- support tagstack C-t jump back
 vim.keymap.set("n", "<leader>gd", "<cmd>Lspsaga peek_definition<CR>", { silent = true })

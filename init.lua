@@ -52,7 +52,7 @@ local load_module = function(mod_name)
 end
 
 local init_modules = {
-  "plugins", "core", "settings",
+  'plugins', 'core', 'settings',
 }
 for _, module in ipairs(init_modules) do load_module(module) end
 
@@ -60,3 +60,5 @@ for _, module in ipairs(init_modules) do load_module(module) end
 if vim.g.neovide then
   require("units.neovideConfig").neovide_config()
 end
+
+

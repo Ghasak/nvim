@@ -40,11 +40,13 @@ end
 
 
 -- ---------------------------------------------------------------------------------
---                          Adapter request settings -- CPP
+--                          Adapter request settings -- C/CPP
 -- ---------------------------------------------------------------------------------
 
 M.cpp_debuger_setup = function(dap)
   require("plugins.configs.dap.dap_custom_languages_settings.dap_cpp_settings").setup(dap)
+  -- Another configurations - desont work
+  -- require("plugins.configs.dap.dap_custom_languages_settings.dap_dap_cpp_codelldb").setup(dap)
 end
 
 

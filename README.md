@@ -373,7 +373,7 @@ B. Tree-Sitter Color-Groups which used once you install the `nvim-treesitter`
 C. Component of the `plugins` that alter the colors (e.g., statuline, bufferline, nvim-tree and lsp configurations)
 D. The user custom individual colors defined.
 
-Notice: to change the color, you need to consider to which level you want to alter the color,
+configurations : to change the color, you need to consider to which level you want to alter the color,
 
 
 ## VIM EVENTS
@@ -381,3 +381,5 @@ Notice: to change the color, you need to consider to which level you want to alt
 
 ## MEASURE SPEED OF NEOVIM
 - [Speedup Neovim ](https://aca.github.io/neovim_startuptime.html)
+
+

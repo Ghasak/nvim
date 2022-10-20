@@ -35,7 +35,7 @@ local function env_cleanup(venv)
   return venv
 end
 
-local lsp_func = function(msg)
+local lsp_func = function()
   -- Function that return the client language server corresponding to the
   local server_icon = "歷"
   local server_icon_not_not_known = "轢"
@@ -44,6 +44,10 @@ local lsp_func = function(msg)
   path = string.format("%s", path)
   local clients = vim.lsp.get_active_clients()
   local buff_ft = vim.bo.filetype
+  local next = next
+  if next(clients) == nil then
+    return string.format("%s : %s-lsp*: %s", server_icon_not_not_known, buff_ft)
+  end
   for _, client in pairs(clients) do table.insert(servers, client) end
   for _, server in ipairs(servers) do
     if buff_ft == "lua" and server.name == "sumneko_lua" then -- [lua] For nvim 0.51 server.nam for lua is  lua, while for 0.6 it is sumneko_lua
@@ -57,9 +61,9 @@ local lsp_func = function(msg)
       else
         return string.format("%s: pyright-lsp", server_icon)
       end
-    elseif buff_ft == "r" and server.name == "r" then
+    elseif buff_ft == "r" and server.name == "r_language_server" then
       return string.format("%s : R-lsp", server_icon)
-    elseif buff_ft == "markdown" and server.name == "ltex" then -- [Markdown] For nvim 0.51, server.name is html, while for 0.6 it is latex
+    elseif buff_ft == "markdown" or server.name == "ltex" then -- [Markdown] For nvim 0.51, server.name is html, while for 0.6 it is latex
       return string.format("%s : markdown-lsp", server_icon)
     elseif buff_ft == "typescript" and server.name == "tsserver" then
       return string.format("%s : typescript-lsp", server_icon)
@@ -75,8 +79,11 @@ local lsp_func = function(msg)
     elseif buff_ft == "tex" and server.name == "texlab" or server.name == "ltex" then
       return string.format("%s :latex ", server_icon)
     else
-      --return string.format("%s : %s-lsp*: %s", server_icon_not_not_known, buff_ft, server.name)
-      return string.format("%s :latex ", server_icon)
+      if server.name == "" or server.name == nil or buff_ft == "" or buff_ft == nil then
+        return string.format("%s : %-lsp*:", server_icon_not_not_known)
+      else
+        return string.format("%s : %s-lsp*: %s", server_icon_not_not_known, buff_ft, server.name)
+      end
     end
   end
 end
@@ -196,16 +203,16 @@ local function format_messages_2(messages)
   -- local spinners = {"", " "}
   --- More Spinners: https://github.com/j-hui/fidget.nvim/blob/main/lua/fidget/spinners.lua
   local spinners = {
-       -- "∙∙∙",
-       -- "●∙∙",
-       -- "∙●∙",
-       -- "∙∙●",
-       -- "∙∙∙",
-       "∙∙∙",
-       " ∙",
-       "∙∙",
-       "∙∙",
-       "∙∙∙",
+    -- "∙∙∙",
+    -- "●∙∙",
+    -- "∙●∙",
+    -- "∙∙●",
+    -- "∙∙∙",
+    "∙∙∙",
+    " ∙",
+    "∙∙",
+    "∙∙",
+    "∙∙∙",
 
     --"", "", "", "", "", "",
     --
@@ -219,11 +226,11 @@ local function format_messages_2(messages)
     -- "⠧",
     -- "⠇",
     -- "⠏",
-     -- "∙∙∙∙",
-     -- " ∙∙",
-     -- "∙ ∙",
-     -- "∙∙ ",
-     -- "∙∙∙∙",
+    -- "∙∙∙∙",
+    -- " ∙∙",
+    -- "∙ ∙",
+    -- "∙∙ ",
+    -- "∙∙∙∙",
   }
   local ms       = vim.loop.hrtime() / 1000000
   --local frame    = math.floor(ms / 120) % #spinners

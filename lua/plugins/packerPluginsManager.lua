@@ -357,11 +357,18 @@ return packer.startup(function(use)
     cmd = { "Bdelete" },
   })
 
+  use({"vim-scripts/ReplaceWithRegister",
+    opt = true,
+    event = "InsertEnter"
+  })
   -- Better repeat (.) with nvim (from tpope)
   --  use({ "tpope/vim-repeat" })
 
-  --  -- Better surrounding
-  --  use({ "tpope/vim-surround" })
+   -- Better surrounding
+   use({ "tpope/vim-surround",
+    opt = true,
+    event = "InsertEnter"
+  })
 
   --  -- Development
   --  use({ "tpope/vim-dispatch" })

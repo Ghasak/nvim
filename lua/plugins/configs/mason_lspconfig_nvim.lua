@@ -116,6 +116,8 @@ M.setup = function()
       local install_root_dir = vim.fn.stdpath "data" .. "/mason"
       local extension_path = install_root_dir .. "/packages/codelldb/extension/"
       local codelldb_path = extension_path .. "adapter/codelldb"
+      local liblldb_path = extension_path .. "lldb/lib/liblldb.dylib"
+
 
       -- Requesting rust_tools: for Rust analyzer
       local rust_tools_status_ok, rust_tools = pcall(require, "rust-tools")
@@ -162,11 +164,9 @@ M.setup = function()
         },
         -- debugging stuff
         dap = {
-          adapter = {
-            type = "executable",
-            command = codelldb_path,
-            name = "codelldb",
-          },
+          adapter = require('rust-tools.dap').get_codelldb_adapter(
+            codelldb_path, liblldb_path),
+
         },
       }
 
@@ -224,6 +224,14 @@ M.setup = function()
         filetypes    = { "typescript", "typescriptreact", "typescript.tsx", "javascript" },
       })
     end,
+    ["r_language_server"] = function()
+      lspconfig.r_language_server.setup({
+        on_attach    = opts.on_attach,
+        capabilities = opts.capabilities,
+        handlers     = opts.handlers,
+        cmd          = { "R", "--slave", "-e", "languageserver::run()" },
+      })
+    end
   })
 end
 return M
