@@ -43,6 +43,13 @@ vim.keymap.set('n', '-', '<C-x>')
 -- Delete a word backwards
 vim.keymap.set('n', 'dw', 'vb"_d')
 
+
+-- To Replace with regsiter [ you can yank a word then use <ESC>b then grw]
+vim.keymap.set('n', 'gr', '<Plug>ReplaceWithRegisterOperator')
+vim.keymap.set('n', 'grl', '<Plug>ReplaceWithRegisterLine')
+vim.keymap.set('n', 'grv', '<Plug>ReplaceWithRegisterVisual')
+
+
 -- Select all But it will affect the increament
 --vim.keymap.set('n', '<C-a>', 'gg<S-v>G')
 
