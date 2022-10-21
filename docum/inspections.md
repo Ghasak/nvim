@@ -108,6 +108,56 @@ return M
 
 ```
 
+## Developement testing
+1. Create a `lua` file named `testing_file.lua` inside the `lua` directory as:
+
+```shell
+  rwxr-xr-x   8   gmbp   staff    256 B     Fri Oct 21 18:26:35 2022    core/
+  rwxr-xr-x   6   gmbp   staff    192 B     Fri Oct 21 01:55:21 2022    plugins/
+  rwxr-xr-x   4   gmbp   staff    128 B     Fri Oct 14 12:25:51 2022    units/
+  rwxr-xr-x   6   gmbp   staff    192 B     Fri Oct 14 12:25:51 2022    settings/
+  rwxr-xr-x   6   gmbp   staff    192 B     Fri Oct  7 15:54:01 2022    scripts/
+  rw-r--r--   1   gmbp   staff    369 B     Fri Oct 21 19:56:12 2022    testing_file.lua
+```
+Inside the `testing_file.lua` put the following:
+```lua
+M = {}
+
+M.setup = function()
+
+  local dict_test = {
+ '1', '2', '3','4', '5'
+  }
+  return dict_test
+
+end
+return M
+
+```
+2. Inside your `init.lua` put the following:
+
+```lua
+
+require("core.myInspectorFucntions")
+local fn = require("testing_file")
+P(fn.setup())
+```
+3. You will see that the file will be executed everytime we restart the `init.lua` exit and load the file again.
+but, there is a way to load the file that we can change the `testing_file.lua`
+and keep on printing the resutls in the `init.lua` everytime we change the
+`testing_file.lua`. Now, we need to do the following:
+
+4. For developement, we need to use the following
+- Loading automaticall by calling
+```lua
+require('plenary.reload').reload_module('plugins.configs.dap.dap_engine', true)
+
+```
+- Or, using the command that we created called `RELOADED` created here `./lua/core/myInspectorFucntions.lua`
+    - Use first `RELOAD` command then `RELOADED testing_file` then eveytime you change the file, it will be changed as well.
+    - Later I have updated this requested feature, now lua will load the file we request to be loaded. This is so good feature for developement.
+
+
 
 ## REFERENCES
 - [loading the modules automatically ](https://www.reddit.com/r/neovim/comments/jxub94/reload_lua_config/)
@@ -122,4 +172,9 @@ return M
 You can use the following, In your nvim commandline:
 ```lua
 :lua vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+```
+## How to use codlens
+
+```lua
+:lua vim.pretty_print(vim.lsp.codelens.get(bufnr))
 ```
