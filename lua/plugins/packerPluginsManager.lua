@@ -141,12 +141,13 @@ return packer.startup(function(use)
       require("plugins.configs.treesitter").setup()
     end,
     requires = {
-      { "nvim-treesitter/nvim-treesitter-textobjects", event = "BufReadPre" },
+      { "nvim-treesitter/nvim-treesitter-textobjects", event = "InsertEnter" },
       { "windwp/nvim-ts-autotag", event = "InsertEnter" },
-      { "JoosepAlviste/nvim-ts-context-commentstring", event = "BufReadPre" },
-      { "p00f/nvim-ts-rainbow", event = "BufReadPre" },
-      { "RRethy/nvim-treesitter-textsubjects", event = "BufReadPre" },
-      { "nvim-treesitter/nvim-treesitter-context", event = "BufReadPre", disable = false },
+      { "JoosepAlviste/nvim-ts-context-commentstring", event = "InsertEnter" },
+      --{ "p00f/nvim-ts-rainbow", event = "BufReadPre" },
+      { "p00f/nvim-ts-rainbow", event = "InsertEnter" },
+      { "RRethy/nvim-treesitter-textsubjects", event = "InsertEnter" },
+      { "nvim-treesitter/nvim-treesitter-context", event = "InsertEnter", disable = false },
     },
   }
 
@@ -505,7 +506,8 @@ return packer.startup(function(use)
   -- lsp_signature.nvim
   use({
     "glepnir/lspsaga.nvim",
-    event = "BufReadPre",
+    --event = "BufReadPre",
+    event = "InsertEnter",
     branch = "main",
     config = function()
       local saga = require("lspsaga")
@@ -571,7 +573,7 @@ return packer.startup(function(use)
   use {
     "mfussenegger/nvim-dap",
     opt = true,
-    event = "BufReadPre",
+    event = "InsertEnter",
     -- keys = { [[<leader>d]] },
     module = { "dap" },
     wants = { "nvim-dap-virtual-text", "nvim-dap-ui", "nvim-dap-python" },
@@ -599,7 +601,7 @@ return packer.startup(function(use)
   use({
     'saecki/crates.nvim',
     opt = true,
-    ft = "rust",
+    ft = {"rust", "toml"},
     tag = 'v0.3.0',
     requires = { 'nvim-lua/plenary.nvim' },
     config = function()
@@ -667,7 +669,7 @@ return packer.startup(function(use)
   -- Auto-save for nvim, which will save your work triggered on events: "InsertLeave", "TextChanged"
   use({
     "Pocco81/auto-save.nvim",
-    opt = true,
+    --opt = true,
     event = "InsertEnter",
     config = function()
       require("auto-save").setup {
