@@ -37,14 +37,16 @@ end
 -- Adding here a autocmd that will sync your packer once you modify this file., and save
 -- This will run in nvim 0.8, using the new API,
 -- https://www.reddit.com/r/neovim/comments/vqjz87/autorun_packer_sync_but_only_when_my_plugin_list/
-local group = vim.api.nvim_create_augroup("packer_user_config", { clear = true })
-vim.api.nvim_create_autocmd("BufWritePost", {
-  command = "source <afile> | PackerSync",
-  pattern = "packerPluginsManager.lua", -- the name of your plugins file
-  group = group,
-})
+local auto_packer_loader_fn = function()
+  local group = vim.api.nvim_create_augroup("packer_user_config", { clear = true })
+  vim.api.nvim_create_autocmd("BufWritePost", {
+    command = "source <afile> | PackerSync",
+    pattern = "packerPluginsManager.lua", -- the name of your plugins file
+    group = group,
+  })
+end
 
-
+auto_packer_loader_fn()
 
 -- Have packer use a popup window
 packer.init {
@@ -116,7 +118,7 @@ return packer.startup(function(use)
     end
   })
   use({ "nvim-lua/popup.nvim", opt = true }) -- An implementation of the Popup API from vim in Neovim
-  use({ "nvim-lua/plenary.nvim",start = true, module = "plenary" })
+  use({ "nvim-lua/plenary.nvim", start = true, module = "plenary" })
   use({ 'navarasu/onedark.nvim',
     config = function()
       -- Lua
@@ -452,7 +454,7 @@ return packer.startup(function(use)
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-nvim-lua",
       "ray-x/cmp-treesitter",
-      --"hrsh7th/cmp-cmdline",
+      "hrsh7th/cmp-cmdline",
       "saadparwaiz1/cmp_luasnip",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-nvim-lsp-signature-help",
@@ -601,7 +603,12 @@ return packer.startup(function(use)
     tag = 'v0.3.0',
     requires = { 'nvim-lua/plenary.nvim' },
     config = function()
-      require('crates').setup()
+      require('crates').setup({
+        popup = {
+          border = "rounded",
+        }
+
+      })
     end,
   })
   -- Using formatter (instaed of null-lsp)
@@ -660,10 +667,12 @@ return packer.startup(function(use)
   -- Auto-save for nvim, which will save your work triggered on events: "InsertLeave", "TextChanged"
   use({
     "Pocco81/auto-save.nvim",
-    opt= true,
+    opt = true,
     event = "InsertEnter",
     config = function()
-      require("auto-save").setup{}
+      require("auto-save").setup {
+        enabled = false, -- Start auto-save when the plugin is loaded.(default is true)
+      }
     end,
   })
   -- ===========================================================================
@@ -675,6 +684,7 @@ return packer.startup(function(use)
       require('nvim_comment').setup()
     end
   })
+
   -- ==========================================================================
   -- 	            PACKER PLUGIN PACKAGE SYNCING AND LOADING
   -- ==========================================================================

@@ -68,6 +68,10 @@ set write
 --    "set spellfile = /usr/share/myspell/en_US.dic
 --]])
 --vim.cmd("set dictionary+=/usr/share/dict/words")
+-- Now we trigger the spell-checking using <F6>
+-- These options to trigger the spelling attachment.
+-- vim.opt.spell = true
+-- vim.opt.spelllang = { 'en_us' }
 -----------------------------------------------------------
 --              Cursor shape
 -----------------------------------------------------------

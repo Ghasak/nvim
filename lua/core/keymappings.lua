@@ -225,6 +225,30 @@ vim.api.nvim_set_keymap('n', '<F6>', ':set spell! spelllang=en<CR>', { noremap =
 -- -> zuw (as z for spell and u as undo and w for bad word)
 -- -> z= (to see the suggestions, must put the cursor under the word for spell suggestions)
 -- -> [s ,[S, ]s and ]S are for navigating the words for spelling checking
+---- *****************************************************************************************
+ ----                   Auto-save plugin to save file every changes happen
+---- *****************************************************************************************
+-- To trigger auto-save for the given file
+vim.api.nvim_set_keymap("n", "<leader>s", ":ASToggle<CR>", {})
+
+---- *****************************************************************************************
+ ----                   Auto-save plugin to save file every changes happen
+---- *****************************************************************************************
+-- This function will support many hovering style including "toml crate" files
+local show_documentation = function()
+  local filetype = vim.bo.filetype
+  if vim.tbl_contains({ 'vim', 'help' }, filetype) then
+    vim.cmd('h ' .. vim.fn.expand('<cword>'))
+  elseif vim.tbl_contains({ 'man' }, filetype) then
+    vim.cmd('Man ' .. vim.fn.expand('<cword>'))
+  elseif vim.fn.expand('%:t') == 'Cargo.toml' and require('crates').popup_available() then
+    require('crates').show_popup()
+  else
+    vim.lsp.buf.hover()
+  end
+end
+
+vim.keymap.set('n', 'gH', show_documentation, { noremap = true, silent = true })
 
 ---- *****************************************************************************************
 ----                     Lspsaga KeyMapping

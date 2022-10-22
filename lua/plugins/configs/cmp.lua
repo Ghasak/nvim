@@ -22,14 +22,10 @@ function M.setup()
 
   local present, cmp = pcall(require, "cmp")
 
-  if not present then
-    return
-  end
+  if not present then return end
 
   local snip_status_ok, luasnip = pcall(require, "luasnip")
-  if not snip_status_ok then
-    return
-  end
+  if not snip_status_ok then return end
 
   require("luasnip/loaders/from_vscode").lazy_load()
 
@@ -51,31 +47,34 @@ function M.setup()
   vim.api.nvim_set_hl(0, "CmpItemKindEmoji", { fg = "#FDE030" })
   vim.api.nvim_set_hl(0, "CmpItemKindCrate", { fg = "#F64D00" })
 
-
   -- nvim-cmp setup
   cmp.setup({
     snippet = {
       expand = function(args)
         require("luasnip").lsp_expand(args.body)
-      end,
+      end
     },
 
     window = {
       documentation = {
-        --border = "rounded",
-        --bordered = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-        --winhighlight = "NormalFloat:Pmenu,NormalFloat:Pmenu,CursorLine:PmenuSel,Search:None",
-        --winhighlight = "NormalFloat:NormalFloat,FloatBorder:TelescopeBorder",
+        -- border = "rounded",
+        -- bordered = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+        -- winhighlight = "NormalFloat:Pmenu,NormalFloat:Pmenu,CursorLine:PmenuSel,Search:None",
+        -- winhighlight = "NormalFloat:NormalFloat,FloatBorder:TelescopeBorder",
 
-        border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-        --winhighlight = "NormalFloat:NormalFloat,FloatBorder:TelescopeBorder",
-        winhighlight = "NormalFloat:Pmenu,NormalFloat:Pmenu,CursorLine:PmenuSel,Search:None",
+        border = {
+          "╭", "─", "╮", "│", "╯", "─", "╰", "│"
+        },
+        -- winhighlight = "NormalFloat:NormalFloat,FloatBorder:TelescopeBorder",
+        winhighlight = "NormalFloat:Pmenu,NormalFloat:Pmenu,CursorLine:PmenuSel,Search:None"
       },
       completion = {
 
-        border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-        winhighlight = "NormalFloat:Pmenu,NormalFloat:Pmenu,CursorLine:PmenuSel,Search:None",
-        --winhighlight = "NormalFloat:NormalFloat,FloatBorder:TelescopeBorder",
+        border = {
+          "╭", "─", "╮", "│", "╯", "─", "╰", "│"
+        },
+        winhighlight = "NormalFloat:Pmenu,NormalFloat:Pmenu,CursorLine:PmenuSel,Search:None"
+        -- winhighlight = "NormalFloat:NormalFloat,FloatBorder:TelescopeBorder",
       }
     },
 
@@ -83,12 +82,10 @@ function M.setup()
       fields = { "kind", "abbr", "menu" },
       format = function(entry, vim_item)
         -- load lspkind icons
-        vim_item.kind = string.format(
-          "%s %s",
-          require("plugins.configs.lspkind_icons").icons[vim_item.kind],
+        vim_item.kind = string.format("%s %s", require(
+          "plugins.configs.lspkind_icons").icons[vim_item.kind],
           -- Icons for the language server, should be loaded here
-          vim_item.kind
-        )
+          vim_item.kind)
         -- Kind icons
         vim_item.kind = kind_icons[vim_item.kind]
 
@@ -117,16 +114,18 @@ function M.setup()
           nvim_lua = "[  Lua]",
           buffer = "[﬘  BUF]",
           ultisnips = "[   UltiSnips]",
+          luasnip = "[  LuaSnip]",
+          latex_symbols = "[  Latex]",
           cmp_tabnine = "[  TabNine]",
           look = "[  Look]",
           path = "[  Path]",
-          spell = "[暈 Spell]",
+          spell = "[暈 Spell]", -- This will be trigger once you allow spell-checking using F6, dont use vim.opt.spell = true, as it will be triggered everytime cmp loaded
           calc = "[  Calc]",
-          emoji = "[ﲃ  Emoji]",
+          emoji = "[ﲃ  Emoji]"
         })[entry.source.name]
 
         return vim_item
-      end,
+      end
     },
     mapping = {
       ["<C-p>"] = cmp.mapping.select_prev_item(),
@@ -139,7 +138,7 @@ function M.setup()
       ["<C-e>"] = cmp.mapping.close(),
       ["<CR>"] = cmp.mapping.confirm({
         behavior = cmp.ConfirmBehavior.Replace,
-        select = true,
+        select = true
       }),
       --      ["<Tab>"] = function(fallback)
       --         if vim.fn.pumvisible() == 1 then
@@ -181,7 +180,7 @@ function M.setup()
         else
           fallback()
         end
-      end, { "i", "s" }),
+      end, { "i", "s" })
 
       --		["<Tab>"] = cmp.mapping(function(fallback)
       --			if cmp.visible() then
@@ -205,103 +204,122 @@ function M.setup()
       --		}),
     },
     sources = {
-      {
-        name = "nvim_lsp",
-      },
-      {
-        name = "luasnip",
-      },
-      {
-        name = "buffer",
-      },
-      {
-        name = "nvim_lua",
-      },
-      {
-        name = "buffer",
-      },
-      {
-        name = "nvim_lsp",
-      },
-      {
-        name = "ultisnips",
-      },
-      {
-        name = "nvim_lua",
-      },
-      {
-        name = "look",
-      },
-      {
-        name = "path",
-      },
-      {
-        name = "cmp_tabnine",
-      },
-      {
-        name = "calc",
-      },
-      {
+      { name = "nvim_lsp" },
+      { name = 'luasnip', option = { use_show_condition = false } },
+      { name = "buffer" }, { name = "nvim_lua" }, { name = "buffer" },
+      { name = "nvim_lsp" }, { name = "ultisnips" }, { name = "nvim_lua" },
+      { name = "look" }, { name = "path" }, { name = "cmp_tabnine" },
+      { name = "calc" }, { name = "neosnippet" }, {
         name = "spell",
         option = {
           keep_all_entries = false,
           enable_in_context = function()
             return true
-          end,
-        },
-      },
-      {
-        name = "emoji",
-      },
+          end
+        }
+      }, { name = "emoji" },
+      { name = "crates" },
     },
-    confirm_opts = {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = false,
-    },
+    confirm_opts = { behavior = cmp.ConfirmBehavior.Replace, select = false },
     completion = {
-      --border = "rounded",
-      completeopt = "menu,menuone,noinsert",
+      -- border = "rounded",
+      completeopt = "menu,menuone,noinsert"
     },
-    experimental = {
-      ghost_text = false,
-      native_menu = false,
-    },
+    experimental = { ghost_text = false, native_menu = false }
   })
 
   -- Database completion
-  vim.api.nvim_exec(
-    [[
+  vim.api.nvim_exec([[
       autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })
-]]   ,
-    false
-  )
+]] , false)
 
--- These options to trigger the spelling attachment.
-vim.opt.spell = true
-vim.opt.spelllang = { 'en_us' }
   ----------------------------------------------------------------------------------------------------------------------
   --
   --                            █▀▀ █▀▄▀█ █▀█ ▄▄ █▀▀ █▀▄▀█ █▀▄ █   █ █▄ █ █▀▀
   --                            █▄▄ █ ▀ █ █▀▀    █▄▄ █ ▀ █ █▄▀ █▄▄ █ █ ▀█ ██▄
   --
   ----------------------------------------------------------------------------------------------------------------------
-  -- https://github.com/hrsh7th/cmp-cmdline
-  -- Completions for command mode:
-  -- it seems <C-j> and <C-k> don't work, and that the setting of cmp doesnt pass
-  -- to the (:) and (/) events.
-  cmp.setup.cmdline("/", {
-    sources = {
-      { name = "buffer" },
-    },
-  })
+  local feedkeys = require('cmp.utils.feedkeys')
+  local keymap = require('cmp.utils.keymap')
+  -- Function used to custom the mapping for the cmdline for both (:) and (\)
+  local mapping_custom_fn = function()
+    return {
+      ['<Tab>'] = {
+        c = function()
+          if cmp.visible() then
+            cmp.select_next_item()
+          else
+            feedkeys.call(keymap.t('<C-z>'), 'n')
+          end
+        end,
+      },
+      ['<S-Tab>'] = {
+        c = function()
+          if cmp.visible() then
+            cmp.select_prev_item()
+          else
+            feedkeys.call(keymap.t('<C-z>'), 'n')
+          end
+        end,
+      },
+      ['<C-n>'] = {
+        c = function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item()
+          else
+            fallback()
+          end
+        end,
+      },
+      ['<C-p>'] = {
+        c = function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          else
+            fallback()
+          end
+        end,
+      },
+      ['<C-j>'] = {
+        c = function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item()
+          else
+            fallback()
+          end
+        end,
+      },
+      ['<C-k>'] = {
+        c = function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          else
+            fallback()
+          end
+        end,
+      },
+    }
+  end
 
-  -- cmp.setup.cmdline(":", {
-  --   sources = cmp.config.sources({
-  --     { name = "path" },
-  --   }, {
-  --     { name = "cmdline" },
-  --   }),
-  -- })
+  -- Command mode completion
+  -- local cmdline_mappings = cmp.mapping.preset.cmdline(filter_mode(mapping, "c"))
+  local cmdline_view = { entries = "wildmenu" } -- <- If you want to make your cmp menu showed horizontally.
+  -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline({ '/', '?' }, {
+    -- mapping = cmp.mapping.preset.cmdline(), -- <- I have borrowed from this function the mapping table below,
+    mapping = mapping_custom_fn(),
+    --view = cmdline_view,
+    sources = {
+      { name = 'buffer' }
+    }
+  })
+  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline(':', {
+    some_function = cmp.mapping.preset.cmdline(), -- <- I have borrowed from this function the mapping table below,
+    mapping = mapping_custom_fn(),
+    --view = cmdline_view,
+    sources = cmp.config.sources({ { name = 'path' } }, { { name = 'cmdline' } })
+  })
 end
 
 return M

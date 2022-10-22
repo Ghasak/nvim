@@ -1,5 +1,6 @@
 local M = {}
 
+
 local function lsp_keymaps(bufnr)
   local opts = { noremap = true, silent = true }
   local keymap = vim.api.nvim_buf_set_keymap
@@ -82,7 +83,13 @@ M.custom_attach = function(client, bufnr)
   -- DiagnosticVirtualTextWarn
   -- DiagnosticVirtualTextInfo
   -- DiagnosticVirtualTextHint
-
+  -----------------------------------------------------------------------------------
+  --          Adding more features specific for Rust-language
+  --          https://github.com/hrsh7th/nvim-cmp/wiki/Language-Server-Specific-Samples#rust-with-rust-toolsnvim
+  -----------------------------------------------------------------------------------
+  vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
+  vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+  vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.vim.lsp.tagfunc")
   -----------------------------------------------------------------------------------
   --          The above keymapping will be overwritten by lsp-saga
   -----------------------------------------------------------------------------------

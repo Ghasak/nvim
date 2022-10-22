@@ -28,8 +28,10 @@ upgrades to my configuration file (to name few)
 - [x] Added boarders to the `lsp/cmp` elements
 - [x] Auto-trigger `packer-plugins` when the list of plugins is upated.
 - [x] `packer-plugin` is now can handle mutli-jobs for the `macbook` without freezing.
-- [x] Added the support of the `tabnine` with executional compatibility for the `arm 64` `silicon M1` this supports the also the `virtualenv` of python.
-- [x] Statusline now shows message about the `virtualenv` name, near to the `lsp-type` support.
+- [x] Added the support of the `tabnine` with executional compatibility for the
+  `arm 64` `silicon M1` this supports the also the `virtualenv` of python.
+- [x] Statusline now shows message about the `virtualenv` name, near to the
+  `lsp-type` support.
 - [x] Support for the colorscheme that can configure to show major highlights
     - Highlighter for the current number-line
     - Highlighter for `Statusline`
@@ -43,6 +45,35 @@ upgrades to my configuration file (to name few)
 - [x] Plugins triggered by certain types of events that will reduce the clutter
   and improve the speed significantly, check for example `:packer status` to
   see that majority of plugins are not loaded at the startup.
+
+## Workflow notes
+### Cargo with Rust
+To activite the `crate` plugin, you need to enter first to a buffer with `rust
+file` `*.rs`, which can be activited on `Insert` event. This will trigger also
+`cmp-create` and also `nvim-crate`. You can also later for `crate-tomal` file
+to use the `keymapping: gH` on the crate name, which will trigger documentation
+about the crate history and other considerations.
+
+### Auto Save
+By default, the file will be auto-saved based on the `auto-saved` plugin, which
+will be trigger once we start writting. To stop the auto-save, we can use the
+`keymapping: <leader>s` which will stop the autosave.
+
+## For development
+We can use add the following to the top of the file
+
+```lua
+require("core.myInspectorFucntions")
+```
+to reguest the necessary `custom-development` functions that I created.
+Then, for development you can use this as an example
+- assume you have a file called `testing_file` at the `lua` directory
+
+```lua
+local fn = require("testing_file")
+P(fn.setup())
+```
+
 
 
 ## More details for the configurations
