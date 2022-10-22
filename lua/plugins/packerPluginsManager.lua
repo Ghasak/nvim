@@ -116,7 +116,7 @@ return packer.startup(function(use)
     end
   })
   use({ "nvim-lua/popup.nvim", opt = true }) -- An implementation of the Popup API from vim in Neovim
-  use({ "nvim-lua/plenary.nvim", module = "plenary" })
+  use({ "nvim-lua/plenary.nvim",start = true, module = "plenary" })
   use({ 'navarasu/onedark.nvim',
     config = function()
       -- Lua
@@ -357,15 +357,15 @@ return packer.startup(function(use)
     cmd = { "Bdelete" },
   })
 
-  use({"vim-scripts/ReplaceWithRegister",
+  use({ "vim-scripts/ReplaceWithRegister",
     opt = true,
     event = "InsertEnter"
   })
   -- Better repeat (.) with nvim (from tpope)
   --  use({ "tpope/vim-repeat" })
 
-   -- Better surrounding
-   use({ "tpope/vim-surround",
+  -- Better surrounding
+  use({ "tpope/vim-surround",
     opt = true,
     event = "InsertEnter"
   })
@@ -657,7 +657,15 @@ return packer.startup(function(use)
     ft = { "tex" },
     config = function() require("plugins.configs.myknap") end
   })
-
+  -- Auto-save for nvim, which will save your work triggered on events: "InsertLeave", "TextChanged"
+  use({
+    "Pocco81/auto-save.nvim",
+    opt= true,
+    event = "InsertEnter",
+    config = function()
+      require("auto-save").setup{}
+    end,
+  })
   -- ===========================================================================
   --                          Other Plugins
   -- ===========================================================================

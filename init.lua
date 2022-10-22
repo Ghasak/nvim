@@ -62,3 +62,6 @@ if vim.g.neovide then
 end
 
 
+require("core.myInspectorFucntions")
+local fn = require("testing_file")
+P(fn.setup())

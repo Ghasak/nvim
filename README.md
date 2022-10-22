@@ -1,21 +1,65 @@
 # Nvim Workflow
 
-## Configurations
+## Update release Nvim-workflow v0.1
+As `nvim` is now updated to version `0.8` with a stable release. Several
+deprecated `3rd-plugins` and `APIs`. I have optimized the startup time and got
+it reduced from 800 milliseconds to only 18 milliseconds. Now, `nvim` is faster
+than light with backwards compatibilities to some outdated `plugins` but
+essential to my daily workflow.
+
+![Current versions view](./assets/SS-05.png)
+![Another supported view](./assets/SS-06.png)
+
+
+The configuration files are all written in `lua` using
+the most modern `APIs` by this time. Check for more details `:h depurated` to
+see the news feature of the new release. Here, is a summary of the most wanted
+upgrades to my configuration file (to name few)
+
+- [x] All packages are supported for the new version of `nvim`
+- [x] Startup time up to maximum 18 milliseconds tested on my `MacBook Max M1`
+- [x] Support several programming languages, with their components such assets
+    - LSP configured with `mason` plugin, (also support lsp-saga, lsp-signature)
+    - Linting support, Auto-formatter, intelligence, auto-completions,
+    - Go to definition, hover, references, troubles, actions.
+    - Debugging with `nvim-dap` support several protocols and programmings adapters.
+    - Dap now support the `virtualenv` type, which can trigger the adapter of the virtualenv to keep consistency.
+- [x] Fixed the `cmp-line` support the `ctrl+j/k` for navigation.
+- [x] Added boarders to the `lsp/cmp` elements
+- [x] Auto-trigger `packer-plugins` when the list of plugins is upated.
+- [x] `packer-plugin` is now can handle mutli-jobs for the `macbook` without freezing.
+- [x] Added the support of the `tabnine` with executional compatibility for the `arm 64` `silicon M1` this supports the also the `virtualenv` of python.
+- [x] Statusline now shows message about the `virtualenv` name, near to the `lsp-type` support.
+- [x] Support for the colorscheme that can configure to show major highlights
+    - Highlighter for the current number-line
+    - Highlighter for `Statusline`
+    - Highlighter for `tabs`
+    - Highlighter for `git` plugin support
+    - Highlighter for `linter` and the `virtual-text`
+    - Highlighter for `lsp-icons` on the side gutter with different colors.
+- [x] Added helper utilities/functions and documentation for debugging, development support
+- [x] Upgraded the `nvim_speed_test` to gauge the speed of the startup time and evaluate the performance.
+- [x] Support the `nvim-patient` for loading and caching the plugins.
+- [x] Plugins triggered by certain types of events that will reduce the clutter
+  and improve the speed significantly, check for example `:packer status` to
+  see that majority of plugins are not loaded at the startup.
+
+
+## More details for the configurations
 ## To do
-- [?] Configuration for the dap
+- [x] Configuration for the dap
 - [install dap for rust-analyzer, integrated with rust-tools](https://github.com/alpha2phi/neovim-for-beginner/blob/50-package-manager/lua/config/lsp/installer.lua)
-
-Confiuration
-
-
+- [ ] Adding only the `keymapping-window`
+- [ ] spell-checking for nvim such as
+    - [Spelunker.vim](https://github.com/kamykn/spelunker.vim)
 The current configurations are from the needs of getting the best optimized `IDE` for
 the startup time.
 ## Major Changes in Nvim 0.8
-- [Major Changes in nvim 0.8](https://jdhao.github.io/2022/10/05/nvim-v08-release/)
-- [New LSP Features in Neovim 0.8](https://www.reddit.com/r/neovim/comments/xt1tj2/new_lsp_features_in_neovim_08/)
-- [Deprection of lsp_installer.on_server_ready()](https://github.com/williamboman/nvim-lsp-installer/discussions/6360)
-- [Introduction mason.nvim](https://www.reddit.com/r/neovim/comments/w6w5ij/introducing_masonnvim/)
-- [How to configure LSP with mason](https://github.com/williamboman/mason.nvim/discussions/92#discussioncomment-3173425)
+- [x]  [Major Changes in nvim 0.8](https://jdhao.github.io/2022/10/05/nvim-v08-release/)
+- [x]  [New LSP Features in Neovim 0.8](https://www.reddit.com/r/neovim/comments/xt1tj2/new_lsp_features_in_neovim_08/)
+- [x]  [Deprection of lsp_installer.on_server_ready()](https://github.com/williamboman/nvim-lsp-installer/discussions/6360)
+- [x]  [Introduction mason.nvim](https://www.reddit.com/r/neovim/comments/w6w5ij/introducing_masonnvim/)
+- [x]  [How to configure LSP with mason](https://github.com/williamboman/mason.nvim/discussions/92#discussioncomment-3173425)
 
 ## General Configuration helper
 - [configure nvim using lua](https://icyphox.sh/blog/nvim-lua/)
@@ -365,15 +409,17 @@ end
 
 ## UNDERSTANDING THE COLOR
 
-In `nvim-lua` configurations there are basically three layers that control the `color` of each `group`
-- `group` colors are the one defined for specific action in `nvim` such as: digit, tab, normal, background ..etc.
-These layers are:
-A. Default Layer (this will be native to the color-scheme that you select. (mostly the tree-sitter parser colors are included)
-B. Tree-Sitter Color-Groups which used once you install the `nvim-treesitter`
-C. Component of the `plugins` that alter the colors (e.g., statuline, bufferline, nvim-tree and lsp configurations)
-D. The user custom individual colors defined.
+In `nvim-lua` configurations there are basically three layers that control the
+`color` of each `group`. `group` colors are the one defined for specific action
+in `nvim` such as: digit, tab, normal, background ..etc. These layers are:
+- A. Default Layer (this will be native to the color-scheme that you select.
+  (mostly the tree-sitter parser colors are included)
+- B. Tree-Sitter Color-Groups which used once you install the `nvim-treesitter`
+- C. Component of the `plugins` that alter the colors (e.g., statuline,
+  bufferline, nvim-tree and lsp configurations)
+- D. The user custom individual colors defined.
 
-configurations : to change the color, you need to consider to which level you want to alter the color,
+Configurations : to change the color, you need to consider to which level you want to alter the color,
 
 
 ## VIM EVENTS
@@ -381,5 +427,6 @@ configurations : to change the color, you need to consider to which level you wa
 
 ## MEASURE SPEED OF NEOVIM
 - [Speedup Neovim ](https://aca.github.io/neovim_startuptime.html)
+
 
 

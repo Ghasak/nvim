@@ -243,6 +243,12 @@ function M.setup()
       },
       {
         name = "spell",
+        option = {
+          keep_all_entries = false,
+          enable_in_context = function()
+            return true
+          end,
+        },
       },
       {
         name = "emoji",
@@ -270,6 +276,9 @@ function M.setup()
     false
   )
 
+-- These options to trigger the spelling attachment.
+vim.opt.spell = true
+vim.opt.spelllang = { 'en_us' }
   ----------------------------------------------------------------------------------------------------------------------
   --
   --                            █▀▀ █▀▄▀█ █▀█ ▄▄ █▀▀ █▀▄▀█ █▀▄ █   █ █▄ █ █▀▀
