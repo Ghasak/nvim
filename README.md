@@ -12,7 +12,7 @@ essential to my daily workflow.
 
 
 The configuration files are all written in `lua` using
-the most modern `APIs` by this time. Check for more details `:h depurated` to
+the most modern `APIs` by this time. Check for more details `:h deprecated` to
 see the news feature of the new release. Here, is a summary of the most wanted
 upgrades to my configuration file (to name few)
 
@@ -59,7 +59,7 @@ By default, the file will be auto-saved based on the `auto-saved` plugin, which
 will be trigger once we start writting. To stop the auto-save, we can use the
 `keymapping: <leader>s` which will stop the autosave.
 
-## For development
+### For development
 We can use add the following to the top of the file
 
 ```lua
