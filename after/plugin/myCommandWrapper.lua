@@ -1,9 +1,8 @@
-
 CMD = vim.cmd
 
 -- This is a wrapping for many commands to allow more flexibilities.
-
-vim.cmd[[
+function useful_commands()
+  vim.cmd [[
       command! HOME Startify
      "command! MYFZF FloatermNew fzf
       command! MYFZF fzf
@@ -36,4 +35,4 @@ vim.cmd[[
 
 ]]
 
-
+end

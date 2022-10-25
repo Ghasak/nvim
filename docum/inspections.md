@@ -178,3 +178,8 @@ You can use the following, In your nvim commandline:
 ```lua
 :lua vim.pretty_print(vim.lsp.codelens.get(bufnr))
 ```
+## Getting stats of buffer
+
+```lua
+:lua vim.pretty_print(vim.api.nvim__buf_stats(vim.api.nvim_get_current_buf()))
+```

@@ -578,12 +578,12 @@ return packer.startup(function(use)
     module = { "dap" },
     wants = { "nvim-dap-virtual-text", "nvim-dap-ui", "nvim-dap-python" },
     requires = {
-      "theHamsta/nvim-dap-virtual-text",
-      "rcarriga/nvim-dap-ui",
-      "mfussenegger/nvim-dap-python",
-      "nvim-telescope/telescope-dap.nvim",
-      { "leoluz/nvim-dap-go", module = "dap-go" },
-      { "jbyuki/one-small-step-for-vimkind", module = "osv" },
+      { "theHamsta/nvim-dap-virtual-text", event = "InsertEnter" },
+      { "rcarriga/nvim-dap-ui", event = "InsertEnter" },
+      { "mfussenegger/nvim-dap-python", event = "InsertEnter" },
+      { "nvim-telescope/telescope-dap.nvim", event = "InsertEnter" },
+      { "leoluz/nvim-dap-go", module = "dap-go", event = "InsertEnter" },
+      { "jbyuki/one-small-step-for-vimkind", module = "osv", event = "InsertEnter" },
     },
     config = function()
       require("plugins.configs.dap")
@@ -601,7 +601,7 @@ return packer.startup(function(use)
   use({
     'saecki/crates.nvim',
     opt = true,
-    ft = {"rust", "toml"},
+    ft = { "rust", "toml" },
     tag = 'v0.3.0',
     requires = { 'nvim-lua/plenary.nvim' },
     config = function()
@@ -667,16 +667,18 @@ return packer.startup(function(use)
     config = function() require("plugins.configs.myknap") end
   })
   -- Auto-save for nvim, which will save your work triggered on events: "InsertLeave", "TextChanged"
-  use({
-    "Pocco81/auto-save.nvim",
-    --opt = true,
-    event = "InsertEnter",
-    config = function()
-      require("auto-save").setup {
-        enabled = false, -- Start auto-save when the plugin is loaded.(default is true)
-      }
-    end,
-  })
+  -- We don't need the auto-saver anymore it seem, that is correct maybe, that is correct, try this
+  -- use({
+  --   "Pocco81/auto-save.nvim",
+  --   --opt = true,
+  --   event = "InsertEnter",
+  --   config = function()
+  --     require("auto-save").setup {
+  --       enabled = false, -- Start auto-save when the plugin is loaded.(default is true)
+  --       trigger_events = {"BufLeave"},
+  --     }
+  --   end,
+  -- })
   -- ===========================================================================
   --                          Other Plugins
   -- ===========================================================================

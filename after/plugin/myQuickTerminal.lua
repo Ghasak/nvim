@@ -1,7 +1,8 @@
+function horizontal_terminal_custom_fn()
+  local exec = vim.api.nvim_exec -- execute Vimscript
 
-local exec = vim.api.nvim_exec 	-- execute Vimscript
 
-vim.cmd([[
+  vim.cmd([[
 "==============================================================================
 " This is a script will triger a terminal quickly than the FloatTerminal
 " open new split panes to right and below
@@ -47,5 +48,5 @@ nnoremap <space>bn :call OpenTerminal()<CR>
 " Exit any terminal opened using leader + Esc
 "tnoremap <leader><Esc> <C-\><C-n>:q!<CR>
 tnoremap <Esc><Esc> <C-\><C-n>:q!<CR>
-]])
-
+]] )
+end

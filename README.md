@@ -10,7 +10,6 @@ essential to my daily workflow.
 ![Current versions view](./assets/SS-05.png)
 ![Another supported view](./assets/SS-06.png)
 
-
 The configuration files are all written in `lua` using
 the most modern `APIs` by this time. Check for more details `:h deprecated` to
 see the news feature of the new release. Here, is a summary of the most wanted
@@ -458,6 +457,5 @@ Configurations : to change the color, you need to consider to which level you wa
 
 ## MEASURE SPEED OF NEOVIM
 - [Speedup Neovim ](https://aca.github.io/neovim_startuptime.html)
-
 
 
