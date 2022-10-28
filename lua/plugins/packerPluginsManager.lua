@@ -690,6 +690,11 @@ return packer.startup(function(use)
   })
 
   -- ==========================================================================
+  -- 	            Custom Plugin Development
+  -- ==========================================================================
+  use({ "/Users/gmbp/Desktop/devCode/plugins/auto.nvim",
+    disable = true })
+  -- ==========================================================================
   -- 	            PACKER PLUGIN PACKAGE SYNCING AND LOADING
   -- ==========================================================================
   -- Automatically set up your configuration after cloning packer.nvim
