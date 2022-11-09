@@ -201,4 +201,4 @@ function auto_schedular_custom_event_fn()
 end
 
 -- Here, we call the function to perform the auto-buffer-saver, when we leave the buffer, or the window
-auto_schedular_custom_event_fn()
+--auto_schedular_custom_event_fn()

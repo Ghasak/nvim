@@ -61,5 +61,5 @@ if vim.g.neovide then
   require("units.neovideConfig").neovide_config()
 end
 
-require("core.myInspectorFucntions")
--- Adding some note, this could be used later
+-- Inspection function for checking module development
+--require("core.myInspectorFucntions")

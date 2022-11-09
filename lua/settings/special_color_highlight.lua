@@ -170,3 +170,17 @@ local function show_full_path()
 end
 
 
+
+
+-- ----------------------------------------------------------------------------------------
+--                  Allow to wrap the lines when we spit the window
+--                  Source:  https://www.reddit.com/r/neovim/comments/yq7jpz/how_to_automatically_wrap_lines_when_split_screen/
+-- ----------------------------------------------------------------------------------------
+vim.api.nvim_create_autocmd({ "WinNew", "WinClosed", "WinEnter" }, {
+    group = vim.api.nvim_create_augroup("on_demand_wrap", {}),
+    callback = function()
+        local should_wrap = vim.api.nvim_win_get_width(0) ~= vim.o.columns
+        vim.api.nvim_win_set_option(0, "wrap", should_wrap)
+    end,
+})
+

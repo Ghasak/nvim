@@ -124,7 +124,6 @@ M.setup = function()
 
       Constant = { fg = '$Light_Yellow' },
       StatusLineNC = { fg = '$beautiful_black', bg = '$beautiful_black' },
-
       -- nvim-tree
       NvimTreeVertSplit = { bg = '$beautiful_black' }, -- When you split inside nvim-tree the fg will be activited
       NvimTreeNormal = { bg = '$beautiful_black', bf = '$beautiful_black' }, -- fg means files names, folder names ..etc.
@@ -170,7 +169,9 @@ M.setup = function()
       -- StatusLineTermNC = { fg = '$beautiful_black' ,bg = '$beautiful_black' },
       -- Nvim-treesitter
       TSString = { fg = '$TeaGreen' }, -- For only string in nvim
-      TSConstant = { fg = '$Light_Yellow' }
+      TSConstant = { fg = '$Light_Yellow' },
+      -- got appended since the newest update for the tree-sitter
+     ['@constant']  = { fg = '$Light_Yellow' }
     }, -- Override highlight groups
 
 
