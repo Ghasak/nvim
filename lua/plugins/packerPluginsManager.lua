@@ -478,6 +478,8 @@ return packer.startup(function(use)
     },
   }
 
+ -- use({"onsails/lspkind.nvim", })
+
   -- TabNine auto-compleletions
   use({
     "tzachar/cmp-tabnine",

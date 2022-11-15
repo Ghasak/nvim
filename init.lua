@@ -59,7 +59,6 @@ for _, module in ipairs(init_modules) do load_module(module) end
 -- Loading the neovide configurations, once it neovide is lunched.
 if vim.g.neovide then
   require("units.neovideConfig").neovide_config()
+
 end
 
--- Inspection function for checking module development
---require("core.myInspectorFucntions")

@@ -44,6 +44,7 @@ function! OpenTerminal()
   resize 15
 endfunction
 nnoremap <space>bn :call OpenTerminal()<CR>
+nnoremap <space>tt:call OpenTerminal()<CR>
 
 " Exit any terminal opened using leader + Esc
 "tnoremap <leader><Esc> <C-\><C-n>:q!<CR>
