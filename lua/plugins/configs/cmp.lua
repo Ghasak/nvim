@@ -45,7 +45,7 @@ function M.setup()
   vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { bg = "#6CC644" })
   vim.api.nvim_set_hl(0, "CmpItemKindEmoji", { bg = "#FDE030" })
   vim.api.nvim_set_hl(0, "CmpItemKindCrate", { bg = "#F64D00" })
-  vim.api.nvim_set_hl(0, "CmpItemKindTabnine", { bg = "#EA526F" })
+  vim.api.nvim_set_hl(0, "CmpItemKindTabnine", { bg = "#F0D2D1" })
 
   -- contorl over the main frame of auto-complete and documentation
   -- vim.api.nvim_set_hl(0, "MyNormal", { bg = "#343a43", fg = "#aaafff" })
@@ -58,21 +58,17 @@ function M.setup()
   -- vim.api.nvim_set_hl(0, "CmpItemAbbrMatchFuzzy", { fg = "#ec5300", bg = "NONE" })
   --
   -- contorl over the icons
-  -- vim.api.nvim_set_hl(0, "CmpItemKindClass", { fg = "#B2C9AB" })
-  -- vim.api.nvim_set_hl(0, "CmpItemKindkeyword", { fg = "blue" })
-  -- vim.api.nvim_set_hl(0, "CmpItemKindmethod", { fg = "#CA42F0" })
-  -- vim.api.nvim_set_hl(0, "CmpItemKindVariable", { fg = "#EEEDBF" })
 
   vim.api.nvim_set_hl(0, "CmpItemKindClass", { bg = "#B2C9AB" })
   vim.api.nvim_set_hl(0, "CmpItemKindKeyword", { bg = "#9EA3B0" })
   vim.api.nvim_set_hl(0, "CmpItemKindMethod", { bg = "#D5CFE1" })
-  vim.api.nvim_set_hl(0, "CmpItemKindVariable", { bg = "#EEEDBF" })
+  vim.api.nvim_set_hl(0, "CmpItemKindVariable", { bg = "#9BBDF9" })
   vim.api.nvim_set_hl(0, "CmpItemKindFunction", { bg = "#D282A6" })
-  vim.api.nvim_set_hl(0, "CmpItemKindConstructor", { bg = "#9BBDF9" })
+  vim.api.nvim_set_hl(0, "CmpItemKindConstructor", { bg = "#6DB7BA" })
   vim.api.nvim_set_hl(0, "CmpItemKindModule", { bg = "#C49E85" })
   vim.api.nvim_set_hl(0, "CmpItemKindConstant", { bg = "#E1BB80" })
   vim.api.nvim_set_hl(0, "CmpItemKindSnippet", { bg = "#A3BFA8" })
-  vim.api.nvim_set_hl(0, "CmpItemKindText", { bg = "#CDE7B0" })
+  vim.api.nvim_set_hl(0, "CmpItemKindText", { bg = "#EEEDBF" })
   vim.api.nvim_set_hl(0, "CmpItemKindStruct", { bg = "#D3D5D7" })
 
 
