@@ -42,10 +42,10 @@ function M.setup()
 
   local icons = require("plugins.configs.icons")
   local kind_icons = icons.kind
-  vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
-  vim.api.nvim_set_hl(0, "CmpItemKindTabnine", { fg = "#CA42F0" })
-  vim.api.nvim_set_hl(0, "CmpItemKindEmoji", { fg = "#FDE030" })
-  vim.api.nvim_set_hl(0, "CmpItemKindCrate", { fg = "#F64D00" })
+  vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { bg = "#6CC644" })
+  vim.api.nvim_set_hl(0, "CmpItemKindEmoji", { bg = "#FDE030" })
+  vim.api.nvim_set_hl(0, "CmpItemKindCrate", { bg = "#F64D00" })
+  vim.api.nvim_set_hl(0, "CmpItemKindTabnine", { bg = "#EA526F" })
 
   -- contorl over the main frame of auto-complete and documentation
   -- vim.api.nvim_set_hl(0, "MyNormal", { bg = "#343a43", fg = "#aaafff" })
@@ -63,6 +63,41 @@ function M.setup()
   -- vim.api.nvim_set_hl(0, "CmpItemKindmethod", { fg = "#CA42F0" })
   -- vim.api.nvim_set_hl(0, "CmpItemKindVariable", { fg = "#EEEDBF" })
 
+  vim.api.nvim_set_hl(0, "CmpItemKindClass", { bg = "#B2C9AB" })
+  vim.api.nvim_set_hl(0, "CmpItemKindKeyword", { bg = "#9EA3B0" })
+  vim.api.nvim_set_hl(0, "CmpItemKindMethod", { bg = "#D5CFE1" })
+  vim.api.nvim_set_hl(0, "CmpItemKindVariable", { bg = "#EEEDBF" })
+  vim.api.nvim_set_hl(0, "CmpItemKindFunction", { bg = "#D282A6" })
+  vim.api.nvim_set_hl(0, "CmpItemKindConstructor", { bg = "#9BBDF9" })
+  vim.api.nvim_set_hl(0, "CmpItemKindModule", { bg = "#C49E85" })
+  vim.api.nvim_set_hl(0, "CmpItemKindConstant", { bg = "#E1BB80" })
+  vim.api.nvim_set_hl(0, "CmpItemKindSnippet", { bg = "#A3BFA8" })
+  vim.api.nvim_set_hl(0, "CmpItemKindText", { bg = "#CDE7B0" })
+  vim.api.nvim_set_hl(0, "CmpItemKindStruct", { bg = "#D3D5D7" })
+
+
+
+  vim.api.nvim_set_hl(0, "CmpItemKindEnumMember", { bg = "#F49FBC" })
+  vim.api.nvim_set_hl(0, "CmpItemKindEnum", { bg = "#F49FBC" })
+  vim.api.nvim_set_hl(0, "CmpItemKindInterface", { bg = "#A799B7" })
+  vim.api.nvim_set_hl(0, "CmpItemKindReference", { bg = "#BFD7EA" })
+
+
+  vim.api.nvim_set_hl(0, "CmpItemKindProperty", { bg = "#F0F3BD" })
+  vim.api.nvim_set_hl(0, "CmpItemKindUnit", { bg = "#1A5E63" })
+  vim.api.nvim_set_hl(0, "CmpItemKindValue", { bg = "#F9DAD0" })
+  vim.api.nvim_set_hl(0, "CmpItemKindColor", { bg = "#9FA4A9" })
+  vim.api.nvim_set_hl(0, "CmpItemKindFile", { bg = "#C2D3CD" })
+  vim.api.nvim_set_hl(0, "CmpItemKindReference", { bg = "#F2DC5D" })
+  vim.api.nvim_set_hl(0, "CmpItemKindFolder", { bg = "#F2A359" })
+  vim.api.nvim_set_hl(0, "CmpItemKindEvent", { bg = "#DB9065" })
+  vim.api.nvim_set_hl(0, "CmpItemKindOperator", { bg = "#A4031F" })
+  vim.api.nvim_set_hl(0, "CmpItemKindTypeParameter", { bg = "#9DC0BC" })
+
+
+
+
+
   -- nvim-cmp setup
   cmp.setup({
     snippet = {
@@ -78,22 +113,28 @@ function M.setup()
         -- winhighlight = "NormalFloat:Pmenu,NormalFloat:Pmenu,CursorLine:PmenuSel,Search:None",
         -- winhighlight = "NormalFloat:NormalFloat,FloatBorder:TelescopeBorder",
 
-        border = {
-          "╭", "─", "╮", "│", "╯", "─", "╰", "│"
-        },
+        -- border = {
+        --   "╭", "─", "╮", "│", "╯", "─", "╰", "│"
+        -- },
+        border = "double",
         -- winhighlight = "NormalFloat:NormalFloat,FloatBorder:TelescopeBorder",
         -- winhighlight = "NormalFloat:Pmenu,NormalFloat:MyFloatBoarder,CursorLine:PmenuSel,Search:None"
         -- winhighlight = "Normal:MyNormal,FloatBorder:MyFloatBoarder,CursorLine:MyCursorLine,Search:None"
         winhighlight = "NormalFloat:Pmenu,NormalFloat:Pmenu,CursorLine:PmenuSel,Search:None"
       },
+      --completion = cmp.config.window.bordered({ border = "double", side_padding = 0 })
       completion = {
 
-        border = {
-          "╭", "─", "╮", "│", "╯", "─", "╰", "│"
-        },
-        winhighlight = "NormalFloat:Pmenu,NormalFloat:Pmenu,CursorLine:PmenuSel,Search:None"
+        -- border = {
+        --   "╭", "─", "╮", "│", "╯", "─", "╰", "│"
+        -- },
+        border = "double",
+        --winhighlight = "NormalFloat:Pmenu,NormalFloat:Pmenu,CursorLine:PmenuSel,Search:None"
+        winhighlight = "NormalFloat:Pmenu,NormalFloat:Pmenu,CursorLine:PmenuSel,Search:None",
         -- winhighlight = "NormalFloat:NormalFloat,FloatBorder:TelescopeBorder",
         -- winhighlight = "Normal:MyNormal,FloatBorder:MyFloatBoarder,CursorLine:MyCursorLine,Search:None"
+        --col_offset = -3,
+        side_padding = 0,
       }
     },
 
@@ -110,11 +151,25 @@ function M.setup()
         --   "plugins.configs.lspkind_icons").icons[vim_item.kind],
         --   vim_item.kind)
 
-        vim_item.kind = string.format("%s %s", vim_item.kind,require("plugins.configs.lspkind_icons").icons[vim_item.kind])
+        -- vim_item.kind = string.format("%s %s", vim_item.kind,
+        --   require("plugins.configs.lspkind_icons").icons[vim_item.kind])
+
+        -- vim_item.kind = string.format("%s %s", require("plugins.configs.lspkind_icons").icons[vim_item.kind],
+        --   vim_item.kind)
+
+
+        -- This is the core of getting the icons for our current buffer
+        local kind = require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
+        local strings = vim.split(kind.kind, "%s", { trimempty = true })
+        kind.kind = " " .. strings[1] .. " "
+        kind.menu = "    (" .. strings[2] .. ")"
+
+
 
         -- Specific items
         if entry.source.name == "cmp_tabnine" then
-          vim_item.kind = icons.misc.Robot .. " Tabnine"
+          --vim_item.kind = icons.misc.Robot .. " Tabnine"
+          vim_item.kind = string.format(" %s ", icons.misc.Robot)
           vim_item.kind_hl_group = "CmpItemKindTabnine"
         end
         if entry.source.name == "copilot" then
@@ -148,7 +203,8 @@ function M.setup()
           emoji = "[ﲃ  Emoji]"
         })[entry.source.name]
 
-        return vim_item
+        --return vim_item
+        return kind
       end
     },
     mapping = {

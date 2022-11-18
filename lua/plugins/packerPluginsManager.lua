@@ -478,7 +478,7 @@ return packer.startup(function(use)
     },
   }
 
- -- use({"onsails/lspkind.nvim", })
+  -- use({"onsails/lspkind.nvim", })
 
   -- TabNine auto-compleletions
   use({
@@ -653,6 +653,13 @@ return packer.startup(function(use)
   use({ "SmiteshP/nvim-navic", -- We have already this in lsp-saga
     wants = "neovim/nvim-lspconfig",
     disable = true,
+  })
+  use({ 'RishabhRD/popfix',
+    event = "InsertEnter",
+  })
+  use({ "RishabhRD/nvim-cheat.sh",
+    event = "InsertEnter",
+
   })
   -- ===========================================================================
   --                         For Editor

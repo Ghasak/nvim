@@ -18,7 +18,15 @@ This plugin give us the ability to perform `surroundings` easily
 4. To change given surroundings :         `c`+`s`+ `' or "`
 
 
+- Very nice trick
 
+```lua
+-- How we can achieve that
+use({dbeniamine/cheat.sh-vim}) => use({"dbeniamine/cheat.sh-vim"})
+
+`y` + `s` + `i` + `{` + `"`
+
+```
 ## Better replace with reggister
 This plugin is used for replacing yanked word with support to the command (.)
 ```lua
