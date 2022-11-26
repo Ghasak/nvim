@@ -108,6 +108,7 @@ M.setup = function()
 
       Terminal = { fg = '$beautiful_black', bg = '$beautiful_black' }, -- terminal color for nvim
       EndOfBuffer = { fg = '$beautiful_black', bg = '$beautiful_black' }, -- End of buffer color
+      StatusLineTermNC    = { fg = '$light_green', bg = '$beautiful_black' },
       VertSplit = { fg = '$light_green', bg = '$beautiful_black' }, -- when using vertical split
       SignColumn = { fg = '$beautiful_black', bg = '$beautiful_black' }, -- SignColumn control the edge of nvim buffer
 
@@ -123,7 +124,7 @@ M.setup = function()
       TabLineSel = { fg = '$beautiful_black', bg = '$beautiful_black' },
 
       Constant = { fg = '$Light_Yellow' },
-      StatusLineNC = { fg = '$beautiful_black', bg = '$beautiful_black' },
+      --StatusLineNC = { fg = '$beautiful_black', bg = '$beautiful_black' },
       -- nvim-tree
       NvimTreeVertSplit = { bg = '$beautiful_black' }, -- When you split inside nvim-tree the fg will be activited
       NvimTreeNormal = { bg = '$beautiful_black', bf = '$beautiful_black' }, -- fg means files names, folder names ..etc.

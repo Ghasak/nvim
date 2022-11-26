@@ -497,6 +497,24 @@ return packer.startup(function(use)
       require("plugins.configs.indent_line").setup()
     end,
   })
+  -- Show documentation window and tracking the Cursor movement
+  use {
+    "amrbashir/nvim-docs-view",
+    --opt = true,
+    event = "InsertEnter",
+    cmd = { "DocsViewToggle" },
+    config = function()
+      require("docs-view").setup {
+        position = "right",
+        width = vim.o.columns * 0.35
+      }
+    end
+  }
+  -- Implmented text floading
+  use { 'wellle/context.vim',
+    event = 'InsertEnter',
+    cmd = {'ContextEnable'}
+  }
   -- ==========================================================================
   -- 	                      Programming Language Servers
   -- ==========================================================================

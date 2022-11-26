@@ -57,8 +57,11 @@ function M.setup()
   -- vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { fg = "#EEEDBF", bg = "NONE" })
   -- vim.api.nvim_set_hl(0, "CmpItemAbbrMatchFuzzy", { fg = "#ec5300", bg = "NONE" })
   --
-  -- contorl over the icons
-
+  -- Contorl over the icons
+  -- complete list can be found here:
+  -- https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance
+  -- or here,
+  -- "$HOME/.local/share/nvim/site/pack/packer/opt/lspkind-nvim"
   vim.api.nvim_set_hl(0, "CmpItemKindClass", { bg = "#B2C9AB" })
   vim.api.nvim_set_hl(0, "CmpItemKindKeyword", { bg = "#9EA3B0" })
   vim.api.nvim_set_hl(0, "CmpItemKindMethod", { bg = "#D5CFE1" })
@@ -70,15 +73,10 @@ function M.setup()
   vim.api.nvim_set_hl(0, "CmpItemKindSnippet", { bg = "#A3BFA8" })
   vim.api.nvim_set_hl(0, "CmpItemKindText", { bg = "#EEEDBF" })
   vim.api.nvim_set_hl(0, "CmpItemKindStruct", { bg = "#D3D5D7" })
-
-
-
   vim.api.nvim_set_hl(0, "CmpItemKindEnumMember", { bg = "#F49FBC" })
   vim.api.nvim_set_hl(0, "CmpItemKindEnum", { bg = "#F49FBC" })
   vim.api.nvim_set_hl(0, "CmpItemKindInterface", { bg = "#A799B7" })
   vim.api.nvim_set_hl(0, "CmpItemKindReference", { bg = "#BFD7EA" })
-
-
   vim.api.nvim_set_hl(0, "CmpItemKindProperty", { bg = "#F0F3BD" })
   vim.api.nvim_set_hl(0, "CmpItemKindUnit", { bg = "#1A5E63" })
   vim.api.nvim_set_hl(0, "CmpItemKindValue", { bg = "#F9DAD0" })
@@ -89,7 +87,6 @@ function M.setup()
   vim.api.nvim_set_hl(0, "CmpItemKindEvent", { bg = "#DB9065" })
   vim.api.nvim_set_hl(0, "CmpItemKindOperator", { bg = "#A4031F" })
   vim.api.nvim_set_hl(0, "CmpItemKindTypeParameter", { bg = "#9DC0BC" })
-
 
 
 
@@ -150,6 +147,7 @@ function M.setup()
         -- vim_item.kind = string.format("%s %s", vim_item.kind,
         --   require("plugins.configs.lspkind_icons").icons[vim_item.kind])
 
+        -- If you use this , the retun should be vim_item.kind, a text next to the icon will appear.
         -- vim_item.kind = string.format("%s %s", require("plugins.configs.lspkind_icons").icons[vim_item.kind],
         --   vim_item.kind)
 
@@ -159,6 +157,9 @@ function M.setup()
         local strings = vim.split(kind.kind, "%s", { trimempty = true })
         kind.kind = " " .. strings[1] .. " "
         kind.menu = "    (" .. strings[2] .. ")"
+
+        -- Trimming the abbrivation for the functions (text) that will appear.
+        vim_item.abbr = vim_item.abbr:match("[^(]+")
 
 
 

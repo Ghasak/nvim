@@ -156,21 +156,18 @@ vim.api.nvim_create_autocmd("BufEnter", {
 -- ----------------------------------------------------------------------------------------
 -- Function to show the full path in nvim when you open a given file
 local function show_full_path()
-    local file = vim.fn.expand("%:p")
-    local async = require("plenary.async")
-    local notify = require("notify").async
-    -- vim.notify(file)
-    async.run(function()
-        local messege = string.format(" %s at %s ... ", file,
-                                      os.date("%H:%M:%S"))
-        notify(messege, "INFO", {
-            title = " Initializing file"
-        })
-    end)
+  local file = vim.fn.expand("%:p")
+  local async = require("plenary.async")
+  local notify = require("notify").async
+  -- vim.notify(file)
+  async.run(function()
+    local messege = string.format(" %s at %s ... ", file,
+      os.date("%H:%M:%S"))
+    notify(messege, "INFO", {
+      title = " Initializing file"
+    })
+  end)
 end
-
-
-
 
 -- ----------------------------------------------------------------------------------------
 --                  Allow to wrap the lines when we spit the window
@@ -184,4 +181,34 @@ end
 --         vim.api.nvim_win_set_option(0, "wrap", should_wrap)
 --     end,
 -- })
+
+
+-- ----------------------------------------------------------------------------------------
+--                    Custome function for showing flashing the line
+-- More detals: https://www.youtube.com/watch?v=2Hsr4drhAV4
+-- ----------------------------------------------------------------------------------------
+local function line_flasher()
+
+  local timer = vim.loop.new_timer()
+  local i = 0
+
+  timer:start(0, 100, vim.schedule_wrap(function()
+    vim.cmd "set cursorline"
+    print("timer counting! i = " .. tostring(i))
+    --vim.cmd "hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white"
+    -- if i % 2 == 0 then
+    --   vim.cmd "set cursorline"
+    -- else
+    --   vim.cmd "set nocursorline"
+    -- end
+
+
+    if i > 10 then
+      timer:stop()
+      print("timer stopped")
+    end
+    i = i + 1
+  end
+  ))
+end
 
