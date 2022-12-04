@@ -51,3 +51,4 @@ nnoremap <space>tt:call OpenTerminal()<CR>
 tnoremap <Esc><Esc> <C-\><C-n>:q!<CR>
 ]] )
 end
+
