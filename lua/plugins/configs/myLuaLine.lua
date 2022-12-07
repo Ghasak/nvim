@@ -208,11 +208,15 @@ local function format_messages_2(messages)
     -- "∙●∙",
     -- "∙∙●",
     -- "∙∙∙",
-    "∙∙∙",
-    " ∙",
-    "∙∙",
-    "∙∙",
-    "∙∙∙",
+    -- "∙∙∙",
+    -- " ∙",
+    -- "∙∙",
+    -- "∙∙",
+    -- "∙∙∙",
+  --""
+    "",
+    "",
+    "ﱣ"
 
     --"", "", "", "", "", "",
     --
@@ -252,7 +256,7 @@ end
 -- REQUIRES LSP
 local function Icon_LSP_Progress()
   local messages = vim.lsp.util.get_progress_messages()
-  if #messages == 0 then return "" end
+  if #messages == 0 then return "" end
   --if #messages == 0 then return "" end
 
   return format_messages_2(messages)

@@ -49,7 +49,18 @@ vim.keymap.set('n', 'gr', '<Plug>ReplaceWithRegisterOperator')
 vim.keymap.set('n', 'grl', '<Plug>ReplaceWithRegisterLine')
 vim.keymap.set('n', 'grv', '<Plug>ReplaceWithRegisterVisual')
 
+-- Better verticl movmenet control
+-- We have shift + { or shit + } for moving vertically, but I found the ctrl + n/p are better
+-- - [Vim As Your Editor - Vertical Movements ](https://www.youtube.com/watch?v=KfENDDEpCsI)
+vim.api.nvim_set_keymap("n", "<C-d>", "<C-d>zz", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<C-n>", "<C-n>zz", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<C-p>", "<C-p>zz", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<C-u>", "<C-u>zz", {noremap = true, silent = true})
 
+-- For better searching
+vim.keymap.set('n', 'n', 'nzzzv')
+vim.keymap.set('n', 'N', 'Nzzzv')
+-- For better searching you can also try (select the word then #, * to get your word loaded in the search, then n, or N to jump on occurrences).
 -- Select all But it will affect the increament
 --vim.keymap.set('n', '<C-a>', 'gg<S-v>G')
 
