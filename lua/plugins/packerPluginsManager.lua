@@ -510,7 +510,9 @@ return packer.startup(function(use)
       }
     end
   }
-  -- Implmented text floading
+  -- Context.vim: A vim plugin that shows the context of the currently visible buffer context.
+  -- It's supposed to work on a wide range of file types, but is probably most suseful when looking at source code files.
+  -- https://github.com/wellle/context.vim
   use { 'wellle/context.vim',
     event = 'InsertEnter',
     cmd = {'ContextEnable'}
