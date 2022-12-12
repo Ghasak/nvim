@@ -377,7 +377,9 @@ return packer.startup(function(use)
   --  use({ "tpope/vim-dispatch" })
   --  use({ "tpope/vim-commentary" })
   --  use({ "tpope/vim-rhubarb", event = "VimEnter" })
-  --  use({ "tpope/vim-unimpaired" })
+   use({ "tpope/vim-unimpaired",
+    event = "InsertEnter",
+  })
   --  use({ "tpope/vim-vinegar" })
   --  use({ "tpope/vim-sleuth" })
   -- Replace word with register

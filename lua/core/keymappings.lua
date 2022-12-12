@@ -43,7 +43,9 @@ vim.keymap.set('n', '-', '<C-x>')
 -- Delete a word backwards
 vim.keymap.set('n', 'dw', 'vb"_d')
 
-
+-- Better paste with indentation
+vim.keymap.set('n', ',p', 'o<Esc>p')
+vim.keymap.set('n', ',P', 'O<Esc>p')
 -- To Replace with regsiter [ you can yank a word then use <ESC>b then grw]
 vim.keymap.set('n', 'gr', '<Plug>ReplaceWithRegisterOperator')
 vim.keymap.set('n', 'grl', '<Plug>ReplaceWithRegisterLine')
