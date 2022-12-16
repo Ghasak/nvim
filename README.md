@@ -1,5 +1,24 @@
 # Nvim Workflow
 
+## Shortcuts
+
+1. `ContextEnable`: will give you a nice folding to your functions.
+2. `DocsViewToogle`: for showing documents and tracing your cursor.
+3. `SymbolsOutline`: for getting a nice jump over all coding elements.
+4. `<leader> + o`: will also give us similar to `SymbosOutline`.
+5. Remember, once you are in insert mode, it will trigger other plugins to be
+   loaded. but some of them until you open next buffer. (reason is to get speed
+   and loading only necessary plugins on demands.)
+6. `Ctr + n/p`: to scroll faster while center.
+7. `Shift + { or }` to scroll faster while centered but jump on coding elements.
+8. `<F6>`: To toggle the spell checking.
+9. `<F1>`: To show help
+10. `<leader>ff`, `<leader>fg`, `<leader>fb` and `<leader>fh` all are reserved to `nvim-Telelscope toggler`.
+11. `<leader>tt`: horizontal terminal,
+12. `<leader>t`: floating terminal but slower
+13. `<leader>r`: Ranger for navigating your files.
+14. `<leader>u`: undo-tree toggler.
+
 ## Update release Nvim-workflow v0.1
 As `nvim` is now updated to version `0.8` with a stable release. Several
 deprecated `3rd-plugins` and `APIs`. I have optimized the startup time and got

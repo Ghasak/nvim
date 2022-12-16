@@ -300,4 +300,4 @@ vim.keymap.set("n", "]E", function()
 end, { silent = true })
 
 -- Outline
-vim.keymap.set("n", "<leader>o", "<cmd>LSoutlineToggle<CR>", { silent = true, })
+vim.keymap.set("n", "<leader>o", "<cmd>Lspsaga outline<CR>", { silent = true, })
