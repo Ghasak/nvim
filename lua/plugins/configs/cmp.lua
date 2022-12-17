@@ -93,6 +93,28 @@ function M.setup()
 
   -- nvim-cmp setup
   cmp.setup({
+    sources = {
+      { name = "nvim_lsp" },
+      { name = 'luasnip', option = { use_show_condition = false } },
+      { name = "buffer" },
+      { name = "nvim_lua" },
+      { name = "ultisnips" },
+      { name = "vsnip" },
+      { name = "look" },
+      { name = "path" },
+      { name = "cmp_tabnine" },
+      { name = "calc" },
+      { name = "neosnippet" }, {
+        name = "spell",
+        option = {
+          keep_all_entries = false,
+          enable_in_context = function()
+            return true
+          end
+        }
+      }, { name = "emoji" }, { name = "crates" }
+    },
+
     snippet = {
       expand = function(args)
         require("luasnip").lsp_expand(args.body)
@@ -153,14 +175,20 @@ function M.setup()
 
 
         -- This is the core of getting the icons for our current buffer
-        local kind = require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
-        local strings = vim.split(kind.kind, "%s", { trimempty = true })
-        kind.kind = " " .. strings[1] .. " "
-        kind.menu = "    (" .. strings[2] .. ")"
+        -- local kind = require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
+        -- local strings = vim.split(kind.kind, "%s", { trimempty = true })
+        -- kind.kind = " " .. strings[1] .. " "
+        -- kind.menu = "    (" .. strings[2] .. ")"
+
 
         -- Trimming the abbrivation for the functions (text) that will appear.
         vim_item.abbr = vim_item.abbr:match("[^(]+")
 
+        -- Removing the duplicates
+        local kind    = vim_item.kind
+        vim_item.kind = " " .. (require("plugins.configs.lspkind_icons").icons[vim_item.kind] or "?") .. " "
+        local source  = entry.source.name
+        vim_item.menu = "(" .. source .. ")"
 
 
         -- Specific items
@@ -200,8 +228,8 @@ function M.setup()
           emoji = "[ﲃ  Emoji]"
         })[entry.source.name]
 
-        --return vim_item
-        return kind
+        return vim_item
+        --return kind
       end
     },
     mapping = {
@@ -280,22 +308,7 @@ function M.setup()
       --			"s",
       --		}),
     },
-    sources = {
-      { name = "nvim_lsp" },
-      { name = 'luasnip', option = { use_show_condition = false } },
-      { name = "buffer" }, { name = "nvim_lua" }, { name = "buffer" },
-      { name = "nvim_lsp" }, { name = "ultisnips" }, { name = "nvim_lua" },
-      { name = "look" }, { name = "path" }, { name = "cmp_tabnine" },
-      { name = "calc" }, { name = "neosnippet" }, {
-        name = "spell",
-        option = {
-          keep_all_entries = false,
-          enable_in_context = function()
-            return true
-          end
-        }
-      }, { name = "emoji" }, { name = "crates" }
-    },
+
     confirm_opts = { behavior = cmp.ConfirmBehavior.Replace, select = false },
     completion = {
       -- border = "rounded",
