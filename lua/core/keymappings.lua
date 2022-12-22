@@ -126,10 +126,10 @@ vim.api.nvim_set_keymap('n', '<leader>p', "<cmd>lua require('fzf-lua').files()<C
 --vim.api.nvim_set_keymap('n', '<leader>p',"<cmd>lua require('fzf-lua').files({ fzf_opts = {['--layout'] = 'reverse-list'} })<CR>",{ noremap = true, silent = true })
 
 -- Move/selected line / block of text in visual mode
-vim.api.nvim_set_keymap("x", "K", ":move '<-2<CR>gv-gv", { noremap = true, silent = true, })
-vim.api.nvim_set_keymap("x", "J", ":move '>+2<CR>gv-gv", { noremap = true, silent = true, })
-vim.api.nvim_set_keymap("n", "K", ":move .-2<CR>==", { noremap = true, silent = true, })
-vim.api.nvim_set_keymap("n", "J", ":move .+1<CR>==", { noremap = true, silent = true, })
+vim.api.nvim_set_keymap("x", "<C-k>", ":move '<-2<CR>gv-gv", { noremap = true, silent = true, })
+vim.api.nvim_set_keymap("x", "<C-j>", ":move '>+2<CR>gv-gv", { noremap = true, silent = true, })
+-- vim.api.nvim_set_keymap("n", "<C>k", ":move .-2<CR>==", { noremap = true, silent = true, })
+-- vim.api.nvim_set_keymap("n", "<C>j", ":move .+1<CR>==", { noremap = true, silent = true, })
 
 -- yank to the end of a line
 vim.api.nvim_set_keymap("n", "Y", "y$", { noremap = true, silent = true, })

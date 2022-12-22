@@ -56,13 +56,14 @@ M.setup = function()
       --green               = "#6A8D73",
       --cyan                = "#2E86AB",
       cyan                = "#56b6c2",
+      red                 = "#F56476",
       --orange              = "#e5c07b",
       --blue                = "#2E86AB",
       --yellow              = "#e5c07b",
       --yellow              = "#EEEDBF",
       --green               = '#00ffaa', -- redefine an existing color
-     -- purple              = "#DEC0F1",
-      purple = "#DCB6D5",
+      -- purple              = "#DEC0F1",
+      purple              = "#DCBDFB",
       beautiful_black     = '#343a43',
       test                = '#00ffaa',
       light_green         = '#C6EBC5',
@@ -94,7 +95,12 @@ M.setup = function()
       light_coral         = '#F49390',
       rose_dust           = "#A2666F",
       apricot             = "#FFD8BE",
-
+      -- GitHub Theme Colors
+      GORANGE             = "#F69D50",
+      GRED                = "#F47267",
+      GPURPPLE            = "#DCBDFB",
+      GBLUE               = "#65A8EC",
+      GBLUE_STRING        = "#93CCFA",
 
     }, -- Override the components of the nvim modules
     highlights = {
@@ -107,18 +113,18 @@ M.setup = function()
       Search = { fg = '$Davys_Grey', bg = '$Mindaro', fmt = 'bold' },
       CursorLineNr = { fg = '$light_green', fmt = 'bold' },
 
-      Terminal = { fg = '$beautiful_black', bg = '$beautiful_black' }, -- terminal color for nvim
-      EndOfBuffer = { fg = '$beautiful_black', bg = '$beautiful_black' }, -- End of buffer color
-      StatusLineTermNC    = { fg = '$light_green', bg = '$beautiful_black' },
-      VertSplit = { fg = '$light_green', bg = '$beautiful_black' }, -- when using vertical split
-      SignColumn = { fg = '$beautiful_black', bg = '$beautiful_black' }, -- SignColumn control the edge of nvim buffer
+      Terminal         = { fg = '$beautiful_black', bg = '$beautiful_black' }, -- terminal color for nvim
+      EndOfBuffer      = { fg = '$beautiful_black', bg = '$beautiful_black' }, -- End of buffer color
+      StatusLineTermNC = { fg = '$light_green', bg = '$beautiful_black' },
+      VertSplit        = { fg = '$light_green', bg = '$beautiful_black' }, -- when using vertical split
+      SignColumn       = { fg = '$beautiful_black', bg = '$beautiful_black' }, -- SignColumn control the edge of nvim buffer
 
       DiffAdded = { fg = '$light_green', bg = '$beautiful_black' },
       DiffviewStatusAdded = { fg = '$light_green', bf = '$beautiful_black' },
       DiffviewFilePanelInsertions = { fg = '$light_green', bf = '$beautiful_black' },
       DiffviewVertSplit = { fg = '$light_green', bf = '$beautiful_black' },
       -- Syntax
-      String = { fg = '$TeaGreen' }, -- For only string in nvim (will be alter by the tree-sitter
+      String = { fg = '$GBLUE_STRING' }, -- For only string in nvim (will be alter by the tree-sitter
       -- Tab color
       TabLine = { fg = '$beautiful_black', bg = '$beautiful_black' },
       TabLineFill = { fg = '$beautiful_black', bg = '$beautiful_black' },
@@ -170,10 +176,12 @@ M.setup = function()
       -- StatusLineTerm = {},
       -- StatusLineTermNC = { fg = '$beautiful_black' ,bg = '$beautiful_black' },
       -- Nvim-treesitter
-      TSString = { fg = '$TeaGreen' }, -- For only string in nvim
-      TSConstant = { fg = '$Light_Yellow' },
+      --TSString = { fg = '$GBLUE_STRING' }, -- For only string in nvim (Old format)
+      ['@String']   = { fg = '#91B5D0' },
+      --TSConstant = { fg = '$Light_Yellow' },
       -- got appended since the newest update for the tree-sitter
-     ['@constant']  = { fg = '$Light_Yellow' }
+      ['@constant'] = { fg = '$Light_Yellow' },
+
     }, -- Override highlight groups
 
 

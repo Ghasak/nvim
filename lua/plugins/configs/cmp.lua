@@ -83,13 +83,16 @@ function M.setup()
   vim.api.nvim_set_hl(0, "CmpItemKindColor", { bg = "#9FA4A9" })
   vim.api.nvim_set_hl(0, "CmpItemKindFile", { bg = "#C2D3CD" })
   vim.api.nvim_set_hl(0, "CmpItemKindReference", { bg = "#F2DC5D" })
-  vim.api.nvim_set_hl(0, "CmpItemKindFolder", { bg = "#F2A359" })
+  vim.api.nvim_set_hl(0, "CmpItemKindFolder", { bg = "#C2D3CD" })
   vim.api.nvim_set_hl(0, "CmpItemKindEvent", { bg = "#DB9065" })
   vim.api.nvim_set_hl(0, "CmpItemKindOperator", { bg = "#A4031F" })
   vim.api.nvim_set_hl(0, "CmpItemKindTypeParameter", { bg = "#9DC0BC" })
 
 
 
+-- TabNine
+local tabnine = require "cmp_tabnine.config"
+tabnine:setup { max_lines = 1000, max_num_results = 20, sort = true }
 
   -- nvim-cmp setup
   cmp.setup({
@@ -101,8 +104,10 @@ function M.setup()
       { name = "ultisnips" },
       { name = "vsnip" },
       { name = "look" },
+      { name = "neorg" },
       { name = "path" },
       { name = "cmp_tabnine" },
+      { name = "treesitter" },
       { name = "calc" },
       { name = "neosnippet" }, {
         name = "spell",
@@ -220,12 +225,13 @@ function M.setup()
           ultisnips = "[   UltiSnips]",
           luasnip = "[  LuaSnip]",
           latex_symbols = "[  Latex]",
+          neorg = "[  Neorg]",
           cmp_tabnine = "[  TabNine]",
           look = "[  Look]",
           path = "[  Path]",
           spell = "[暈 Spell]", -- This will be trigger once you allow spell-checking using F6, dont use vim.opt.spell = true, as it will be triggered everytime cmp loaded
           calc = "[  Calc]",
-          emoji = "[ﲃ  Emoji]"
+          emoji = "[ﲃ  Emoji]",
         })[entry.source.name]
 
         return vim_item
