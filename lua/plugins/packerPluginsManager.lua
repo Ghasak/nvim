@@ -119,10 +119,17 @@ return packer.startup(function(use)
   })
   use({ "nvim-lua/popup.nvim", opt = true }) -- An implementation of the Popup API from vim in Neovim
   use({ "nvim-lua/plenary.nvim", start = true, module = "plenary" })
-  use({ 'navarasu/onedark.nvim',
+  -- use({ 'navarasu/onedark.nvim',
+  --   config = function()
+  --     -- Lua
+  --     require("plugins.configs.onedark_config").setup()
+  --   end
+  -- })
+  -- GitHub with configuration
+  use({
+    'projekt0n/github-nvim-theme',
     config = function()
-      -- Lua
-      require("plugins.configs.onedark_config").setup()
+      require('plugins.configs.github_theme').setup()
     end
   })
 
@@ -377,7 +384,7 @@ return packer.startup(function(use)
   --  use({ "tpope/vim-dispatch" })
   --  use({ "tpope/vim-commentary" })
   --  use({ "tpope/vim-rhubarb", event = "VimEnter" })
-   use({ "tpope/vim-unimpaired",
+  use({ "tpope/vim-unimpaired",
     event = "InsertEnter",
   })
   --  use({ "tpope/vim-vinegar" })
@@ -517,7 +524,7 @@ return packer.startup(function(use)
   -- https://github.com/wellle/context.vim
   use { 'wellle/context.vim',
     event = 'InsertEnter',
-    cmd = {'ContextEnable'}
+    cmd = { 'ContextEnable' }
   }
   -- ==========================================================================
   -- 	                      Programming Language Servers

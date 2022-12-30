@@ -304,14 +304,17 @@ custom_onedark.inactive.b.bg = '#343a43'
 custom_onedark.inactive.c.bg = '#343a43'
 -- Configuations for the colors of the Normal mode
 --custom_onedark.normal.a.fg= '#00A9A5'    -- background color
-custom_onedark.normal.a.bg = '#94C9A9' -- lightgreen
+--custom_onedark.normal.a.bg = '#94C9A9' -- lightgreen
+custom_onedark.normal.a.bg = '#65A8EC' -- lightgreen
+custom_onedark.insert.a.bg = '#E18CA4' --
+custom_onedark.visual.a.bg = '#DCBDFB' --
 
 
 function M.setup()
   require('lualine').setup {
     options = {
       icons_enabled = true,
-      globalstatus = true,
+      globalstatus = false, -- this will make the statusline expand vertically across all other opened buffered such as nvimtree
       theme = custom_onedark,
       disabled_filetypes = {
         statusline = { 'packer', 'NvimTree', 'Telescope', 'Dashboard', 'Packer', 'FZF', 'Alpha' },
@@ -322,7 +325,7 @@ function M.setup()
       component_separators = { left = '', right = '' },
       ignore_focus = {},
       always_divide_middle = true,
-      globalstatus = false,
+      --globalstatus = false,
       refresh = {
         statusline = 1000,
         tabline = 1000,
