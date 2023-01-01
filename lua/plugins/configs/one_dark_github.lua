@@ -120,10 +120,12 @@ M.setup = function()
     }, -- Override the components of the nvim modules
     highlights = {
       -- Common
-      Normal       = { fg = "$white", bg = "$black" }, -- backgorund default color
-      Normalrc     = { fg = "$white", bg = "$black" }, -- backgorund default color
-      Visual       = { fg = '$Davys_Grey', bg = '$Charm_Pink', fmt = 'bold' },
-      CursorLine   = { bg = "#343a43" },
+      Normal      = { fg = "$white", bg = "$black" }, -- backgorund default color
+      Normalrc    = { fg = "$white", bg = "$black" }, -- backgorund default color
+      Visual      = { fg = '$Davys_Grey', bg = '$Charm_Pink', fmt = 'bold' },
+      CursorLine  = { bg = "#343a43" },
+      ColorColumn = { bg = "#3C434B" }, --  color of the ruler on the right of the text.
+
       --Normal = { fg = '$beautiful_black', bg = '$beautiful_black' }, -- backgorund default color
       --Normal = { fg = '#C3C3C3', bg = '$beautiful_black' }, -- backgorund default color
       --Normal       = { fg = '#E1E1E5', bg = '$beautiful_black' }, -- backgorund default color
@@ -132,8 +134,10 @@ M.setup = function()
       CursorLineNr = { fg = '#65A8EC', fmt = 'bold' },
 
       Terminal         = { fg = '$black', bg = '$black' }, -- terminal color for nvim
+      Floaterm         = { fg = '$black', bg = '$black' }, -- terminal color for nvim
       EndOfBuffer      = { fg = '$black', bg = '$black' }, -- End of buffer color
-      StatusLineTermNC = { fg = '$light_green', bg = '$black' },
+      StatusLineTermNC = { fg = '$black', bg = '$black' },
+      StatusLineTerm   = { fg = "$black", bg = "$black" },
       VertSplit        = { fg = '$blue', bg = '$black' }, -- when using vertical split
       SignColumn       = { fg = '$black', bg = '$black' }, -- SignColumn control the edge of nvim buffer
 
@@ -180,6 +184,12 @@ M.setup = function()
       DiagnosticVirtualTextWarn  = { bg = '$black', fg = '$apricot' },
       DiagnosticVirtualTextInfo  = { bg = '$black', fg = '$birght_navy_blue' },
       DiagnosticVirtualTextHint  = { bg = '$black', fg = '$cadet_Grey' },
+
+      -- LSP for virutalText
+      DiagnosticError = { bg = '$black', fg = '#F56476' },
+      DiagnosticWarn  = { bg = '$black', fg = '#FFD8BE' },
+      DiagnosticInfo  = { bg = '$black', fg = '#3E78B2' },
+      DiagnosticHint  = { bg = '$black', fg = '#97A7B3' },
       -- Color of the line number while there is an error, Info or Hint
       -- DiagnosticLineNrError      = { fg = "$light_Fiery_Rose" },
       -- DiagnosticLineNrWarn       = { fg = "$Light_Yellow" },
@@ -187,7 +197,7 @@ M.setup = function()
       -- DiagnosticLineNrHint       = { fg = '$purple' },
       -- LspDiagnosticsSignError    = { bg = '$light_Fiery_Rose', fg = '$light_green' },
       -- Third-party plugin (fidget: show lsp message at startup of the buffer)
-      FidgetTitle                = { fg = '$Charm_Pink', bg = '$Blush' },
+      FidgetTitle     = { fg = '$Charm_Pink', bg = '$Blush' },
 
       -- GGX = {fg = '#EEEDBF'}
       -- StatusLine
