@@ -119,20 +119,21 @@ return packer.startup(function(use)
   })
   use({ "nvim-lua/popup.nvim", opt = true }) -- An implementation of the Popup API from vim in Neovim
   use({ "nvim-lua/plenary.nvim", start = true, module = "plenary" })
-  -- use({ 'navarasu/onedark.nvim',
-  --   config = function()
-  --     -- Lua
-  --     require("plugins.configs.onedark_config").setup()
-  --   end
-  -- })
-  -- GitHub with configuration
-  use({
-    'projekt0n/github-nvim-theme',
+  -- Onedark theme
+  use({ 'navarasu/onedark.nvim',
     config = function()
-      require('plugins.configs.github_theme').setup()
+      -- Lua
+      require("plugins.configs.one_dark_github").setup()
     end
   })
-
+  -- GitHub with configuration
+  -- use({
+  --   'projekt0n/github-nvim-theme',
+  --   config = function()
+  --     require('plugins.configs.github_theme').setup()
+  --   end
+  -- })
+  --
   -- ==========================================================================
   -- 	                      Core Dependencies and Utilities
   -- ===========================================================================
@@ -157,6 +158,9 @@ return packer.startup(function(use)
       { "nvim-treesitter/nvim-treesitter-context", event = "InsertEnter", disable = false },
     },
   }
+  use({'nvim-treesitter/playground',
+    event = "InsertEnter"
+  })
 
 
   -- Better icons

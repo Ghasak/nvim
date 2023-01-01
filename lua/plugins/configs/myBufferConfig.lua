@@ -3,7 +3,7 @@ M = {}
 
 local colors = {
   white = "#E4FDE1",
-  darker_black = "#232323",
+  darker_black = "#22272e",
   black = "#282828", --  nvim bg
   black2 = "#2e2e2e",
   one_bg = "#353535",
@@ -35,7 +35,7 @@ local colors = {
   lightbg2 = "#303030",
   pmenu_bg = "#83a598",
   folder_bg = "#83a598",
-  beautiful_black = "#343a43",
+  beautiful_black = "#22272e",
 
 }
 

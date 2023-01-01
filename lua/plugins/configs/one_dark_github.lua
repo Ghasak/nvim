@@ -1,17 +1,18 @@
 local M = {}
 
 M.setup = function()
-  -- Lua
   -- Use a protected call so we don't error out on first use
   local status_ok, onedark = pcall(require, "onedark")
   if not status_ok then
     return
   end
+
   onedark.setup {
 
     -- Main options --
-    style = 'dark', -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
-    transparent = false, -- Show/hide background
+    style = 'dark', -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer'
+    --transparent = false, -- Show/hide background
+    transparent = true, -- Show/hide background
     term_colors = true, -- Change terminal color as per the selected theme style
     ending_tildes = false, -- Show the end-of-buffer tildes. By default they are hidden
     cmp_itemkind_reverse = false, -- reverse item kind highlights in cmp menu
@@ -41,6 +42,22 @@ M.setup = function()
     -- Global colors can be altered to fit the corresponding needs.
     -- Color names can be found here: ~/.local/share/nvim/site/pack/packer/start/onedark.nvim/lua/onedark/palette.lua
     colors = {
+      white               = "#adbac7",
+      black               = "#22272e", -- "#343a43",
+      red                 = "#f47067",
+      cyan                = "#f69d50",
+      blue                = "#6cb6ff",
+      purple              = "#f47067",
+      orange              = "#f69d50",
+      purple_e            = "#dcbdfb",
+      cyan_e              = "#81cad2",
+      -- white               = "#adbac7",
+      -- black               = "#22272e", -- "#343a43",
+      -- red                 = "#f47067",
+      -- cyan                = "#81cad2",
+      -- blue                = "#6cb6ff",
+      -- purple              = "#dcbdfb",
+      -- orange              = "#f69d50",
       Isbelline           = '#F2EFEA',
       Platinum            = '#E7E5DF',
       bright_orange       = "#ff8800", -- define a new color
@@ -55,15 +72,13 @@ M.setup = function()
       green               = "#B2C9AB", -- Laurel Green
       --green               = "#6A8D73",
       --cyan                = "#2E86AB",
-      cyan                = "#56b6c2",
-      red                 = "#F56476",
+      --cyan                = "#56b6c2",
       --orange              = "#e5c07b",
       --blue                = "#2E86AB",
       --yellow              = "#e5c07b",
       --yellow              = "#EEEDBF",
       --green               = '#00ffaa', -- redefine an existing color
       -- purple              = "#DEC0F1",
-      purple              = "#DCBDFB",
       beautiful_black     = '#343a43',
       test                = '#00ffaa',
       light_green         = '#C6EBC5',
@@ -105,40 +120,42 @@ M.setup = function()
     }, -- Override the components of the nvim modules
     highlights = {
       -- Common
+      Normal       = { fg = "$white", bg = "$black" }, -- backgorund default color
+      Normalrc     = { fg = "$white", bg = "$black" }, -- backgorund default color
       Visual       = { fg = '$Davys_Grey', bg = '$Charm_Pink', fmt = 'bold' },
+      CursorLine   = { bg = "#343a43" },
       --Normal = { fg = '$beautiful_black', bg = '$beautiful_black' }, -- backgorund default color
       --Normal = { fg = '#C3C3C3', bg = '$beautiful_black' }, -- backgorund default color
       --Normal       = { fg = '#E1E1E5', bg = '$beautiful_black' }, -- backgorund default color
-      Normal       = { fg = "#ffffff", bg = "#343a43" }, -- backgorund default color
       IncSearch    = { fg = '$light_orange', bg = '$Davys_Grey', fmt = 'reverse' },
       Search       = { fg = '$Davys_Grey', bg = '$Mindaro', fmt = 'bold' },
-      CursorLineNr = { fg = '$light_green', fmt = 'bold' },
+      CursorLineNr = { fg = '#65A8EC', fmt = 'bold' },
 
-      Terminal         = { fg = '$beautiful_black', bg = '$beautiful_black' }, -- terminal color for nvim
-      EndOfBuffer      = { fg = '$beautiful_black', bg = '$beautiful_black' }, -- End of buffer color
-      StatusLineTermNC = { fg = '$light_green', bg = '$beautiful_black' },
-      VertSplit        = { fg = '$light_green', bg = '$beautiful_black' }, -- when using vertical split
-      SignColumn       = { fg = '$beautiful_black', bg = '$beautiful_black' }, -- SignColumn control the edge of nvim buffer
+      Terminal         = { fg = '$black', bg = '$black' }, -- terminal color for nvim
+      EndOfBuffer      = { fg = '$black', bg = '$black' }, -- End of buffer color
+      StatusLineTermNC = { fg = '$light_green', bg = '$black' },
+      VertSplit        = { fg = '$blue', bg = '$black' }, -- when using vertical split
+      SignColumn       = { fg = '$black', bg = '$black' }, -- SignColumn control the edge of nvim buffer
 
-      DiffAdded = { fg = '$light_green', bg = '$beautiful_black' },
-      DiffviewStatusAdded = { fg = '$light_green', bf = '$beautiful_black' },
-      DiffviewFilePanelInsertions = { fg = '$light_green', bf = '$beautiful_black' },
-      DiffviewVertSplit = { fg = '$light_green', bf = '$beautiful_black' },
+      DiffAdded = { fg = '$light_green', bg = '$black' },
+      DiffviewStatusAdded = { fg = '$light_green', bf = '$black' },
+      DiffviewFilePanelInsertions = { fg = '$light_green', bf = '$black' },
+      DiffviewVertSplit = { fg = '$light_green', bf = '$black' },
       -- Syntax
       String = { fg = '$GBLUE_STRING' }, -- For only string in nvim (will be alter by the tree-sitter
       -- Tab color
-      TabLine = { fg = '$beautiful_black', bg = '$beautiful_black' },
-      TabLineFill = { fg = '$beautiful_black', bg = '$beautiful_black' },
-      TabLineSel = { fg = '$beautiful_black', bg = '$beautiful_black' },
+      TabLine = { fg = '$black', bg = '$black' },
+      TabLineFill = { fg = '$black', bg = '$black' },
+      TabLineSel = { fg = '$black', bg = '$black' },
 
       Constant            = { fg = '$Light_Yellow' },
       Comment             = { fg = "#97A7B3" }, -- any comment
-      --StatusLineNC = { fg = '$beautiful_black', bg = '$beautiful_black' },
+      --StatusLineNC = { fg = '$black', bg = '$black' },
       -- nvim-tree
-      NvimTreeVertSplit   = { bg = '$beautiful_black' }, -- When you split inside nvim-tree the fg will be activited
-      NvimTreeNormal      = { bg = '$beautiful_black', bf = '$beautiful_black' }, -- fg means files names, folder names ..etc.
-      NvimTreeEndOfBuffer = { fg = '$light_green', bg = '$beautiful_black' },
-      NvimTreeGitNew      = { fg = '$light_green', bg = '$beautiful_black' }, -- This will change only the the edge of the nvim-tree
+      NvimTreeVertSplit   = { bg = '$black' }, -- When you split inside nvim-tree the fg will be activited
+      NvimTreeNormal      = { bg = '$black', bf = '$black' }, -- fg means files names, folder names ..etc.
+      NvimTreeEndOfBuffer = { fg = '$light_green', bg = '$black' },
+      NvimTreeGitNew      = { fg = '$light_green', bg = '$black' }, -- This will change only the the edge of the nvim-tree
 
       -- plugins: gitsigns
       GitSignsAdd = { fg = '$light_green' },
@@ -147,22 +164,22 @@ M.setup = function()
 
       -- plugins: barbar for bufferline configurations:
       -- BufferCurrent = { fmt = "bold" },
-      BufferCurrentMod = { fg = '$beautiful_black', bg = '$beautiful_black' },
-      BufferCurrentSign = { fg = '$beautiful_black', bg = '$beautiful_black' },
-      BufferInactiveMod = { fg = '$beautiful_black', bg = '$beautiful_black' },
-      BufferVisible = { fg = '$beautiful_black', bg = '$beautiful_black' },
-      BufferVisibleMod = { fg = '$beautiful_black', bg = '$beautiful_black' },
-      BufferVisibleIndex = { fg = '$beautiful_black', bg = '$beautiful_black' },
-      BufferVisibleSign = { fg = '$beautiful_black', bg = '$beautiful_black' },
-      BufferVisibleTarget = { fg = '$beautiful_black', bg = '$beautiful_black' },
+      BufferCurrentMod = { fg = '$black', bg = '$black' },
+      BufferCurrentSign = { fg = '$black', bg = '$black' },
+      BufferInactiveMod = { fg = '$black', bg = '$black' },
+      BufferVisible = { fg = '$black', bg = '$black' },
+      BufferVisibleMod = { fg = '$black', bg = '$black' },
+      BufferVisibleIndex = { fg = '$black', bg = '$black' },
+      BufferVisibleSign = { fg = '$black', bg = '$black' },
+      BufferVisibleTarget = { fg = '$black', bg = '$black' },
 
 
       -- LSP configruations
       --  For the virtual text which is shown next to each code line
-      DiagnosticVirtualTextError = { bg = '$beautiful_black', fg = '$light_Fiery_Rose' },
-      DiagnosticVirtualTextWarn  = { bg = '$beautiful_black', fg = '$apricot' },
-      DiagnosticVirtualTextInfo  = { bg = '$beautiful_black', fg = '$birght_navy_blue' },
-      DiagnosticVirtualTextHint  = { bg = '$beautiful_black', fg = '$cadet_Grey' },
+      DiagnosticVirtualTextError = { bg = '$black', fg = '$light_Fiery_Rose' },
+      DiagnosticVirtualTextWarn  = { bg = '$black', fg = '$apricot' },
+      DiagnosticVirtualTextInfo  = { bg = '$black', fg = '$birght_navy_blue' },
+      DiagnosticVirtualTextHint  = { bg = '$black', fg = '$cadet_Grey' },
       -- Color of the line number while there is an error, Info or Hint
       -- DiagnosticLineNrError      = { fg = "$light_Fiery_Rose" },
       -- DiagnosticLineNrWarn       = { fg = "$Light_Yellow" },
@@ -176,16 +193,51 @@ M.setup = function()
       -- StatusLine
       -- StatusLine = { fg = '#DADFF7' ,bg = '#008DD5' },
       -- StatusLineTerm = {},
-      -- StatusLineTermNC = { fg = '$beautiful_black' ,bg = '$beautiful_black' },
+      -- StatusLineTermNC = { fg = '$black' ,bg = '$black' },
       -- Nvim-treesitter
       --TSString = { fg = '$GBLUE_STRING' }, -- For only string in nvim (Old format)
-      ['@String']   = { fg = '#91B5D0' },
+      ['@String']           = { fg = '#96d0ff' },
       --TSConstant = { fg = '$Light_Yellow' },
       -- got appended since the newest update for the tree-sitter
-      ['@constant'] = { fg = '$Light_Yellow' },
-      ["@comment"]  = { fg = "#97A7B3" },
-      ["@text"]     = { fg = "#E1E1E5", },
+      ['@constant']         = { fg = '$Light_Yellow' },
+      ["@comment"]          = { fg = "#768390" },
+      --["@text"]     = { fg = "#adbac7", },
+      ["@method"]           = { fg = "$purple_e" },
+      ["@function"]         = { fg = "$purple_e" },
+      ["@function.builtin"] = { fg = "$purple_e" },
+      ["@keyword"]          = { fg = "$red" },
+      ["@boolean"]          = { fg = "$blue" },
+      ["@property"]         = { fg = "$cyan" },
+      ["@attribute"]        = { fg = "$cyan" },
+      ["@symbol"]           = { fg = "$purple_e" },
+      ["@variable"]         = { fg = "$white" },
+      ["@field"]            = { fg = "$white" },
+      ["@variable.builtin"] = { fg = "$white" },
+      ["@parameter"]        = { fg = "$white" },
+      ["@keyword.function"] = { fg = "$red" },
+      ["@keyword.return"]   = { fg = "$red" },
+      ["@function.call"]    = { fg = "$purple_e" },
+      ["@constant.builtin"] = { fg = "$purple_e" },
+      ["@constructor"]      = { fg = "$orange" },
+      ["@operator"]         = { fg = "$blue" },
+      ["@number"]           = { fg = "$blue" },
+      ["@type"]             = { fg = "$orange" },
+      -- Pmenu components
+      Pmenu                 = { bg = "$black" }, -- Popup menu: normal item.
+      --PmenuSel       = { fg = c.pmenu.bg, bg = util.darken(c.bright_blue, 0.75) }, -- Popup menu: selected item.
+      --PmenuSbar      = { bg = "#DCBDFB" }, -- Popup menu: scrollbar.
+      PmenuThumb            = { bg = "#65A8EC" }, -- Popup menu: Thumb of the scrollbar.
+      FloatBorder           = { fg = "#E1E1E5", bg = "$black" },
 
+      TelescopeBorder = { fg = "$blue" },
+      TelescopePromptBorder = { fg = "$blue" },
+      TelescopeResultsBorder = { fg = "$blue" },
+      TelescopePreviewBorder = { fg = "$blue" },
+      TelescopeTitle = { fg = "$red", fmt = "bold" },
+      TelescopeMatching = { fg = "$red", fmt = "bold" },
+      TelescopePromptPrefix = { fg = "$blue" },
+      TelescopeSelection = { bg = "$blue" },
+      -- TelescopeSelectionCaret = colors.Yellow
     }, -- Override highlight groups
 
 
@@ -196,7 +248,10 @@ M.setup = function()
       background = false, -- use background color for virtual text
     },
   }
+
   onedark.load()
+
 end
+
 
 return M

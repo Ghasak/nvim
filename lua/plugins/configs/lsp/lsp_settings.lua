@@ -3,10 +3,14 @@ local M = {}
 M.setup = function()
   local signs = {
 
-    { name = "DiagnosticSignError", text = "" ,texthl=DiagnosticSignError,linehl = {}, numhl=DiagnosticLineNrError},
-    { name = "DiagnosticSignWarn",  text = "כֿ" ,texthl=DiagnosticSignWarn ,linehl = {}, numhl=DiagnosticLineNrWarn },
-    { name = "DiagnosticSignHint",  text = "" ,texthl=DiagnosticSignInfo ,linehl = {}, numhl=DiagnosticLineNrInfo },
-    { name = "DiagnosticSignInfo",  text = "" ,texthl=DiagnosticSignHint ,linehl = {}, numhl=DiagnosticLineNrHint },
+    -- { name = "DiagnosticSignError", text = "" ,texthl=DiagnosticSignError,linehl = {}, numhl=DiagnosticLineNrError},
+    -- { name = "DiagnosticSignWarn",  text = "כֿ" ,texthl=DiagnosticSignWarn ,linehl = {}, numhl=DiagnosticLineNrWarn },
+    -- { name = "DiagnosticSignHint",  text = "" ,texthl=DiagnosticSignInfo ,linehl = {}, numhl=DiagnosticLineNrInfo },
+    -- { name = "DiagnosticSignInfo",  text = "" ,texthl=DiagnosticSignHint ,linehl = {}, numhl=DiagnosticLineNrHint },
+    { name = "DiagnosticSignError", text = "" ,texthl=DiagnosticError,linehl = {}, numhl=DiagnosticLineNrError},
+    { name = "DiagnosticSignWarn",  text = "כֿ" ,texthl=DiagnosticWarn ,linehl = {}, numhl=DiagnosticLineNrWarn },
+    { name = "DiagnosticSignHint",  text = "" ,texthl=DiagnosticInfo ,linehl = {}, numhl=DiagnosticLineNrInfo },
+    { name = "DiagnosticSignInfo",  text = "" ,texthl=DiagnosticHint ,linehl = {}, numhl=DiagnosticLineNrHint },
   }
   for _, sign in ipairs(signs) do
     vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })

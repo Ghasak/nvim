@@ -295,13 +295,13 @@ end
 -- Check .local/share/nvim/site/pack/packer/opt/lualine.nvim/lua/lualine/themes/onedark.lua
 local custom_onedark = require 'lualine.themes.onedark'
 -- Change the background of lualine_c section for normal mode
-custom_onedark.normal.c.bg = '#343a43'
+custom_onedark.normal.c.bg = '$black'
 -- When we open/switch to another buffer (such as vsplit, nvimtree), it will be inactive
 -- In orginal common style for stausline without the (lualine) it has a name called NC
 -- (StatusLineNC = { fg = '$beautiful_black' ,bg = '$beautiful_black' } which can be added to the config of Onedark
-custom_onedark.inactive.a.bg = '#343a43'
-custom_onedark.inactive.b.bg = '#343a43'
-custom_onedark.inactive.c.bg = '#343a43'
+custom_onedark.inactive.a.bg = '$black'
+custom_onedark.inactive.b.bg = '$black'
+custom_onedark.inactive.c.bg = '$black'
 -- Configuations for the colors of the Normal mode
 --custom_onedark.normal.a.fg= '#00A9A5'    -- background color
 --custom_onedark.normal.a.bg = '#94C9A9' -- lightgreen
@@ -316,6 +316,7 @@ function M.setup()
       icons_enabled = true,
       globalstatus = false, -- this will make the statusline expand vertically across all other opened buffered such as nvimtree
       theme = custom_onedark,
+      --theme = "github_dimmed",
       disabled_filetypes = {
         statusline = { 'packer', 'NvimTree', 'Telescope', 'Dashboard', 'Packer', 'FZF', 'Alpha' },
         winbar = {}, -- only ignores the ft for winbar.
