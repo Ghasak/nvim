@@ -246,7 +246,7 @@ M.setup = function()
       TelescopeTitle = { fg = "$red", fmt = "bold" },
       TelescopeMatching = { fg = "$red", fmt = "bold" },
       TelescopePromptPrefix = { fg = "$blue" },
-      TelescopeSelection = { bg = "$blue" },
+      TelescopeSelection = { fg = "$blue", fmt = "bold" },
       -- TelescopeSelectionCaret = colors.Yellow
     }, -- Override highlight groups
 
