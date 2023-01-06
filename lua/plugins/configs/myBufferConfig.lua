@@ -19,8 +19,8 @@ local colors = {
   --line = "#2c2f30",            -- for lines like vertsplit
   line = "#ff75a0", -- for lines like vertsplit
   --green = "#b8bb26",
-  --green = '#C6EBC5',
-  green = '#6cb6ff',
+  green = '#C6EBC5',
+  blue_e = '#6cb6ff',
   vibrant_green = "#a9b665",
   nord_blue = "#83a598",
   blue = "#458588",
@@ -139,7 +139,7 @@ M.setup = function()
         bg = colors.beautiful_black, -- This is the color that will fill the entire tab bar
       },
       indicator_selected = {
-        fg = colors.green,
+        fg = colors.blue_e,
         bg = colors.beautiful_black,
       },
 
