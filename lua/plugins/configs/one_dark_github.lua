@@ -141,7 +141,7 @@ M.setup = function()
       VertSplit        = { fg = '$blue', bg = '$black' }, -- when using vertical split
       SignColumn       = { fg = '$black', bg = '$black' }, -- SignColumn control the edge of nvim buffer
 
-      DiffAdded = { fg = '$light_green', bg = '$black' },
+      DiffAdded = { fg = '$red', bg = '$black' },
       DiffviewStatusAdded = { fg = '$light_green', bf = '$black' },
       DiffviewFilePanelInsertions = { fg = '$light_green', bf = '$black' },
       DiffviewVertSplit = { fg = '$light_green', bf = '$black' },
@@ -162,9 +162,9 @@ M.setup = function()
       NvimTreeGitNew      = { fg = '$light_green', bg = '$black' }, -- This will change only the the edge of the nvim-tree
 
       -- plugins: gitsigns
-      GitSignsAdd = { fg = '$light_green' },
-      GitSignsAddLn = { fg = '$light_green' },
-      GitSignsAddNr = { fg = '$light_green' },
+      GitSignsAdd = { fg = '$blue' },
+      GitSignsAddLn = { fg = '$blue' },
+      GitSignsAddNr = { fg = '$blue' },
 
       -- plugins: barbar for bufferline configurations:
       -- BufferCurrent = { fmt = "bold" },
@@ -239,10 +239,10 @@ M.setup = function()
       PmenuThumb            = { bg = "#65A8EC" }, -- Popup menu: Thumb of the scrollbar.
       FloatBorder           = { fg = "#E1E1E5", bg = "$black" },
 
-      TelescopeBorder = { fg = "$blue" },
-      TelescopePromptBorder = { fg = "$blue" },
-      TelescopeResultsBorder = { fg = "$blue" },
-      TelescopePreviewBorder = { fg = "$blue" },
+      TelescopeBorder = { fg = "#E1E1E5" },
+      TelescopePromptBorder = { fg = "#E1E1E5" },
+      TelescopeResultsBorder = { fg = "#E1E1E5" },
+      TelescopePreviewBorder = { fg = "#E1E1E5" },
       TelescopeTitle = { fg = "$red", fmt = "bold" },
       TelescopeMatching = { fg = "$red", fmt = "bold" },
       TelescopePromptPrefix = { fg = "$blue" },

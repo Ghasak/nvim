@@ -37,11 +37,14 @@ This plugin is used for replacing yanked word with support to the command (.)
   })
 ```
 
+
+## Past inside a quote
+For "replace-inner-quotes-to-yanked-text" you can use vi"p
+
 - Rules
 2. To yank a word:   `y`+`w`
 3. To replace with a registered yanked word:  `g`+`r`+`w`
 4. Repeat the yanked word using `.`
 
-
-
-
+## Reference
+- [How can replace string in quotes with string from buffer](https://stackoverflow.com/questions/4483743/how-can-replace-string-in-quotes-with-string-from-buffer)
