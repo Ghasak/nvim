@@ -158,7 +158,7 @@ return packer.startup(function(use)
       { "nvim-treesitter/nvim-treesitter-context", event = "InsertEnter", disable = false },
     },
   }
-  use({'nvim-treesitter/playground',
+  use({ 'nvim-treesitter/playground',
     event = "InsertEnter"
   })
 
@@ -199,7 +199,7 @@ return packer.startup(function(use)
 			PackerLoad telescope-ui-select.nvim
 			]]    )
         require("telescope").load_extension("ui-select")
-        vim.ui.select(items, opts, on_choice)
+        --vim.ui.select(items, opts, on_choice)
       end
     end,
   })
@@ -296,7 +296,7 @@ return packer.startup(function(use)
     event = "CursorMoved",
     wants = "nvim-web-devicons",
     config = function()
-      require("plugins.configs.myBufferConfig").setup()
+      require("plugins.configs.myBufferConfig").config()
     end,
   }
 

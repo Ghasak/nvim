@@ -34,30 +34,30 @@
 --                      %%%;vv;%;vv;%%%v;%%%%;vvv;%%%v;%%%;vvv;%;vv;%%%%%;vv;%%%;vvv;.%%%,                                     --
 --                                                                                                                             --
 --                     You are about to experience a potent dosage of Neovim Watch your steps.                                 --
---                                                Version 0.8                                                                  --
+--                                                Version 0.9                                                                  --
 --                              ╔══════════════════════════════════════════╗                                                   --
 --                              ║           ⎋  HERE BE VIMPIRES ⎋          ║                                                   --
 --                              ╚══════════════════════════════════════════╝                                                   --
 -- ------------------------------------------------------------------------------------------------------------------------------
 --
-
-
-
 local load_module = function(mod_name)
-  local ok, err = pcall(require, mod_name)
-  if not ok then
-    local msg = "failed loading: " .. mod_name .. "\n " .. err
-    vim.notify(msg, vim.log.levels.ERROR)
-  end
+	local ok, err = pcall(require, mod_name)
+	if not ok then
+		local msg = "failed loading: " .. mod_name .. "\n " .. err
+		vim.notify(msg, vim.log.levels.ERROR)
+	end
 end
 
 local init_modules = {
-  'plugins', 'core', 'settings', --'scripts', 'dev'
+	"plugins",
+	"core",
+	"settings", -- 'scripts', 'dev'
 }
-for _, module in ipairs(init_modules) do load_module(module) end
+for _, module in ipairs(init_modules) do
+	load_module(module)
+end
 
 -- Loading the neovide configurations, once it neovide is lunched.
 if vim.g.neovide then
-  require("units.neovideConfig").neovide_config()
+	require("units.neovideConfig").neovide_config()
 end
-

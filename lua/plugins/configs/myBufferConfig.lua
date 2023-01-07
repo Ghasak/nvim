@@ -2,7 +2,7 @@ M = {}
 
 
 local colors = {
-  white = "#E4FDE1",
+  white = "#adbac7",
   darker_black = "#343a43",
   black = "#343a43", --  nvim bg
   black2 = "#343a43",
@@ -43,7 +43,7 @@ local colors = {
 
 --- @module "bufferline.colors"
 
-M.setup = function()
+M.config = function()
 
   require("bufferline").setup {
     options = {
