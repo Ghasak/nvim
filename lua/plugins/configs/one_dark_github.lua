@@ -43,7 +43,7 @@ M.setup = function()
     -- Color names can be found here: ~/.local/share/nvim/site/pack/packer/start/onedark.nvim/lua/onedark/palette.lua
     colors = {
       white               = "#adbac7",
-      black               = "#22272e", -- "#343a43",
+      black               = "#343a43", -- "#343a43",
       red                 = "#f47067",
       cyan                = "#f69d50",
       blue                = "#6cb6ff",
