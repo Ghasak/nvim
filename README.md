@@ -451,7 +451,8 @@ _G.highlight_upper_letter_cases = function()
     vim.api.nvim_command([[syn match GGX /[A-Z]+/]])
     vim.api.nvim_command([[syn match GGX /[A-Z]\{2,\}/]])
     vim.api.nvim_command([[syn match GGX "\v<[A-Z]+>"]])
-    -- this will be executed only when open vim on event VimEnter (then source all nvim files), should not be used (affecting the markdown)
+    -- this will be executed only when open vim on event VimEnter (then source
+    -- all nvim files), should not be used (affecting the markdown)
     vim.cmd([[autocmd VimEnter ~/.config/nvim/* source %]])
 end
 ```
@@ -476,5 +477,4 @@ Configurations : to change the color, you need to consider to which level you wa
 
 ## MEASURE SPEED OF NEOVIM
 - [Speedup Neovim ](https://aca.github.io/neovim_startuptime.html)
-
 

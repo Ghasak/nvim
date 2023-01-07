@@ -127,9 +127,9 @@ M.setup = function()
       -- Syntax
       String = { fg = '$GBLUE_STRING' }, -- For only string in nvim (will be alter by the tree-sitter
       -- Tab color
-      TabLine = { fg = '$beautiful_black', bg = '$beautiful_black' },
-      TabLineFill = { fg = '$beautiful_black', bg = '$beautiful_black' },
-      TabLineSel = { fg = '$beautiful_black', bg = '$beautiful_black' },
+      TabLine = { fg = '$white', bg = '$beautiful_black' },
+      TabLineFill = { fg = '$white', bg = '$beautiful_black' },
+      TabLineSel = { fg = '$white', bg = '$beautiful_black' },
 
       Constant            = { fg = '$Light_Yellow' },
       Comment             = { fg = "#97A7B3" }, -- any comment

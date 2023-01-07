@@ -39,7 +39,11 @@ M.custom_attach = function(client, bufnr)
       local opts = {
         focusable = false,
         close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-        border = 'rounded',
+        --border = 'rounded',
+
+        border = {
+          "╔", "═", "╗", "║", "╝", "═", "╚", "║",
+        },
         source = 'always',
         prefix = ' ',
         scope = 'cursor',
@@ -49,9 +53,9 @@ M.custom_attach = function(client, bufnr)
   })
   if client.server_capabilities.documentHighlightProvider then -- Since Nvim v.0.8
     vim.cmd [[
-          hi LspReferenceRead cterm=bold ctermbg=black guibg=#FAFF7F
-          hi LspReferenceText cterm=bold ctermbg=black guibg=#505050
-          hi LspReferenceWrite cterm=bold ctermbg=black guibg=#E5989B
+          hi LspReferenceRead cterm=bold ctermbg=black guibg=#FAFF7F  guifg=#343a43
+          hi LspReferenceText cterm=bold ctermbg=black guibg=#505050  guifg=#343a43
+          hi LspReferenceWrite cterm=bold ctermbg=black guibg=#E5989B guifg=#343a43
  ]]
     vim.api.nvim_create_augroup('lsp_document_highlight', {
       clear = false

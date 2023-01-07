@@ -2,17 +2,18 @@ M = {}
 
 
 local colors = {
-  white = "#adbac7",
+  white = "#ffffff",
   darker_black = "#343a43",
   black = "#343a43", --  nvim bg
   black2 = "#343a43",
   one_bg = "#353535",
-  one_bg2 = "#3f3f3f",
-  one_bg3 = "#444444",
-  grey = "#464646",
-  grey_fg = "#4e4e4e",
-  grey_fg2 = "#505050",
-  light_grey = "#565656",
+  one_bg2 = "#353535",
+  one_bg3 = "#353535",
+  grey = "#adbac7",
+  grey_e = "#adbac7",
+  grey_fg = "#adbac7",
+  grey_fg2 = "#adbac7",
+  light_grey = "#adbac7",
   red = "#fb4934",
   baby_pink = "#cc241d",
   pink = "#ff75a0",
@@ -31,7 +32,7 @@ local colors = {
   teal = "#749689",
   orange = "#e78a4e",
   cyan = "#82b3a8",
-  statusline_bg = "#2c2c2c",
+  statusline_bg = "#343a43",
   lightbg = "#353535",
   lightbg2 = "#303030",
   pmenu_bg = "#83a598",
@@ -93,7 +94,7 @@ M.config = function()
 
     highlights = {
       background = {
-        fg = colors.black0,
+        fg = colors.grey_e,
         --bg = colors.black2,
         bg = colors.beautiful_black,
       },
@@ -103,7 +104,7 @@ M.config = function()
         fg = colors.white,
         --bg = colors.black,
         bg = colors.beautiful_black,
-        fmt = "bold",
+        fmt = "bold"
       },
       buffer_visible = {
         fg = colors.grey,

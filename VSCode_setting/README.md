@@ -1,6 +1,7 @@
 # Integrate VSCode with Neovim
 
-There are several steps are needed to accomplish this integration. Here is a quick summary on how to do so,
+There are several steps are needed to accomplish this integration. Here is a
+quick summary on how to do so,
 
 ![VSCode with Nvim 0.6](./SS-01.png)
 
@@ -29,8 +30,8 @@ ln -s ~/dev/bin/nvim  /usr/local/bin/nvim
 you will add the following in the `VSCode Setting file`,
 
 ## For Virtualenv or a new python
-To ensure things are working you need to install `pynvim` integrated with the python that you are working on
-I usuaully use
+To ensure things are working you need to install `pynvim` integrated with the
+python that you are working on I usuaully use:
 
 ### For Global python
 ```shell
