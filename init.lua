@@ -62,7 +62,3 @@ if vim.g.neovide then
   require("units.neovideConfig").neovide_config()
 end
 
-
-
-
-
