@@ -1,14 +1,13 @@
 M = {}
 
-
 local colors = {
   white = "#ffffff",
-  darker_black = "#343a43",
-  black = "#343a43", --  nvim bg
-  black2 = "#343a43",
-  one_bg = "#353535",
-  one_bg2 = "#353535",
-  one_bg3 = "#353535",
+  darker_black = "#2d333b",
+  black = "#2d333b", --  nvim bg
+  black2 = "#2d333b",
+  one_bg = "#2d333b",
+  one_bg2 = "#2d333b",
+  one_bg3 = "#2d333b",
   grey = "#adbac7",
   grey_e = "#adbac7",
   grey_fg = "#adbac7",
@@ -20,8 +19,8 @@ local colors = {
   --line = "#2c2f30",            -- for lines like vertsplit
   line = "#ff75a0", -- for lines like vertsplit
   --green = "#b8bb26",
-  green = '#C6EBC5',
-  blue_e = '#6cb6ff',
+  green = "#C6EBC5",
+  blue_e = "#6cb6ff",
   vibrant_green = "#a9b665",
   nord_blue = "#83a598",
   blue = "#458588",
@@ -32,35 +31,32 @@ local colors = {
   teal = "#749689",
   orange = "#e78a4e",
   cyan = "#82b3a8",
-  statusline_bg = "#343a43",
-  lightbg = "#353535",
-  lightbg2 = "#343a43",
+  statusline_bg = "#2d333b",
+  lightbg = "#2d333b",
+  lightbg2 = "#2d333b",
   pmenu_bg = "#83a598",
   folder_bg = "#83a598",
-  beautiful_black = "#343a43",
-
+  beautiful_black = "#2d333b",
 }
-
 
 --- @module "bufferline.colors"
 
 M.config = function()
-
-  require("bufferline").setup {
+  require("bufferline").setup({
     options = {
       numbers = "ordinal",
       right_mouse_command = "bdelete! %d",
       left_mosue_command = "buffer %d",
       -- indicator_icon = '▎',
       indicator = {
-        icon = '▐',
+        icon = "▐",
         style = "icon",
       },
-      buffer_close_icon = '',
-      modified_icon = '', --'●',
-      close_icon = '',
-      left_trunc_marker = '',
-      right_trunc_marker = '',
+      buffer_close_icon = "",
+      modified_icon = "", --'●',
+      close_icon = "",
+      left_trunc_marker = "",
+      right_trunc_marker = "",
       max_name_length = 14,
       max_prefix_length = 13,
       tab_size = 20,
@@ -71,7 +67,7 @@ M.config = function()
       separator_style = "thin",
       always_show_bufferline = true,
       --diagnostics = false, -- "or nvim_lsp"
-      diagnostics = 'nvim_lsp', -- "or nvim_lsp"
+      diagnostics = "nvim_lsp", -- "or nvim_lsp"
       custom_filter = function(buf_number)
         -- Func to filter out our managed/persistent split terms
         local present_type, type = pcall(function()
@@ -105,20 +101,20 @@ M.config = function()
         fmt = "bold",
       },
       buffer_visible = {
-        fg = colors.grey,
+        fg = colors.white,
         --bg = colors.black2,
         bg = colors.beautiful_black,
       },
 
       -- FOR DIAGNOSTICS = "NVIM_LSP"
-      error = {
-        fg = colors.beautiful_black,
-        bg = colors.beautiful_black,
-      },
-      error_diagnostic = {
-        fg = colors.beautiful_black,
-        bg = colors.beautiful_black,
-      },
+      -- error = {
+      -- 	fg = colors.beautiful_black,
+      -- 	bg = colors.beautiful_black,
+      -- },
+      -- error_diagnostic = {
+      -- 	fg = colors.beautiful_black,
+      -- 	bg = colors.beautiful_black,
+      -- },
 
       -- close buttons
       close_button = {
@@ -190,7 +186,7 @@ M.config = function()
         bold = true,
       },
 
-      numbers_visible = {
+      numbers_visible  = {
         fg = colors.grey,
         bg = colors.beautiful_black,
       },
@@ -200,10 +196,40 @@ M.config = function()
         bold = true,
         --italic = true,
       },
+      pick_selected    = {
+        fg = colors.red,
+        --bg = '<colour-value-here>',
+        bold = true,
+        italic = true,
+      },
+      pick_visible     = {
+        fg = colors.red,
+        --bg = '<colour-value-here>',
+        bold = true,
+        italic = true,
+      },
+      pick             = {
+        fg = colors.red,
+        --bg = '<colour-value-here>',
+        bold = true,
+        italic = true,
+      },
+      -- pick_visible = {
+      --   fg = '<colour-value-here>',
+      --   bg = '<colour-value-here>',
+      --   bold = true,
+      --   italic = true,
+      -- },
+      -- pick = {
+      --   fg = '<colour-value-here>',
+      --   bg = '<colour-value-here>',
+      --   bold = true,
+      --   italic = true,
+      -- },
 
-    }
-  }
 
+    },
+  })
 end
 
 return M
