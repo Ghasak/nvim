@@ -30,15 +30,20 @@ ln -s ~/dev/bin/nvim  /usr/local/bin/nvim
 you will add the following in the `VSCode Setting file`,
 
 ## For Virtualenv or a new python
+
 To ensure things are working you need to install `pynvim` integrated with the
 python that you are working on I usuaully use:
 
 ### For Global python
+
 ```shell
 python3 -m install --user --upgrade pynvim
 ```
+
 ### For virtualenv python
+
 this will work for both `pipenv` or `virtualenv`
+
 ```shell
 python3 -m install --upgrade pynvim
 ```
@@ -51,12 +56,13 @@ python3 -m install --upgrade pynvim
 ```
 
 ## Applying Color Scheme in VSCode
+
 Read here:
+
 - [VSCode - How do I change the color of constants only in a javaScript? ](https://stackoverflow.com/questions/61829218/vscode-how-do-i-change-the-color-of-constants-only-in-a-javascript-file)
 - [How to Create a Custom VS Code Theme (2020) | Step-by-Step | Debut of codeStack dark-theme](https://www.youtube.com/watch?v=QCqWzb-9Sy8&t=441s)
 - [How to Make your own VSCode Theme!](https://www.youtube.com/watch?v=pGzssFNtWXw&t=599s)
 
 ## References
+
 -[How to integrate python with vscode nvim](https://www.reddit.com/r/neovim/comments/i65pwd/no_python3_provider_found_run_checkhealth_provider/)
-
-

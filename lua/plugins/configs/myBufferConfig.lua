@@ -34,7 +34,7 @@ local colors = {
   cyan = "#82b3a8",
   statusline_bg = "#343a43",
   lightbg = "#353535",
-  lightbg2 = "#303030",
+  lightbg2 = "#343a43",
   pmenu_bg = "#83a598",
   folder_bg = "#83a598",
   beautiful_black = "#343a43",
@@ -53,7 +53,7 @@ M.config = function()
       left_mosue_command = "buffer %d",
       -- indicator_icon = '▎',
       indicator = {
-        icon ='▐',
+        icon = '▐',
         style = "icon",
       },
       buffer_close_icon = '',
@@ -95,16 +95,14 @@ M.config = function()
     highlights = {
       background = {
         fg = colors.grey_e,
-        --bg = colors.black2,
         bg = colors.beautiful_black,
       },
 
       -- buffers
       buffer_selected = {
         fg = colors.white,
-        --bg = colors.black,
         bg = colors.beautiful_black,
-        fmt = "bold"
+        fmt = "bold",
       },
       buffer_visible = {
         fg = colors.grey,
@@ -184,6 +182,23 @@ M.config = function()
       tab_close = {
         fg = colors.red,
         bg = colors.beautiful_black,
+      },
+      -- Style for the numbers in the tab
+      numbers = {
+        fg = colors.grey,
+        bg = colors.beautiful_black,
+        bold = true,
+      },
+
+      numbers_visible = {
+        fg = colors.grey,
+        bg = colors.beautiful_black,
+      },
+      numbers_selected = {
+        fg = colors.blue_e,
+        bg = colors.beautiful_black,
+        bold = true,
+        --italic = true,
       },
 
     }
