@@ -62,12 +62,12 @@ set write
 --              Spelling and dictionary
 --        This takes so much time costing around 30 millsec
 -----------------------------------------------------------
---vim.cmd([[
+-- vim.cmd([[
 --    set spell
 --    set spelllang=en_us
 --    "set spellfile = /usr/share/myspell/en_US.dic
---]])
---vim.cmd("set dictionary+=/usr/share/dict/words")
+-- ]])
+-- vim.cmd("set dictionary+=/usr/share/dict/words")
 -- Now we trigger the spell-checking using <F6>
 -- These options to trigger the spelling attachment.
 -- vim.opt.spell = true
@@ -78,8 +78,8 @@ set write
 -- cmd[[set guicursor=a:/iCursor-blinkon40-blinkoff40-blinkwait10]]   -- To change the  cursor options such as the size and blinking, not used at the moment
 -- cmd[[set guicursor=i-ci:ver30-iCursor-blinkon40-blinkoff40-blinkwait10]]   -- To change the  cursor options such as the size and blinking
 -- (a) means all modes, (i) insert, (v) visual model, and iCursor is different from blcokCurosr see (:h guicurosr)
---cmd([[set guicursor=a:ver50-iCursor-blinkon40-blinkoff40-blinkwait10]]) -- To change the  cursor options such as the size and blinking,
---cmd([[set guicursor=i:ver50-iCursor-blinkon40-blinkoff40-blinkwait10]]) -- To change the  cursor options such as the size and blinking,
+-- cmd([[set guicursor=a:ver50-iCursor-blinkon40-blinkoff40-blinkwait10]]) -- To change the  cursor options such as the size and blinking,
+-- cmd([[set guicursor=i:ver50-iCursor-blinkon40-blinkoff40-blinkwait10]]) -- To change the  cursor options such as the size and blinking,
 
 -----------------------------------------------------------
 -- Configurations form my old vim script
@@ -104,16 +104,16 @@ opt.conceallevel = 0
 opt.tabstop = 2
 opt.shiftwidth = 2
 opt.wildignore =
-".git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**"
+	".git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**"
 opt.fillchars = {
-  vert = "▕", -- alternatives │
-  fold = " ",
-  eob = " ", -- suppress ~ at EndOfBuffer
-  diff = "╱", -- alternatives = ⣿ ░ ─
-  msgsep = "‾",
-  foldopen = "▾",
-  foldsep = "│",
-  foldclose = "▸"
+	vert = "▕", -- alternatives │
+	fold = " ",
+	eob = " ", -- suppress ~ at EndOfBuffer
+	diff = "╱", -- alternatives = ⣿ ░ ─
+	msgsep = "‾",
+	foldopen = "▾",
+	foldsep = "│",
+	foldclose = "▸",
 }
 -----------------------------------------------------------
 -- Neovim UI
@@ -133,7 +133,6 @@ opt.smartcase = true -- ignore lowercase for the whole pattern
 
 -- remove whitespace on save
 cmd([[au BufWritePre * :%s/\s\+$//e]])
-
 
 -----------------------------------------------------------
 -- Memory, CPU
@@ -184,35 +183,27 @@ cmd([[
 	autocmd FileType markdown let g:indentLine_enabled=0
 ]])
 
-
 -- Configurations for the mac
 local global = require("core.global")
 if global.is_mac then
-  vim.g.clipboard = {
-    name = "macOS-clipboard",
-    copy = {
-      ["+"] = "pbcopy",
-      ["*"] = "pbcopy"
-    },
-    paste = {
-      ["+"] = "pbpaste",
-      ["*"] = "pbpaste"
-    },
-    cache_enabled = 0
-  }
+	vim.g.clipboard = {
+		name = "macOS-clipboard",
+		copy = { ["+"] = "pbcopy", ["*"] = "pbcopy" },
+		paste = { ["+"] = "pbpaste", ["*"] = "pbpaste" },
+		cache_enabled = 0,
+	}
 
-  vim.g.python_host_prog = "/usr/bin/python2"
-  vim.g.python3_host_prog = "$HOME/opt/anaconda3/bin/python3" -- '/usr/local/bin/python3'
+	vim.g.python_host_prog = "/usr/bin/python2"
+	vim.g.python3_host_prog = "$HOME/opt/anaconda3/bin/python3" -- '/usr/local/bin/python3'
 end
 -----------------------------------------------------------
 --          Glow for Markdown
 -----------------------------------------------------------
 vim.g.glow_border = "rounded"
 vim.g.glow_width = 200
---vim.g.glow_use_pager = true
---vim.g.glow_style = "light"
+-- vim.g.glow_use_pager = true
+-- vim.g.glow_style = "light"
 vim.opt.termguicolors = true
-
 
 -----------------------------------------------------------
 --      Unload some default plugins shipped with nvim
@@ -221,52 +212,50 @@ local g = vim.g
 
 -- Disable some builtin vim plugins
 local disabled_built_ins = {
-  "2html_plugin",
-  "getscript",
-  "getscriptPlugin",
-  "gzip",
-  "logipat",
-  -- "netrw",
-  -- "netrwPlugin",
-  -- "netrwSettings",
-  -- "netrwFileHandlers",
-  "matchit",
-  "matchparen",
-  "tar",
-  "tarPlugin",
-  "rrhelper",
-  "vimball",
-  "vimballPlugin",
-  "zip",
-  "zipPlugin",
+	"2html_plugin",
+	"getscript",
+	"getscriptPlugin",
+	"gzip",
+	"logipat",
+	-- "netrw",
+	-- "netrwPlugin",
+	-- "netrwSettings",
+	-- "netrwFileHandlers",
+	"matchit",
+	"matchparen",
+	"tar",
+	"tarPlugin",
+	"rrhelper",
+	"vimball",
+	"vimballPlugin",
+	"zip",
+	"zipPlugin",
 }
 
 for _, plugin in pairs(disabled_built_ins) do
-  g["loaded_" .. plugin] = 1
+	g["loaded_" .. plugin] = 1
 end
 
 local disable_distribution_plugins = function()
-  vim.g.loaded_gzip = 1
-  vim.g.loaded_tar = 1
-  vim.g.loaded_tarPlugin = 1
-  vim.g.loaded_zip = 1
-  vim.g.loaded_zipPlugin = 1
-  vim.g.loaded_getscript = 1
-  vim.g.loaded_getscriptPlugin = 1
-  vim.g.loaded_vimball = 1
-  vim.g.loaded_vimballPlugin = 1
-  vim.g.loaded_matchit = 1
-  vim.g.loaded_matchparen = 1
-  vim.g.loaded_2html_plugin = 1
-  vim.g.loaded_logiPat = 1
-  vim.g.loaded_rrhelper = 1
-  vim.g.loaded_netrw = 1
-  vim.g.loaded_netrwPlugin = 1
-  vim.g.loaded_netrwSettings = 1
-  vim.g.loaded_netrwFileHandlers = 1
+	vim.g.loaded_gzip = 1
+	vim.g.loaded_tar = 1
+	vim.g.loaded_tarPlugin = 1
+	vim.g.loaded_zip = 1
+	vim.g.loaded_zipPlugin = 1
+	vim.g.loaded_getscript = 1
+	vim.g.loaded_getscriptPlugin = 1
+	vim.g.loaded_vimball = 1
+	vim.g.loaded_vimballPlugin = 1
+	vim.g.loaded_matchit = 1
+	vim.g.loaded_matchparen = 1
+	vim.g.loaded_2html_plugin = 1
+	vim.g.loaded_logiPat = 1
+	vim.g.loaded_rrhelper = 1
+	vim.g.loaded_netrw = 1
+	vim.g.loaded_netrwPlugin = 1
+	vim.g.loaded_netrwSettings = 1
+	vim.g.loaded_netrwFileHandlers = 1
 end
-
-
 
 -----------------------------------------------------------
 --            Remove whitespace on save
@@ -283,11 +272,10 @@ vim.cmd([[au BufWritePre * :%s/\s\+$//e]])
 -- au CursorHold *.<fileextension>  checktime
 -- ]])
 
-
 -----------------------------------------------------------
 --  Createa a yanking highlight _ colored from onedark config ( IncSearch: increment search color group)
 -----------------------------------------------------------
---vim.highlight.create('XXX', {ctermbg=0, guibg="#FFC49B", guifg="#EEEDBF"}, true)
+-- vim.highlight.create('XXX', {ctermbg=0, guibg="#FFC49B", guifg="#EEEDBF"}, true)
 -- Having source % can cause problems for certain files
 --  exec([[
 --    augroup YankHighlight
@@ -296,17 +284,31 @@ vim.cmd([[au BufWritePre * :%s/\s\+$//e]])
 --      autocmd TextYankPost  ~/.config/nvim/* source %
 --    augroup end
 --  ]], true)
-vim.cmd [[
-  augroup _general_settings
-    autocmd!
-    autocmd FileType qf,help,man,lspinfo nnoremap <silent> <buffer> q :close<CR>
-    autocmd TextYankPost * silent!lua require('vim.highlight').on_yank({higroup = 'IncSearch', timeout = 700})
-    autocmd BufWinEnter * :set formatoptions-=cro
-    autocmd FileType qf set nobuflisted
-  augroup end
-  ]]
---
 
+-----------------------------------------------------------
+
+--            ON YANKING HIGHLIGHT
+
+-----------------------------------------------------------
+-- vim.cmd [[
+--   augroup _general_settings
+--     autocmd!
+--     autocmd FileType qf,help,man,lspinfo nnoremap <silent> <buffer> q :close<CR>
+--     autocmd TextYankPost * silent!lua require('vim.highlight').on_yank({higroup = 'IncSearch', timeout = 700})
+--     autocmd BufWinEnter * :set formatoptions-=cro
+--     autocmd FileType qf set nobuflisted
+--   augroup end
+--   ]]
+--
+-- This is implementation of the same above for the Nvim using Lua API
+vim.api.nvim_create_autocmd("TextYankPost", {
+	-- group = vim.api.nvim_create_augroup('highlight_yank'),
+	desc = "Hightlight selection on yank",
+	pattern = "*",
+	callback = function()
+		vim.highlight.on_yank({ higroup = "TextYankPost_style", timeout = 700 })
+	end,
+})
 -- ===========================================================================
 --            This will highlight the Cursor Line Number ()
 -- ===========================================================================
@@ -321,29 +323,85 @@ vim.cmd [[
 --  Highlight symbols with (/) search command event
 -----------------------------------------------------------
 -- Setting for the multi-instance searching with /
---vim.cmd([[set hlsearch]])
---vim.cmd([[hi Search term=reverse guibg=peru guifg=wheat]])
+-- vim.cmd([[set hlsearch]])
+-- vim.cmd([[hi Search term=reverse guibg=peru guifg=wheat]])
 --
+-- ===============================================================
+--            HIGHLIGHT THE HOPPING MATCHES
+--         Based on the color style of IncSearch
+-- https://vi.stackexchange.com/questions/18546/
+-- can-i-use-a-different-color-for-the-selected-match-than-for-other-matches/
+-- 18555#18555?newreg=22db9c3cafc846cc905fb0da27633f18
+-- It will be triggered once, we enter the buffer.
+-- ===============================================================
+vim.api.nvim_create_autocmd("BufEnter", {
+	nested = true,
+	callback = function()
+    vim.cmd([[
+function! HighlightSearch(timer)
+    if (g:firstCall)
+        let g:originalStatusLineHLGroup = execute("hi StatusLine")
+        let g:firstCall = 0
+    endif
+    if (exists("g:searching") && g:searching)
+        let searchString = getcmdline()
+        if searchString == ""
+            let searchString = "."
+        endif
+        let newBG = search(searchString) != 0 ? "green" : "red"
+        if searchString == "."
+            set whichwrap+=h
+            normal h
+            set whichwrap-=h
+        endif
+        let g:highlightTimer = timer_start(50, 'HighlightSearch')
+        let g:searchString = searchString
+    else
+        let originalBG = matchstr(g:originalStatusLineHLGroup, 'ctermfg=\zs[^ ]\+')
+        if exists("g:highlightTimer")
+            call timer_stop(g:highlightTimer)
+            call HighlightCursorMatch()
+        endif
+    endif
+endfunction
+function! HighlightCursorMatch()
+    try
+        let l:patt = '\%#'
+        if &ic | let l:patt = '\c' . l:patt | endif
+        exec 'match IncSearch /' . l:patt . g:searchString . '/'
+    endtry
+endfunction
+nnoremap n n:call HighlightCursorMatch()<CR>
+nnoremap N N:call HighlightCursorMatch()<CR>
+augroup betterSeachHighlighting
+    autocmd!
+    autocmd CmdlineEnter * if (index(['?', '/'], getcmdtype()) >= 0) | let g:searching = 1 | let g:firstCall = 1 | call timer_start(1, 'HighlightSearch') | endif
+    autocmd CmdlineLeave * let g:searching = 0
+
+augroup END
+]])
+  end
+ })
 
 -- ===========================================================================
 --                 Create Directories for Caching files
 -- ===========================================================================
 local createdir = function()
-  -- This function is used to create cache directories for our nvim sessionn
-  local data_dir = {
-    global.cache_dir .. "backup",
-    global.cache_dir .. "session",
-    global.cache_dir .. "swap",
-    global.cache_dir .. "tags",
-    global.cache_dir .. "undo",
-  }
-  for key, dirx in pairs(data_dir) do
-    -- if vim.fn.empty(vim.fn.glob(dirx)) > 0 then
-    vim.api.nvim_command(
-      ([[echohl WarningMsg | echomsg "[-] The directory:%s is not existed, will be created ." | echohl None]]):format(
-        dirx
-      )
-    )
-    os.execute("mkdir -p " .. dirx)
-  end
+	-- This function is used to create cache directories for our nvim sessionn
+	local data_dir = {
+		global.cache_dir .. "backup",
+		global.cache_dir .. "session",
+		global.cache_dir .. "swap",
+		global.cache_dir .. "tags",
+		global.cache_dir .. "undo",
+	}
+	for key, dirx in pairs(data_dir) do
+		-- if vim.fn.empty(vim.fn.glob(dirx)) > 0 then
+		vim.api.nvim_command(
+			([[echohl WarningMsg | echomsg "[-] The directory:%s is not existed, will be created ." | echohl None]]):format(
+				dirx
+			)
+		)
+		os.execute("mkdir -p " .. dirx)
+	end
 end
