@@ -135,11 +135,12 @@ M.setup = function()
 			ColorColumn = { bg = "$black" }, --  color of the ruler on the right of the text.
 
 			IncSearch = {
-				fg = "$Davys_Grey",
-				bg = "$GRED",
+				fg = "$black",
+				bg = "$Charm_Pink",
+        fmt = "bold"
 				--fmt = "reverse",
 			},
-			Search = { fg = "$Davys_Grey", bg = "$blue", fmt = "bold" },
+			Search = { fg = "$Davys_Grey", bg = "$TeaGreen", fmt = "bold" },
 			CursorLineNr = { fg = "#65A8EC", fmt = "bold" },
 			-- For highlighting the yanked selected letters, words, lines
 			TextYankPost_style = { fg = "$black", bg = "$light_orange", fmt = "bold" },

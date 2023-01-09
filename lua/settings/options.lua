@@ -371,8 +371,9 @@ function! HighlightCursorMatch()
         exec 'match IncSearch /' . l:patt . g:searchString . '/'
     endtry
 endfunction
-nnoremap n n:call HighlightCursorMatch()<CR>
-nnoremap N N:call HighlightCursorMatch()<CR>
+nnoremap n nzzzv:call HighlightCursorMatch()<CR>
+nnoremap N Nzzzv:call HighlightCursorMatch()<CR>
+
 augroup betterSeachHighlighting
     autocmd!
     autocmd CmdlineEnter * if (index(['?', '/'], getcmdtype()) >= 0) | let g:searching = 1 | let g:firstCall = 1 | call timer_start(1, 'HighlightSearch') | endif
