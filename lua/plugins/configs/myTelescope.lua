@@ -67,7 +67,7 @@ M.setup = function()
     end)
 
   vim.g.nmap("<leader>fh", function()
-   -- builtin.help_tags(ivy)
+    -- builtin.help_tags(ivy)
     --builtin.help_tags({ sorter = require('telescope.sorters').get_generic_fuzzy_sorter({}) })
     builtin.help_tags({
     })
@@ -98,6 +98,11 @@ M.config = function()
         "--line-number",
         "--column",
         "--smart-case",
+      },
+      borderchars = {
+        "═", "║","═","║","╔", "╗", "╝",  "╚",
+        --"╭", "─", "╮", "│", "╯", "─", "╰", "│"
+        --  "▛", "▀", "▜", "▐", "▟", "▄", "▙", "▌"
       },
 
       preview = {

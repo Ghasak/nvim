@@ -4,10 +4,15 @@ local M = {}
 --    3.                 Handler for the language server
 -- ===========================================================================
 
+-- border = {
+--   { "╭", "FloatBorder" }, { "─", "FloatBorder" }, { "╮", "FloatBorder" },
+--   { "│", "FloatBorder" }, { "╯", "FloatBorder" }, { "─", "FloatBorder" },
+--   { "╰", "FloatBorder" }, { "│", "FloatBorder" }
+-- }
 border = {
-  { "╭", "FloatBorder" }, { "─", "FloatBorder" }, { "╮", "FloatBorder" },
-  { "│", "FloatBorder" }, { "╯", "FloatBorder" }, { "─", "FloatBorder" },
-  { "╰", "FloatBorder" }, { "│", "FloatBorder" }
+  { "╔", "FloatBorder" }, { "═", "FloatBorder" }, { "╗", "FloatBorder" },
+  { "║", "FloatBorder" }, { "╝", "FloatBorder" }, { "═", "FloatBorder" },
+  { "╚", "FloatBorder" }, { "║", "FloatBorder" }
 }
 
 -- LSP settings (for overriding per client)
