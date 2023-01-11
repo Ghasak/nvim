@@ -269,6 +269,10 @@ M.setup = function()
 			TelescopePromptPrefix = { fg = "$blue" },
 			TelescopeSelection = { fg = "$blue", fmt = "bold" },
 			-- TelescopeSelectionCaret = colors.Yellow
+      -- Colors for the brackets based on the ts-rainbow plugin
+      -- This is the first bracket, parentheses color
+      rainbowcol1 = {fg = "$white" }
+
 		}, -- Override highlight groups
 
 		-- Plugins Config --

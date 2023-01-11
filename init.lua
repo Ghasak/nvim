@@ -61,3 +61,4 @@ end
 if vim.g.neovide then
   require("units.neovideConfig").neovide_config()
 end
+-- This will  change the first color of the pair hi rainbowcol1 guifg=#123456

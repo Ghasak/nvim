@@ -52,7 +52,12 @@ packer.init({
 	max_jobs = max_job_limit(), -- This has fixed the freezing windows in nvim when packer sync.
 	display = {
 		open_fn = function()
-			return require("packer.util").float({ border = "rounded" })
+			return require("packer.util").float({
+
+    border = {
+      "╔", "═", "╗", "║", "╝", "═", "╚", "║",
+    }
+        })
 		end,
 		open_cmd = "65vnew \\[packer\\]", -- An optional command to open a window for packer's display
 		working_sym = "  ", -- '⟳', -- The symbol for a plugin being installed/updated
@@ -149,8 +154,8 @@ return packer.startup(function(use)
 			{ "nvim-treesitter/nvim-treesitter-textobjects", event = "InsertEnter" },
 			{ "windwp/nvim-ts-autotag", event = "InsertEnter" },
 			{ "JoosepAlviste/nvim-ts-context-commentstring", event = "InsertEnter" },
-			--{ "p00f/nvim-ts-rainbow", event = "BufReadPre" },
-			{ "p00f/nvim-ts-rainbow", event = "InsertEnter" },
+			{ "p00f/nvim-ts-rainbow", event = "BufReadPre" },
+			--{ "p00f/nvim-ts-rainbow", event = "InsertEnter" },
 			{ "RRethy/nvim-treesitter-textsubjects", event = "InsertEnter" },
 			{ "nvim-treesitter/nvim-treesitter-context", event = "InsertEnter", disable = false },
 		},

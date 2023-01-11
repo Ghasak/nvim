@@ -39,7 +39,7 @@ This plugin is used for replacing yanked word with support to the command (.)
 
 
 ## Past inside a quote
-For "replace-inner-quotes-to-yanked-text" you can use vi"p
+For "replace-inner-quotes-to-yanked-text" you can use `vi"p`
 
 - Rules
 2. To yank a word:   `y`+`w`
