@@ -230,7 +230,6 @@ M.setup = function()
 			["@String"] = { fg = "#96d0ff" },
 			-- TSConstant = { fg = '$Light_Yellow' },
 			-- got appended since the newest update for the tree-sitter
-			["@constant"] = { fg = "$Light_Yellow" },
 			["@comment"] = { fg = "#768390" },
 			-- ["@text"]     = { fg = "#adbac7", },
 			["@method"] = { fg = "$purple_e" },
@@ -253,6 +252,7 @@ M.setup = function()
 			["@operator"] = { fg = "$blue" },
 			["@number"] = { fg = "$blue" },
 			["@type"] = { fg = "$orange" },
+			["@constant"] = { fg = '$Light_Yellow' },
 			-- Pmenu components
 			Pmenu = { bg = "$black" }, -- Popup menu: normal item.
 			-- PmenuSel       = { fg = c.pmenu.bg, bg = util.darken(c.bright_blue, 0.75) }, -- Popup menu: selected item.

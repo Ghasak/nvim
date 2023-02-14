@@ -53,8 +53,8 @@ local lsp_func = function()
   end
   for _, client in pairs(clients) do table.insert(servers, client) end
   for _, server in ipairs(servers) do
-    if buff_ft == "lua" and server.name == "sumneko_lua" then -- [lua] For nvim 0.51 server.nam for lua is  lua, while for 0.6 it is sumneko_lua
-      return string.format("%s : sumneko-lua-lsp", server_icon)
+    if buff_ft == "lua" and server.name == "lua_ls" then -- [lua] For nvim 0.51 server.nam for lua is  lua, while for 0.6 it is sumneko_lua
+      return string.format("%s : lua-lsp", server_icon)
     elseif buff_ft == "python" and (server.name == "pyright" or server.name == "pylsp") then --  [python] For nvim 0.51 serer.name is python , while for 0.6 it is now pyright)
       -- regular virtualenv stored in variable VIRTUAL_ENV
       local venv = os.getenv("VIRTUAL_ENV")

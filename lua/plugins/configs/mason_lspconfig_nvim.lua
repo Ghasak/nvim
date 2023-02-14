@@ -42,7 +42,7 @@ M.setup = function()
   -- Extension to bridge mason.nvim with the lspconfig plugin
   mason_lspconfig.setup({
     -- A list of servers to automatically install if they're not already installed.,
-    ensure_installed = { "pyright", "sumneko_lua", "rust_analyzer", "tsserver", "texlab", "clangd" },
+    ensure_installed = { "pyright", "lua_ls", "rust_analyzer", "tsserver", "texlab", "clangd" },
     ui = {
       -- Whether to automatically check for new versions when opening the :Mason window.
       check_outdated_packages_on_open = true,
@@ -96,11 +96,11 @@ M.setup = function()
         handlers     = opts.handlers
       }
     end,
-    ["sumneko_lua"] = function()
+    ["lua_ls"] = function()
 
       local sumneko_settings = require "plugins.configs.lsp.custom_servers.sumneko_lua_server"
       opts = vim.tbl_deep_extend("force", sumneko_settings, opts)
-      lspconfig.sumneko_lua.setup({
+      lspconfig.lua_ls.setup({
         on_attach    = opts.on_attach,
         capabilities = opts.capabilities,
         handlers     = opts.handlers,

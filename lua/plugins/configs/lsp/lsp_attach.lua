@@ -117,7 +117,7 @@ M.custom_attach = function(client, bufnr)
 		client.server_capabilities.document_formatting = true
 	end
 
-	if client.name == "sumneko_lua" then
+	if client.name == "lua_ls" then
 		client.server_capabilities.document_formatting = true
 	end
 
