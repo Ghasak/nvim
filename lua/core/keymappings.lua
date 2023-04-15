@@ -244,6 +244,10 @@ vim.api.nvim_set_keymap("n", "<leader>s", ":ASToggle<CR>", {})
 ---- *****************************************************************************************
 ----                   Auto-save plugin to save file every changes happen
 ---- *****************************************************************************************
+vim.api.nvim_set_keymap("n", "<leader>fr",":Neoformat<CR>" , {})
+---- *****************************************************************************************
+----                   Auto-save plugin to save file every changes happen
+---- *****************************************************************************************
 -- This function will support many hovering style including "toml crate" files
 local show_documentation = function()
 	local filetype = vim.bo.filetype

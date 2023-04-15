@@ -252,9 +252,9 @@ fzf_lua.setup {
    -- default options are controlled by 'fd|rg|find|_opts'
    -- NOTE: 'find -printf' requires GNU find
    -- cmd            = "find . -type f -printf '%P\n'",
-   find_opts         = [[-type f -not -path '*/\.git/*' -printf '%P\n']],
-   rg_opts           = "--color=never --files --hidden --follow -g '!.git'",
-   fd_opts           = "--color=never --type f --hidden --follow --exclude .git",
+   find_opts         = [[-type f -not -path '*/\.git/*' -not -path '*/\.reporo/*' -printf '%P\n']],
+   rg_opts           = "--color=never --files --hidden --follow -g '!.git' --follow -g '!.reporo' ",
+   fd_opts           = "--color=never --type f --hidden --follow --exclude .git --exclude .reporo",
    actions = {
      -- inherits from 'actions.files', here we can override
      -- or set bind to 'false' to disable a default action

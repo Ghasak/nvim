@@ -1,7 +1,6 @@
 local M = {}
 
 M.setup = function()
-
   ---- *****************************************************************************************
   ----                                Prerequisites settings supports
   ---- *****************************************************************************************
@@ -16,8 +15,10 @@ M.setup = function()
   -- IMPORTANT: make sure to setup lua-dev BEFORE lspconfig
   local neodev_status, neodev = pcall(require, "neodev")
   if neodev_status then
-    neodev.setup({})
+    neodev.setup({
+    })
   end
+
   ---- *****************************************************************************************
   ----                     Mason Loader (similar to nvim-lsp-installer)
   ---- *****************************************************************************************
@@ -27,9 +28,11 @@ M.setup = function()
       -- Whether to automatically check for new versions when opening the :Mason window.
       check_outdated_packages_on_open = true,
       -- The border to use for the UI window. Accepts same border values as |nvim_open_win()|.
-      border = "rounded",
+      --border = "rounded",
+      border = {
+        "╔", "═", "╗", "║", "╝", "═", "╚", "║",
+      }
     }
-
   })
 
   -- 2.) >> Loading Mason lspconfig (mason-config) <<
@@ -97,7 +100,6 @@ M.setup = function()
       }
     end,
     ["lua_ls"] = function()
-
       local sumneko_settings = require "plugins.configs.lsp.custom_servers.sumneko_lua_server"
       opts = vim.tbl_deep_extend("force", sumneko_settings, opts)
       lspconfig.lua_ls.setup({
@@ -108,11 +110,9 @@ M.setup = function()
         settings     = opts.settings
       })
     end,
-
     -- Next, you can provide targeted overrides for specific servers.
     -- For example, a handler override for the `rust_analyzer`:
     ["rust_analyzer"] = function()
-
       local install_root_dir = vim.fn.stdpath "data" .. "/mason"
       local extension_path = install_root_dir .. "/packages/codelldb/extension/"
       local codelldb_path = extension_path .. "adapter/codelldb"
@@ -133,7 +133,6 @@ M.setup = function()
                 -- Getting loading the codelens without popup an error message.
                 local _, _ = pcall(vim.lsp.codelens.refresh)
               end
-
             })
           end,
 
@@ -169,9 +168,7 @@ M.setup = function()
 
         },
       }
-
     end,
-
     ["texlab"] = function()
       lspconfig.texlab.setup({
         on_attach = opts.custom_attach,
@@ -194,9 +191,7 @@ M.setup = function()
           }
         }
       })
-
     end,
-
     ["pyright"] = function()
       lspconfig.pyright.setup({
         on_attach    = opts.on_attach,

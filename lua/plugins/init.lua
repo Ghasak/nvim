@@ -1,8 +1,5 @@
-
 local init_modules ={
-	"plugins.packerPluginsManagerLoader",
-	"plugins.packerPluginsManager",
-	"plugins.configs",
+	"plugins.lazyPluginsManager",
 
 }
 
@@ -12,6 +9,9 @@ for _, module in ipairs(init_modules) do
 		error("Error in loading modules ... < " .. module ..  " > " .. "\n\nn" .. err)
 	end
 end
+
+
+
 
 
 

@@ -42,8 +42,6 @@ set helpheight=80
 
 
 M.setup = function()
-
-
   local ivy = themes.get_ivy({
     show_untracked = true
   })
@@ -169,3 +167,4 @@ M.config = function()
 end
 
 return M
+
