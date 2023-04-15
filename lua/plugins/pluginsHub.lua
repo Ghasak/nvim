@@ -5,10 +5,15 @@ return {
     -- Onedark theme
     {
         "navarasu/onedark.nvim",
+        priority = 1000, -- make sure to load this before all the other start plugins
         config = function()
             -- Lua
             require("plugins.configs.onedark_config").setup()
-        end
+            -- do not remove the colorscheme!
+            vim.opt.termguicolors = true
+        end,
+
+        init = function() vim.cmd([[colorscheme onedark]]) end
     },
     -- ==========================================================================
     -- 	                      Utilities for NVIM IDE Env
