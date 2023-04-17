@@ -108,7 +108,32 @@ return {
     -- 	                      Programming Language Servers
     -- =========================================================================
     -- Rust lsp Enhancer
-    {"simrat39/rust-tools.nvim", lazy = true, ft = "rust"},
+    {"simrat39/rust-tools.nvim", lazy = true, ft = "rust"}, {
+        "saecki/crates.nvim",
+        lazy = true,
+        ft = {"rust", "toml"},
+        tag = "v0.3.0",
+        dependencies = {"nvim-lua/plenary.nvim"},
+        config = function()
+            require("crates").setup({popup = {border = "rounded"}})
+        end
+    }, -- Using formatter (instaed of null-lsp)
+    -- Navigation for all the coding problems
+    {
+        "folke/trouble.nvim",
+        lazy = true,
+        event = "InsertEnter",
+        cmd = "Trouble",
+        dependencies = "kyazdani42/nvim-web-devicons",
+        config = function() require("trouble").setup({}) end
+    }, -- markdown-preview using :markdown Preview
+    {
+        "iamcco/markdown-preview.nvim",
+        ft = {"markdown"},
+        cmd = "MarkdownPreview",
+        build = "cd app && npm install",
+        config = function() vim.g.mkdp_filetypes = {"markdown"} end
+    }, -- Adding notification for nvim
     {"folke/neodev.nvim", ft = "lua", event = "InsertEnter"},
     -- lsp_signature.nvim
     {
@@ -233,6 +258,17 @@ return {
     -- Context.vim: A vim plugin that shows the context of the currently visible buffer context.
     -- It's supposed to work on a wide range of file types, but is probably most suseful when looking at source code files.
     -- https://github.com/wellle/context.vim
+    {
+        "rcarriga/nvim-notify",
+        event = "VeryLazy",
+        config = function() require("plugins.configs.myNotify") end
+    }, -- Navic
+    {
+        "SmiteshP/nvim-navic", -- We have already this in lsp-saga
+        event = "VeryLazy",
+        dependencies = "neovim/nvim-lspconfig"
+    }, {"RishabhRD/popfix", event = "InsertEnter"},
+    {"RishabhRD/nvim-cheat.sh", event = "InsertEnter"},
     -- ==========================================================================
     -- 	                    Aesthetic and UI Design
     -- ==========================================================================
