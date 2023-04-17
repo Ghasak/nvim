@@ -1,5 +1,4 @@
-
-local exec = vim.api.nvim_exec 	-- execute Vimscript
+local exec = vim.api.nvim_exec -- execute Vimscript
 
 vim.cmd([[
 "==============================================================================

@@ -4,10 +4,12 @@
 
 #### v.1.2.1 Release Nvim 0.9 with Lazy
 
-- [x] Working on the `nvim 0.9` modern APIs. The current version works under `nvim`
+- [x] Working on the `nvim 0.9` modern APIs.
+- [x] The current version works under `nvim`
       with Lazy Plugins Manager.
+- [x] Startup time is under `20 milliseconds` for all the installed plugins.
 
-## Update release Nvim-workflow v0.1
+#### Update release Nvim-workflow v0.1
 
 As `nvim` is now updated to version `0.8` with a stable release. Several
 deprecated `3rd-plugins` and `APIs`. I have optimized the startup time and got
@@ -117,8 +119,8 @@ P(fn.setup())
 - [x] Adding only the `keymapping-window`.
 - [x] spell-checking for nvim such as
 - [Spelunker.vim](https://github.com/kamykn/spelunker.vim)
-The current configurations are from the needs of getting the best optimized `IDE` for
-the startup time.
+  The current configurations are from the needs of getting the best optimized `IDE` for
+  the startup time.
 
 ## Major Changes in Nvim 0.8
 

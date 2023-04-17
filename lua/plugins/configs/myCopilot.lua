@@ -8,14 +8,12 @@
 --          ░╚════╝░░╚════╝░╚═╝░░░░░╚═╝╚══════╝░╚════╝░░░░╚═╝░░░  ░╚════╝░░╚════╝░╚═╝░░░░░╚═╝░╚═════╝░╚═╝
 --
 -- ===================================================================================================================
-
 -- Copliot plugin initializer
 -- This will allow the copilot to be triggered with <leader> <TAB>
 vim.cmd([[
         imap <silent><script><expr> <leader><TAB> copilot#Accept("\<CR>")
         let g:copilot_no_tab_map = v:true
 ]])
-
 
 -- b:copilot_enabled       Set to v:false to disable GitHub Copilot for the
 --                         current buffer.  Or set to v:true to force enabling
@@ -53,7 +51,6 @@ vim.cmd([[
 --                  █▀▀ █░█ █▀▀ █▀▀ █▄▀ █ █▄░█ █▀▀   █▀▀ █░█ █▄░█ █▀▀ ▀█▀ █ █▀█ █▄░█ █▀
 --                  █▄▄ █▀█ ██▄ █▄▄ █░█ █ █░▀█ █▄█   █▀░ █▄█ █░▀█ █▄▄ ░█░ █ █▄█ █░▀█ ▄█
 
-
 local function copilot_plugin_installed_check()
     -- This will check if the current command is existed but not checking if
     -- the command is enabled or not.
@@ -64,13 +61,10 @@ local function copilot_plugin_installed_check()
         -- vim.notify(file)
         async.run(function()
             local messege = "copilot is installed ... "
-            notify(messege, "INFO", {
-                title = " Copilot Plugin"
-            })
+            notify(messege, "INFO", {title = " Copilot Plugin"})
         end)
     end
 end
-
 
 -- local async = require("plenary.async")
 -- local notify = require("notify").async
@@ -79,7 +73,6 @@ end
 --   notify("Let's wait for this to close").events.close()
 --   notify("It closed!")
 -- end)
-
 
 local function copilot_plugin_enabled_check()
     -- This will check the option of our current setting variable for the
@@ -92,9 +85,8 @@ local function copilot_plugin_enabled_check()
             -- vim.notify(file)
             async.run(function()
                 local messege = "copilot is enabled ... "
-                notify(messege, "WARN", {
-                    title = " Copilot plugin status"
-                }).events.close()
+                notify(messege, "WARN", {title = " Copilot plugin status"}).events
+                    .close()
             end)
         end
     end
@@ -111,6 +103,6 @@ end
 
 -- copilot_plugin_enabled_check()
 -- print(check_to_show_copilot_status_in_lualine_statusbar())
---print(vim.inspect(vim.api.nvim_get_var('copilot_enabled')))
---print(check_to_show_copilot_status_in_lualine_statusbar())
+-- print(vim.inspect(vim.api.nvim_get_var('copilot_enabled')))
+-- print(check_to_show_copilot_status_in_lualine_statusbar())
 -- ===================================================================================================================

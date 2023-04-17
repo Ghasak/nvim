@@ -104,16 +104,16 @@ opt.conceallevel = 0
 opt.tabstop = 2
 opt.shiftwidth = 2
 opt.wildignore =
-	".git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**"
+    ".git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**"
 opt.fillchars = {
-	vert = "▕", -- alternatives │
-	fold = " ",
-	eob = " ", -- suppress ~ at EndOfBuffer
-	diff = "╱", -- alternatives = ⣿ ░ ─
-	msgsep = "‾",
-	foldopen = "▾",
-	foldsep = "│",
-	foldclose = "▸",
+    vert = "▕", -- alternatives │
+    fold = " ",
+    eob = " ", -- suppress ~ at EndOfBuffer
+    diff = "╱", -- alternatives = ⣿ ░ ─
+    msgsep = "‾",
+    foldopen = "▾",
+    foldsep = "│",
+    foldclose = "▸"
 }
 -----------------------------------------------------------
 -- Neovim UI
@@ -186,15 +186,15 @@ cmd([[
 -- Configurations for the mac
 local global = require("core.global")
 if global.is_mac then
-	vim.g.clipboard = {
-		name = "macOS-clipboard",
-		copy = { ["+"] = "pbcopy", ["*"] = "pbcopy" },
-		paste = { ["+"] = "pbpaste", ["*"] = "pbpaste" },
-		cache_enabled = 0,
-	}
+    vim.g.clipboard = {
+        name = "macOS-clipboard",
+        copy = {["+"] = "pbcopy", ["*"] = "pbcopy"},
+        paste = {["+"] = "pbpaste", ["*"] = "pbpaste"},
+        cache_enabled = 0
+    }
 
-	vim.g.python_host_prog = "/usr/bin/python2"
-	vim.g.python3_host_prog = "$HOME/opt/anaconda3/bin/python3" -- '/usr/local/bin/python3'
+    vim.g.python_host_prog = "/usr/bin/python2"
+    vim.g.python3_host_prog = "$HOME/opt/anaconda3/bin/python3" -- '/usr/local/bin/python3'
 end
 -----------------------------------------------------------
 --          Glow for Markdown
@@ -212,49 +212,36 @@ local g = vim.g
 
 -- Disable some builtin vim plugins
 local disabled_built_ins = {
-	"2html_plugin",
-	"getscript",
-	"getscriptPlugin",
-	"gzip",
-	"logipat",
-	-- "netrw",
-	-- "netrwPlugin",
-	-- "netrwSettings",
-	-- "netrwFileHandlers",
-	"matchit",
-	"matchparen",
-	"tar",
-	"tarPlugin",
-	"rrhelper",
-	"vimball",
-	"vimballPlugin",
-	"zip",
-	"zipPlugin",
+    "2html_plugin", "getscript", "getscriptPlugin", "gzip", "logipat",
+    -- "netrw",
+    -- "netrwPlugin",
+    -- "netrwSettings",
+    -- "netrwFileHandlers",
+    "matchit", "matchparen", "tar", "tarPlugin", "rrhelper", "vimball",
+    "vimballPlugin", "zip", "zipPlugin"
 }
 
-for _, plugin in pairs(disabled_built_ins) do
-	g["loaded_" .. plugin] = 1
-end
+for _, plugin in pairs(disabled_built_ins) do g["loaded_" .. plugin] = 1 end
 
 local disable_distribution_plugins = function()
-	vim.g.loaded_gzip = 1
-	vim.g.loaded_tar = 1
-	vim.g.loaded_tarPlugin = 1
-	vim.g.loaded_zip = 1
-	vim.g.loaded_zipPlugin = 1
-	vim.g.loaded_getscript = 1
-	vim.g.loaded_getscriptPlugin = 1
-	vim.g.loaded_vimball = 1
-	vim.g.loaded_vimballPlugin = 1
-	vim.g.loaded_matchit = 1
-	vim.g.loaded_matchparen = 1
-	vim.g.loaded_2html_plugin = 1
-	vim.g.loaded_logiPat = 1
-	vim.g.loaded_rrhelper = 1
-	vim.g.loaded_netrw = 1
-	vim.g.loaded_netrwPlugin = 1
-	vim.g.loaded_netrwSettings = 1
-	vim.g.loaded_netrwFileHandlers = 1
+    vim.g.loaded_gzip = 1
+    vim.g.loaded_tar = 1
+    vim.g.loaded_tarPlugin = 1
+    vim.g.loaded_zip = 1
+    vim.g.loaded_zipPlugin = 1
+    vim.g.loaded_getscript = 1
+    vim.g.loaded_getscriptPlugin = 1
+    vim.g.loaded_vimball = 1
+    vim.g.loaded_vimballPlugin = 1
+    vim.g.loaded_matchit = 1
+    vim.g.loaded_matchparen = 1
+    vim.g.loaded_2html_plugin = 1
+    vim.g.loaded_logiPat = 1
+    vim.g.loaded_rrhelper = 1
+    vim.g.loaded_netrw = 1
+    vim.g.loaded_netrwPlugin = 1
+    vim.g.loaded_netrwSettings = 1
+    vim.g.loaded_netrwFileHandlers = 1
 end
 
 -----------------------------------------------------------
@@ -302,12 +289,12 @@ vim.cmd([[au BufWritePre * :%s/\s\+$//e]])
 --
 -- This is implementation of the same above for the Nvim using Lua API
 vim.api.nvim_create_autocmd("TextYankPost", {
-	-- group = vim.api.nvim_create_augroup('highlight_yank'),
-	desc = "Hightlight selection on yank",
-	pattern = "*",
-	callback = function()
-		vim.highlight.on_yank({ higroup = "TextYankPost_style", timeout = 700 })
-	end,
+    -- group = vim.api.nvim_create_augroup('highlight_yank'),
+    desc = "Hightlight selection on yank",
+    pattern = "*",
+    callback = function()
+        vim.highlight.on_yank({higroup = "TextYankPost_style", timeout = 700})
+    end
 })
 -- ===========================================================================
 --            This will highlight the Cursor Line Number ()
@@ -335,9 +322,9 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 -- It will be triggered once, we enter the buffer.
 -- ===============================================================
 vim.api.nvim_create_autocmd("BufEnter", {
-	nested = true,
-	callback = function()
-    vim.cmd([[
+    nested = true,
+    callback = function()
+        vim.cmd([[
 function! HighlightSearch(timer)
     if (g:firstCall)
         let g:originalStatusLineHLGroup = execute("hi StatusLine")
@@ -381,28 +368,24 @@ augroup betterSeachHighlighting
 
 augroup END
 ]])
-  end
- })
+    end
+})
 
 -- ===========================================================================
 --                 Create Directories for Caching files
 -- ===========================================================================
 local createdir = function()
-	-- This function is used to create cache directories for our nvim sessionn
-	local data_dir = {
-		global.cache_dir .. "backup",
-		global.cache_dir .. "session",
-		global.cache_dir .. "swap",
-		global.cache_dir .. "tags",
-		global.cache_dir .. "undo",
-	}
-	for key, dirx in pairs(data_dir) do
-		-- if vim.fn.empty(vim.fn.glob(dirx)) > 0 then
-		vim.api.nvim_command(
-			([[echohl WarningMsg | echomsg "[-] The directory:%s is not existed, will be created ." | echohl None]]):format(
-				dirx
-			)
-		)
-		os.execute("mkdir -p " .. dirx)
-	end
+    -- This function is used to create cache directories for our nvim sessionn
+    local data_dir = {
+        global.cache_dir .. "backup", global.cache_dir .. "session",
+        global.cache_dir .. "swap", global.cache_dir .. "tags",
+        global.cache_dir .. "undo"
+    }
+    for key, dirx in pairs(data_dir) do
+        -- if vim.fn.empty(vim.fn.glob(dirx)) > 0 then
+        vim.api.nvim_command(
+            ([[echohl WarningMsg | echomsg "[-] The directory:%s is not existed, will be created ." | echohl None]]):format(
+                dirx))
+        os.execute("mkdir -p " .. dirx)
+    end
 end

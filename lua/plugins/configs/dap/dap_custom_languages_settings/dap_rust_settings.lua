@@ -12,43 +12,44 @@
 local M = {}
 
 function M.setup(dap)
-  -- local dap_install = require "dap-install"
-  -- dap_install.config("codelldb", {})
+    -- local dap_install = require "dap-install"
+    -- dap_install.config("codelldb", {})
 
-  --local dap = require "dap"
-  local install_root_dir = vim.fn.stdpath "data" .. "/mason"
-  local extension_path = install_root_dir .. "/packages/codelldb/extension/"
-  local codelldb_path = extension_path .. "adapter/codelldb"
+    -- local dap = require "dap"
+    local install_root_dir = vim.fn.stdpath "data" .. "/mason"
+    local extension_path = install_root_dir .. "/packages/codelldb/extension/"
+    local codelldb_path = extension_path .. "adapter/codelldb"
 
-  dap.adapters.codelldb = {
-    type = "server",
-    port = "${port}",
-    executable = {
-      command = codelldb_path,
-      args = { "--port", "${port}" },
+    dap.adapters.codelldb = {
+        type = "server",
+        port = "${port}",
+        executable = {
+            command = codelldb_path,
+            args = {"--port", "${port}"}
 
-      -- On windows you may have to uncomment this:
-      -- detached = false,
-    },
-  }
-  dap.configurations.rust= {
-    {
-      name = "Launch file",
-      type = "codelldb",
-      request = "launch",
-      program = function()
-        --return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/target/debug/", "file")
-        -- This will run on the root project direcotry
-        return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-      end,
-      cwd = "${workspaceFolder}",
-      --stopOnEntry = true,
-      stopOnEntry = false,   -- <- If this is true, the nvim-dap ui will be stop at first lunch.
-    },
-  }
+            -- On windows you may have to uncomment this:
+            -- detached = false,
+        }
+    }
+    dap.configurations.rust = {
+        {
+            name = "Launch file",
+            type = "codelldb",
+            request = "launch",
+            program = function()
+                -- return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/target/debug/", "file")
+                -- This will run on the root project direcotry
+                return vim.fn.input("Path to executable: ",
+                                    vim.fn.getcwd() .. "/", "file")
+            end,
+            cwd = "${workspaceFolder}",
+            -- stopOnEntry = true,
+            stopOnEntry = false -- <- If this is true, the nvim-dap ui will be stop at first lunch.
+        }
+    }
 
-  dap.configurations.c = dap.configurations.cpp
-  -- dap.configurations.rust = dap.configurations.cpp
+    dap.configurations.c = dap.configurations.cpp
+    -- dap.configurations.rust = dap.configurations.cpp
 end
 
 return M
