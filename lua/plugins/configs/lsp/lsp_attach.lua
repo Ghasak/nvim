@@ -63,7 +63,7 @@ M.custom_attach = function(client, bufnr)
           hi LspReferenceRead  cterm=bold ctermbg=NONE guibg=#4a535f  "guifg=black
           hi LspReferenceText  cterm=bold ctermbg=NONE guibg=#4a535f  "guifg=black
           hi LspReferenceWrite cterm=bold ctermbg=NONE guibg=#4a535f  "guifg=black
- ]])
+         ]])
         vim.api.nvim_create_augroup("lsp_document_highlight", {clear = false})
         vim.api.nvim_clear_autocmds({
             buffer = bufnr,
@@ -81,12 +81,12 @@ M.custom_attach = function(client, bufnr)
         })
     end
     vim.cmd([[
- highlight! DiagnosticLineNrError guibg=#51202A guifg=#FF0000 gui=bold
- highlight! DiagnosticLineNrWarn guibg=#51412A guifg=#FFA500 gui=bold
- highlight! DiagnosticLineNrInfo guibg=#1E535D guifg=#00FFFF gui=bold
- highlight! DiagnosticLineNrHint guibg=#1E205D guifg=#0000FF gui=bold
+         highlight! DiagnosticLineNrError guibg=#51202A guifg=#FF0000 gui=bold
+         highlight! DiagnosticLineNrWarn guibg=#51412A guifg=#FFA500 gui=bold
+         highlight! DiagnosticLineNrInfo guibg=#1E535D guifg=#00FFFF gui=bold
+         highlight! DiagnosticLineNrHint guibg=#1E205D guifg=#0000FF gui=bold
 
-]])
+         ]])
     -- Customization for at the colorscheme level (onedark)
     -- DiagnosticVirtualTextError
     -- DiagnosticVirtualTextWarn

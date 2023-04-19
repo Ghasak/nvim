@@ -12,7 +12,6 @@ return {
             -- do not remove the colorscheme!
             vim.opt.termguicolors = true
         end,
-
         init = function() vim.cmd([[colorscheme onedark]]) end
     },
     -- ==========================================================================
@@ -66,7 +65,6 @@ return {
         config = function()
             require("plugins.configs.myTelescope").config()
         end
-
     }, -- nvim-tree
     {
         "kyazdani42/nvim-tree.lua",
@@ -166,7 +164,6 @@ return {
             {"williamboman/mason.nvim"}, {"williamboman/mason-lspconfig.nvim"},
             {"WhoIsSethDaniel/mason-tool-installer.nvim"}
         },
-
         -- This will be initailized at first
         init = function()
             require("core.utils").lazy_load "nvim-lspconfig"
@@ -175,7 +172,6 @@ return {
         config = function()
             require("plugins.configs.mason_lspconfig_nvim").setup()
         end
-
     }, -- Adding lsp signature for nvim
     {
         "ray-x/lsp_signature.nvim",
@@ -223,16 +219,14 @@ return {
                 --      require("config.snip").setup()
                 --    end,
             }, "rafamadriz/friendly-snippets", "honza/vim-snippets"
-            -- { "tzachar/cmp-tabnine", run = "./install.sh", disable = true },
         }
-    }, -- use({"onsails/lspkind.nvim", })
-    -- TabNine auto-compleletions
+    }, -- TabNine auto-compleletions
     {
         "tzachar/cmp-tabnine",
         lazy = true,
         event = "InsertEnter",
         build = "./install.sh",
-        requires = {"hrsh7th/nvim-cmp", "cmp-buffer"}
+        dependencies = {"hrsh7th/nvim-cmp", "cmp-buffer"}
     }, -- Indent
     {
         "lukas-reineke/indent-blankline.nvim",
@@ -262,18 +256,92 @@ return {
         "rcarriga/nvim-notify",
         event = "VeryLazy",
         config = function() require("plugins.configs.myNotify") end
-    }, -- Navic
-    {
-        "SmiteshP/nvim-navic", -- We have already this in lsp-saga
-        event = "VeryLazy",
-        dependencies = "neovim/nvim-lspconfig"
-    }, {"RishabhRD/popfix", event = "InsertEnter"},
+    }, -- Navic for winbar, not needed anymore
+    -- {
+    --     "SmiteshP/nvim-navic", -- We have already this in lsp-saga
+    --     event = "VeryLazy",
+    --     dependencies = "neovim/nvim-lspconfig"
+    -- },
+    {"RishabhRD/popfix", event = "InsertEnter"},
     {"RishabhRD/nvim-cheat.sh", event = "InsertEnter"},
     -- ==========================================================================
     -- 	                    Aesthetic and UI Design
     -- ==========================================================================
+    -- {
+    --     'goolord/alpha-nvim',
+    --     --event = "VeryLazy",
+    --     config = function()
+    --         require'alpha'.setup(require'alpha.themes.dashboard'.config)
+    --     end
+    -- },
+    {
+        'glepnir/dashboard-nvim',
+        event = 'VimEnter',
+        cond = false, -- don't load this plugin as I will use the default [netrwPlugin]
+        config = function()
+            require('dashboard').setup {
+                -- config
+                theme = "Doom",
+                config = {
+                    header = {
+                        '',
+                        ' ██████╗  █████╗ ███████╗██╗  ██╗██████╗  ██████╗  █████╗ ██████╗ ██████╗  ',
+                        ' ██╔══██╗██╔══██╗██╔════╝██║  ██║██╔══██╗██╔═══██╗██╔══██╗██╔══██╗██╔══██╗ ',
+                        ' ██║  ██║███████║███████╗███████║██████╔╝██║   ██║███████║██████╔╝██║  ██║ ',
+                        ' ██║  ██║██╔══██║╚════██║██╔══██║██╔══██╗██║   ██║██╔══██║██╔══██╗██║  ██║ ',
+                        ' ██████╔╝██║  ██║███████║██║  ██║██████╔╝╚██████╔╝██║  ██║██║  ██║██████╔╝ ',
+                        ' ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝  ',
+                        '', "Welcome to Nvim - 0.9"
+                    }, -- your header
+                    center = {
+                        {
+                            icon = ' ',
+                            icon_hl = 'Title',
+                            desc = 'Find File           ',
+                            desc_hl = 'String',
+                            key = 'b',
+                            keymap = '<leader>ff',
+                            key_hl = 'Number',
+                            action = 'Telescope find_files'
+                        }, {
 
-    -- Status line
+                            icon = ' ',
+                            icon_hl = 'Title',
+                            desc = 'Regular Expression           ',
+                            desc_hl = 'String',
+                            key = 'f',
+                            keymap = '<leader>fg',
+                            key_hl = 'Number',
+                            action = 'Telescope live_grep'
+
+                        }, {
+
+                            icon = ' ',
+                            icon_hl = 'Title',
+                            desc = 'Ranger Explorer           ',
+                            desc_hl = 'String',
+                            key = 'r',
+                            keymap = '<leader>r',
+                            key_hl = 'Number',
+                            action = 'RnvimrToggle'
+                        }, {
+
+                            icon = ' ',
+                            icon_hl = 'Title',
+                            desc = 'Terminal Explorer           ',
+                            desc_hl = 'String',
+                            key = 't',
+                            -- keymap = '<C-\>',
+                            key_hl = 'Number',
+                            action = 'ToggleTerm'
+                        }
+                    },
+                    footer = {"(C) Theme Usage"} -- your footer
+                }
+            }
+        end,
+        requires = {'nvim-tree/nvim-web-devicons'}
+    }, -- Status line
     {
         "nvim-lualine/lualine.nvim",
         dependencies = {{"nvim-treesitter"}, {"nvim-web-devicons"}},
@@ -335,7 +403,6 @@ return {
     {"rhysd/accelerated-jk", lazy = true, event = "VimEnter"},
     -- Deleting a given buffer without affecting
     {"famiu/bufdelete.nvim", lazy = true, cmd = {"Bdelete"}},
-
     {"vim-scripts/ReplaceWithRegister", lazy = true, event = "InsertEnter"},
     -- Better repeat (.) with nvim (from tpope)
     --  use({ "tpope/vim-repeat" })
@@ -358,10 +425,10 @@ return {
     -- ===========================================================================
     -- Debugging
     -- use({ "puremourning/vimspector", event = "BufWinEnter" })
-
     -- Debugging
     {
         "mfussenegger/nvim-dap",
+        cond = false, -- Not loading the dap,
         lazy = true,
         event = "InsertEnter",
         -- keys = { [[<leader>d]] },
@@ -377,7 +444,6 @@ return {
         },
         config = function() require("plugins.configs.dap") end
     },
-
     -- ===========================================================================
     --                         For Editor
     -- ===========================================================================
@@ -411,5 +477,32 @@ return {
         "terrortylor/nvim-comment",
         event = "CursorMoved",
         config = function() require("nvim_comment").setup() end
+    },
+
+    -- ===========================================================================
+    --                        Nvim Keymapping Manager
+    -- ===========================================================================
+    {
+        "folke/which-key.nvim",
+        event = "InsertEnter",
+        config = function()
+            vim.o.timeout = true
+            vim.o.timeoutlen = 2000 -- This will control the which-key popup window interval, default 300,
+            require("which-key").setup({
+                -- your configuration comes here
+                -- or leave it empty to use the default settings
+                -- refer to the configuration section below
+                hidden = {
+                    "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:",
+                    "^ "
+                },
+                window = {
+                    border = "double" -- none, single, double, shadow
+                }
+
+            })
+            require("plugins.configs.which_key_config").config()
+        end
     }
+
 }

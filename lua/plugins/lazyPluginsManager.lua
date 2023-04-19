@@ -18,7 +18,8 @@ local lazyManagerConfig = {
             ---@type string[]
             --paths = {}, -- add any custom paths here that you want to includes in the rtp
             disabled_plugins = {
-                "gzip", "matchit", "matchparen", "netrwPlugin", "tarPlugin",
+                "gzip", "matchit", "matchparen",-- "netrwPlugin",
+        "tarPlugin",
                 "tohtml", "tutor", "zipPlugin"
             }
         }
@@ -48,6 +49,6 @@ vim.api.nvim_set_hl(0, "NormalFloat", {bg = "#1e222a"})
 lazy.setup(plugins, lazyManagerConfig)
 vim.keymap.set("n", "<leader>z", "<cmd>:Lazy<cr>", {desc = "Plugin Manager"})
 
-vim.opt.termguicolors = true
--- do not remove the colorscheme!
-vim.cmd([[colorscheme onedark]])
+-- vim.opt.termguicolors = true
+-- -- do not remove the colorscheme!
+-- vim.cmd([[colorscheme onedark]])

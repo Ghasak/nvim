@@ -28,7 +28,12 @@ M.dap_ui_setttings_fn = function(dap, dapui)
     end
 
     -- the Hamsta/nvim-dap-virtual-text and mfussenegger/nvim-dap
-    require("nvim-dap-virtual-text").setup({commented = true})
+    local nvim_dap_viritual_text__status_ok, nvim_dap_virtual_text = pcall(
+                                                                         require,
+                                                                         "nvim-dap-virtual-text")
+    if not nvim_dap_viritual_text__status_ok then
+        nvim_dap_virtual_text.setup({commented = true})
+    end
 
     -- require("dapui").setup({
     dapui.setup({

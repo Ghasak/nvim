@@ -8,6 +8,8 @@
 - [x] The current version works under `nvim`
       with Lazy Plugins Manager.
 - [x] Startup time is under `20 milliseconds` for all the installed plugins.
+- [x] Added `which-key` for mapping all the available `keys`.
+- [x] Refactoring and optimizing the workflow structure.
 
 #### Update release Nvim-workflow v0.1
 

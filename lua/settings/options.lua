@@ -389,3 +389,31 @@ local createdir = function()
         os.execute("mkdir -p " .. dirx)
     end
 end
+
+-- ===========================================================================
+--                 Auto Load netrwPlugin at startup
+--        (when you use nvim without specifying the file_name)
+-- ===========================================================================
+-- Moder Lua auto-command for launching netrwPlugin which shipped with the nvim
+-- Previously: Instead of callback I used -> command = ":silent! Explore",
+local mygroup = vim.api.nvim_create_augroup("loading_netrwPlugin", {clear = true})
+vim.api.nvim_create_autocmd({"VimEnter"}, {
+    pattern = {"*"},
+    callback = function()
+        local current_file = vim.fn.expand("%")
+        if current_file ~= "" then
+            vim.cmd(":silent! edit " .. current_file)
+        else
+            vim.cmd(":silent! Explore")
+        end
+    end,
+    group = mygroup
+})
+-- Or simply use
+-- vim.cmd([[
+-- " Open Netrw after Vim starts up
+-- augroup InitNetrw
+-- autocmd!
+-- autocmd VimEnter * :silent! Explore
+-- augroup END
+-- ]])

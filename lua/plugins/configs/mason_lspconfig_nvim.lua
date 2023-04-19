@@ -67,6 +67,10 @@ M.setup = function()
     if not lspconfig_status_ok then
         vim.notify("Couldn't load LSP-Config" .. lspconfig, vim.log.levels.ERROR)
         return
+
+    else
+        -- Adding a boarder to the lspInfo window.
+        require('lspconfig.ui.windows').default_options.border = 'double'
     end
 
     -- ==========================================================================
@@ -139,7 +143,6 @@ M.setup = function()
                             end
                         })
                     end,
-
                     executor = require("rust-tools/executors").termopen, -- can be quickfix or termopen
                     reload_workspace_from_cargo_toml = true,
                     inlay_hints = {
@@ -166,7 +169,6 @@ M.setup = function()
                 dap = {
                     adapter = require('rust-tools.dap').get_codelldb_adapter(
                         codelldb_path, liblldb_path)
-
                 }
             }
         end,

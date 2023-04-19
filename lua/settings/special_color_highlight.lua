@@ -78,27 +78,27 @@ _G.edit_neovim_files = function()
   if ok then
     picker.find_files {
       shorten_path = true,
-      cwd = "~/.local/share/nvim/site/pack/packer",
-      prompt = "~ Packer Plugins ~ ",
+      cwd = "~/config/nvim/",
+      prompt = "~ nvim config dir ~ ",
       hight = 10,
     }
   end
 end
 
 -- The following function will search any keyword in packer plugins
-_G.search_keyword_packer_plugins = function()
+_G.search_keyword_lazy_plugins = function()
   local ok, picker = pcall(require, 'telescope.builtin')
   if ok then
     picker.live_grep({
-      cwd = "~/.local/share/nvim/site/pack/packer",
-      prompt = "~ Packer Plugins ~ ",
+      cwd = "~/.local/share/nvim/lazy/",
+      prompt = "~ Lazy Plugins ~ ",
     })
   end
 end
 -----------------------------------------------------------
 --              Experiment function
 -----------------------------------------------------------
-_G.search_for_word_in_packer_plugins = function(word)
+_G.search_for_word_in_lazy_plugins = function(word)
   vim.notify(string.format("%s : this is the word that you have selected", word))
 end
 

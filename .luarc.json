@@ -40,6 +40,7 @@
         "/Users/gmbp/.local/share/nvim/lazy/nvim-treesitter/lua",
         "/Users/gmbp/.local/share/nvim/lazy/mason.nvim/lua",
         "/Users/gmbp/.config/nvim/lua",
+        "${3rd}/luv/library",
         "${3rd}/luv/library"
     ]
 }
