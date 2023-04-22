@@ -121,7 +121,7 @@ M.setup = function()
         highlights = {
             -- Common
             Normal = {fg = "$white", bg = "$black"}, -- backgorund default color
-            Normalrc = {fg = "$white", bg = "$black"}, -- backgorund default color
+            Normalrc = {fg = "$white", bg = "$black"}, -- backgorund default color                                                <-
             Visual = {fg = "$Davys_Grey", bg = "$Charm_Pink", fmt = "bold"},
             CursorLine = {bg = "$black"},
             ColorColumn = {bg = "$black"}, --  color of the ruler on the right of the text.
@@ -141,12 +141,12 @@ M.setup = function()
                 fmt = "bold"
             },
             -- Terminal Highlighting
-            Terminal = {fg = "$black", bg = "$black"}, -- terminal color for nvim
+            Terminal = {fg = "$black", bg = "$black"}, -- terminal color for nvim                                                 <-
             Floaterm = {fg = "$black", bg = "$black"}, -- terminal color for nvim
             EndOfBuffer = {fg = "$black", bg = "$black"}, -- End of buffer color
             StatusLineTermNC = {fg = "$black", bg = "$black"},
             StatusLineTerm = {fg = "$black", bg = "$black"},
-            VertSplit = {fg = "$blue", bg = "$black"}, -- when using vertical split
+            VertSplit = {fg = "$blue", bg = "$black"}, -- when using vertical split                                               <-
             SignColumn = {fg = "$black", bg = "$black"}, -- SignColumn control the edge of nvim buffer
 
             DiffAdded = {fg = "$red", bg = "$black"},
@@ -172,7 +172,7 @@ M.setup = function()
             NvimTreeEndOfBuffer = {fg = "#adbac7", bg = "$black"},
             NvimTreeGitNew = {fg = "#adbac7", bg = "$black"}, -- This will change only the the edge of the nvim-tree
             -- Icons
-            DevIconGitIgnore = {fg = "$light_orange", bg = "$black"},
+            DevIconGitIgnore = {fg = "$light_orange", bg = "$black"},                                                           --<-
             -- plugins: gitsigns
             GitSignsAdd = {fg = "$blue"},
             GitSignsAddLn = {fg = "$blue"},
@@ -231,7 +231,7 @@ M.setup = function()
             ["@method"] = {fg = "$purple_e"},
             ["@function"] = {fg = "$purple_e"},
             ["@function.builtin"] = {fg = "$purple_e"},
-            ["@keyword"] = {fg = "$red"},
+            ["@keyword"] = {fg = "$Charm_Pink"},
             ["@boolean"] = {fg = "$blue"},
             ["@property"] = {fg = "$cyan"},
             ["@attribute"] = {fg = "$cyan"},
@@ -240,8 +240,8 @@ M.setup = function()
             ["@field"] = {fg = "$white"},
             ["@variable.builtin"] = {fg = "$white"},
             ["@parameter"] = {fg = "$white"},
-            ["@keyword.function"] = {fg = "$red"},
-            ["@keyword.return"] = {fg = "$red"},
+            ["@keyword.function"] = {fg = "$white"},
+            ["@keyword.return"] = {fg = "$white"},
             ["@function.call"] = {fg = "$purple_e"},
             ["@constant.builtin"] = {fg = "$purple_e"},
             ["@constructor"] = {fg = "$orange"},

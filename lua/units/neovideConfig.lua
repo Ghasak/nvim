@@ -23,12 +23,12 @@ local M = {}
 
 M.neovide_config = function()
 
-    -- vim.cmd([[set guifont=VictorMono_NF:h14]]) --Main
+    vim.cmd([[set guifont=VictorMono_NF:h14]]) -- Main
     -- vim.cmd([[set guifont=SFMono_Nerd_Font:h14]])
     -- vim.opt.guifont = { "VictorMono NF", ":h14" }
     -- vim.opt.guifont                            = { "VictorMono NF", ":h14", ":bold" }
     -- vim.opt.guifont                            = { "Hack_Nerd_Font", ":h14" }
-    vim.opt.guifont = {"RobotoMono_NF", ":h14", ":bold"}
+    -- vim.opt.guifont = {"RobotoMono_NF", ":h14", ":bold"}
     -- vim.opt.guifont                            = { "SFMono Nerd Font", ":h14",":w13", }
     -- vim.opt.guifont                            = { "SFMono Nerd Font", ":h14:w3.4" }
     -- vim.cmd([[set guifont=VictorMono_NF:h14:w16]])

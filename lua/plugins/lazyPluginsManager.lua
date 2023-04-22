@@ -16,11 +16,17 @@ local lazyManagerConfig = {
         rtp = {
             rest = true,
             ---@type string[]
-            --paths = {}, -- add any custom paths here that you want to includes in the rtp
+            -- paths = {}, -- add any custom paths here that you want to includes in the rtp
             disabled_plugins = {
-                "gzip", "matchit", "matchparen",-- "netrwPlugin",
-        "tarPlugin",
-                "tohtml", "tutor", "zipPlugin"
+                "gzip", "matchit", "matchparen", "tarPlugin", "tohtml", "tutor",
+                "zipPlugin", "2html_plugin", "tohtml", "getscript",
+                "getscriptPlugin", "gzip", "logipat", "netrw", -- "netrwPlugin",
+                -- "netrwSettings",
+                -- "netrwFileHandlers",
+                "matchit", "tar", "tarPlugin", "rrhelper", "spellfile_plugin",
+                "vimball", "vimballPlugin", "zip", "zipPlugin", "tutor",
+                "rplugin", "syntax", "synmenu", "optwin", "compiler",
+                "bugreport", "ftplugin"
             }
         }
     }
@@ -49,6 +55,3 @@ vim.api.nvim_set_hl(0, "NormalFloat", {bg = "#1e222a"})
 lazy.setup(plugins, lazyManagerConfig)
 vim.keymap.set("n", "<leader>z", "<cmd>:Lazy<cr>", {desc = "Plugin Manager"})
 
--- vim.opt.termguicolors = true
--- -- do not remove the colorscheme!
--- vim.cmd([[colorscheme onedark]])

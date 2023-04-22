@@ -10,6 +10,8 @@
 - [x] Startup time is under `20 milliseconds` for all the installed plugins.
 - [x] Added `which-key` for mapping all the available `keys`.
 - [x] Refactoring and optimizing the workflow structure.
+- [x] Added session harboon designed for productivity.
+- [x] Added original function for launching `autoload`-`netrwPlugin`-
 
 #### Update release Nvim-workflow v0.1
 

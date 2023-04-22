@@ -55,3 +55,5 @@ for _, module in ipairs(init_modules) do load_module(module) end
 -- Loading the neovide configurations, once it neovide is lunched.
 if vim.g.neovide then require("units.neovideConfig").neovide_config() end
 
+vim.keymap.set("n", "<leader><leader>",
+               "<cmd>TSHighlightCapturesUnderCursor<CR>", {silent = true})

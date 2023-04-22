@@ -149,7 +149,7 @@ opt.sidescrolloff = 15 -- make scrolling better
 -----------------------------------------------------------
 -- Colorscheme
 -----------------------------------------------------------
-opt.termguicolors = true -- enable 24-bit RGB colors
+opt.termguicolors = false -- enable 24-bit RGB colors
 -----------------------------------------------------------
 -- Tabs, indent
 -----------------------------------------------------------

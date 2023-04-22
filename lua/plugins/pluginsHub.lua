@@ -3,16 +3,44 @@ return {
     -- "folke/tokyonight.nvim",
     -- 'navarasu/onedark.nvim'
     -- Onedark theme
+    -- Or with configuration
+
+    -- {
+    --     'ghasak/nordG.nvim',
+    --     priority = 1000, -- make sure to load this before all the other start plugins
+    --     init = function()
+    --         vim.opt.termguicolors = true
+    --         vim.g.nord_disable_background = true
+    --         vim.g.nord_borders = true
+    --
+    --         vim.cmd('colorscheme nord')
+    --     end
+    -- },
+    -- {
+    --     "navarasu/onedark.nvim",
+    --     cond = true, -- Don't load this plugin
+    --     priority = 1000, -- make sure to load this before all the other start plugins
+    --     config = function()
+    --         -- Lua
+    --         require("plugins.configs.onedark_config").setup()
+    --         -- do not remove the colorscheme!
+    --         vim.opt.termguicolors = true
+    --     end,
+    --     init = function() vim.cmd([[colorscheme onedark]]) end
+    -- },
     {
-        "navarasu/onedark.nvim",
+        "ghasak/githubG.nvim",
+        cond = true, -- load this plugin
         priority = 1000, -- make sure to load this before all the other start plugins
+        init = function()
+            require("onedark").setup({style = 'gdark'})
+            vim.cmd([[colorscheme onedark]])
+        end,
         config = function()
-            -- Lua
-            require("plugins.configs.onedark_config").setup()
             -- do not remove the colorscheme!
             vim.opt.termguicolors = true
-        end,
-        init = function() vim.cmd([[colorscheme onedark]]) end
+            -- require("plugins.configs.onedark_config").setup()
+        end
     },
     -- ==========================================================================
     -- 	                      Utilities for NVIM IDE Env
@@ -429,19 +457,32 @@ return {
             vim.o.timeout = true
             vim.o.timeoutlen = 2000 -- This will control the which-key popup window interval, default 300,
             require("which-key").setup({
-                -- your configuration comes here
-                -- or leave it empty to use the default settings
-                -- refer to the configuration section below
+                icons = {
+                    breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
+                    separator = "  ", -- symbol used between a key and it's label
+                    group = "+" -- symbol prepended to a group
+                },
+                popup_mappings = {
+                    scroll_down = "<c-d>", -- binding to scroll down inside the popup
+                    scroll_up = "<c-u>" -- binding to scroll up inside the popup
+                },
+                window = {
+                    border = "double" -- none/single/double/shadow
+                },
+                layout = {
+                    spacing = 6 -- spacing between columns
+                },
                 hidden = {
                     "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:",
                     "^ "
                 },
-                window = {
-                    border = "double" -- none, single, double, shadow
+                triggers_blacklist = {
+                    -- list of mode / prefixes that should never be hooked by WhichKey
+                    i = {"j", "k"},
+                    v = {"j", "k"}
                 }
-
             })
             require("plugins.configs.which_key_config").config()
         end
-    }, --
+    } --
 }

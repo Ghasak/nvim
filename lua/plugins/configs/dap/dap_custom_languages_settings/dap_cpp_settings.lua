@@ -22,7 +22,6 @@ function M.setup(dap)
 
     dap.configurations.cpp = {
         {
-
             name = "Launch file",
             type = "lldb",
             request = "launch",

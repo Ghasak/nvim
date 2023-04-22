@@ -199,10 +199,10 @@ end
 -- -------------------                                       ------------------------------
 -- ----------------------------------------------------------------------------------------
 _G.open_session = function()
-    -- Current function is used to switch to environment
-    -- To create an environment use: mksession ~/.cache/nvim/sessions/<session_environment_name>
-    -- We will map this function to the <leader><leader>p to load any project/session faster
-    -- Read more about making sessions here: https://bocoup.com/blog/sessions-the-vim-feature-you-probably-arent-using
+  -- Current function is used to switch to environment
+  -- To create an environment use: mksession ~/.cache/nvim/sessions/<session_environment_name>
+  -- We will map this function to the <leader><leader>p to load any project/session faster
+  -- Read more about making sessions here: https://bocoup.com/blog/sessions-the-vim-feature-you-probably-arent-using
     local path = vim.fn.expand("~/.cache/nvim/sessions/")
     local ok, picker = pcall(require, 'telescope.builtin')
     if ok then
@@ -225,7 +225,6 @@ _G.open_session = function()
                     require('telescope.actions').close(prompt_bufnr)
                     vim.cmd("source " .. tostring(full_path))
                     ----------------- Just for showing banner ------------------
-                    local file = vim.fn.expand("%:p")
                     local async = require("plenary.async")
                     local notify = require("notify").async
                     -- vim.notify(file)
