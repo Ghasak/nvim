@@ -55,7 +55,13 @@ return {
                         icon = "",
                         color = "#f1502f",
                         name = "Gitignore"
-                    }
+                    },
+                    ["tex"] = {
+                        icon = "󰙩",
+                        color = "#70B77E",
+                        name = "Gitignore"
+                    },
+
                 }
             })
         end

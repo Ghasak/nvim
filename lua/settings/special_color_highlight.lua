@@ -112,7 +112,7 @@ end
 -- nvim-tree is also there in modified buffers so this function filter it out
 local modifiedBufs = function(bufs)
     local t = 0
-    for k, v in pairs(bufs) do
+    for _, v in pairs(bufs) do
         if v.name:match("NvimTree_") == nil then t = t + 1 end
     end
     return t
@@ -199,11 +199,11 @@ end
 -- -------------------                                       ------------------------------
 -- ----------------------------------------------------------------------------------------
 _G.open_session = function()
-  -- Current function is used to switch to environment
-  -- To create an environment use: mksession ~/.cache/nvim/sessions/<session_environment_name>
-  -- We will map this function to the <leader><leader>p to load any project/session faster
-  -- Read more about making sessions here:
-  -- https://bocoup.com/blog/sessions-the-vim-feature-you-probably-arent-using
+    -- Current function is used to switch to environment
+    -- To create an environment use: mksession ~/.cache/nvim/sessions/<session_environment_name>
+    -- We will map this function to the <leader><leader>p to load any project/session faster
+    -- Read more about making sessions here:
+    -- https://bocoup.com/blog/sessions-the-vim-feature-you-probably-arent-using
     local path = vim.fn.expand("~/.cache/nvim/sessions/")
     local ok, picker = pcall(require, 'telescope.builtin')
     if ok then
@@ -236,7 +236,6 @@ _G.open_session = function()
                                             os.date("%H:%M:%S"))
                         notify(messege, "INFO", {title = " Initializing Env."})
                     end, function() end)
-
                     ------------------------------------------------------------
                 end)
                 return true

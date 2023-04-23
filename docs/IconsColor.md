@@ -76,3 +76,46 @@ hl.plugins.nvim_tree = {
         config = function() require("plugins.configs.myNvimTree") end
     }, -- undotree
 ```
+
+## Changes that I made
+
+Usually, you will need to know the `filen type` you open in `nvim`.
+For example I was searching for `latex`. and here is the one I use:
+
+1. I opened a file `gh.tex` which is `*.tex` extension for the `latex` files.
+2. I use the command
+
+```lua
+:lua print(vim.bo.filetype)
+-- Ouput
+tex
+```
+
+3. I added `tex` with the color and the icon I want under the `nvim-tree` config function.
+
+```lua
+
+    {
+        "kyazdani42/nvim-web-devicons",
+        event = "VimEnter",
+        config = function()
+            require("nvim-web-devicons").setup({
+                default = true,
+                -- takes effect when `strict` is true
+                override_by_filename = {
+                    [".gitignore"] = {
+                        icon = "",
+                        color = "#f1502f",
+                        name = "Gitignore"
+                    },
+                    ["tex"] = {
+                        icon = "󰙩",
+                        color = "#70B77E",
+                        name = "Gitignore"
+                    },
+
+                }
+            })
+        end
+    },
+```
