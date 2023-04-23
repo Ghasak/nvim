@@ -12,6 +12,8 @@
 - [x] Refactoring and optimizing the workflow structure.
 - [x] Added session harboon designed for productivity.
 - [x] Added original function for launching `autoload`-`netrwPlugin`-
+- [x] Changed the nvim-web-devicons customized based on our requested color ([Read here](./docs/IconsColor.md))
+- [x] Added a color theme plugin created from scratch namely `github.nvim` theme.
 
 #### Update release Nvim-workflow v0.1
 

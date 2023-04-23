@@ -48,7 +48,7 @@ local load_module = function(mod_name)
 end
 
 local init_modules = {
-    "plugins", "core", "settings" -- 'scripts', 'dev'
+          "plugins", "core", "settings" -- 'scripts', 'dev'
 }
 for _, module in ipairs(init_modules) do load_module(module) end
 

@@ -1,33 +1,4 @@
 return {
-    -- do not remove the colorscheme!
-    -- "folke/tokyonight.nvim",
-    -- 'navarasu/onedark.nvim'
-    -- Onedark theme
-    -- Or with configuration
-
-    -- {
-    --     'ghasak/nordG.nvim',
-    --     priority = 1000, -- make sure to load this before all the other start plugins
-    --     init = function()
-    --         vim.opt.termguicolors = true
-    --         vim.g.nord_disable_background = true
-    --         vim.g.nord_borders = true
-    --
-    --         vim.cmd('colorscheme nord')
-    --     end
-    -- },
-    -- {
-    --     "navarasu/onedark.nvim",
-    --     cond = true, -- Don't load this plugin
-    --     priority = 1000, -- make sure to load this before all the other start plugins
-    --     config = function()
-    --         -- Lua
-    --         require("plugins.configs.onedark_config").setup()
-    --         -- do not remove the colorscheme!
-    --         vim.opt.termguicolors = true
-    --     end,
-    --     init = function() vim.cmd([[colorscheme onedark]]) end
-    -- },
     {
         "ghasak/githubG.nvim",
         cond = true, -- load this plugin
@@ -76,7 +47,17 @@ return {
         "kyazdani42/nvim-web-devicons",
         event = "VimEnter",
         config = function()
-            require("nvim-web-devicons").setup({default = true})
+            require("nvim-web-devicons").setup({
+                default = true,
+                -- takes effect when `strict` is true
+                override_by_filename = {
+                    [".gitignore"] = {
+                        icon = "",
+                        color = "#f1502f",
+                        name = "Gitignore"
+                    }
+                }
+            })
         end
     },
 
