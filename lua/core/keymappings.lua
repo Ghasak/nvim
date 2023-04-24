@@ -346,3 +346,4 @@ vim.keymap.set("n", "<leader>o", "<cmd>Lspsaga outline<CR>", {silent = true})
 
 vim.keymap.set("n", "<leader><leader>",
                "<cmd>TSHighlightCapturesUnderCursor<CR>", {silent = true})
+

@@ -384,7 +384,7 @@ return {
     -- Debugging
     {
         "mfussenegger/nvim-dap",
-        cond = false, -- Not loading the dap,
+        cond = true, -- Loading the dap, if false it will not be loaded,
         lazy = true,
         event = "InsertEnter",
         -- keys = { [[<leader>d]] },

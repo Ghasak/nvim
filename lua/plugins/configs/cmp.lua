@@ -40,7 +40,7 @@ function M.setup()
 ]])
 
     local icons = require("plugins.configs.icons")
-    local kind_icons = icons.kind
+    -- local kind_icons = icons.kind
     vim.api.nvim_set_hl(0, "CmpItemKindCopilot",
                         {fg = "#2d333b", bg = "#6CC644"})
     vim.api.nvim_set_hl(0, "CmpItemKindEmoji", {fg = "#2d333b", bg = "#FDE030"})
@@ -343,8 +343,8 @@ function M.setup()
     --                            █▄▄ █ ▀ █ █▀▀    █▄▄ █ ▀ █ █▄▀ █▄▄ █ █ ▀█ ██▄
     --
     ----------------------------------------------------------------------------------------------------------------------
-    local feedkeys = require("cmp.utils.feedkeys")
-    local keymap = require("cmp.utils.keymap")
+    -- local feedkeys = require("cmp.utils.feedkeys")
+    -- local keymap = require("cmp.utils.keymap")
     -- Function used to custom the mapping for the cmdline for both (:) and (\)
     local mapping_custom_fn = function()
         return {
@@ -353,7 +353,8 @@ function M.setup()
                     if cmp.visible() then
                         cmp.select_next_item()
                     else
-                        feedkeys.call(keymap.t("<C-z>"), "n")
+                        -- feedkeys.call(keymap.t("<C-z>"), "n")
+                        cmp.complete() -- added for fix the auto complete
                     end
                 end
             },
@@ -362,7 +363,8 @@ function M.setup()
                     if cmp.visible() then
                         cmp.select_prev_item()
                     else
-                        feedkeys.call(keymap.t("<C-z>"), "n")
+                        -- feedkeys.call(keymap.t("<C-z>"), "n")
+                        cmp.complete() -- added for fix the auto complete
                     end
                 end
             },
@@ -407,7 +409,7 @@ function M.setup()
 
     -- Command mode completion
     -- local cmdline_mappings = cmp.mapping.preset.cmdline(filter_mode(mapping, "c"))
-    local cmdline_view = {entries = "wildmenu"} -- <- If you want to make your cmp menu showed horizontally.
+    -- local cmdline_view = {entries = "wildmenu"} -- <- If you want to make your cmp menu showed horizontally.
     -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline({"/", "?"}, {
         -- mapping = cmp.mapping.preset.cmdline(), -- <- I have borrowed from this function the mapping table below,
@@ -417,7 +419,7 @@ function M.setup()
     })
     -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline(":", {
-        some_function = cmp.mapping.preset.cmdline(), -- <- I have borrowed from this function the mapping table below,
+        --some_function = cmp.mapping.preset.cmdline(), -- <- I have borrowed from this function the mapping table below,
         mapping = mapping_custom_fn(),
         -- view = cmdline_view,
         sources = cmp.config.sources({{name = "path"}}, {{name = "cmdline"}})
