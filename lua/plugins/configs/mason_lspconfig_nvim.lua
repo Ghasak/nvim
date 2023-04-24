@@ -44,14 +44,13 @@ M.setup = function()
         -- A list of servers to automatically install if they're not already installed.,
         ensure_installed = {
             "pyright", "lua_ls", "rust_analyzer", "tsserver", "texlab",
-            "clangd", "dockerls", "docker_compose_language_service", "jsonls",
-            "r_language_server", "vimls"
+            "clangd", --"dockerls", "docker_compose_language_service", "jsonls", "r_language_server", "vimls"
         },
         ui = {
             -- Whether to automatically check for new versions when opening the :Mason window.
             check_outdated_packages_on_open = true,
             -- The border to use for the UI window. Accepts same border values as |nvim_open_win()|.
-            border = "rounded"
+            border = "double"
         }
     })
     -- 3.) >> Mason-tool-installer: installing speicific linterning and tools for specific lps.

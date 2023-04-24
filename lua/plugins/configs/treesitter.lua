@@ -19,7 +19,8 @@ function M.setup()
             enable = true, -- false will disable the whole extension
             use_languagetree = true,
             disable = {"phpdoc", "tree-sitter-phpdoc"}, -- list of language that will be disabled
-            additional_vim_regex_highlighting = true
+            additional_vim_regex_highlighting = true,
+
         },
         rainbow = {
             enable = true,

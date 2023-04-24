@@ -38,6 +38,7 @@ print("File type:", file_type)
 You can also use the `filetype()` function to get the file type of a specific
 buffer. This function takes a buffer number as an argument and returns the file
 type of the corresponding buffer.
+
 - Example:
 
 ```lua
@@ -50,8 +51,8 @@ print("File type:", file_type)
   buffer-local variables and functions, respectively. These modules are used to
   get information about the current buffer and its contents.
 
-
 ## How to know buffer name and language server name in lua nvim
+
 In order to know the buffer name and language server name in Lua with Neovim,
 you can use the following commands:
 
@@ -59,25 +60,30 @@ To get the buffer name, you can use the bufname() function. This function
 returns the full file path of the current buffer if called without any
 arguments, or the full file path of the buffer specified by the buffer number
 if an argument is passed. Example:
+
 ```lua
 local buffer_name = vim.fn.bufname()
 print("Buffer name:", buffer_name)
 ```
+
 To get the language server name, you can use the `vim.lsp.buf_get_clients()`
 function. This function returns a table containing information about the active
 language server clients for the current buffer. You can then access the name
 field of each client to get the language server name. Example:
+
 ```lua
 local clients = vim.lsp.buf_get_clients()
 for _, client in ipairs(clients) do
   print("Language server name:", client.name)
 end
 ```
+
 Note that the vim.lsp module requires a language server to be installed and
 configured. If you haven't done so already, you'll need to install a language
 server and set up Neovim to use it.
 
 ## what is different between Search and CurSearch?
+
 Search and CurSearch are both highlight groups used in the neovim editor, but
 they serve different purposes.
 
@@ -99,6 +105,7 @@ be customized in your init.vim configuration file or in your chosen color
 scheme file.
 
 ## How about IncSearch
+
 IncSearch is another highlight group used in the neovim editor that is related
 to searching. It is used to highlight the current search match as you type the
 search term, instead of waiting for you to press enter to start the search.
@@ -122,14 +129,31 @@ init.vim file:
 "Set the background color to red and the foreground color to white
 highlight IncSearch ctermbg=red ctermfg=white
 ```
+
 This will change the colors used for the IncSearch highlight group to red and
 white, respectively.
 
-
-
 ## Getting all package loaded
+
 I use the following command to get all packages which are loaded on fly.
+
 ```lua
 :lua vim.print(package.loaded)
 ```
 
+## How to change the color fo specific language
+
+- Assume you want to change the `inlay` and `comment` of the `Rust` file types only.
+- We can use the following nvim API.
+  - We are linking the highlight that we created to the original highlight of the `Comment` in nvim.
+
+```lua
+-------------------------------------------
+-- How to change the color for specific language
+-- Define a new highlight group for comments in Rust files
+vim.api.nvim_command('highlight RustComment gui=italic guifg=#B2EF9B')
+-- Set the `comment` syntax group to use the new highlight group for Rust files
+vim.api
+    .nvim_command('autocmd FileType rust highlight! link Comment RustComment')
+-------------------------------------------
+```

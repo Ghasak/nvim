@@ -14,7 +14,8 @@ M.BlamerSetting = function()
           let g:blamer_show_in_insert_modes = 0
           let g:blamer_template = '   <committer>  <committer-time>  <summary>'
           let g:blamer_prefix = ' <-  : '
-          highlight Blamer guifg=gray
+          "highlight Blamer guifg=gray
+          highlight Blamer guifg=#848b98
   ]]
 end
 
