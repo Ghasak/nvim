@@ -3,6 +3,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.DS_Store
+.luarc.json
+.stylua.toml
 # C extensions
 *.so
 plugin/*

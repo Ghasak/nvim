@@ -43,7 +43,9 @@ M.setup = function()
     mason_lspconfig.setup({
         -- A list of servers to automatically install if they're not already installed.,
         ensure_installed = {
-            "pyright", "lua_ls", "rust_analyzer", "tsserver", "texlab", "clangd"
+            "pyright", "lua_ls", "rust_analyzer", "tsserver", "texlab",
+            "clangd", "dockerls", "docker_compose_language_service", "jsonls",
+            "r_language_server", "vimls"
         },
         ui = {
             -- Whether to automatically check for new versions when opening the :Mason window.
@@ -62,6 +64,7 @@ M.setup = function()
         auto_update = false,
         run_on_start = true
     }
+
     -- 4.) >> lspconfig main loader for the lsp
     local lspconfig_status_ok, lspconfig = pcall(require, "lspconfig")
     if not lspconfig_status_ok then

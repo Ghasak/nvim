@@ -56,11 +56,7 @@ return {
                         color = "#f1502f",
                         name = "Gitignore"
                     },
-                    ["tex"] = {
-                        icon = "󰙩",
-                        color = "#70B77E",
-                        name = "Gitignore"
-                    },
+                    ["tex"] = {icon = "󰙩", color = "#70B77E", name = "tex"}
 
                 }
             })
@@ -160,10 +156,10 @@ return {
         dependencies = {"kyazdani42/nvim-web-devicons"}
     }, -- lsp stuff
     {
+        "williamboman/mason.nvim",
         lazy = true,
         event = {"VeryLazy"},
         -- event = {"VimEnter"},
-        "williamboman/mason.nvim",
         cmd = {
             "Mason", "MasonInstall", "MasonInstallAll", "MasonUninstall",
             "MasonUninstallAll", "MasonLog"
@@ -471,5 +467,33 @@ return {
             })
             require("plugins.configs.which_key_config").config()
         end
-    } --
+    }, --
+    -- ===========================================================================
+    --                            Git and Diff
+    -- ===========================================================================
+    {
+        "APZelos/blamer.nvim",
+        event = "VimEnter",
+        config = function()
+            require("plugins.configs.myGitBlamer").BlamerSetting()
+        end
+    },
+    -- adding (+/-) for diff, in the Gutter      -- Not compatable with the nvim-diagnostics  in nvim 0.6
+    -- use({"mhinz/vim-signify"})
+
+    -- Git
+    {
+        "lewis6991/gitsigns.nvim",
+        event = "InsertEnter",
+        config = function() require("plugins.configs.myGit") end
+    }, -- Git Diff
+    {
+        "sindrets/diffview.nvim",
+        dependencies = "nvim-lua/plenary.nvim",
+        config = function() require("plugins.configs.myGitDiff") end,
+        cmd = {
+            "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles",
+            "DiffviewFocusFiles"
+        }
+    }
 }

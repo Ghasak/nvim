@@ -131,9 +131,13 @@ opt.splitbelow = true -- orizontal split to the bottom
 opt.ignorecase = true -- ignore case letters when search
 opt.smartcase = true -- ignore lowercase for the whole pattern
 
--- remove whitespace on save
-cmd([[au BufWritePre * :%s/\s\+$//e]])
 
+-- ===========================================================================
+--                      Remove any white space on saving event
+-- ===========================================================================
+
+-- remove whitespace on save
+vim.cmd([[au BufWritePre * :%s/\s\+$//e]])
 -----------------------------------------------------------
 -- Memory, CPU
 -----------------------------------------------------------
