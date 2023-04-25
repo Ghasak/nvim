@@ -7,9 +7,9 @@ function M.setup()
     configs.setup({
         -- ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
         ensure_installed = {
-            "lua", "python", "cpp", "rust", "markdown", "c", "lua", "sql",
-            "html", "rust", "javascript", "python", "vim", "json", "json5",
-            "jsdoc", "cmake", "make", "bash"
+            "lua", "python", "cpp", "markdown", "c", "lua", "sql", "html",
+            "rust", "javascript", "vim", "json", "json5", "jsdoc", "cmake",
+            "make", "bash"
             -- "help",
         },
         sync_install = false, -- install languages synchronously (only applied to
@@ -19,7 +19,7 @@ function M.setup()
             enable = true, -- false will disable the whole extension
             use_languagetree = true,
             disable = {"phpdoc", "tree-sitter-phpdoc"}, -- list of language that will be disabled
-            additional_vim_regex_highlighting = true,
+            additional_vim_regex_highlighting = true
 
         },
         rainbow = {

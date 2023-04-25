@@ -89,7 +89,8 @@ nvim_tree.setup {
 
                 default = "",
                 symlink = "",
-                bookmark = "",
+                --bookmark = "",
+                bookmark = "",
                 folder = {
                     arrow_closed = "",
                     arrow_open = "",
@@ -140,7 +141,7 @@ nvim_tree.setup {
     --   dotfiles = false,
     --   custom = {},
     -- },
-    git = {enable = true, ignore = true, timeout = 500},
+    git = {enable = true, ignore = true, timeout = 500}
     -- view = {
     --     width = 30,
     --     -- height = 30,
