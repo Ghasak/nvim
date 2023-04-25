@@ -9,7 +9,7 @@ function M.setup()
         ensure_installed = {
             "lua", "python", "cpp", "rust", "markdown", "c", "lua", "sql",
             "html", "rust", "javascript", "python", "vim", "json", "json5",
-            "jsdoc", "cmake", "make"
+            "jsdoc", "cmake", "make", "bash"
             -- "help",
         },
         sync_install = false, -- install languages synchronously (only applied to
