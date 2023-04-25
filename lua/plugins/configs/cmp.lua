@@ -19,6 +19,7 @@
 local M = {}
 
 function M.setup()
+    local types = require('cmp.types')
     local present, cmp = pcall(require, "cmp")
 
     if not present then return end
@@ -348,26 +349,32 @@ function M.setup()
     -- Function used to custom the mapping for the cmdline for both (:) and (\)
     local mapping_custom_fn = function()
         return {
-            ["<Tab>"] = {
-                c = function()
-                    if cmp.visible() then
-                        cmp.select_next_item()
-                    else
-                        -- feedkeys.call(keymap.t("<C-z>"), "n")
-                        cmp.complete() -- added for fix the auto complete
-                    end
-                end
-            },
-            ["<S-Tab>"] = {
-                c = function()
-                    if cmp.visible() then
-                        cmp.select_prev_item()
-                    else
-                        -- feedkeys.call(keymap.t("<C-z>"), "n")
-                        cmp.complete() -- added for fix the auto complete
-                    end
-                end
-            },
+            -- ["<Tab>"] = {
+            --     c = function()
+            --         if cmp.visible() then
+            --             -- cmp.select_next_item()
+            --             cmp.select_next_item({
+            --                 behavior = types.cmp.SelectBehavior.Insert
+            --             })
+            --         else
+            --             -- feedkeys.call(keymap.t("<C-z>"), "n")
+            --             cmp.complete() -- added for fix the auto complete
+            --         end
+            --     end
+            -- },
+            -- ["<S-Tab>"] = {
+            --     c = function()
+            --         if cmp.visible() then
+            --             -- cmp.select_prev_item()
+            --             cmp.select_prev_item({
+            --                 behavior = types.cmp.SelectBehavior.Insert
+            --             })
+            --         else
+            --             -- feedkeys.call(keymap.t("<C-z>"), "n")
+            --             cmp.complete() -- added for fix the auto complete
+            --         end
+            --     end
+            -- },
             ["<C-n>"] = {
                 c = function(fallback)
                     if cmp.visible() then
@@ -419,7 +426,7 @@ function M.setup()
     })
     -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline(":", {
-        --some_function = cmp.mapping.preset.cmdline(), -- <- I have borrowed from this function the mapping table below,
+        -- some_function = cmp.mapping.preset.cmdline(), -- <- I have borrowed from this function the mapping table below,
         mapping = mapping_custom_fn(),
         -- view = cmdline_view,
         sources = cmp.config.sources({{name = "path"}}, {{name = "cmdline"}})
