@@ -86,8 +86,7 @@ upgrades to my configuration file (to name few)
 
 ### Cargo with Rust
 
-To activite the `crate` plugin, you need to enter first to a buffer with `rust
-file` `*.rs`, which can be activited on `Insert` event. This will trigger also
+To activite the `crate` plugin, you need to enter first to a buffer with `rust file` `*.rs`, which can be activited on `Insert` event. This will trigger also
 `cmp-create` and also `nvim-crate`. You can also later for `crate-tomal` file
 to use the `keymapping: gH` on the crate name, which will trigger documentation
 about the crate history and other considerations.
@@ -159,8 +158,7 @@ The following command are super handy and useful when developign `lua` plugins.
 2. Color-scheme
 
 - Any color scheme (\*.vim) will be put at `colors` directory inside the `nvim`
-  will be loaded to the color-scheme, which can be checked using `:colorscheme
-<tab>`
+  will be loaded to the color-scheme, which can be checked using `:colorscheme <tab>`
 
 3. RUNTIME PATH
 
@@ -522,7 +520,8 @@ in `nvim` such as: digit, tab, normal, background ..etc. These layers are:
   bufferline, nvim-tree and lsp configurations)
 - D. The user custom individual colors defined.
 
-Configurations : to change the color, you need to consider to which level you want to alter the color,
+`Configurations` : to change the color, you need to consider to which level you
+want to alter the color,
 
 ## VIM EVENTS
 

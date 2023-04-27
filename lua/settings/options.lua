@@ -38,8 +38,6 @@ set fileformats=unix,dos,mac
 ]])
 
 opt.swapfile = false -- don't use swapfile
-cmd([[set guicursor=]]) -- This will keep the cursor form changing.
-g.gruvbox_invert_selection = 0 -- In Visual Mode selection, turn-off multi-color, https://www.reddit.com/r/vim/comments/ejy7yp/how_would_you_tell_vim_to_change_the_visual/
 
 -- mapping for paste  Ref: https://vim.fandom.com/wiki/Replace_a_word_with_yanked_text
 vim.cmd([[
@@ -72,14 +70,6 @@ set write
 -- These options to trigger the spelling attachment.
 -- vim.opt.spell = true
 -- vim.opt.spelllang = { 'en_us' }
------------------------------------------------------------
---              Cursor shape
------------------------------------------------------------
--- cmd[[set guicursor=a:/iCursor-blinkon40-blinkoff40-blinkwait10]]   -- To change the  cursor options such as the size and blinking, not used at the moment
--- cmd[[set guicursor=i-ci:ver30-iCursor-blinkon40-blinkoff40-blinkwait10]]   -- To change the  cursor options such as the size and blinking
--- (a) means all modes, (i) insert, (v) visual model, and iCursor is different from blcokCurosr see (:h guicurosr)
--- cmd([[set guicursor=a:ver50-iCursor-blinkon40-blinkoff40-blinkwait10]]) -- To change the  cursor options such as the size and blinking,
--- cmd([[set guicursor=i:ver50-iCursor-blinkon40-blinkoff40-blinkwait10]]) -- To change the  cursor options such as the size and blinking,
 
 -----------------------------------------------------------
 -- Configurations form my old vim script
@@ -131,7 +121,6 @@ opt.splitbelow = true -- orizontal split to the bottom
 opt.ignorecase = true -- ignore case letters when search
 opt.smartcase = true -- ignore lowercase for the whole pattern
 
-
 -- ===========================================================================
 --                      Remove any white space on saving event
 -- ===========================================================================
@@ -153,7 +142,7 @@ opt.sidescrolloff = 15 -- make scrolling better
 -----------------------------------------------------------
 -- Colorscheme
 -----------------------------------------------------------
-opt.termguicolors = false -- enable 24-bit RGB colors
+opt.termguicolors = true -- enable 24-bit RGB colors
 -----------------------------------------------------------
 -- Tabs, indent
 -----------------------------------------------------------
@@ -203,7 +192,7 @@ end
 -----------------------------------------------------------
 --          Glow for Markdown
 -----------------------------------------------------------
-vim.g.glow_border = "rounded"
+vim.g.glow_border = "double"
 vim.g.glow_width = 200
 -- vim.g.glow_use_pager = true
 -- vim.g.glow_style = "light"
@@ -212,7 +201,7 @@ vim.opt.termguicolors = true
 -----------------------------------------------------------
 --      Unload some default plugins shipped with nvim
 -----------------------------------------------------------
-local g = vim.g
+-- local g = vim.g
 
 -- Disable some builtin vim plugins
 local disabled_built_ins = {
@@ -440,3 +429,30 @@ vim.api.nvim_create_autocmd({"VimEnter"}, {
 -- autocmd VimEnter * :silent! Explore
 -- augroup END
 -- ]])
+
+-- ===========================================================================
+--                       Change the shape of Cursor
+-- By default, you will see the
+-- ===========================================================================
+-- cmd([[set guicursor=]]) -- This will keep the cursor form changing. [important command]
+-----------------------------------------------------------
+--              Cursor shape
+-----------------------------------------------------------
+-- cmd[[set guicursor=a:/iCursor-blinkon40-blinkoff40-blinkwait10]]   -- To change the  cursor options such as the size and blinking, not used at the moment
+-- cmd[[set guicursor=i-ci:ver30-iCursor-blinkon40-blinkoff40-blinkwait10]]   -- To change the  cursor options such as the size and blinking
+-- (a) means all modes, (i) insert, (v) visual model, and iCursor is different from blockCurosr see (:h guicurosr)
+-- cmd([[set guicursor=a:ver50-iCursor-blinkon40-blinkoff40-blinkwait10]]) -- To change the  cursor options such as the size and blinking,
+-- cmd([[set guicursor=i:ver50-iCursor-blinkon40-blinkoff40-blinkwait10]]) -- To change the  cursor options such as the size and blinking,
+-----------------------------------------------------------
+local mygroup2 = vim.api.nvim_create_augroup("ChangeMyCursor", {clear = true})
+vim.api.nvim_create_autocmd({"InsertEnter"}, {
+    pattern = "*",
+    command = vim.cmd([[silent set guicursor=i:ver100-blockCurosr-blinkon40-blinkoff40-blinkwait10]]),
+    group = mygroup2
+})
+
+vim.api.nvim_create_autocmd({"InsertLeave"}, {
+    pattern = "*",
+    command = vim.cmd([[silent set guicursor=i:ver100-iCursor-blinkon40-blinkoff100-blinkwait100]]),
+    group = mygroup2
+})
