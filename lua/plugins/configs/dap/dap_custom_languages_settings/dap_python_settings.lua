@@ -34,9 +34,9 @@ M.dap_configurations_python_fn = function()
                 local env_path = string.format("%s/bin/python3",
                                                os.getenv("VIRTUAL_ENV"))
                 if vim.fn.executable(env_path) == 1 then
-                    vim.pretty_print("We have selected virtualenv python ... ")
+                    vim.print("We have selected virtualenv python ... ")
                 else
-                    vim.pretty_print(
+                    vim.print(
                         "We have selected system default python ... ")
                 end
                 return vim.g.python_custom_command_path

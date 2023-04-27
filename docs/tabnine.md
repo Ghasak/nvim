@@ -22,9 +22,13 @@ You need to provide the following:
 
 1. In your default python (shipped with the Mac M1) using the `cmp-tabnine`, Use `PackerSync` to install `cmp-tabnine`
 2. Go to the directory:
-
+- packer manager
 ```shell
 ~/.local/share/nvim/site/pack/packer/opt/cmp-tabnine/binaries/4.4.149
+```
+- lazy nvim
+```shell
+~/.local/share/nvim/lazy/cmp-tabnine/binaries/4.4.285
 ```
 3. Create a directory called `x86_64-apple-darwin`. at `4.4.149`
 4. Copy the content (exactly the same), inside the directory `4.4.149` which called
