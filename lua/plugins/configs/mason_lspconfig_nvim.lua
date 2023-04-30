@@ -159,7 +159,7 @@ M.setup = function()
                         right_align_padding = 7,
                         highlight = "Comment"
                     },
-                    hover_actions = {border = "rounded", auto_focus = true}
+                    hover_actions = {border = "double", auto_focus = true}
                 },
 
                 server = {

@@ -469,10 +469,10 @@ SignColumn = { fg = '$beautiful_black' ,bg = '$beautiful_black' },              
 -- Syntax
 String = {fg ='$light_green'},                                                                -- For only string in nvim
 -- nvim-tree
-NvimTreeVertSplit =  { fg = '$light_green' ,bg = '$beautiful_black' },                       -- When you split inside nvim-tree the fg will be activited
-NvimTreeNormal = { fg = '$light_green' ,bg = '$beautiful_black' },                           -- fg means files names, folder names ..etc.
+NvimTreeVertSplit =  { fg = '$light_green' ,bg = '$beautiful_black' },                        -- When you split inside nvim-tree the fg will be activited
+NvimTreeNormal = { fg = '$light_green' ,bg = '$beautiful_black' },                            -- fg means files names, folder names ..etc.
 NvimTreeEndOfBuffer = { fg = '$light_green' ,bg = '$beautiful_black' },
-NvimTreeGitNew = {fg ='$light_green'  },                                                       -- This will change only the
+NvimTreeGitNew = {fg ='$light_green'  },                                                      -- This will change only the
 -- GGX = {fg = '#EEEDBF'}
 
 ```

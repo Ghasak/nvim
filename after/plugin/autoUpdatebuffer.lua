@@ -189,7 +189,7 @@ au FocusLost,WinLeave * :silent! noautocmd w
 
 end
 
-function auto_schedular_custom_event_fn()
+local function auto_schedular_custom_event_fn()
   vim.api.nvim_create_autocmd({ "BufLeave", "BufWinLeave" },
     {
       pattern = { "*" },
