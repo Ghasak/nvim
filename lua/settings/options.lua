@@ -444,15 +444,15 @@ vim.api.nvim_create_autocmd({"VimEnter"}, {
 -- cmd([[set guicursor=a:ver50-iCursor-blinkon40-blinkoff40-blinkwait10]]) -- To change the  cursor options such as the size and blinking,
 -- cmd([[set guicursor=i:ver50-iCursor-blinkon40-blinkoff40-blinkwait10]]) -- To change the  cursor options such as the size and blinking,
 -----------------------------------------------------------
-local mygroup2 = vim.api.nvim_create_augroup("ChangeMyCursor", {clear = true})
-vim.api.nvim_create_autocmd({"InsertEnter"}, {
-    pattern = "*",
-    command = vim.cmd([[silent set guicursor=i:ver100-blockCurosr-blinkon40-blinkoff40-blinkwait10]]),
-    group = mygroup2
-})
-
-vim.api.nvim_create_autocmd({"InsertLeave"}, {
-    pattern = "*",
-    command = vim.cmd([[silent set guicursor=i:ver100-iCursor-blinkon40-blinkoff100-blinkwait100]]),
-    group = mygroup2
-})
+-- local mygroup2 = vim.api.nvim_create_augroup("ChangeMyCursor", {clear = true})
+-- vim.api.nvim_create_autocmd({"InsertEnter"}, {
+--     pattern = "*",
+--     command = vim.cmd([[silent set guicursor=i:ver100-blockCurosr-blinkon40-blinkoff40-blinkwait10]]),
+--     group = mygroup2
+-- })
+--
+-- vim.api.nvim_create_autocmd({"InsertLeave"}, {
+--     pattern = "*",
+--     command = vim.cmd([[silent set guicursor=i:ver100-iCursor-blinkon40-blinkoff100-blinkwait100]]),
+--     group = mygroup2
+-- })

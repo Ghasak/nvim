@@ -43,8 +43,7 @@ M.setup = function()
     mason_lspconfig.setup({
         -- A list of servers to automatically install if they're not already installed.,
         ensure_installed = {
-            "pyright", "lua_ls", "rust_analyzer", "tsserver", "texlab",
-            "clangd", --"dockerls", "docker_compose_language_service", "jsonls", "r_language_server", "vimls"
+            "pyright", "lua_ls", "rust_analyzer", "tsserver", "texlab", "clangd" -- "dockerls", "docker_compose_language_service", "jsonls", "r_language_server", "vimls"
         },
         ui = {
             -- Whether to automatically check for new versions when opening the :Mason window.
@@ -147,6 +146,7 @@ M.setup = function()
                     end,
                     executor = require("rust-tools/executors").termopen, -- can be quickfix or termopen
                     reload_workspace_from_cargo_toml = true,
+                    runnables = {use_telescope = true}, -- added for supporting telescope to run
                     inlay_hints = {
                         auto = true,
                         only_current_line = false,
@@ -165,6 +165,7 @@ M.setup = function()
                 server = {
                     on_attach = opts.on_attach,
                     handlers = opts.handlers,
+                    capabilities = opts.capabilities, -- aslo added here new
                     settings = rust_tools_settings
                 },
                 -- debugging stuff

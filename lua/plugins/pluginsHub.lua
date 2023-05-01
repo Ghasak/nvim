@@ -393,7 +393,22 @@ return {
     -- Debugging
     -- use({ "puremourning/vimspector", event = "BufWinEnter" })
     -- Debugging
+    -- This plugin adds virtual text support to nvim-dap. nvim-treesitter is used to find variable definitions.
+    -- It will add variable text value in the debugging session.
     {
+        'theHamsta/nvim-dap-virtual-text',
+        lazy = true,
+        event = "InsertEnter",
+        config = function()
+            require("nvim-dap-virtual-text").setup({
+                display_callback = function(variable, _buf, _stackframe, _node)
+                    return variable.name .. '  󰞮 󱚟   ' .. variable.value
+                end
+            })
+            vim.g.dap_virtual_text = true
+        end
+
+    }, {
         "mfussenegger/nvim-dap",
         cond = true, -- Loading the dap, if false it will not be loaded,
         lazy = true,
@@ -401,6 +416,7 @@ return {
         -- keys = { [[<leader>d]] },
         dependencies = {
             {"nvim-dap-virtual-text", "nvim-dap-ui", "nvim-dap-python"},
+            -- {"DAPIkstall.nvim"},
             {"theHamsta/nvim-dap-virtual-text", event = "InsertEnter"},
             {"rcarriga/nvim-dap-ui", event = "InsertEnter"},
             {"mfussenegger/nvim-dap-python", event = "InsertEnter"},
@@ -410,6 +426,7 @@ return {
         },
         config = function() require "plugins.configs.dap" end
     },
+
     -- ===========================================================================
     --                         For Editor
     -- ===========================================================================
