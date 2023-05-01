@@ -1,6 +1,9 @@
 # Session In Nvim
 
 ## Introduction
+The `session` in `nvim` is about creating a shortcut for your environment that
+you can jump to it anytime. Currently it doesn't support if the `Nvim-tree`
+window is opened, so, close it first then create the session.
 
 ## Create Nvim Session
 

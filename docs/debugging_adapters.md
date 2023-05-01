@@ -1,5 +1,20 @@
 # Debugging In depth in Neovim
 
+## Major update 2023-05-01 22:48
+
+- In our `Nvim 0.9` update, I have added the following functionality for the
+  `dap` nvim plugin.
+  - Support virtual text using the `nvim-dap-virtual-text`. Check the
+    configuration file for this plugin.
+  - For `Rust`, `rust-tools` session. I have added the capability support which
+    was not supported before.
+  - For `Rust`, `rust-tools` I have added `Telescope` support which is when you
+    go to `main` function and use the command `RustHoverActions` will allow us
+    to Run or debug the project.
+  - I added also for the `which-key` support for more features for the dap
+    session. For example check out the `<leader>de`, it will show the value of
+    the current variable in the debugging session.
+
 ## In theory
 
 you will need
@@ -34,7 +49,8 @@ system), and also for the `virtualenv` (virtualenv either local or like the pipe
 
 ## Several adapters of lldb
 
-There are several adpaters for `lldb`, but only the one I install from the `brew` is working
+- There are several adpaters for `lldb`, but only the one I install from the
+`brew` is working
 
 ```shell
 brew install llvm

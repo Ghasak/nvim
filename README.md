@@ -14,6 +14,9 @@
 - [x] Added original function for launching `autoload`-`netrwPlugin`-
 - [x] Changed the nvim-web-devicons customized based on our requested color ([Read here](./docs/IconsColor.md))
 - [x] Added a color theme plugin created from scratch namely `github.nvim` theme.
+- [x] Add more support for the debugging session with `which-key` integration.
+  Also added `virtual-text` supprot in the `dap` session to show the value of
+  the variable [check here](./docs/debugging_adapgers.md).
 
 #### Update release Nvim-workflow v0.1
 
@@ -144,8 +147,8 @@ P(fn.setup())
 The following command are super handy and useful when developign `lua` plugins.
 
 ```lua
-:source %                                   -- This will repload the curretn buffer (usually can be used with init.lua)
-:lua <function_name()>                      -- How to run a function (especially the __G.) global functions (check special function file)
+:source %                  -- This will repload the curretn buffer (usually can be used with init.lua)
+:lua <function_name()>     -- How to run a function (especially the __G.) global functions (check special function file)
 
 ```
 
