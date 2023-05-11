@@ -385,7 +385,19 @@ return {
     --  use({ "tpope/vim-vinegar" })
     --  use({ "tpope/vim-sleuth" })
     -- Replace word with register
-    {"gennaro-tedesco/nvim-peekup", event = "InsertEnter"},
+    {"gennaro-tedesco/nvim-peekup", event = "InsertEnter"}, {
+        "rainbowhxch/beacon.nvim",
+        lazy = true,
+        event = "InsertEnter",
+        -- :Beacon: highlight current position (even if plugin is disabled)
+        -- :BeaconToggle: toggle beacon enable/disable
+
+        config = function()
+            -- To highlight your becacon indicator
+            -- vim.cmd([[highlight Beacon guibg=#007CBE ctermbg=15]])
+            require('beacon').setup({})
+        end
+    },
 
     -- ===========================================================================
     --                        Debugger Tools
