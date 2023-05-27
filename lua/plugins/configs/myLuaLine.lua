@@ -39,8 +39,8 @@ end
 
 local lsp_func = function()
     -- Function that return the client language server corresponding to the
-    local server_icon = "歷"
-    local server_icon_not_not_known = "轢"
+    local server_icon = "󰒍"
+    local server_icon_not_not_known = "󰒍"
     local servers = {}
     local path = vim.fn.stdpath("data")
     path = string.format("%s", path)
@@ -124,13 +124,13 @@ local function file_size(file)
     local size = vim.fn.getfsize(file)
     if size == 0 or size == -1 or size == -2 then return "" end
     if size < 1024 then
-        size = string.format("猪 %d", size) .. "B"
+        size = string.format("󰖡 %d", size) .. "B"
     elseif size < 1024 * 1024 then
-        size = string.format("猪 %d", size / 1024) .. "KB"
+        size = string.format("󰖡 %d", size / 1024) .. "KB"
     elseif size < 1024 * 1024 * 1024 then
-        size = string.format("猪 %d", size / 1024 / 1024) .. "MB"
+        size = string.format("󰖡 %d", size / 1024 / 1024) .. "MB"
     else
-        size = string.format("猪 %d", size / 1024 / 1024 / 1024) .. "GB"
+        size = string.format("󰖡 %d", size / 1024 / 1024 / 1024) .. "GB"
     end
     return size .. space
 end
@@ -177,8 +177,8 @@ end
 -- --------------------------------------------------------------------
 local function copilot_status()
 
-    local copilot_icon_loaded = "  ﮧ "
-    local copilot_icon_not_loaded = "  ﮧ "
+    local copilot_icon_loaded = "  󰚩 "
+    local copilot_icon_not_loaded = "  󰚩 "
 
     if vim.fn.exists("g:copilot_enabled") == 1 then
         if (vim.inspect(vim.api.nvim_get_var('copilot_enabled')) == "true") then
@@ -345,13 +345,13 @@ function M.setup()
                 {'branch'}, {'diff'}, {
                     'diagnostics',
                     sources = {"nvim_diagnostic"},
-                    -- symbols = { error = " ", warn = " ", info = " ", hint = " " },
-                    symbols = {
-                        error = "",
-                        information = "כֿ",
-                        hint = "",
-                        warn = ""
-                    }
+                    symbols = { error = " ", warn = " ", info = " ", hint = "" },
+                    -- symbols = {
+                    --     error = "",
+                    --     information = "כֿ",
+                    --     hint = "",
+                    --     warn = ""
+                    -- }
                     -- cond = conditions.hide_in_width,
                 }
             },

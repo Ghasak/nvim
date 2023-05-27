@@ -15,13 +15,13 @@ M.setup = function()
             numhl = DiagnosticLineNrError
         }, {
             name = "DiagnosticSignWarn",
-            text = "כֿ",
+            text = "",
             texthl = DiagnosticWarn,
             linehl = {},
             numhl = DiagnosticLineNrWarn
         }, {
             name = "DiagnosticSignHint",
-            text = "",
+            text = "󰌵",
             texthl = DiagnosticInfo,
             linehl = {},
             numhl = DiagnosticLineNrInfo

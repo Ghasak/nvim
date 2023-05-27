@@ -244,6 +244,3 @@ _G.open_session = function()
 
     end
 end
---------- Load the session pallete using <leader><leader>p ---------
-vim.api.nvim_set_keymap("n", "<leader><leader>p", ":lua open_session()<CR>",
-                        {noremap = true, silent = true})

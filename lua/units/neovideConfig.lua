@@ -23,15 +23,16 @@ local M = {}
 
 M.neovide_config = function()
 
-    --vim.cmd([[set guifont=VictorMono_NF:h14]]) -- Main
+    -- vim.cmd([[set guifont=VictorMono_NF:h14]]) -- Main
     -- vim.cmd([[set guifont=SFMono_Nerd_Font:h14]])
-    -- vim.opt.guifont = { "VictorMono NF", ":h14" }
+    vim.opt.guifont = { "VictorMono_Nerd_Font", ":h15:b:e-antialias:h-full" }
     -- vim.opt.guifont                            = { "VictorMono NF", ":h14", ":bold" }
     -- vim.opt.guifont                            = { "Hack_Nerd_Font", ":h14" }
     -- vim.opt.guifont = {"RobotoMono_NF", ":h14", ":bold"}
     -- vim.opt.guifont                            = { "SFMono Nerd Font", ":h14",":w13", }
     -- vim.opt.guifont                            = { "SFMono Nerd Font", ":h14:w3.4" }
-    vim.cmd([[set guifont=VictorMono_NF:h14:w16]])
+    --vim.cmd([[set guifont=VictorMono_Nerd_Font:h15]])
+
     -- vim.cmd([[set guifont=SFMono_Nerd_Font:h14/-1/5/-10/0/0/0/1/0]])
     vim.g.neovide_scale_factor = 1.0
     vim.g.neovide_refresh_rate = 60
@@ -41,7 +42,7 @@ M.neovide_config = function()
     vim.g.neovide_cursor_trail_length = 0.05
     vim.g.neovide_cursor_antialiasing = true
     vim.g.neovide_cursor_vfx_opacity = 80.0
-    vim.g.neovide_cursor_vfx_particle_lifetime = 1.2
+    vim.g.neovide_cursor_vfx_particle_lifetime = 3
     vim.g.neovide_cursor_vfx_particle_speed = 20.0
     vim.g.neovide_cursor_vfx_particle_density = 5.0
     vim.g.neovide_transparency = 0.0

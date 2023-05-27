@@ -229,7 +229,7 @@ function M.setup()
 
                 vim_item.menu = ({
                     -- nvim_lsp = "[LSP]",
-                    nvim_lsp = "[憐 LSP]",
+                    nvim_lsp = "[󰒍 LSP]",
                     nvim_lua = "[  Lua]",
                     buffer = "[﬘  BUF]",
                     ultisnips = "[   UltiSnips]",
@@ -237,11 +237,11 @@ function M.setup()
                     latex_symbols = "[  Latex]",
                     neorg = "[  Neorg]",
                     cmp_tabnine = "[  TabNine]",
-                    look = "[  Look]",
+                    look = "[ Look]",
                     path = "[  Path]",
-                    spell = "[暈 Spell]", -- This will be trigger once you allow spell-checking using F6, dont use vim.opt.spell = true, as it will be triggered everytime cmp loaded
+                    spell = "[󰓆 Spell]", -- This will be trigger once you allow spell-checking using F6, dont use vim.opt.spell = true, as it will be triggered everytime cmp loaded
                     calc = "[  Calc]",
-                    emoji = "[ﲃ  Emoji]"
+                    emoji = "[󰞅 Emoji]"
                 })[entry.source.name]
 
                 return vim_item

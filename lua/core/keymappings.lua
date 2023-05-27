@@ -126,7 +126,7 @@ vim.api.nvim_set_keymap("n", "<S-TAB>", ":bprevious<CR>",
 -- map the leader in nvim to space
 vim.g.mapleader = " "
 -- Explorer with Nvim-tree( ensure first the undotree is not toggled )
-vim.api.nvim_set_keymap("n", "<Leader>e",
+vim.api.nvim_set_keymap("n", "<Leader>ft",
                         ":<cmd>UndotreeHide<CR>:NvimTreeToggle<CR>",
                         {noremap = true, silent = true})
 -- this will be source with setting directory which shoould be put at the end of the loaded dictionaries
@@ -343,7 +343,13 @@ vim.keymap.set("n", "<leader>o", "<cmd>Lspsaga outline<CR>", {silent = true})
 ---- *****************************************************************************************
 ----                     Debugging Color Syntx for Color theme
 ---- *****************************************************************************************
-
 vim.keymap.set("n", "<leader><leader>",
                "<cmd>TSHighlightCapturesUnderCursor<CR>", {silent = true})
 
+---- *****************************************************************************************
+----                    Switching between Sessions (Projects)
+----          check the function _G.open_session at special_color_highlight.lua
+---- *****************************************************************************************
+--------- Load the session pallete using <leader><leader>p ---------
+vim.api.nvim_set_keymap("n", "<leader><leader>p", ":lua open_session()<CR>",
+                        {noremap = true, silent = true})

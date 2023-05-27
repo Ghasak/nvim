@@ -44,6 +44,13 @@ vim.cmd([[
   xnoremap p "_dP
 ]])
 --
+
+
+
+-----------------------------------------------------------
+--              For Neovide - Compatibility
+-----------------------------------------------------------
+vim.g.neovide_scale_factor = 1.0
 -----------------------------------------------------------
 --               For Tmux Support colors
 -----------------------------------------------------------
@@ -74,6 +81,9 @@ set write
 -----------------------------------------------------------
 -- Configurations form my old vim script
 -----------------------------------------------------------
+
+
+opt.cmdheight = 1  --vim.cmd('set cmdheight=0') -- Control the height of cmdline
 opt.wrap = false
 opt.relativenumber = true
 opt.errorbells = false

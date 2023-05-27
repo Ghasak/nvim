@@ -3,8 +3,6 @@ if not status_ok then return end
 
 local config_status_ok, nvim_tree_config = pcall(require, "nvim-tree.config")
 if not config_status_ok then return end
-
-local g = vim.g
 local cmd = vim.cmd
 
 -- disable netrw at the very start of your init.lua (strongly advised)
@@ -87,14 +85,14 @@ nvim_tree.setup {
             show = {file = true, folder = true, folder_arrow = true, git = true},
             glyphs = {
 
-                default = "",
+                default = "󰈙",
                 symlink = "",
                 --bookmark = "",
                 bookmark = "",
                 folder = {
                     arrow_closed = "",
                     arrow_open = "",
-                    default = " ",
+                    default = "",
                     open = "",
                     empty = "",
                     empty_open = "",
@@ -110,8 +108,8 @@ nvim_tree.setup {
                     -- untracked = "U",
                     deleted = "",
                     ignored = "◌",
-                    staged = "ﱘ ",
-                    unstaged = "ﱙ ",
+                    staged = "󰝚 ",
+                    unstaged = "󰝛 ",
                     untracked = " "
 
                 }
@@ -127,9 +125,9 @@ nvim_tree.setup {
             -- warning = "",
             -- error = "",
             error = "",
-            info = "כֿ",
-            hint = "",
-            warning = ""
+            info = "",
+            warning= " ",
+            hint = ""
         }
     },
     update_focused_file = {enable = true, update_cwd = true, ignore_list = {}},

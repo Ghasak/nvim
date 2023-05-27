@@ -30,7 +30,7 @@ return {
   hint_enable = true, -- virtual hint enable
   --hint_prefix = "🐼 ",  -- Panda for parameter, NOTE: for the terminal not support emoji, might crash
   --hint_prefix = "",  -- Panda for parameter, NOTE: for the terminal not support emoji, might crash
-  hint_prefix = "      ", -- Panda for parameter
+  hint_prefix = "  ", -- Panda for parameter
   hint_scheme = "String",
   hi_parameter = "LspSignatureActiveParameter", -- how your parameter will be highlight
   handler_opts = {

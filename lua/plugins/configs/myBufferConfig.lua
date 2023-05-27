@@ -47,9 +47,12 @@ M.config = function()
             numbers = "ordinal",
             right_mouse_command = "bdelete! %d",
             left_mosue_command = "buffer %d",
-            -- indicator_icon = '▎',
-            indicator = {icon = "▐", style = "icon"},
-            buffer_close_icon = "",
+            indicator = {
+                icon = "█ ",  "▎ ",-- this should be omitted if indicator style is not 'icon'
+                style = 'icon'
+            },
+
+            buffer_close_icon = "",
             modified_icon = "", -- '●',
             close_icon = "",
             left_trunc_marker = "",
@@ -120,7 +123,7 @@ M.config = function()
                 bg = colors.beautiful_black
             },
             close_button_selected = {
-                fg = colors.red,
+                fg = colors.green,
                 bg = colors.beautiful_black
             },
             fill = {
@@ -134,8 +137,8 @@ M.config = function()
 
             -- modified
             modified = {fg = colors.red, bg = colors.beautiful_black},
-            modified_visible = {fg = colors.red, bg = colors.beautiful_black},
-            modified_selected = {fg = colors.green, bg = colors.beautiful_black},
+            modified_visible = {fg = colors.green, bg = colors.beautiful_black},
+            modified_selected = {fg = colors.red, bg = colors.beautiful_black},
 
             -- separators
             separator = {
