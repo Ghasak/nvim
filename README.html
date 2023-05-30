@@ -1,0 +1,601 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>README.html</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+
+</head>
+
+<body>
+
+<h1 id="modern-nvim-config">MODERN NVIM CONFIG</h1>
+<h2 id="updates-history">Updates History</h2>
+<h4 id="v.1.2.1-release-nvim-0.9-with-lazy">v.1.2.1 Release Nvim 0.9
+with Lazy</h4>
+<ul class="task-list">
+<li><input type="checkbox" checked="" />Working on the
+<code>nvim 0.9</code> modern APIs.</li>
+<li><input type="checkbox" checked="" />The current version works under
+<code>nvim</code> with Lazy Plugins Manager.</li>
+<li><input type="checkbox" checked="" />Startup time is under
+<code>20 milliseconds</code> for all the installed plugins.</li>
+<li><input type="checkbox" checked="" />Added <code>which-key</code> for
+mapping all the available <code>keys</code>.</li>
+<li><input type="checkbox" checked="" />Refactoring and optimizing the
+workflow structure.</li>
+<li><input type="checkbox" checked="" />Added session harboon designed
+for productivity.</li>
+<li><input type="checkbox" checked="" />Added original function for
+launching <code>autoload</code>-<code>netrwPlugin</code>-</li>
+<li><input type="checkbox" checked="" />Changed the nvim-web-devicons
+customized based on our requested color (<a
+href="./docs/IconsColor.md">Read here</a>)</li>
+<li><input type="checkbox" checked="" />Added a color theme plugin
+created from scratch namely <code>github.nvim</code> theme.</li>
+<li><input type="checkbox" checked="" />Add more support for the
+debugging session with <code>which-key</code> integration. Also added
+<code>virtual-text</code> supprot in the <code>dap</code> session to
+show the value of the variable <a
+href="./docs/debugging_adapgers.md">check here</a>.</li>
+<li><input type="checkbox" />adding more advanced topic here.</li>
+</ul>
+<h4 id="update-release-nvim-workflow-v0.1">Update release Nvim-workflow
+v0.1</h4>
+<p>As <code>nvim</code> is now updated to version <code>0.8</code> with
+a stable release. Several deprecated <code>3rd-plugins</code> and
+<code>APIs</code>. I have optimized the startup time and got it reduced
+from 800 milliseconds to only 18 milliseconds. Now, <code>nvim</code> is
+faster than light with backwards compatibilities to some outdated
+<code>plugins</code> but essential to my daily workflow.</p>
+<p><img src="./assets/SS-07.png" alt="Current versions view" /> <img
+src="./assets/SS-08.png" alt="Another supported view" /></p>
+<p>The configuration files are all written in <code>lua</code> using the
+most modern <code>APIs</code> by this time. Check for more details
+<code>:h deprecated</code> to see the news feature of the new release.
+Here, is a summary of the most wanted upgrades to my configuration file
+(to name few)</p>
+<ul class="task-list">
+<li><input type="checkbox" checked="" />All packages are supported for
+the new version of <code>nvim</code></li>
+<li><input type="checkbox" checked="" />Startup time up to maximum 18
+milliseconds tested on my <code>MacBook Max M1</code></li>
+<li><input type="checkbox" checked="" />Support several programming
+languages, with their components such assets
+<ul>
+<li>LSP configured with <code>mason</code> plugin, (also support
+lsp-saga, lsp-signature)</li>
+<li>Linting support, Auto-formatter, intelligence,
+auto-completions,</li>
+<li>Go to definition, hover, references, troubles, actions.</li>
+<li>Debugging with <code>nvim-dap</code> support several protocols and
+programmings adapters.</li>
+<li>Dap now support the <code>virtualenv</code> type, which can trigger
+the adapter of the virtualenv to keep consistency.</li>
+</ul></li>
+<li><input type="checkbox" checked="" />Fixed the <code>cmp-line</code>
+support the <code>ctrl+j/k</code> for navigation.</li>
+<li><input type="checkbox" checked="" />Added boarders to the
+<code>lsp/cmp</code> elements</li>
+<li><input type="checkbox" checked="" />Auto-trigger
+<code>packer-plugins</code> when the list of plugins is upated.</li>
+<li><input type="checkbox" checked="" /><code>packer-plugin</code> is
+now can handle mutli-jobs for the <code>macbook</code> without
+freezing.</li>
+<li><input type="checkbox" checked="" />Added the support of the
+<code>tabnine</code> with executional compatibility for the
+<code>arm 64</code> <code>silicon M1</code> this supports the also the
+<code>virtualenv</code> of python.</li>
+<li><input type="checkbox" checked="" />Statusline now shows message
+about the <code>virtualenv</code> name, near to the
+<code>lsp-type</code> support.</li>
+<li><input type="checkbox" checked="" />Support for the colorscheme that
+can configure to show major highlights
+<ul>
+<li>Highlighter for the current number-line</li>
+<li>Highlighter for <code>Statusline</code></li>
+<li>Highlighter for <code>tabs</code></li>
+<li>Highlighter for <code>git</code> plugin support</li>
+<li>Highlighter for <code>linter</code> and the
+<code>virtual-text</code></li>
+<li>Highlighter for <code>lsp-icons</code> on the side gutter with
+different colors.</li>
+</ul></li>
+<li><input type="checkbox" checked="" />Added helper utilities/functions
+and documentation for debugging, development support</li>
+<li><input type="checkbox" checked="" />Upgraded the
+<code>nvim_speed_test</code> to gauge the speed of the startup time and
+evaluate the performance.</li>
+<li><input type="checkbox" checked="" />Support the
+<code>nvim-patient</code> for loading and caching the plugins.</li>
+<li><input type="checkbox" checked="" />Plugins triggered by certain
+types of events that will reduce the clutter and improve the speed
+significantly, check for example <code>:packer status</code> to see that
+majority of plugins are not loaded at the startup.</li>
+</ul>
+<h1 id="nvim-workflow">Nvim Workflow</h1>
+<h2 id="shortcuts">Shortcuts</h2>
+<ol type="1">
+<li><code>ContextEnable</code>: will give you a nice folding to your
+functions.</li>
+<li><code>DocsViewToogle</code>: for showing documents and tracing your
+cursor.</li>
+<li><code>SymbolsOutline</code>: for getting a nice jump over all coding
+elements.</li>
+<li><code>&lt;leader&gt; + o</code>: will also give us similar to
+<code>SymbosOutline</code>.</li>
+<li>Remember, once you are in insert mode, it will trigger other plugins
+to be loaded. but some of them until you open next buffer. (reason is to
+get speed and loading only necessary plugins on demands.)</li>
+<li><code>Ctr + n/p</code>: to scroll faster while center.</li>
+<li><code>Shift + { or }</code> to scroll faster while centered but jump
+on coding elements.</li>
+<li><code>&lt;F6&gt;</code>: To toggle the spell checking.</li>
+<li><code>&lt;F1&gt;</code>: To show help</li>
+<li><code>&lt;leader&gt;ff</code>, <code>&lt;leader&gt;fg</code>,
+<code>&lt;leader&gt;fb</code> and <code>&lt;leader&gt;fh</code> all are
+reserved to <code>nvim-Telelscope toggler</code>.</li>
+<li><code>&lt;leader&gt;tt</code>: horizontal terminal,</li>
+<li><code>&lt;leader&gt;t</code>: floating terminal but slower</li>
+<li><code>&lt;leader&gt;r</code>: Ranger for navigating your files.</li>
+<li><code>&lt;leader&gt;u</code>: undo-tree toggler.</li>
+</ol>
+<h2 id="workflow-notes">Workflow notes</h2>
+<h3 id="cargo-with-rust">Cargo with Rust</h3>
+<p>To activite the <code>crate</code> plugin, you need to enter first to
+a buffer with <code>rust file</code> <code>*.rs</code>, which can be
+activited on <code>Insert</code> event. This will trigger also
+<code>cmp-create</code> and also <code>nvim-crate</code>. You can also
+later for <code>crate-tomal</code> file to use the
+<code>keymapping: gH</code> on the crate name, which will trigger
+documentation about the crate history and other considerations.</p>
+<h3 id="auto-save">Auto Save</h3>
+<p>By default, the file will be auto-saved based on the
+<code>auto-saved</code> plugin, which will be trigger once we start
+writting. To stop the auto-save, we can use the
+<code>keymapping: &lt;leader&gt;s</code> which will stop the
+autosave.</p>
+<h3 id="for-development">For development</h3>
+<p>We can use add the following to the top of the file</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode lua"><code class="sourceCode lua"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span><span class="op">(</span><span class="st">&quot;core.myInspectorFucntions&quot;</span><span class="op">)</span></span></code></pre></div>
+<p>to reguest the necessary <code>custom-development</code> functions
+that I created. Then, for development you can use this as an example</p>
+<ul>
+<li>assume you have a file called <code>testing_file</code> at the
+<code>lua</code> directory</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode lua"><code class="sourceCode lua"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> <span class="va">fn</span> <span class="op">=</span> <span class="fu">require</span><span class="op">(</span><span class="st">&quot;testing_file&quot;</span><span class="op">)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>P<span class="op">(</span><span class="va">fn</span><span class="op">.</span>setup<span class="op">())</span></span></code></pre></div>
+<h2 id="more-details-for-the-configurations">More details for the
+configurations</h2>
+<h2 id="to-do">To do</h2>
+<ul>
+<li><input type="checkbox" checked="" />Configuration for the dap</li>
+<li><a
+href="https://github.com/alpha2phi/neovim-for-beginner/blob/50-package-manager/lua/config/lsp/installer.lua">install
+dap for rust-analyzer, integrated with rust-tools</a></li>
+<li><input type="checkbox" checked="" />Adding only the
+<code>keymapping-window</code>.</li>
+<li><input type="checkbox" checked="" />spell-checking for nvim such
+as</li>
+<li><a href="https://github.com/kamykn/spelunker.vim">Spelunker.vim</a>
+The current configurations are from the needs of getting the best
+optimized <code>IDE</code> for the startup time.</li>
+</ul>
+<h2 id="major-changes-in-nvim-0.8">Major Changes in Nvim 0.8</h2>
+<ul class="task-list">
+<li><input type="checkbox" checked="" /><a
+href="https://jdhao.github.io/2022/10/05/nvim-v08-release/">Major
+Changes in nvim 0.8</a></li>
+<li><input type="checkbox" checked="" /><a
+href="https://www.reddit.com/r/neovim/comments/xt1tj2/new_lsp_features_in_neovim_08/">New
+LSP Features in Neovim 0.8</a></li>
+<li><input type="checkbox" checked="" /><a
+href="https://github.com/williamboman/nvim-lsp-installer/discussions/6360">Deprection
+of lsp_installer.on_server_ready()</a></li>
+<li><input type="checkbox" checked="" /><a
+href="https://www.reddit.com/r/neovim/comments/w6w5ij/introducing_masonnvim/">Introduction
+mason.nvim</a></li>
+<li><input type="checkbox" checked="" /><a
+href="https://github.com/williamboman/mason.nvim/discussions/92#discussioncomment-3173425">How
+to configure LSP with mason</a></li>
+</ul>
+<h2 id="general-configuration-helper">General Configuration helper</h2>
+<ul>
+<li><a href="https://icyphox.sh/blog/nvim-lua/">configure nvim using
+lua</a></li>
+</ul>
+<h2 id="useful-commands">USEFUL COMMANDS</h2>
+<p>The following command are super handy and useful when developign
+<code>lua</code> plugins.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode lua"><code class="sourceCode lua"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">:</span><span class="va">source</span> <span class="op">%</span>                  <span class="co">-- This will repload the curretn buffer (usually can be used with init.lua)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="op">:</span><span class="va">lua</span> <span class="op">&lt;</span>function_name<span class="op">()&gt;</span>     <span class="co">-- How to run a function (especially the __G.) global functions (check special function file)</span></span></code></pre></div>
+<ol type="1">
+<li>Packer and packadd</li>
+</ol>
+<ul>
+<li><code>packer</code> usually will load the required plugins and thats
+suppose to be for any file you will put at <code>plugin</code> which
+where packer usually dumps its contents.</li>
+</ul>
+<ol start="2" type="1">
+<li>Color-scheme</li>
+</ol>
+<ul>
+<li>Any color scheme (*.vim) will be put at <code>colors</code>
+directory inside the <code>nvim</code> will be loaded to the
+color-scheme, which can be checked using
+<code>:colorscheme &lt;tab&gt;</code></li>
+</ul>
+<ol start="3" type="1">
+<li>RUNTIME PATH</li>
+</ol>
+<ul>
+<li>You can use <code>:set rtp+=/path/to/emmet</code> to add any
+directory which will be loaded to the <code>run-path</code> lists.</li>
+</ul>
+<ol start="4" type="1">
+<li>Getting some useful Info</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode lua"><code class="sourceCode lua"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">:</span><span class="va">lua</span> <span class="fu">print</span><span class="op">(</span><span class="va">vim</span><span class="op">.</span><span class="va">opt</span><span class="op">.</span><span class="va">columns</span><span class="op">:</span>get<span class="op">())</span> <span class="co">-- will print the number of columns you have (set/get are main functions to retervie or setting info)</span></span></code></pre></div>
+<ul>
+<li><a
+href="https://github.com/j-hui/fidget.nvim/blob/main/lua/fidget.lua">Read
+Useful Information</a></li>
+</ul>
+<ol start="5" type="1">
+<li>Since 0.8 we can now create</li>
+</ol>
+<pre class="vim"><code>
+      vim.cmd [[
+      autocmd BufEnter,CursorHold,InsertLeave,BufWritePost *.rs silent! lua vim.lsp.codelens.refresh()
+    ]]</code></pre>
+<p>Now, it becomes as:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode lua"><code class="sourceCode lua"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>    <span class="va">vim</span><span class="op">.</span><span class="va">api</span><span class="op">.</span>nvim_create_autocmd<span class="op">({</span> <span class="st">&quot;BufWritePost&quot;</span><span class="op">,</span> <span class="st">&quot;BufEnter&quot;</span><span class="op">,</span> <span class="st">&quot;CursorHold&quot;</span><span class="op">,</span> <span class="st">&quot;InsertLeave&quot;</span> <span class="op">},</span> <span class="op">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>      <span class="va">pattern</span> <span class="op">=</span> <span class="op">{</span> <span class="st">&quot;*.rs&quot;</span> <span class="op">},</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>      <span class="va">callback</span> <span class="op">=</span> <span class="kw">function</span><span class="op">()</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">vim</span><span class="op">.</span><span class="va">lsp</span><span class="op">.</span><span class="va">codelens</span><span class="op">.</span>refresh<span class="op">()</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>      <span class="kw">end</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">})</span></span></code></pre></div>
+<ol start="6" type="1">
+<li>undotree hint Since we allow <code>undotree</code> to be triggered
+only when we call the undotree kepmapping, then you should always hit at
+least once the <code>undotree</code> to trigger it for the curretn
+buffer, which can keep tracking the changes.</li>
+</ol>
+<h2 id="jump-motion">Jump Motion</h2>
+<p>Read more here:</p>
+<ul>
+<li><a
+href="https://alpha2phi.medium.com/neovim-for-beginners-motion-4553e3c06818">Nvim
+Motion</a></li>
+</ul>
+<ol type="1">
+<li>vim-easymotion, vim-sneak, hop.nvim, lightspeed.nvim, pounce.nvim,
+vim-searchx</li>
+</ol>
+<h3 id="things-to-be-considered">Things to be considered</h3>
+<ul class="task-list">
+<li><input type="checkbox" checked="" />Use the color-scheme form
+<code>NVChad</code>.</li>
+<li><input type="checkbox" checked="" />optimized with the
+<code>lazy loading</code> based on packer configuration .</li>
+<li><input type="checkbox" checked="" />remove the unnecessary packages
+form loading that comes with <code>nvim</code>.</li>
+<li><input type="checkbox" checked="" />Adding the lsp compatibility
+configuraition skippers for regualr <code>lsp</code> vs
+<code>rust-tools</code>.</li>
+<li><input type="checkbox" checked="" />Adding the virtual text lsp
+configruration.</li>
+<li><input type="checkbox" checked="" />Refactoring all the crrent lsp
+files into more moduels follow the other way of writing.</li>
+<li><input type="checkbox" checked="" />Using Nvim v.0.8</li>
+<li><input type="checkbox" checked="" />Adding symboles inspector for
+the right corner.</li>
+<li><input type="checkbox" checked="" /><code>cmd</code> and
+<code>/:</code> should works</li>
+<li><input type="checkbox" checked="" />Spelling completion.</li>
+<li><input type="checkbox" checked="" /><code>LSP</code> configurations
+advanced, including highlighting and other optimizations</li>
+<li><input type="checkbox" checked="" />Rust-tools and analyzer for
+complete configurations.</li>
+</ul>
+<h3 id="migration-for-nvim-0.8">Migration for Nvim 0.8</h3>
+<p>check <code>:h deprecated</code></p>
+<ul class="task-list">
+<li><input type="checkbox" checked="" />Need to change
+vim.highlight.create into vim.create.hl.</li>
+<li><input type="checkbox" checked="" /><code>compatibility</code>
+changed to <code>compatibility_vim</code>. : read more about this
+refactoring later.</li>
+<li><input type="checkbox"
+checked="" /><code>vim.lsp.buf.format()</code> now replaces the
+<code>vim.lsp.buf.formatting()</code></li>
+</ul>
+<h3 id="nvim-with-lua-api">Nvim with Lua API</h3>
+<ul>
+<li><a href="https://github.com/max397574">pretty_print</a></li>
+</ul>
+<pre class="shell"><code>vim.pretty_print(&quot;&quot;)</code></pre>
+<h3 id="for-mapping-keyboard">For mapping keyboard</h3>
+<p>there are two <code>apis</code></p>
+<ul>
+<li><input type="checkbox" checked="" />got it from the telescope</li>
+<li><a
+href="https://github.com/vzytoi/nvim.lua/blob/main/lua/plugins/telescope.lua">telescope
+configuration</a></li>
+</ul>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode lua"><code class="sourceCode lua"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> <span class="va">map</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">op</span><span class="op">,</span> <span class="va">outer</span><span class="op">)</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">outer</span> <span class="op">=</span> <span class="va">outer</span> <span class="kw">or</span> <span class="op">{</span> <span class="va">silent</span> <span class="op">=</span> <span class="kw">true</span><span class="op">,</span> <span class="va">noremap</span> <span class="op">=</span> <span class="kw">true</span> <span class="op">}</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">function</span><span class="op">(</span><span class="va">lhs</span><span class="op">,</span> <span class="va">rhs</span><span class="op">,</span> <span class="va">opts</span><span class="op">)</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="fu">type</span><span class="op">(</span><span class="va">lhs</span><span class="op">)</span> <span class="op">~=</span> <span class="st">&quot;table&quot;</span> <span class="cf">then</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>            <span class="va">lhs</span> <span class="op">=</span> <span class="op">{</span> <span class="va">lhs</span> <span class="op">}</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">opts</span> <span class="op">=</span> <span class="va">vim</span><span class="op">.</span>tbl_extend<span class="op">(</span><span class="st">&quot;force&quot;</span><span class="op">,</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>            <span class="va">outer</span><span class="op">,</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>            <span class="va">opts</span> <span class="kw">or</span> <span class="op">{}</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>        <span class="op">)</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="cn">_</span><span class="op">,</span> <span class="va">v</span> <span class="kw">in</span> <span class="fu">pairs</span><span class="op">(</span><span class="va">lhs</span><span class="op">)</span> <span class="cf">do</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>            <span class="va">vim</span><span class="op">.</span><span class="va">keymap</span><span class="op">.</span>set<span class="op">(</span><span class="va">op</span> <span class="kw">or</span> <span class="st">&quot;n&quot;</span><span class="op">,</span> <span class="va">v</span><span class="op">,</span> <span class="va">rhs</span><span class="op">,</span> <span class="va">opts</span><span class="op">)</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="va">vim</span><span class="op">.</span><span class="va">g</span><span class="op">.</span><span class="va">nmap</span> <span class="op">=</span> map<span class="op">(</span><span class="st">&quot;n&quot;</span><span class="op">)</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="va">vim</span><span class="op">.</span><span class="va">g</span><span class="op">.</span><span class="va">imap</span> <span class="op">=</span> map<span class="op">(</span><span class="st">&quot;i&quot;</span><span class="op">)</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="va">vim</span><span class="op">.</span><span class="va">g</span><span class="op">.</span><span class="va">vmap</span> <span class="op">=</span> map<span class="op">(</span><span class="st">&quot;v&quot;</span><span class="op">)</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="va">vim</span><span class="op">.</span><span class="va">g</span><span class="op">.</span><span class="va">tmap</span> <span class="op">=</span> map<span class="op">(</span><span class="st">&quot;t&quot;</span><span class="op">)</span></span></code></pre></div>
+<p>which means using <code>vim.keymap.set()</code></p>
+<ul class="task-list">
+<li><input type="checkbox" checked="" />Using reqular nvim</li>
+</ul>
+<pre class="shell"><code>vim.api.nvim_set_keymap(&quot;i&quot;, &quot;&lt;c-j&gt;&quot;, &#39;(&quot;&lt;C-n&gt;&quot;)&#39;, {
+    noremap = true,
+    silent = true,
+    expr = true,
+})
+</code></pre>
+<h3 id="telescope-commands">Telescope commands</h3>
+<p>In the <code>cmd</code> you can use</p>
+<pre class="shell"><code>:Telescope keymaps, registers, vim_options, jumplist, loclist, filetypes ..etc.
+</code></pre>
+<ul>
+<li><a
+href="https://github.com/nvim-telescope/telescope.nvim#layout-display">Check
+Vim Pickers</a></li>
+</ul>
+<h3 id="events-managment-in-nvim">Events managment in nvim</h3>
+<p>There are several ways to manage the <code>events</code> such as
+VimEnter, BufEnter … etc. Read more here</p>
+<ul>
+<li><a
+href="http://vimdoc.sourceforge.net/htmldoc/autocmd.html#autocmd-events">Vim
+documentation: autocmd</a></li>
+</ul>
+<h3 id="make-statusline-from-scratch">Make statusline from scratch</h3>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode lua"><code class="sourceCode lua"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> <span class="kw">function</span> status_line<span class="op">()</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">local</span> <span class="va">mode</span> <span class="op">=</span> <span class="st">&quot;%-5{%v:lua.string.upper(v:lua.vim.fn.mode())%}&quot;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">local</span> <span class="va">file_name</span> <span class="op">=</span> <span class="st">&quot;%-.16t&quot;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">local</span> <span class="va">buf_nr</span> <span class="op">=</span> <span class="st">&quot;[%n]&quot;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">local</span> <span class="va">modified</span> <span class="op">=</span> <span class="st">&quot; %-m&quot;</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">local</span> <span class="va">file_type</span> <span class="op">=</span> <span class="st">&quot; %y&quot;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">local</span> <span class="va">right_align</span> <span class="op">=</span> <span class="st">&quot;%=&quot;</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">local</span> <span class="va">line_no</span> <span class="op">=</span> <span class="st">&quot;%10([%l/%L%)]&quot;</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">local</span> <span class="va">pct_thru_file</span> <span class="op">=</span> <span class="st">&quot;%5p%%&quot;</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="va">vim</span><span class="op">.</span>cmd<span class="op">(</span><span class="vs">[[hi StatusLine ctermbg=red ctermfg=yellow ]]</span><span class="op">)</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="fu">string.format</span><span class="op">(</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;%s%s%s%s%s%s%s%s&quot;</span><span class="op">,</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="va">mode</span><span class="op">,</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="va">file_name</span><span class="op">,</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="va">buf_nr</span><span class="op">,</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="va">modified</span><span class="op">,</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    <span class="va">file_type</span><span class="op">,</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    <span class="va">right_align</span><span class="op">,</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    <span class="va">line_no</span><span class="op">,</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    <span class="va">pct_thru_file</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>  <span class="op">)</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="va">vim</span><span class="op">.</span><span class="va">opt</span><span class="op">.</span><span class="va">statusline</span> <span class="op">=</span> status_line<span class="op">()</span></span></code></pre></div>
+<p>To add color to <code>status-line</code> we can use the following, Go
+to the <code>one-darker</code> configuration file and add the following
+which can alter the group color of the <code>statusline</code></p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode lua"><code class="sourceCode lua"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>     <span class="co">-- StatusLine</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>      <span class="cn">S</span><span class="va">tatusLine</span> <span class="op">=</span> <span class="op">{</span> <span class="va">fg</span> <span class="op">=</span> <span class="st">&#39;#DADFF7&#39;</span> <span class="op">,</span><span class="va">bg</span> <span class="op">=</span> <span class="st">&#39;#008DD5&#39;</span> <span class="op">},</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>     <span class="co">-- StatusLineTerm = {},</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>     <span class="co">-- StatusLineNC = {},</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>     <span class="co">-- StatusLineTermNC = {},</span></span></code></pre></div>
+<h3 id="debugging-in-lua">Debugging in lua</h3>
+<p>In command line prompt for <code>nvim</code> you can print the tables
+using one of the following.</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode lua"><code class="sourceCode lua"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">:</span><span class="va">lua</span> <span class="va">vim</span><span class="op">.</span>pretty_print<span class="op">(</span><span class="va">packer_plugins</span><span class="op">)</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="op">:</span><span class="va">lua</span> <span class="fu">print</span><span class="op">(</span><span class="va">vim</span><span class="op">.</span>inspect<span class="op">(</span><span class="va">packer_plugins</span><span class="op">))</span></span></code></pre></div>
+<h3 id="order-of-execution-in-nvim">Order of execution in nvim</h3>
+<p>Anything you put inside the <code>plugin</code> (notice there is not
+s), which is same directory that the <code>nvim-packer</code> store the
+<code>startup</code> it will be used to load the
+<code>nvim configuration</code> It is very useful to understand the
+directory order to put the configurations files that used by the nvim
+for speeding up the startup time.</p>
+<ul class="task-list">
+<li><input type="checkbox" checked="" />Create a <code>test.lua</code>
+file at the <code>plugin</code> then it will source automatically.</li>
+<li><input type="checkbox" checked="" />You can put a code inside this
+<code>test.lua</code> any code which can be loaded after all the
+<code>lua</code> files will be sourced and executed.</li>
+<li><input type="checkbox" checked="" />Notice that
+<code>packer-plugins</code> is a global variable which will be
+established after sourcing the <code>packer_compiled.lua</code>. It will
+check for a plugin called <code>undotree</code> (the name should be same
+as the one from the GitHub repository).Here, we will get
+(<code>wow</code>) when we open <code>init.lua</code> file
+automatically.</li>
+</ul>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode lua"><code class="sourceCode lua"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">packer_plugins</span><span class="op">[</span><span class="st">&quot;undotree&quot;</span><span class="op">]</span> <span class="kw">and</span> <span class="va">packer_plugins</span><span class="op">[</span><span class="st">&quot;undotree&quot;</span><span class="op">].</span><span class="va">loaded</span> <span class="cf">then</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span><span class="op">(</span><span class="st">&quot;Vim undotree is loaded&quot;</span><span class="op">)</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- other custom logic</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span><span class="op">(</span><span class="st">&quot;wow&quot;</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode lua"><code class="sourceCode lua"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a> ├──     <span class="cn">LICENSE</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a> ├──     <span class="cn">README</span><span class="op">.</span><span class="va">md</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a> └──     <span class="cn">VSC</span><span class="va">ode_setting</span><span class="op">/</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a> │  ├────     <span class="cn">README</span><span class="op">.</span><span class="va">md</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a> │  ├────     <span class="cn">SS</span><span class="op">-</span><span class="dv">01.</span><span class="er">png</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a> │  └────     <span class="va">init</span><span class="op">.</span><span class="va">vim</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a> └──     <span class="va">assets</span><span class="op">/</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a> │  ├────     <span class="cn">SS</span><span class="op">-</span><span class="dv">01.</span><span class="er">old</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a> │  ├────     <span class="cn">SS</span><span class="op">-</span><span class="dv">01.</span><span class="er">png</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a> │  ├────     <span class="cn">SS</span><span class="op">-</span><span class="dv">02.</span><span class="er">png</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a> │  ├────     <span class="cn">SS</span><span class="op">-</span><span class="dv">03.</span><span class="er">png</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a> │  ├────     <span class="cn">SS</span><span class="op">-</span><span class="dv">04.</span><span class="er">png</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a> │  └────     <span class="va">current_loaded_programming_langauge_servers</span><span class="op">.</span><span class="va">png</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a> ├──     <span class="va">init</span><span class="op">.</span><span class="va">lua</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a> └──     <span class="va">lua</span><span class="op">/</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a> │  └────     <span class="va">core</span><span class="op">/</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a> │  │  ├────     <span class="va">global</span><span class="op">.</span><span class="va">lua</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a> │  │  ├────     <span class="va">init</span><span class="op">.</span><span class="va">lua</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a> │  │  └────     <span class="va">keymappings</span><span class="op">.</span><span class="va">lua</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a> │  └────     <span class="va">plugins</span><span class="op">/</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a> │  │  └────     <span class="va">configs</span><span class="op">/</span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a> │  │  │  ├────     <span class="va">init</span><span class="op">.</span><span class="va">lua</span></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a> │  │  │  ├────     <span class="va">myFzf</span><span class="op">.</span><span class="va">lua</span></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a> │  │  │  ├────     <span class="va">myImpatient</span><span class="op">.</span><span class="va">lua</span></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a> │  │  │  ├────     <span class="va">myNvimTree</span><span class="op">.</span><span class="va">lua</span></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a> │  │  │  ├────     <span class="va">myTelescope</span><span class="op">.</span><span class="va">lua</span></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a> │  │  │  ├────     <span class="va">myUndoTreeConfig</span><span class="op">.</span><span class="va">lua</span></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a> │  │  │  └────     <span class="va">onedark_config</span><span class="op">.</span><span class="va">lua</span></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a> │  │  ├────     <span class="va">init</span><span class="op">.</span><span class="va">lua</span></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a> │  │  ├────     <span class="va">packerPluginsManager</span><span class="op">.</span><span class="va">lua</span></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a> │  │  └────     <span class="va">packerPluginsManagerLoader</span><span class="op">.</span><span class="va">lua</span></span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a> │  └────     <span class="va">settings</span><span class="op">/</span></span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a> │  │  ├────     <span class="va">init</span><span class="op">.</span><span class="va">lua</span></span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a> │  │  └────     <span class="va">options</span><span class="op">.</span><span class="va">lua</span></span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a> └──     <span class="va">plugin</span><span class="op">/</span></span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a> │  ├────     <span class="va">packer_compiled</span><span class="op">.</span><span class="va">lua</span></span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a> │  └────     <span class="va">test</span><span class="op">.</span><span class="va">lua</span></span></code></pre></div>
+<p>Read more here</p>
+<ul>
+<li><a
+href="https://learnvimscriptthehardway.stevelosh.com/chapters/42.html">Plugin
+Layout in the Dark Ages</a></li>
+</ul>
+<h3 id="adding-upper-case-captial-letter">Adding upper case (captial
+letter)</h3>
+<p>– This will work if you add to (common) for the color scheme. –
+Defing first the synatx group by linking them to existed on using: –
+highlight def link <you_custom_group_name> guifg=<hash-color-name> –
+Then assign to the specific pattern that you want to highlight</p>
+<pre class="shell"><code>vim.cmd([[
+hi def link GGX Title
+syn match GGX /[A-Z]+/
+syn match GGX /[A-Z]\{2,\}/ &quot;two words or more
+syn match GGX &quot;\v&lt;[A-Z]+&gt;&quot;
+]])
+</code></pre>
+<p>You can also specify some highlight using:</p>
+<pre class="shell"><code>vim.cmd([[highlight Visual cterm=bold ctermbg=Blue ctermfg=NONE]])</code></pre>
+<p>There are three ways to highlight custom group (group created by
+user) these are</p>
+<ol type="1">
+<li>Using direct nvim syntax</li>
+</ol>
+<pre class="vim"><code>highlight GGX guifg=#EEEDBF</code></pre>
+<ol start="2" type="1">
+<li>Adding to the <code>one-dark-config.lua</code> file at the defined
+highlights like: Here we will add <code>GGX</code></li>
+</ol>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode lua"><code class="sourceCode lua"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="va">highlights</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Common</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="cn">V</span><span class="va">isual</span> <span class="op">=</span> <span class="op">{</span> <span class="va">bg</span> <span class="op">=</span> <span class="st">&#39;$bright_orange&#39;</span><span class="op">,</span> <span class="va">fmt</span> <span class="op">=</span> <span class="st">&#39;bold&#39;</span><span class="op">},</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="cn">N</span><span class="va">ormal</span> <span class="op">=</span> <span class="op">{</span> <span class="va">fg</span> <span class="op">=</span> <span class="st">&#39;$beautiful_black&#39;</span> <span class="op">,</span><span class="va">bg</span> <span class="op">=</span> <span class="st">&#39;$beautiful_black&#39;</span> <span class="op">},</span>                                <span class="co">-- backgorund default color</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="cn">T</span><span class="va">erminal</span><span class="op">=</span> <span class="op">{</span> <span class="va">fg</span> <span class="op">=</span> <span class="st">&#39;$beautiful_black&#39;</span> <span class="op">,</span><span class="va">bg</span> <span class="op">=</span> <span class="st">&#39;$beautiful_black&#39;</span> <span class="op">},</span>                               <span class="co">-- terminal color for nvim</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="cn">E</span><span class="va">ndOfBuffer</span> <span class="op">=</span> <span class="op">{</span> <span class="va">fg</span> <span class="op">=</span> <span class="st">&#39;$beautiful_black&#39;</span> <span class="op">,</span><span class="va">bg</span> <span class="op">=</span> <span class="st">&#39;$beautiful_black&#39;</span> <span class="op">},</span>                           <span class="co">-- End of buffer color</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="cn">V</span><span class="va">ertSplit</span> <span class="op">=</span> <span class="op">{</span> <span class="va">fg</span> <span class="op">=</span> <span class="st">&#39;$light_green&#39;</span> <span class="op">,</span><span class="va">bg</span> <span class="op">=</span> <span class="st">&#39;$beautiful_black&#39;</span> <span class="op">},</span>                                 <span class="co">-- when using vertical split</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="cn">S</span><span class="va">ignColumn</span> <span class="op">=</span> <span class="op">{</span> <span class="va">fg</span> <span class="op">=</span> <span class="st">&#39;$beautiful_black&#39;</span> <span class="op">,</span><span class="va">bg</span> <span class="op">=</span> <span class="st">&#39;$beautiful_black&#39;</span> <span class="op">},</span>                            <span class="co">-- SignColumn control the edge of nvim buffer</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co">-- Syntax</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="cn">S</span><span class="va">tring</span> <span class="op">=</span> <span class="op">{</span><span class="va">fg</span> <span class="op">=</span><span class="st">&#39;$light_green&#39;</span><span class="op">},</span>                                                                <span class="co">-- For only string in nvim</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co">-- nvim-tree</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="cn">N</span><span class="va">vimTreeVertSplit</span> <span class="op">=</span>  <span class="op">{</span> <span class="va">fg</span> <span class="op">=</span> <span class="st">&#39;$light_green&#39;</span> <span class="op">,</span><span class="va">bg</span> <span class="op">=</span> <span class="st">&#39;$beautiful_black&#39;</span> <span class="op">},</span>                        <span class="co">-- When you split inside nvim-tree the fg will be activited</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="cn">N</span><span class="va">vimTreeNormal</span> <span class="op">=</span> <span class="op">{</span> <span class="va">fg</span> <span class="op">=</span> <span class="st">&#39;$light_green&#39;</span> <span class="op">,</span><span class="va">bg</span> <span class="op">=</span> <span class="st">&#39;$beautiful_black&#39;</span> <span class="op">},</span>                            <span class="co">-- fg means files names, folder names ..etc.</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="cn">N</span><span class="va">vimTreeEndOfBuffer</span> <span class="op">=</span> <span class="op">{</span> <span class="va">fg</span> <span class="op">=</span> <span class="st">&#39;$light_green&#39;</span> <span class="op">,</span><span class="va">bg</span> <span class="op">=</span> <span class="st">&#39;$beautiful_black&#39;</span> <span class="op">},</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="cn">N</span><span class="va">vimTreeGitNew</span> <span class="op">=</span> <span class="op">{</span><span class="va">fg</span> <span class="op">=</span><span class="st">&#39;$light_green&#39;</span>  <span class="op">},</span>                                                      <span class="co">-- This will change only the</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="co">-- GGX = {fg = &#39;#EEEDBF&#39;}</span></span></code></pre></div>
+<ol start="3" type="1">
+<li>This is native to nvim which we can use</li>
+</ol>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode lua"><code class="sourceCode lua"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>    <span class="va">vim</span><span class="op">.</span><span class="va">highlight</span><span class="op">.</span>create<span class="op">(</span><span class="st">&#39;GGX&#39;</span><span class="op">,</span> <span class="op">{</span><span class="va">guifg</span><span class="op">=</span><span class="st">&quot;#EEEDBF&quot;</span><span class="op">},</span> <span class="kw">true</span><span class="op">)</span></span></code></pre></div>
+<p>We are using now <code>Global</code> function to source all the
+current files</p>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode lua"><code class="sourceCode lua"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Function used to color (yellow) the upper cases words</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="cn">_G</span><span class="op">.</span><span class="va">highlight_upper_letter_cases</span> <span class="op">=</span> <span class="kw">function</span><span class="op">()</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- The following</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- This will work if you add to (common) for the color scheme.</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Defing first the synatx group by linking them to existed on using:</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- highlight def link &lt;you_custom_group_name&gt; guifg=&lt;hash-color-name&gt;</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Then assign to the specific pattern that you want to highlight</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- You can link from other group using:</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- vim.api.nvim_command([[hi def link GGX Title]])</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Or create a new group</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">--vim.highlight.create(&#39;GGX&#39;, {guifg=&quot;#EEEDBF&quot;}, true)</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">--vim.api.nvim_command([[highlight GGX guifg=#EEEDBF]])</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    <span class="va">vim</span><span class="op">.</span><span class="va">api</span><span class="op">.</span>nvim_command<span class="op">(</span><span class="vs">[[syn match GGX /[A-Z]+/]]</span><span class="op">)</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    <span class="va">vim</span><span class="op">.</span><span class="va">api</span><span class="op">.</span>nvim_command<span class="op">(</span><span class="vs">[[syn match GGX /[A-Z]\{2,\}/]]</span><span class="op">)</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>    <span class="va">vim</span><span class="op">.</span><span class="va">api</span><span class="op">.</span>nvim_command<span class="op">(</span><span class="vs">[[syn match GGX &quot;\v&lt;[A-Z]+&gt;&quot;]]</span><span class="op">)</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- this will be executed only when open vim on event VimEnter (then source</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- all nvim files), should not be used (affecting the markdown)</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>    <span class="va">vim</span><span class="op">.</span>cmd<span class="op">(</span><span class="vs">[[autocmd VimEnter ~/.config/nvim/* source %]]</span><span class="op">)</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
+<h2 id="understanding-the-color">UNDERSTANDING THE COLOR</h2>
+<p>In <code>nvim-lua</code> configurations there are basically three
+layers that control the <code>color</code> of each <code>group</code>.
+<code>group</code> colors are the one defined for specific action in
+<code>nvim</code> such as: digit, tab, normal, background ..etc. These
+layers are:</p>
+<ul>
+<li>A. Default Layer (this will be native to the color-scheme that you
+select. (mostly the tree-sitter parser colors are included)</li>
+<li>B. Tree-Sitter Color-Groups which used once you install the
+<code>nvim-treesitter</code></li>
+<li>C. Component of the <code>plugins</code> that alter the colors
+(e.g., statuline, bufferline, nvim-tree and lsp configurations)</li>
+<li>D. The user custom individual colors defined.</li>
+</ul>
+<p><code>Configurations</code> : to change the color, you need to
+consider to which level you want to alter the color,</p>
+<h2 id="vim-events">VIM EVENTS</h2>
+<ul>
+<li><a
+href="https://tech.saigonist.com/b/code/list-all-vim-script-events.html">list
+all vim script events</a></li>
+</ul>
+<h2 id="measure-speed-of-neovim">MEASURE SPEED OF NEOVIM</h2>
+<ul>
+<li><a href="https://aca.github.io/neovim_startuptime.html">Speedup
+Neovim</a></li>
+</ul>
+
+</body>
+</html>

@@ -2,7 +2,7 @@
 
 ## Updates History
 
-#### v.1.2.1 Release Nvim 0.9 with Lazy
+### v.1.2.1 Release Nvim 0.9 with Lazy
 
 - [x] Working on the `nvim 0.9` modern APIs.
 - [x] The current version works under `nvim`
@@ -17,8 +17,9 @@
 - [x] Add more support for the debugging session with `which-key` integration.
   Also added `virtual-text` supprot in the `dap` session to show the value of
   the variable [check here](./docs/debugging_adapgers.md).
+- [ ] adding more advanced topic here.
 
-#### Update release Nvim-workflow v0.1
+### Update release Nvim-workflow v0.1
 
 As `nvim` is now updated to version `0.8` with a stable release. Several
 deprecated `3rd-plugins` and `APIs`. I have optimized the startup time and got

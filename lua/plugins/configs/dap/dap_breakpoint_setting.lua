@@ -12,7 +12,6 @@ M.configs = function()
         on_config_done = nil,
 
         breakpoint = {
-            -- text = "",
             text = " ",
             -- texthl = "LspDiagnosticsSignError",
             texthl = "DiagnosticSignError",
@@ -20,7 +19,6 @@ M.configs = function()
             numhl = ""
         },
         rejected = {
-            -- text = "",
             text = "",
             -- texthl = "LspDiagnosticsSignHint",
             texthl = "DiagnosticSignHint",
@@ -28,7 +26,6 @@ M.configs = function()
             numhl = ""
         },
         stopped = {
-            -- text = "",
             text = "",
             -- texthl = "LspDiagnosticsSignInformation",
             -- linehl = "DiagnosticUnderlineInfo",
@@ -38,7 +35,6 @@ M.configs = function()
             numhl = "DiagnosticSignInfo"
         },
         logpoint = {
-            --text = "",
             text = "",
             texthl = "DiagnosticUnderlineInfo",
             linehl = "",
