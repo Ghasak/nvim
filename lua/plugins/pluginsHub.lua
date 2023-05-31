@@ -413,7 +413,8 @@ return {
         event = "InsertEnter",
         config = function()
             require("nvim-dap-virtual-text").setup({
-                display_callback = function(variable, _buf, _stackframe, _node)
+                --display_callback = function(variable, _buf, _stackframe, _node)
+                display_callback = function(variable, _, _, _)
                     return variable.name .. '  󰞮 󱚟   ' .. variable.value
                 end
             })

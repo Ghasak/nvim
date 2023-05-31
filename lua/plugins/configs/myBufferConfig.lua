@@ -52,8 +52,8 @@ M.config = function()
                 style = 'icon'
             },
 
-            buffer_close_icon = "",
-            modified_icon = "", -- '●',
+            buffer_close_icon = "",
+            modified_icon = " ", -- '●',
             close_icon = "",
             left_trunc_marker = "",
             right_trunc_marker = "",
@@ -99,35 +99,23 @@ M.config = function()
             },
             buffer_visible = {
                 fg = colors.white,
-                -- bg = colors.black2,
                 bg = colors.beautiful_black
             },
-
-            -- FOR DIAGNOSTICS = "NVIM_LSP"
-            -- error = {
-            -- 	fg = colors.beautiful_black,
-            -- 	bg = colors.beautiful_black,
-            -- },
-            -- error_diagnostic = {
-            -- 	fg = colors.beautiful_black,
-            -- 	bg = colors.beautiful_black,
-            -- },
-
             -- close buttons
             close_button = {
-                fg = colors.beautiful_black,
+                fg = colors.red,
                 bg = colors.beautiful_black
             },
             close_button_visible = {
-                fg = colors.beautiful_black,
+                fg = colors.red,
                 bg = colors.beautiful_black
             },
             close_button_selected = {
-                fg = colors.green,
+                fg = colors.red,
                 bg = colors.beautiful_black
             },
             fill = {
-                fg = colors.grey,
+                fg = colors.beautiful_black ,
                 bg = colors.beautiful_black -- This is the color that will fill the entire tab bar
             },
             indicator_selected = {
@@ -137,7 +125,7 @@ M.config = function()
 
             -- modified
             modified = {fg = colors.red, bg = colors.beautiful_black},
-            modified_visible = {fg = colors.green, bg = colors.beautiful_black},
+            modified_visible = {fg = colors.red, bg = colors.beautiful_black},
             modified_selected = {fg = colors.red, bg = colors.beautiful_black},
 
             -- separators
