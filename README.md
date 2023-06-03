@@ -3,7 +3,6 @@
 ## Updates History
 
 ### v.1.2.1 Release Nvim 0.9 with Lazy
-
 - [x] Working on the `nvim 0.9` modern APIs.
 - [x] The current version works under `nvim`
       with Lazy Plugins Manager.
@@ -75,12 +74,14 @@ upgrades to my configuration file (to name few)
 4. `<leader> + o`: will also give us similar to `SymbosOutline`.
 5. Remember, once you are in insert mode, it will trigger other plugins to be
    loaded. but some of them until you open next buffer. (reason is to get speed
-   and loading only necessary plugins on demands.)
+and loading only necessary plugins on demands.)
 6. `Ctr + n/p`: to scroll faster while center.
-7. `Shift + { or }` to scroll faster while centered but jump on coding elements.
+7. `Shift + { or }` to scroll faster while centered but jump on coding
+   elements.
 8. `<F6>`: To toggle the spell checking.
 9. `<F1>`: To show help
-10. `<leader>ff`, `<leader>fg`, `<leader>fb` and `<leader>fh` all are reserved to `nvim-Telelscope toggler`.
+10. `<leader>ff`, `<leader>fg`, `<leader>fb` and `<leader>fh` all are reserved
+    to `nvim-Telelscope toggler`.
 11. `<leader>tt`: horizontal terminal,
 12. `<leader>t`: floating terminal but slower
 13. `<leader>r`: Ranger for navigating your files.
@@ -89,8 +90,8 @@ upgrades to my configuration file (to name few)
 ## Workflow notes
 
 ### Cargo with Rust
-
-To activite the `crate` plugin, you need to enter first to a buffer with `rust file` `*.rs`, which can be activited on `Insert` event. This will trigger also
+To activite the `crate` plugin, you need to enter first to a buffer with `rust
+file` `*.rs`, which can be activited on `Insert` event. This will trigger also
 `cmp-create` and also `nvim-crate`. You can also later for `crate-tomal` file
 to use the `keymapping: gH` on the crate name, which will trigger documentation
 about the crate history and other considerations.
@@ -528,9 +529,7 @@ in `nvim` such as: digit, tab, normal, background ..etc. These layers are:
 want to alter the color,
 
 ## VIM EVENTS
-
 - [list all vim script events](https://tech.saigonist.com/b/code/list-all-vim-script-events.html)
 
 ## MEASURE SPEED OF NEOVIM
-
 - [Speedup Neovim ](https://aca.github.io/neovim_startuptime.html)
