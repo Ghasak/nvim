@@ -196,8 +196,9 @@ if global.is_mac then
         cache_enabled = 0
     }
 
-    vim.g.python_host_prog = "/usr/bin/python2"
-    vim.g.python3_host_prog = "$HOME/opt/anaconda3/bin/python3" -- '/usr/local/bin/python3'
+    --vim.g.python_host_prog = "/usr/bin/python2"
+    vim.g.python_host_prog = "$HOME/anaconda3/bin/python2" -- '/usr/local/bin/python3'
+    vim.g.python3_host_prog = "$HOME/anaconda3/bin/python3" -- '/usr/local/bin/python3'
 end
 -----------------------------------------------------------
 --          Glow for Markdown

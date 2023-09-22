@@ -55,5 +55,8 @@ for _, module in ipairs(init_modules) do load_module(module) end
 -- Loading the neovide configurations, once it neovide is lunched.
 if vim.g.neovide then require("units.neovideConfig").neovide_config() end
 
-
+-- In your init.lua or similar Neovim configuration
+-- This will allow the python-language-server to know the existence of other files in your project
+local lspconfig = require 'lspconfig'
+lspconfig.pyright.setup {}
 

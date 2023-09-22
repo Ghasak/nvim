@@ -1,4 +1,5 @@
---
+-- ====================================================================================================
+---
 --         ██╗░░██╗███████╗██╗░░░██╗  ███╗░░░███╗░█████╗░██████╗░██████╗░██╗███╗░░██╗░██████╗░░██████╗
 --         ██║░██╔╝██╔════╝╚██╗░██╔╝  ████╗░████║██╔══██╗██╔══██╗██╔══██╗██║████╗░██║██╔════╝░██╔════╝
 --         █████═╝░█████╗░░░╚████╔╝░  ██╔████╔██║███████║██████╔╝██████╔╝██║██╔██╗██║██║░░██╗░╚█████╗░
@@ -6,6 +7,7 @@
 --         ██║░╚██╗███████╗░░░██║░░░  ██║░╚═╝░██║██║░░██║██║░░░░░██║░░░░░██║██║░╚███║╚██████╔╝██████╔╝
 --         ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░  ╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝░░░░░╚═╝░░░░░╚═╝╚═╝░░╚══╝░╚═════╝░╚═════╝░
 --
+-- ====================================================================================================
 -- Basics Configurations
 -- Following: https://youtu.be/ppMX4LHIuy4
 -- There are three types of configuration options
@@ -192,7 +194,7 @@ vim.api.nvim_set_keymap("n", "<Leader>r", ":RnvimrToggle<CR>",
                         {noremap = true, silent = false})
 
 -- Floating terminal for nvim
-vim.api.nvim_set_keymap("n", "<Leader>t", ":FloatermToggle<CR>",
+vim.api.nvim_set_keymap("n", "<Leader>t", ":Lspsaga term_toggle<CR>",
                         {noremap = true, silent = false})
 
 -- Better nav for omni-complete
@@ -301,30 +303,23 @@ vim.api.nvim_set_keymap("n", "<leader><F1>", ":lua vim.lsp.buf.hover()<CR>",
 -- KeyMapping
 -- use <C-t> to jump back
 vim.keymap
-    .set("n", "<leader>gh", "<cmd>Lspsaga lsp_finder<CR>", {silent = true})
+    .set("n", "<leader>gh", "<cmd>Lspsaga hover_doc<CR>", {silent = true})
 -- Code action
-vim.keymap.set({"n", "v"}, "<leader>ca", "<cmd>Lspsaga code_action<CR>",
-               {silent = true})
+vim.keymap.set({"n", "v"}, "<leader>ca", "<cmd>Lspsaga code_action<CR>", {silent = true})
 -- Check
-vim.keymap.set("n", "<leader><F2>", "<cmd>Lspsaga lsp_finder<CR>",
-               {silent = true})
+vim.keymap.set("n", "<F2>", "<cmd>Lspsaga peek_type_definition<CR>", {silent = true})
 -- Rename
 vim.keymap.set("n", "<leader>ar", "<cmd>Lspsaga rename<CR>", {silent = true})
 -- Peek Definition
 -- support tagstack C-t jump back
-vim.keymap.set("n", "<leader>gd", "<cmd>Lspsaga peek_definition<CR>",
-               {silent = true})
+vim.keymap.set("n", "<leader>gd", "<cmd>Lspsaga peek_definition<CR>", {silent = true})
 -- Show line diagnostics
-vim.keymap.set("n", "<leader>cd", "<cmd>Lspsaga show_line_diagnostics<CR>",
-               {silent = true})
+vim.keymap.set("n", "<leader>cd", "<cmd>Lspsaga show_line_diagnostics<CR>", {silent = true})
 -- Show cursor diagnostic
-vim.keymap.set("n", "<leader>cd", "<cmd>Lspsaga show_cursor_diagnostics<CR>",
-               {silent = true})
+vim.keymap.set("n", "<leader>cd", "<cmd>Lspsaga show_cursor_diagnostics<CR>", {silent = true})
 -- Diagnsotic jump can use `<c-o>` to jump back
-vim.keymap.set("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>",
-               {silent = true})
-vim.keymap.set("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>",
-               {silent = true})
+vim.keymap.set("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>", {silent = true})
+vim.keymap.set("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>", {silent = true})
 -- Only jump to error
 vim.keymap.set("n", "[E", function()
     require("lspsaga.diagnostic").goto_prev({
@@ -342,6 +337,7 @@ vim.keymap.set("n", "<leader>o", "<cmd>Lspsaga outline<CR>", {silent = true})
 
 ---- *****************************************************************************************
 ----                     Debugging Color Syntx for Color theme
+----                     URL: https://github.com/nvim-treesitter/playground
 ---- *****************************************************************************************
 vim.keymap.set("n", "<leader><leader>",
                "<cmd>TSHighlightCapturesUnderCursor<CR>", {silent = true})

@@ -206,13 +206,14 @@ local function format_messages_2(messages)
         -- "●∙∙",
         -- "∙●∙",
         -- "∙∙●",
-        -- "∙∙∙",
         "∙∙∙", " ∙", "∙∙", "∙∙", "∙∙∙"
+        -- "∙  ∙  ∙", "  ∙  ∙", "∙    ∙", "∙  ∙  ",
+        -- "∙  ∙  ∙",
+        -- "     ", "     ", "     ", "     ",
+        -- "     "
         -- ""
         -- "",
-        -- "", ""
-        -- "󰪥",
-        -- "󰪥",
+        -- "", "", "󰪥", "󰪥", ""
         -- "󰪟",
         -- "󰪠",
         -- "󰪡",
@@ -221,7 +222,6 @@ local function format_messages_2(messages)
         -- "󰪤",
         -- "",
         -- "ﱣ"
-
         -- "", "", "", "", "", "",
         --
         -- "⠋",
@@ -345,7 +345,12 @@ function M.setup()
                 {'branch'}, {'diff'}, {
                     'diagnostics',
                     sources = {"nvim_diagnostic"},
-                    symbols = { error = " ", warn = " ", info = " ", hint = "" },
+                    symbols = {
+                        error = " ",
+                        warn = " ",
+                        info = " ",
+                        hint = ""
+                    }
                     -- symbols = {
                     --     error = "",
                     --     information = "כֿ",

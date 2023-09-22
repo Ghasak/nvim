@@ -1,46 +1,8 @@
 local status_ok, nvim_tree = pcall(require, "nvim-tree")
 if not status_ok then return end
 
-local config_status_ok, nvim_tree_config = pcall(require, "nvim-tree.config")
-if not config_status_ok then return end
-local cmd = vim.cmd
-
--- disable netrw at the very start of your init.lua (strongly advised)
-vim.g.loaded = 1
-vim.g.loaded_netrwPlugin = 1
-
--- Check more options using (:help nvim-tree-setup)
-
--- " a list of groups can be found at `:help nvim_tree_highlight`
-cmd([[highlight NvimTreeFolderIcon guifg = gray]])
-cmd([[highlight NvimTreeIndentMarker guifg = gray]])
---
-vim.o.termguicolors = true
-vim.g.nvim_tree_indent_marker = 1
-
--- Origianl config:
--- local icons = require("user.icons")
--- local icons = {
---   kind = {
--- 	default = "",
--- 	symlink = "",
--- 	git = {
--- 		deleted = "",
--- 		ignored = "◌",
--- 		renamed = "➜",
--- 		unmerged = " ",
--- 		staged = "ﱘ ",
--- 		unstaged = "ﱙ ",
--- 		untracked = " ",
--- 	},
--- }
--- }
-
--- local icons = require("plugins.configs.icons")
-
-local tree_cb = nvim_tree_config.nvim_tree_callback
-
-nvim_tree.setup {
+-- Added for loading the nvim-tree, it seems the above is not working at the moment, to be maintained later.
+nvim_tree.setup({
     hijack_directories = {enable = false},
     -- update_to_buf_dir = {
     --   enable = false,
@@ -80,14 +42,14 @@ nvim_tree.setup {
         icons = {
             webdev_colors = true,
             git_placement = "before",
-            padding = " ",
+            padding = "  ",
             symlink_arrow = " ➛ ",
             show = {file = true, folder = true, folder_arrow = true, git = true},
             glyphs = {
 
                 default = "󰈙",
                 symlink = "",
-                --bookmark = "",
+                -- bookmark = "",
                 bookmark = "",
                 folder = {
                     arrow_closed = "",
@@ -108,9 +70,9 @@ nvim_tree.setup {
                     -- untracked = "U",
                     deleted = "",
                     ignored = "◌",
-                    staged = "󰝚 ",
-                    unstaged = "󰝛 ",
-                    untracked = " "
+                    staged = "󰝚",
+                    unstaged = "󰝛",
+                    untracked = ""
 
                 }
             }
@@ -126,7 +88,7 @@ nvim_tree.setup {
             -- error = "",
             error = "",
             info = "",
-            warning= " ",
+            warning = " ",
             hint = ""
         }
     },
@@ -157,4 +119,43 @@ nvim_tree.setup {
     --     number = false,
     --     relativenumber = false
     -- }
-}
+})
+
+local config_status_ok, nvim_tree_config = pcall(require, "nvim-tree.config")
+if not config_status_ok then return end
+local cmd = vim.cmd
+
+-- disable netrw at the very start of your init.lua (strongly advised)
+vim.g.loaded = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- Check more options using (:help nvim-tree-setup)
+
+-- " a list of groups can be found at `:help nvim_tree_highlight`
+cmd([[highlight NvimTreeFolderIcon guifg = gray]])
+cmd([[highlight NvimTreeIndentMarker guifg = gray]])
+--
+vim.o.termguicolors = true
+vim.g.nvim_tree_indent_marker = 1
+
+-- Origianl config:
+-- local icons = require("user.icons")
+-- local icons = {
+--   kind = {
+-- 	default = "",
+-- 	symlink = "",
+-- 	git = {
+-- 		deleted = "",
+-- 		ignored = "◌",
+-- 		renamed = "➜",
+-- 		unmerged = " ",
+-- 		staged = "ﱘ ",
+-- 		unstaged = "ﱙ ",
+-- 		untracked = " ",
+-- 	},
+-- }
+-- }
+
+-- local icons = require("plugins.configs.icons")
+local tree_cb = nvim_tree_config.nvim_tree_callback
+

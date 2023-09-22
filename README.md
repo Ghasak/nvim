@@ -1,8 +1,11 @@
 # MODERN NVIM CONFIG
 
-## Updates History
+## ChangingLog
+### v.0.9.1 Release Nvim
+- [x] The following major realse shows a bit longer time to trigger the `nvim`.
 
 ### v.1.2.1 Release Nvim 0.9 with Lazy
+
 - [x] Working on the `nvim 0.9` modern APIs.
 - [x] The current version works under `nvim`
       with Lazy Plugins Manager.
@@ -16,7 +19,7 @@
 - [x] Add more support for the debugging session with `which-key` integration.
   Also added `virtual-text` supprot in the `dap` session to show the value of
   the variable [check here](./docs/debugging_adapgers.md).
-- [ ] adding more advanced topic here.
+- [x] adding more advanced topic here.
 
 ### Update release Nvim-workflow v0.1
 
@@ -526,7 +529,7 @@ in `nvim` such as: digit, tab, normal, background ..etc. These layers are:
 - D. The user custom individual colors defined.
 
 `Configurations` : to change the color, you need to consider to which level you
-want to alter the color,
+want to alter the color.
 
 ## VIM EVENTS
 - [list all vim script events](https://tech.saigonist.com/b/code/list-all-vim-script-events.html)

@@ -94,11 +94,12 @@ return {
     }, -- nvim-tree
     {
         "kyazdani42/nvim-tree.lua",
-        lazy = true,
+        lazy = false,
+        version = "*",
         dependencies = {"kyazdani42/nvim-web-devicons"},
-        cmd = {"NvimTreeToggle", "NvimTreeToggle", "NvimTreeClose"},
         -- module = { "nvim-tree", "nvim-tree.actions.root.change-dir" },
-        config = function() require "plugins.configs.myNvimTree" end
+        config = function() require("plugins.configs.myNvimTree") end,
+        cmd = {"NvimTreeToggle", "NvimTreeToggle", "NvimTreeClose"}
     }, -- undotree
     {
         "mbbill/undotree",
@@ -165,10 +166,15 @@ return {
         -- event = "BufReadPre",
         branch = "main",
         event = "InsertEnter",
+        ft = {'c', 'cpp', 'lua', 'rust', 'go', 'python', 'bash'},
+        -- event = 'LspAttach',
         config = function()
             require("lspsaga").setup(require "plugins.configs.mySaga")
         end,
-        dependencies = {"kyazdani42/nvim-web-devicons"}
+        dependencies = {
+            {'nvim-treesitter/nvim-treesitter'}, -- optional
+            {'kyazdani42/nvim-web-devicons'} -- optional
+        }
     }, -- lsp stuff
     {
         "williamboman/mason.nvim",
@@ -413,7 +419,7 @@ return {
         event = "InsertEnter",
         config = function()
             require("nvim-dap-virtual-text").setup({
-                --display_callback = function(variable, _buf, _stackframe, _node)
+                -- display_callback = function(variable, _buf, _stackframe, _node)
                 display_callback = function(variable, _, _, _)
                     return variable.name .. '  󰞮 󱚟   ' .. variable.value
                 end
@@ -542,5 +548,4 @@ return {
         }
     }
 }
-
 
