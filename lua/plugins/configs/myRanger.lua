@@ -7,7 +7,7 @@ M.Style = function()
     " Make Ranger replace Netrw and be the file explorer
     let g:rnvimr_enable_ex = 1
     " Make Ranger to be hidden after picking a file
-    let g:rnvimr_enable_picker = 0
+    let g:rnvimr_enable_picker = 1
     " Disable a border for floating window
     "let g:rnvimr_draw_border = 0
     " Hide the files included in gitignore
@@ -15,6 +15,8 @@ M.Style = function()
     let g:rnvimr_draw_border = 1
     " Change the border's color
     let g:rnvimr_border_attr = {'fg': 4, 'bg': -1}
+    " Replace `$EDITOR` candidate with this command to open the selected file
+    let g:rnvimr_edit_cmd = 'drop'
     "let g:rnvimr_border_attr = {'fg': '#C6EBC5', 'bg': 1}
     " Make Neovim wipe the buffers corresponding to the files deleted by Ranger
     let g:rnvimr_enable_bw = 1

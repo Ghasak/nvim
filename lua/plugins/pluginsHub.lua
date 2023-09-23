@@ -1,21 +1,5 @@
 return {
-    -- {
-    --   "shaunsingh/nord.nvim",
-    --
-    --   cond = true, -- load this plugin
-    --   priority = 1000, -- make sure to load this before all the other start plugins
-    --   init = function()
-    --     vim.cmd [[colorscheme nord]]
-    --   end,
-    --   config = function()
-    --     -- do not remove the colorscheme!
-    --     vim.g.nord_disable_background = false
-    --     vim.opt.termguicolors = true
-    --     -- require("plugins.configs.onedark_config").setup()
-    --   end,
-    -- },
     {
-
         "ghasak/githubG.nvim",
         cond = true, -- load this plugin
         priority = 1000, -- make sure to load this before all the other start plugins
@@ -166,7 +150,7 @@ return {
         -- event = "BufReadPre",
         branch = "main",
         event = "InsertEnter",
-        ft = {'c', 'cpp', 'lua', 'rust', 'go', 'python', 'bash'},
+        --ft = {'c', 'cpp', 'lua', 'rust', 'go', 'python', 'bash'},
         -- event = 'LspAttach',
         config = function()
             require("lspsaga").setup(require "plugins.configs.mySaga")

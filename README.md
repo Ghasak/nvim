@@ -1,6 +1,12 @@
 # MODERN NVIM CONFIG
 
 ## ChangingLog
+### V.0.9.2 RElease Nvim
+- [x] This version has no issue in performance, I just included minor fixes for some libraries.
+    - `nvim-saga` now works flawlessly.
+    - `ranger` now can open in new buffer, support the icons and other features.
+    - `terminal`: Terminal now uses the `saga` package to open the new terminal.
+
 ### v.0.9.1 Release Nvim
 - [x] The following major realse shows a bit longer time to trigger the `nvim`.
 
