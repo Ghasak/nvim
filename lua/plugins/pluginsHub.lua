@@ -150,7 +150,7 @@ return {
         -- event = "BufReadPre",
         branch = "main",
         event = "InsertEnter",
-        --ft = {'c', 'cpp', 'lua', 'rust', 'go', 'python', 'bash'},
+        -- ft = {'c', 'cpp', 'lua', 'rust', 'go', 'python', 'bash'},
         -- event = 'LspAttach',
         config = function()
             require("lspsaga").setup(require "plugins.configs.mySaga")
@@ -191,6 +191,7 @@ return {
     }, -- Adding lsp signature for nvim
     {
         "ray-x/lsp_signature.nvim",
+        event = "InsertEnter",
         dependencies = {"nvim-lspconfig"},
         config = function() require("lsp_signature").setup() end
     }, -- Adding symbols outline (similar to vista)
@@ -336,7 +337,8 @@ return {
     -- Source, https://github.com/hrsh7th/vim-eft
     {
         "hrsh7th/vim-eft",
-        event = "CursorMoved",
+        --event = "CursorMoved",
+        event = "InsertEnter",
         config = function() require("plugins.configs.myVim_eft").setup() end
     }, -- lsp loader status display
     -- use({ 'j-hui/fidget.nvim' ,
@@ -345,7 +347,7 @@ return {
     --       text = {spinner = "dots_negative", done = "歷"}
     --     })
     --   end})
-    {"ggandor/lightspeed.nvim", lazy = true, event = "CursorMoved"},
+    {"ggandor/lightspeed.nvim", lazy = true, event = "InsertEnter"},
     -- ===========================================================================
     --           Productivities and performance
     -- ===========================================================================

@@ -45,6 +45,8 @@ For "replace-inner-quotes-to-yanked-text" you can use `vi"p`
 2. To yank a word:   `y`+`w`
 3. To replace with a registered yanked word:  `g`+`r`+`w`
 4. Repeat the yanked word using `.`
+5. Yanking a word without a white spaces `y` + `i` + `w`
+
 
 ## Reference
 - [How can replace string in quotes with string from buffer](https://stackoverflow.com/questions/4483743/how-can-replace-string-in-quotes-with-string-from-buffer)

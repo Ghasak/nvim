@@ -24,3 +24,4 @@ pip3 install ueberzug
 
 ## Reference
 - [rnvimr lib](https://github.com/kevinhwang91/rnvimr)
+- [how to change the default text editor in ranger](https://unix.stackexchange.com/questions/367452/how-to-change-the-default-text-editor-in-ranger)
