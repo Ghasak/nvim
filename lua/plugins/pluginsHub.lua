@@ -78,7 +78,7 @@ return {
     }, -- nvim-tree
     {
         "kyazdani42/nvim-tree.lua",
-        lazy = false,
+        lazy = true,
         version = "*",
         dependencies = {"kyazdani42/nvim-web-devicons"},
         -- module = { "nvim-tree", "nvim-tree.actions.root.change-dir" },
