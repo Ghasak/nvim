@@ -1,13 +1,51 @@
 # MODERN NVIM CONFIG
 
+<!-- vim-markdown-toc Marked -->
+
+* [ChangingLog](#changinglog)
+    * [V.0.9.2 Release Nvim](#v.0.9.2-release-nvim)
+    * [v.0.9.1 Release Nvim](#v.0.9.1-release-nvim)
+    * [v.1.2.1 Release Nvim 0.9 with Lazy](#v.1.2.1-release-nvim-0.9-with-lazy)
+    * [Update release Nvim-workflow v0.1](#update-release-nvim-workflow-v0.1)
+* [Nvim Workflow](#nvim-workflow)
+    * [Shortcuts](#shortcuts)
+* [Workflow notes](#workflow-notes)
+    * [Cargo with Rust](#cargo-with-rust)
+    * [Auto Save](#auto-save)
+    * [For development](#for-development)
+* [More details for the configurations](#more-details-for-the-configurations)
+* [To do](#to-do)
+* [Major Changes in Nvim 0.8](#major-changes-in-nvim-0.8)
+* [General Configuration helper](#general-configuration-helper)
+* [USEFUL COMMANDS](#useful-commands)
+* [Jump Motion](#jump-motion)
+    * [Things to be considered](#things-to-be-considered)
+    * [Migration for Nvim 0.8](#migration-for-nvim-0.8)
+    * [Nvim with Lua API](#nvim-with-lua-api)
+    * [For mapping keyboard](#for-mapping-keyboard)
+    * [Telescope commands](#telescope-commands)
+    * [Events managment in nvim](#events-managment-in-nvim)
+    * [Make statusline from scratch](#make-statusline-from-scratch)
+    * [Debugging in lua](#debugging-in-lua)
+    * [Order of execution in nvim](#order-of-execution-in-nvim)
+    * [Adding upper case (captial letter)](#adding-upper-case-(captial-letter))
+* [UNDERSTANDING THE COLOR](#understanding-the-color)
+* [VIM EVENTS](#vim-events)
+* [MEASURE SPEED OF NEOVIM](#measure-speed-of-neovim)
+
+<!-- vim-markdown-toc -->
+
 ## ChangingLog
-### V.0.9.2 RElease Nvim
+
+### V.0.9.2 Release Nvim
+
 - [x] This version has no issue in performance, I just included minor fixes for some libraries.
-    - `nvim-saga` now works flawlessly.
-    - `ranger` now can open in new buffer, support the icons and other features.
-    - `terminal`: Terminal now uses the `saga` package to open the new terminal.
+  - `nvim-saga` now works flawlessly.
+  - `ranger` now can open in new buffer, support the icons and other features.
+  - `terminal`: Terminal now uses the `saga` package to open the new terminal.
 
 ### v.0.9.1 Release Nvim
+
 - [x] The following major realse shows a bit longer time to trigger the `nvim`.
 
 ### v.1.2.1 Release Nvim 0.9 with Lazy
@@ -23,8 +61,8 @@
 - [x] Changed the nvim-web-devicons customized based on our requested color ([Read here](./docs/IconsColor.md))
 - [x] Added a color theme plugin created from scratch namely `github.nvim` theme.
 - [x] Add more support for the debugging session with `which-key` integration.
-  Also added `virtual-text` supprot in the `dap` session to show the value of
-  the variable [check here](./docs/debugging_adapgers.md).
+      Also added `virtual-text` supprot in the `dap` session to show the value of
+      the variable [check here](./docs/debugging_adapgers.md).
 - [x] adding more advanced topic here.
 
 ### Update release Nvim-workflow v0.1
@@ -73,9 +111,9 @@ upgrades to my configuration file (to name few)
       and improve the speed significantly, check for example `:packer status` to
       see that majority of plugins are not loaded at the startup.
 
-# Nvim Workflow
+## Nvim Workflow
 
-## Shortcuts
+### Shortcuts
 
 1. `ContextEnable`: will give you a nice folding to your functions.
 2. `DocsViewToogle`: for showing documents and tracing your cursor.
@@ -83,7 +121,7 @@ upgrades to my configuration file (to name few)
 4. `<leader> + o`: will also give us similar to `SymbosOutline`.
 5. Remember, once you are in insert mode, it will trigger other plugins to be
    loaded. but some of them until you open next buffer. (reason is to get speed
-and loading only necessary plugins on demands.)
+   and loading only necessary plugins on demands.)
 6. `Ctr + n/p`: to scroll faster while center.
 7. `Shift + { or }` to scroll faster while centered but jump on coding
    elements.
@@ -99,6 +137,7 @@ and loading only necessary plugins on demands.)
 ## Workflow notes
 
 ### Cargo with Rust
+
 To activite the `crate` plugin, you need to enter first to a buffer with `rust
 file` `*.rs`, which can be activited on `Insert` event. This will trigger also
 `cmp-create` and also `nvim-crate`. You can also later for `crate-tomal` file
@@ -538,7 +577,9 @@ in `nvim` such as: digit, tab, normal, background ..etc. These layers are:
 want to alter the color.
 
 ## VIM EVENTS
+
 - [list all vim script events](https://tech.saigonist.com/b/code/list-all-vim-script-events.html)
 
 ## MEASURE SPEED OF NEOVIM
+
 - [Speedup Neovim ](https://aca.github.io/neovim_startuptime.html)

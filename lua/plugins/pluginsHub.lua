@@ -142,6 +142,12 @@ return {
         cmd = "MarkdownPreview",
         build = "cd app && npm install",
         config = function() vim.g.mkdp_filetypes = {"markdown"} end
+    }, {
+        "mzlogin/vim-markdown-toc",
+        ft = {"markdown"},
+        lazy = true,
+        event = "InsertEnter",
+        cmd = {"GenTocGitLab", "GenTocMarked"}
     }, -- Adding notification for nvim
     {"folke/neodev.nvim", ft = "lua", event = "InsertEnter"},
     -- lsp_signature.nvim
@@ -337,7 +343,7 @@ return {
     -- Source, https://github.com/hrsh7th/vim-eft
     {
         "hrsh7th/vim-eft",
-        --event = "CursorMoved",
+        -- event = "CursorMoved",
         event = "InsertEnter",
         config = function() require("plugins.configs.myVim_eft").setup() end
     }, -- lsp loader status display
