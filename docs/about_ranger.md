@@ -5,6 +5,7 @@
 - `2023-09-23 16:32`: I have updated the ranger to open automatically the buffer for given file.
 
 ## Rnvimr
+
 This library require to install the `ranger` using the `pip` not `brew`.
 Including, read more here:
 
@@ -21,7 +22,7 @@ pip3 install ranger-fm pynvim
 pip3 install ueberzug
 ```
 
-
 ## Reference
+
 - [rnvimr lib](https://github.com/kevinhwang91/rnvimr)
 - [how to change the default text editor in ranger](https://unix.stackexchange.com/questions/367452/how-to-change-the-default-text-editor-in-ranger)

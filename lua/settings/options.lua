@@ -7,8 +7,8 @@
 -----------------------------------------------------------
 -- local map = vim.api.nvim_set_keymap  -- set global keymap
 local cmd = vim.cmd -- execute Vim commands
-local exec = vim.api.nvim_exec -- execute Vimscript
-local fn = vim.fn -- call Vim functions
+-- local exec = vim.api.nvim_exec -- execute Vimscript
+-- local fn = vim.fn -- call Vim functions
 local g = vim.g -- global variables
 local opt = vim.opt -- global/buffer/windows-scoped options
 local vim = vim
@@ -45,8 +45,6 @@ vim.cmd([[
 ]])
 --
 
-
-
 -----------------------------------------------------------
 --              For Neovide - Compatibility
 -----------------------------------------------------------
@@ -81,9 +79,7 @@ set write
 -----------------------------------------------------------
 -- Configurations form my old vim script
 -----------------------------------------------------------
-
-
-opt.cmdheight = 1  --vim.cmd('set cmdheight=0') -- Control the height of cmdline
+opt.cmdheight = 1 -- vim.cmd('set cmdheight=0') -- Control the height of cmdline
 opt.wrap = false
 opt.relativenumber = true
 opt.errorbells = false
@@ -196,7 +192,7 @@ if global.is_mac then
         cache_enabled = 0
     }
 
-    --vim.g.python_host_prog = "/usr/bin/python2"
+    -- vim.g.python_host_prog = "/usr/bin/python2"
     vim.g.python_host_prog = "$HOME/anaconda3/bin/python2" -- '/usr/local/bin/python3'
     vim.g.python3_host_prog = "$HOME/anaconda3/bin/python3" -- '/usr/local/bin/python3'
 end
@@ -277,9 +273,12 @@ vim.cmd([[au BufWritePre * :%s/\s\+$//e]])
 --  ]], true)
 
 -----------------------------------------------------------
+--                 Ruler Color for Nvimm
+-----------------------------------------------------------
+vim.cmd([[highlight ColorColumn ctermbg=black guibg=#373d46]])
 
+-----------------------------------------------------------
 --            ON YANKING HIGHLIGHT
-
 -----------------------------------------------------------
 -- vim.cmd [[
 --   augroup _general_settings
