@@ -6,11 +6,11 @@ function M.setup()
 
     local highlight_scope = {
         -- Mixed scoe colored - my preference
-        "IblIndent", "RainbowYellow", "RainbowBlue", "RainbowOrange",
-        "RainbowGreen", "RainbowViolet", "RainbowCyan"
+        -- "IblIndent", "RainbowYellow", "RainbowBlue", "RainbowOrange",
+        -- "RainbowGreen", "RainbowViolet", "RainbowCyan"
         -- If you want only gray scope
-        -- "IblIndent", "IblIndent", "IblIndent", "IblIndent", "IblIndent",
-        -- "IblIndent", "IblIndent"
+        "IblIndent", "IblIndent", "IblIndent", "IblIndent", "IblIndent",
+        "IblIndent", "IblIndent"
         -- If you want a colored scope
         -- "RainbowRed", "RainbowYellow", "RainbowBlue", "RainbowOrange",
         -- "RainbowGreen", "RainbowViolet", "RainbowCyan"

@@ -538,6 +538,11 @@ return {
             "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles",
             "DiffviewFocusFiles"
         }
+    }, {
+        "kdheepak/lazygit.nvim",
+        event = "InsertEnter",
+        -- optional for floating window border decoration
+        dependencies = {"nvim-lua/plenary.nvim"}
     }
 }
 

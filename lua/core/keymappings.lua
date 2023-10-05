@@ -302,24 +302,30 @@ vim.api.nvim_set_keymap("n", "<leader><F1>", ":lua vim.lsp.buf.hover()<CR>",
 
 -- KeyMapping
 -- use <C-t> to jump back
-vim.keymap
-    .set("n", "<leader>gh", "<cmd>Lspsaga hover_doc<CR>", {silent = true})
+vim.keymap.set("n", "<leader>gh", "<cmd>Lspsaga hover_doc<CR>", {silent = true})
 -- Code action
-vim.keymap.set({"n", "v"}, "<leader>ca", "<cmd>Lspsaga code_action<CR>", {silent = true})
+vim.keymap.set({"n", "v"}, "<leader>ca", "<cmd>Lspsaga code_action<CR>",
+               {silent = true})
 -- Check
-vim.keymap.set("n", "<F2>", "<cmd>Lspsaga peek_type_definition<CR>", {silent = true})
+vim.keymap.set("n", "<F2>", "<cmd>Lspsaga peek_type_definition<CR>",
+               {silent = true})
 -- Rename
 vim.keymap.set("n", "<leader>ar", "<cmd>Lspsaga rename<CR>", {silent = true})
 -- Peek Definition
 -- support tagstack C-t jump back
-vim.keymap.set("n", "<leader>gd", "<cmd>Lspsaga peek_definition<CR>", {silent = true})
+vim.keymap.set("n", "<leader>gd", "<cmd>Lspsaga peek_definition<CR>",
+               {silent = true})
 -- Show line diagnostics
-vim.keymap.set("n", "<leader>cd", "<cmd>Lspsaga show_line_diagnostics<CR>", {silent = true})
+vim.keymap.set("n", "<leader>cd", "<cmd>Lspsaga show_line_diagnostics<CR>",
+               {silent = true})
 -- Show cursor diagnostic
-vim.keymap.set("n", "<leader>cd", "<cmd>Lspsaga show_cursor_diagnostics<CR>", {silent = true})
+vim.keymap.set("n", "<leader>cd", "<cmd>Lspsaga show_cursor_diagnostics<CR>",
+               {silent = true})
 -- Diagnsotic jump can use `<c-o>` to jump back
-vim.keymap.set("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>", {silent = true})
-vim.keymap.set("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>", {silent = true})
+vim.keymap.set("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>",
+               {silent = true})
+vim.keymap.set("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>",
+               {silent = true})
 -- Only jump to error
 vim.keymap.set("n", "[E", function()
     require("lspsaga.diagnostic").goto_prev({
@@ -349,3 +355,10 @@ vim.keymap.set("n", "<leader><leader>",
 --------- Load the session pallete using <leader><leader>p ---------
 vim.api.nvim_set_keymap("n", "<leader><leader>p", ":lua open_session()<CR>",
                         {noremap = true, silent = true})
+
+---- *****************************************************************************************
+--                              Find in visual mode (no plugin is required)
+--                       https://github.com/Ajnasz/nvim-rfind
+---- *****************************************************************************************
+vim.keymap.set("x", "/", "<Esc>/\\%V")
+

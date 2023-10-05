@@ -15,7 +15,9 @@ local vim = vim
 -----------------------------------------------------------
 -- General
 -----------------------------------------------------------
-opt.mouse = "a" -- enable mouse support, clicking and scrolling, Now I use, option from my mac If you use iTerm, <<defaults write com.googlecode.iterm2 AlternateMouseScroll -bool true>>
+opt.mouse = "a" -- enable mouse support, clicking and scrolling,
+-- Now I use, option from my mac If you use iTerm,
+-- <<defaults write com.googlecode.iterm2 AlternateMouseScroll -bool true>>
 opt.clipboard = "unnamedplus" -- copy/paste to system clipboard
 
 vim.cmd([[
@@ -158,27 +160,27 @@ opt.tabstop = 4 -- 1 tab == 4 spaces
 opt.smartindent = true -- autoindent new lines
 opt.autoindent = true
 -- don't auto commenting new lines
-cmd([[au BufEnter * set fo-=c fo-=r fo-=o]])
+vim.cmd([[au BufEnter * set fo-=c fo-=r fo-=o]])
 
 -- remove line lenght marker for selected filetypes
-cmd([[
+vim.cmd([[
   autocmd FileType text,markdown,xml,html,xhtml,javascript setlocal cc=0
 ]])
 
 -- 2 spaces for selected filetypes
-cmd([[
+vim.cmd([[
   autocmd FileType xml,html,xhtml,css,scss,javascript,lua,yaml setlocal shiftwidth=2 tabstop=2
 ]])
 
 -- 8 spaces for Go files
-cmd([[autocmd FileType go setlocal shiftwidth=8 tabstop=8]])
+vim.cmd([[autocmd FileType go setlocal shiftwidth=8 tabstop=8]])
 
 -- IndentLine
 -- g.indentLine_setColors = 0  -- set indentLine color
 -- g.indentLine_char = '|'       -- set indentLine character
 
 -- disable IndentLine for markdown files (avoid concealing)
-cmd([[
+vim.cmd([[
 	autocmd FileType markdown let g:indentLine_enabled=0
 ]])
 
