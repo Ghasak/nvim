@@ -109,63 +109,63 @@ with `COC and COC-LSP` and my current one with `nvim-lsp`.
 
 #### DAILY COMMANDS
 
-| T   | Command                  | Descriptions                                                                                                                          | Reference  |
-| --- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
-| 1   | HOME                     | Got to Stratify home page                                                                                                             |            |
-| 2   | bd                       | close a buffer                                                                                                                        |
-| 3   | leader + cc/cu           | Comment and uncomment                                                                                                                 | deprecated |
-| 4   | Tab                      | navigate among buffers                                                                                                                |            |
-| 5   | g + d                    | Go to definition                                                                                                                      |            |
-| 6   | Ctrl + o                 | back from definition                                                                                                                  |            |
-| 7   | F1                       | show function helper                                                                                                                  |            |
-| 8   | Leader + ff              | fuzzy search for a given word                                                                                                         |
-| 1   | HOME                     | Go to Stratify home                                                                                                                   |            |
-| 2   | bd                       | close a buffer                                                                                                                        |            |
-| 3   | Leader + cc /cu          | Commend and uncommon                                                                                                                  |            |
-| 4   | Tab                      | Navigate between buffers                                                                                                              |            |
-| 5   | g + d                    | Go to definition                                                                                                                      |            |
-| 6   | CTRL + o                 | back from definition                                                                                                                  |            |
-| 7   | Fn + F1                  | Go to description of the given function (python tested)                                                                               |            |
-| 8   | Leader + ff              | Fuzzy search for a given word in your given directory                                                                                 |            |
-| 9   | FZF / FILES              | Command to search for a file                                                                                                          |            |
-| 10  | Leader + r               | Ranger                                                                                                                                |            |
-| 11  | Leader + t               | floating Terminal                                                                                                                     |            |
-| 12  | :CocList marketplace     | Search for a a plug for coc, use CTRL + o to go to Normal mode then use Space to multi-selection then tab to finish and use (install) |            |
-| 13  | :CocCommand python.+TAB  | you can find setup for formatter, `linter`, ..etc                                                                                      |            |
-| 14  | :CocConfig               | To see the configuration of COC                                                                                                       |            |
-| 16  | :Rg                      | Regular expression searching for a word in terminal                                                                                   |            |
-| 17  | :%s/\<Plug\>/Plugin/gc   | Regular Expression searching specific word exclusively and as for change one by one                                                   |            |
-| 18  | Using coc-telescope      | you have (leader + ff , leader + fg)                                                                                                  |            |
-| 19  | using MYReg              | For regular expression search                                                                                                         |            |
-| 20  | :leader + m              | for markdown viewer (using glow)                                                                                                      |
-| 21  | :leader + s              | Save and source your init.vim file                                                                                                    |            |
-| 22  | :leader + ,              | To open the configuration file (init.vim)                                                                                             |            |
-| 23  | :leader + e              | Open coc-explorer better than nerdTree                                                                                                |            |
-| 24  | :leader + u              | UndoTree                                                                                                                              |            |
-| 25  | using F5                 | Open `ipython` and run the script you have                                                                                            |            |
-| 26  | :index                   | To see all key maps                                                                                                                   |            |
-| 27  | F1                       | See hover of definition with coc                                                                                                      |            |
-| 28  | d0 or d^                 | Delete to beginning of line from the cursor position                                                                                  |            |
-| 29  | dgg and dG               | delete to beginning of page and end of page from the position of your cursor.                                                         |            |
-| 30  | leader + c +r then i + w | i + w means inside word, this will allow to replace a word that copied in the register with a given word (you need a plugin)          |            |
-| 31  | v + i + w then p         | Achieve the same thing but not repeated like the one above                                                                            |            |
-| 32  | c + s + " + '            | this will work as change the surrender (you need a plugin)                                                                            |            |
-| 33  | :Markdown_preview        | Toggle markdown using browser (not like glow)                                                                                         |
-| 34  | double ""                | in normal mode (double ") will give us the terminal of the register                                                                   |
-| 35  | :SymbolOutlines          | Open the symbol-outline menu for fast coding movements                                                                                |
-| 36  | :Trouble                 | Code diagnostic with nice layouts                                                                                                     |
-| 37  | :Ctrl-\                  | open quick terminal written in lua super fast.                                                                                        |
-| 38  | ~                        | changing the letter (Capital to small letter)                                                                                         |
-| 39  | gr                       | replace with register yanking then paste (repeatable)                                                                                 |
-| 40  | gy                       | re-mapping to lsp-config for show references                                                                                          |
-| 41  | grr                      | form lspsaga replace the work with a given sentence.                                                                                  |            |
-| 42  | leader t+m               | `Activite` the table mode                                                                                                             |            |
-| 43  | leader b+n               | Open terminal horizontally                                                                                                            |            |
-| 44  | leader g d               | go to definition in nvim-lsp built-in, while (g d) will be using lspSaga                                                              |            |
-| 45  | g  h                     | hover with `lspsaga`, while F1 hover using `nvim-lsp` built-in.                                                                                    |
-| 46  | Neoformat -formatter     | Using the formatter with the nvim depending on the language server, (e.g., Lua: luastyla)                                                          |
-| 47  | shift+f                  | first highlight to get (:\`\<,\`\>)norm (**A** for end of lines, **I** for beginning of lines) adding the text you want               | https://www.youtube.com/watch?v=gccGjwTZA7k
----
+| T   | Command                     | Descriptions                                                                                                                          | Reference                                   |
+| --- | ------------------------    | ------------------------------------------------------------------------------------------------------------------------------------- | ----------                                  |
+| 1   | HOME                        | Got to Stratify home page                                                                                                             |                                             |
+| 2   | bd                          | close a buffer                                                                                                                        |
+| 3   | leader + cc/cu              | Comment and uncomment                                                                                                                 | deprecated                                  |
+| 4   | Tab                         | navigate among buffers                                                                                                                |                                             |
+| 5   | g + d                       | Go to definition                                                                                                                      |                                             |
+| 6   | Ctrl + o                    | back from definition                                                                                                                  |                                             |
+| 7   | F1                          | show function helper                                                                                                                  |                                             |
+| 8   | Leader + ff                 | fuzzy search for a given word                                                                                                         |
+| 1   | HOME                        | Go to Stratify home                                                                                                                   |                                             |
+| 2   | bd                          | close a buffer                                                                                                                        |                                             |
+| 3   | Leader + cc /cu             | Commend and uncommon                                                                                                                  |                                             |
+| 4   | Tab                         | Navigate between buffers                                                                                                              |                                             |
+| 5   | g + d                       | Go to definition                                                                                                                      |                                             |
+| 6   | CTRL + o                    | back from definition                                                                                                                  |                                             |
+| 7   | Fn + F1                     | Go to description of the given function (python tested)                                                                               |                                             |
+| 8   | Leader + ff                 | Fuzzy search for a given word in your given directory                                                                                 |                                             |
+| 9   | FZF / FILES                 | Command to search for a file                                                                                                          |                                             |
+| 10  | Leader + r                  | Ranger                                                                                                                                |                                             |
+| 11  | Leader + t                  | floating Terminal                                                                                                                     |                                             |
+| 12  | :CocList marketplace        | Search for a a plug for coc, use CTRL + o to go to Normal mode then use Space to multi-selection then tab to finish and use (install) |                                             |
+| 13  | :CocCommand python.+TAB     | you can find setup for formatter, `linter`, ..etc                                                                                     |                                             |
+| 14  | :CocConfig                  | To see the configuration of COC                                                                                                       |                                             |
+| 16  | :Rg                         | Regular expression searching for a word in terminal                                                                                   |                                             |
+| 17  | :%s/\<Plug\>/Plugin/gc      | Regular Expression searching specific word exclusively and as for change one by one                                                   |                                             |
+| 18  | Using coc-telescope         | you have (leader + ff , leader + fg)                                                                                                  |                                             |
+| 19  | using MYReg                 | For regular expression search                                                                                                         |                                             |
+| 20  | :leader + m                 | for markdown viewer (using glow)                                                                                                      |
+| 21  | :leader + s                 | Save and source your init.vim file                                                                                                    |                                             |
+| 22  | :leader + ,                 | To open the configuration file (init.vim)                                                                                             |                                             |
+| 23  | :leader + e                 | Open coc-explorer better than nerdTree                                                                                                |                                             |
+| 24  | :leader + u                 | UndoTree                                                                                                                              |                                             |
+| 25  | using F5                    | Open `ipython` and run the script you have                                                                                            |                                             |
+| 26  | :index                      | To see all key maps                                                                                                                   |                                             |
+| 27  | F1                          | See hover of definition with coc                                                                                                      |                                             |
+| 28  | d0 or d^                    | Delete to beginning of line from the cursor position                                                                                  |                                             |
+| 29  | dgg and dG                  | delete to beginning of page and end of page from the position of your cursor.                                                         |                                             |
+| 30  | leader + c +r then i + w    | i + w means inside word, this will allow to replace a word that copied in the register with a given word (you need a plugin)          |                                             |
+| 31  | v + i + w then p            | Achieve the same thing but not repeated like the one above                                                                            |                                             |
+| 32  | c + s + " + '               | this will work as change the surrender (you need a plugin)                                                                            |                                             |
+| 33  | :Markdown_preview           | Toggle markdown using browser (not like glow)                                                                                         |
+| 34  | double ""                   | in normal mode (double ") will give us the terminal of the register                                                                   |
+| 35  | :SymbolOutlines             | Open the symbol-outline menu for fast coding movements                                                                                |
+| 36  | :Trouble                    | Code diagnostic with nice layouts                                                                                                     |
+| 37  | :Ctrl-\                     | open quick terminal written in lua super fast.                                                                                        |
+| 38  | ~                           | changing the letter (Capital to small letter)                                                                                         |
+| 39  | gr                          | replace with register yanking then paste (repeatable)                                                                                 |
+| 40  | gy                          | re-mapping to lsp-config for show references                                                                                          |
+| 41  | grr                         | form lspsaga replace the work with a given sentence.                                                                                  |                                             |
+| 42  | leader t+m                  | `Activite` the table mode                                                                                                             |                                             |
+| 43  | leader b+n                  | Open terminal horizontally                                                                                                            |                                             |
+| 44  | leader g d                  | go to definition in nvim-lsp built-in, while (g d) will be using lspSaga                                                              |                                             |
+| 45  | g  h                        | hover with `lspsaga`, while F1 hover using `nvim-lsp` built-in.                                                                       |
+| 46  | Neoformat -formatter        | Using the formatter with the nvim depending on the language server, (e.g., Lua: luastyla)                                             |
+| 47  | shift+f                     | first highlight to get (:\`\<,\`\>)norm (**A** for end of lines, **I** for beginning of lines) adding the text you want               | https://www.youtube.com/watch?v=gccGjwTZA7k |
+| 48  | \:setfiletype \<file_type\> | Select to open given unknown file with treesitter similar to a given file                                                             |
 
 ### Requirements
 The requirements that I am looking for in my IDE are: **note**, check sign means already implemented.

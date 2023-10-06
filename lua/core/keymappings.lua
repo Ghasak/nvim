@@ -362,3 +362,10 @@ vim.api.nvim_set_keymap("n", "<leader><leader>p", ":lua open_session()<CR>",
 ---- *****************************************************************************************
 vim.keymap.set("x", "/", "<Esc>/\\%V")
 
+---- *****************************************************************************************
+----                    Switching between Sessions (Projects)
+----          check the function _G.open_session at special_color_highlight.lua
+---- *****************************************************************************************
+-- setup mapping to call :LazyGit
+vim.api.nvim_set_keymap("n", "<leader>gg", ":LazyGit<CR>",
+                        {noremap = true, silent = true})
