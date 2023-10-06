@@ -1,5 +1,73 @@
 #  Neovim Configurations File (build v.01)
 
+<!-- vim-markdown-toc GitLab -->
+
+* [What is new?](#what-is-new)
+    * [Nvim updates in nutshell](#nvim-updates-in-nutshell)
+    * [About Branch and GitHub](#about-branch-and-github)
+* [Update history](#update-history)
+* [Contents](#contents)
+* [Debugging Support](#debugging-support)
+* [Features to be developed](#features-to-be-developed)
+    * [Implement OpenAI](#implement-openai)
+    * [Implement GitHub Copilot](#implement-github-copilot)
+    * [Implementation of Remote Server IDE](#implementation-of-remote-server-ide)
+        * [General notes](#general-notes)
+        * [DAILY COMMANDS](#daily-commands)
+    * [Requirements](#requirements)
+    * [To do](#to-do)
+    * [Setup Lua, that already I transfer from previous vim with coc-setting.](#setup-lua-that-already-i-transfer-from-previous-vim-with-coc-setting)
+        * [Things to be considered](#things-to-be-considered)
+        * [Setup packer](#setup-packer)
+* [Building Nvim from Scratch requires:](#building-nvim-from-scratch-requires)
+* [Useful information](#useful-information)
+    * [Execute lua in cmd](#execute-lua-in-cmd)
+* [Some useful API functions](#some-useful-api-functions)
+* [Testing the speed of neovim launching time.](#testing-the-speed-of-neovim-launching-time)
+* [Creating file or directory in vim without plugin](#creating-file-or-directory-in-vim-without-plugin)
+    * [Formula](#formula)
+* [Changing the nvim-clap theme color](#changing-the-nvim-clap-theme-color)
+* [Checking my key-mapping with](#checking-my-key-mapping-with)
+* [Spell checking](#spell-checking)
+* [Fuzzy Finding](#fuzzy-finding)
+* [Commands](#commands)
+* [How to close your windows without affecting other buffers](#how-to-close-your-windows-without-affecting-other-buffers)
+* [Highlight words in vim with (f/t/F/T)](#highlight-words-in-vim-with-ftft)
+* [Performance and optimization](#performance-and-optimization)
+* [Table mode in nvim](#table-mode-in-nvim)
+    * [How it works](#how-it-works)
+* [Special Language Servers Configurations.](#special-language-servers-configurations)
+    * [Julia LSP](#julia-lsp)
+    * [Adding auto-formatter for shell-scripts or bash](#adding-auto-formatter-for-shell-scripts-or-bash)
+    * [How to capitalize and deCapitalize in NeoVim](#how-to-capitalize-and-decapitalize-in-neovim)
+* [Tips and tricks in NVIM](#tips-and-tricks-in-nvim)
+    * [Auto-complete](#auto-complete)
+    * [Buffers](#buffers)
+    * [Recordings](#recordings)
+    * [Norm command](#norm-command)
+        * [Adding to end or beginning of lines](#adding-to-end-or-beginning-of-lines)
+* [Executing CLI commands (from LINUX)](#executing-cli-commands-from-linux)
+* [Form multi-lines into one-line single line in vim](#form-multi-lines-into-one-line-single-line-in-vim)
+* [Do the opposite, form one-line to multi-lines](#do-the-opposite-form-one-line-to-multi-lines)
+* [What the meaning of visual-mode](#what-the-meaning-of-visual-mode)
+* [Open Website from nvim, or go to file](#open-website-from-nvim-or-go-to-file)
+* [Encrypting files with :X](#encrypting-files-with-x)
+* [Spell Checking](#spell-checking-1)
+* [Arithmetic Expression](#arithmetic-expression)
+    * [Increment and decrements](#increment-and-decrements)
+    * [Execution commands](#execution-commands)
+    * [Combine Commands](#combine-commands)
+* [How to increment a list (most elegant way)](#how-to-increment-a-list-most-elegant-way)
+    * [More example](#more-example)
+* [How to capitalize first letter in many lines](#how-to-capitalize-first-letter-in-many-lines)
+* [How to select or append from position to end of multi-lines](#how-to-select-or-append-from-position-to-end-of-multi-lines)
+* [Language Server](#language-server)
+    * [Adding Latex language server](#adding-latex-language-server)
+* [Troubleshooting, Bugs and Errors](#troubleshooting-bugs-and-errors)
+* [References](#references)
+
+<!-- vim-markdown-toc -->
+
 ## What is new?
 
 As `nvim` is now updated to version `0.7` with a stable release. The plugin
@@ -112,13 +180,13 @@ with `COC and COC-LSP` and my current one with `nvim-lsp`.
 | T   | Command                     | Descriptions                                                                                                                          | Reference                                   |
 | --- | ------------------------    | ------------------------------------------------------------------------------------------------------------------------------------- | ----------                                  |
 | 1   | HOME                        | Got to Stratify home page                                                                                                             |                                             |
-| 2   | bd                          | close a buffer                                                                                                                        |
+| 2   | bd                          | close a buffer                                                                                                                        |                                             |
 | 3   | leader + cc/cu              | Comment and uncomment                                                                                                                 | deprecated                                  |
 | 4   | Tab                         | navigate among buffers                                                                                                                |                                             |
 | 5   | g + d                       | Go to definition                                                                                                                      |                                             |
 | 6   | Ctrl + o                    | back from definition                                                                                                                  |                                             |
 | 7   | F1                          | show function helper                                                                                                                  |                                             |
-| 8   | Leader + ff                 | fuzzy search for a given word                                                                                                         |
+| 8   | Leader + ff                 | fuzzy search for a given word                                                                                                         |                                             |
 | 1   | HOME                        | Go to Stratify home                                                                                                                   |                                             |
 | 2   | bd                          | close a buffer                                                                                                                        |                                             |
 | 3   | Leader + cc /cu             | Commend and uncommon                                                                                                                  |                                             |
@@ -137,7 +205,7 @@ with `COC and COC-LSP` and my current one with `nvim-lsp`.
 | 17  | :%s/\<Plug\>/Plugin/gc      | Regular Expression searching specific word exclusively and as for change one by one                                                   |                                             |
 | 18  | Using coc-telescope         | you have (leader + ff , leader + fg)                                                                                                  |                                             |
 | 19  | using MYReg                 | For regular expression search                                                                                                         |                                             |
-| 20  | :leader + m                 | for markdown viewer (using glow)                                                                                                      |
+| 20  | :leader + m                 | for markdown viewer (using glow)                                                                                                      |                                             |
 | 21  | :leader + s                 | Save and source your init.vim file                                                                                                    |                                             |
 | 22  | :leader + ,                 | To open the configuration file (init.vim)                                                                                             |                                             |
 | 23  | :leader + e                 | Open coc-explorer better than nerdTree                                                                                                |                                             |
@@ -150,20 +218,20 @@ with `COC and COC-LSP` and my current one with `nvim-lsp`.
 | 30  | leader + c +r then i + w    | i + w means inside word, this will allow to replace a word that copied in the register with a given word (you need a plugin)          |                                             |
 | 31  | v + i + w then p            | Achieve the same thing but not repeated like the one above                                                                            |                                             |
 | 32  | c + s + " + '               | this will work as change the surrender (you need a plugin)                                                                            |                                             |
-| 33  | :Markdown_preview           | Toggle markdown using browser (not like glow)                                                                                         |
-| 34  | double ""                   | in normal mode (double ") will give us the terminal of the register                                                                   |
-| 35  | :SymbolOutlines             | Open the symbol-outline menu for fast coding movements                                                                                |
-| 36  | :Trouble                    | Code diagnostic with nice layouts                                                                                                     |
-| 37  | :Ctrl-\                     | open quick terminal written in lua super fast.                                                                                        |
-| 38  | ~                           | changing the letter (Capital to small letter)                                                                                         |
-| 39  | gr                          | replace with register yanking then paste (repeatable)                                                                                 |
-| 40  | gy                          | re-mapping to lsp-config for show references                                                                                          |
+| 33  | :Markdown_preview           | Toggle markdown using browser (not like glow)                                                                                         |                                             |
+| 34  | double ""                   | in normal mode (double ") will give us the terminal of the register                                                                   |                                             |
+| 35  | :SymbolOutlines             | Open the symbol-outline menu for fast coding movements                                                                                |                                             |
+| 36  | :Trouble                    | Code diagnostic with nice layouts                                                                                                     |                                             |
+| 37  | :Ctrl-\                     | open quick terminal written in lua super fast.                                                                                        |                                             |
+| 38  | ~                           | changing the letter (Capital to small letter)                                                                                         |                                             |
+| 39  | gr                          | replace with register yanking then paste (repeatable)                                                                                 |                                             |
+| 40  | gy                          | re-mapping to lsp-config for show references                                                                                          |                                             |
 | 41  | grr                         | form lspsaga replace the work with a given sentence.                                                                                  |                                             |
 | 42  | leader t+m                  | `Activite` the table mode                                                                                                             |                                             |
 | 43  | leader b+n                  | Open terminal horizontally                                                                                                            |                                             |
 | 44  | leader g d                  | go to definition in nvim-lsp built-in, while (g d) will be using lspSaga                                                              |                                             |
-| 45  | g  h                        | hover with `lspsaga`, while F1 hover using `nvim-lsp` built-in.                                                                       |
-| 46  | Neoformat -formatter        | Using the formatter with the nvim depending on the language server, (e.g., Lua: luastyla)                                             |
+| 45  | g  h                        | hover with `lspsaga`, while F1 hover using `nvim-lsp` built-in.                                                                       |                                             |
+| 46  | Neoformat -formatter        | Using the formatter with the nvim depending on the language server, (e.g., Lua: luastyla)                                             |                                             |
 | 47  | shift+f                     | first highlight to get (:\`\<,\`\>)norm (**A** for end of lines, **I** for beginning of lines) adding the text you want               | https://www.youtube.com/watch?v=gccGjwTZA7k |
 | 48  | \:setfiletype \<file_type\> | Select to open given unknown file with treesitter similar to a given file                                                             |
 
@@ -261,8 +329,8 @@ cargo install stylua
 luarocks install --server=https://luarocks.org/dev luaformatter
 ```
 
-# Useful information
-## Execute lua in cmd
+## Useful information
+### Execute lua in cmd
 For example, to get the operation system name we can run
 ```shell
 :lua print(vim.ovim.loop.os_uname().sysname) <- this will return Darwin.
@@ -465,7 +533,7 @@ Using a plugin `vim-table-mode` to create a nice table, need to remember the fol
 
 - <leader> tm => is the trigger to the table in markdown format (\*.md)
 
-#### How it works
+### How it works
 
 1. Enter the first line, delimiting columns by the | symbol. The plugin reacts by inserting spaces between the text and the separator if you omit them:
 
@@ -487,9 +555,9 @@ Using a plugin `vim-table-mode` to create a nice table, need to remember the fol
 | Formulate the address first | For on the idea for | Create the right table in material_design_dark |
 | This could                  | How about the       | Working on the second objectives               |
 
-# Special Language Servers Configurations.
+## Special Language Servers Configurations.
 
-## Julia LSP
+### Julia LSP
 
 Installing the `Julia-lsp` needs, read from the references `Julia Language Reference`.
 
@@ -518,7 +586,7 @@ julia --project=/path/to/my/project -e 'using Pkg; Pkg.instantiate()'
 To install the `intractive REPL` of Julia with `jupyter` you can use, inside
 the `julia` REPL use `]` to access the `Pkg` the package manager of `nvim`.
 
-## Adding auto-formatter for shell-scripts or bash
+### Adding auto-formatter for shell-scripts or bash
 For using `NeoVim`, if the language server is `shell-lsp` for `bash` or `shell`, you can add the autoformatter similar to `lua` as following.
 1. Instal Go to your system
 2. Install using Go the auto-shell-formatter, `Neoformat` must see it that it is being installed to your default shell (`zsh`)
@@ -532,7 +600,7 @@ go install mvdan.cc/sh/v3/cmd/shfmt@latest
 shfmt -l -w script.sh
 ```
 
-## How to capitalize and deCapitalize in NeoVim
+### How to capitalize and deCapitalize in NeoVim
 
 ```shell
 Using the keybinding
@@ -545,7 +613,7 @@ g + U 3 w will do for 3 words a head and captilze each word.
 ```
 - [10 Advanced Vim Features You probably didn't know](https://www.youtube.com/watch?v=gccGjwTZA7k)
 
-# Tips and tricks in NVIM
+## Tips and tricks in NVIM
 The following tips and tricks are for heavy `nvim` usages
 ### Auto-complete
 editing `auto comoplete` can you use `Ctrl + p` or `Ctrl + n`
@@ -737,8 +805,9 @@ We can use the following steps:
 6. Type the text you want to append.
 7. Press Escape and the text will be appended across the selected lines.
 - [Vim Select the ends of multiple lines block mode ](https://stackoverflow.com/questions/10772598/vim-select-the-ends-of-multiple-lines-block-mode-but-where-the-ending-column-v)
-# Language Server
-## Adding Latex language server
+
+## Language Server
+### Adding Latex language server
 I have chosen the `latex:textlab` as my language sever for the latex to get all
 the features required to write in `latex`. Following the Steps
 
@@ -767,7 +836,7 @@ which is faster and dynamically update the PDF while typing.
 - [Sioyek pdf](https://sioyek.info), You need a cheat-sheet for `Sioyek`
 
 
-# Troubleshooting, Bugs and Errors
+## Troubleshooting, Bugs and Errors
 after running `nvim` it is a good pratice to use `:messages` or `:notifications` for debugging messages.
 1. Nvim 0.7
 - For`README.md` there was an issue can be solved using `:TSupdate`, follow here
