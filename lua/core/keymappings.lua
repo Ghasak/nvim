@@ -271,7 +271,10 @@ vim.api.nvim_set_keymap("n", "<leader>s", ":ASToggle<CR>", {})
 ---- *****************************************************************************************
 ----                   Auto-save plugin to save file every changes happen
 ---- *****************************************************************************************
-vim.api.nvim_set_keymap("n", "<leader>fr", ":Neoformat<CR>", {})
+vim.api.nvim_set_keymap("n", "<leader>fr", ":Neoformat<CR>",
+                        {noremap = true, silent = true})
+-- For Rust, if it is faild you can run (:!cargo fmt)
+-- Or using (:!rustfmt --edition=2021 src/main.rs)
 ---- *****************************************************************************************
 ----                   Auto-save plugin to save file every changes happen
 ---- *****************************************************************************************
