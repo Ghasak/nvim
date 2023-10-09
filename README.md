@@ -40,9 +40,10 @@
 ### V.0.9.2 Release Nvim
 
 - [x] This version has no issue in performance, I just included minor fixes for some libraries.
-  - `nvim-saga` now works flawlessly.
-  - `ranger` now can open in new buffer, support the icons and other features.
-  - `terminal`: Terminal now uses the `saga` package to open the new terminal.
+  - [x] `nvim-saga` now works flawlessly.
+  - [x] `ranger` now can open in new buffer, support the icons and other features.
+  - [x] `terminal`: Terminal now uses the `saga` package to open the new terminal.
+  - [x] `neoformat`: Fixed manually (locally) the `rust.vim` formatter by adding the `--edition`
 
 ### v.0.9.1 Release Nvim
 

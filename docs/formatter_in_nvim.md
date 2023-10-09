@@ -52,3 +52,12 @@ rustup component add rustfmt
 
 - Check the fix here `feat(rust): add global flag g:rustfmt_edition_opt #405`
   at - [global flat g:rustfmt_edition_opt](https://github.com/sbdchd/neoformat/pull/405)
+
+## None-ls
+
+This formatter is not working as I want, it has some difficulty to integrate it with the `configlsp.nvim`.
+
+## Conform
+
+This is my current formatter is greate, but I cannot make it works right out of
+the box. Check this plugin [here](https://github.com/stevearc/conform.nvim/blob/master/doc/recipes.md#format-command)
