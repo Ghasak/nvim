@@ -1,7 +1,7 @@
 return {
   {
     "ghasak/githubG.nvim",
-    cond = true,     -- load this plugin
+    cond = true, -- load this plugin
     priority = 1000, -- make sure to load this before all the other start plugins
     init = function()
       require("onedark").setup { style = "gdark" }
@@ -16,7 +16,7 @@ return {
   -- ==========================================================================
   -- 	                      Utilities for NVIM IDE Env
   -- ==========================================================================
-  { "nvim-lua/popup.nvim",   lazy = true }, -- An implementation of the Popup API from vim in Neovim
+  { "nvim-lua/popup.nvim", lazy = true }, -- An implementation of the Popup API from vim in Neovim
   { "nvim-lua/plenary.nvim", lazy = true },
   -- ==========================================================================
   -- 	                      Core Dependencies and Utilities
@@ -37,13 +37,13 @@ return {
         "nvim-treesitter/nvim-treesitter-textobjects",
         event = "InsertEnter",
       },
-      { "windwp/nvim-ts-autotag",                  event = "InsertEnter" },
+      { "windwp/nvim-ts-autotag", event = "InsertEnter" },
       {
         "JoosepAlviste/nvim-ts-context-commentstring",
         event = "InsertEnter",
       },
-      { "p00f/nvim-ts-rainbow",                    event = "BufReadPre" },
-      { "RRethy/nvim-treesitter-textsubjects",     event = "InsertEnter" },
+      { "p00f/nvim-ts-rainbow", event = "BufReadPre" },
+      { "RRethy/nvim-treesitter-textsubjects", event = "InsertEnter" },
       { "nvim-treesitter/nvim-treesitter-context", event = "InsertEnter" },
     },
   },
@@ -119,7 +119,7 @@ return {
       require("plugins.configs.myTerminal").setup()
     end,
   }, -- Using floating terminal
-  { "voldikss/vim-floaterm",      lazy = true,          cmd = { "FloatermToggle" } },
+  { "voldikss/vim-floaterm", lazy = true, cmd = { "FloatermToggle" } },
   -- Using Rnvim  <Ranger>
   {
     "kevinhwang91/rnvimr",
@@ -134,7 +134,7 @@ return {
   -- 	                      Programming Language Servers
   -- =========================================================================
   -- Rust lsp Enhancer
-  { "simrat39/rust-tools.nvim",    lazy = true, ft = "rust" },
+  { "simrat39/rust-tools.nvim", lazy = true, ft = "rust" },
   {
     "saecki/crates.nvim",
     lazy = true,
@@ -171,17 +171,13 @@ return {
     lazy = true,
     event = "InsertEnter",
 
-
-
     cmd = { "GenTocGitLab", "GenTocMarked" },
   }, -- Adding notification for nvim
   {
     "folke/neodev.nvim",
     ft = "lua",
 
-
-
-    event = "InsertEnter"
+    event = "InsertEnter",
   },
   -- lsp_signature.nvim
   {
@@ -196,9 +192,9 @@ return {
     end,
     dependencies = {
       { "nvim-treesitter/nvim-treesitter" }, -- optional
-      { "kyazdani42/nvim-web-devicons" },    -- optional
+      { "kyazdani42/nvim-web-devicons" }, -- optional
     },
-  },                                         -- lsp stuff
+  }, -- lsp stuff
   {
     "williamboman/mason.nvim",
     lazy = true,
@@ -332,17 +328,17 @@ return {
     end,
   },
   -- Using formatter (instead of null-lsp)
-  {"sbdchd/neoformat", event = "VeryLazy", lazy = true, cmd = "Neoformat"},
+  --{"sbdchd/neoformat", event = "VeryLazy", lazy = true, cmd = "Neoformat"},
   -- none-ls is also not working good, instead
   -- I will using conform
-  -- {
-  --   "stevearc/conform.nvim",
-  --   event = "VeryLazy",
-  --   config = function()
-  --     require("plugins.configs.myConform").config()
-  --   end,
-  --
-  -- },
+  {
+    "stevearc/conform.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    lazy = true,
+    config = function()
+      require("plugins.configs.myConform").config()
+    end,
+  },
   -- Context.vim: A vim plugin that shows the context of the currently visible buffer context.
   -- It's supposed to work on a wide range of file types, but is probably most suseful when looking at source code files.
   -- https://github.com/wellle/context.vim  {nvim already implemented this plugin in the lsp directly}
@@ -358,7 +354,7 @@ return {
   --     event = "VeryLazy",
   --     dependencies = "neovim/nvim-lspconfig"
   -- },
-  { "RishabhRD/popfix",        event = "InsertEnter" },
+  { "RishabhRD/popfix", event = "InsertEnter" },
   { "RishabhRD/nvim-cheat.sh", event = "InsertEnter" },
   -- ==========================================================================
   -- 	                    Aesthetic and UI Design
@@ -436,7 +432,7 @@ return {
   --       text = {spinner = "dots_negative", done = "歷"}
   --     })
   --   end})
-  { "ggandor/lightspeed.nvim",         lazy = true,          event = "InsertEnter" },
+  { "ggandor/lightspeed.nvim", lazy = true, event = "InsertEnter" },
   -- ===========================================================================
   --           Productivities and performance
   -- ===========================================================================
@@ -450,25 +446,25 @@ return {
       vim.g.CoolTotalMatches = 1
     end,
   }, -- Adding acceleration to the mouse for faster/smooth motion
-  { "rhysd/accelerated-jk",            lazy = true,          event = "VimEnter" },
+  { "rhysd/accelerated-jk", lazy = true, event = "VimEnter" },
   -- Deleting a given buffer without affecting
-  { "famiu/bufdelete.nvim",            lazy = true,          cmd = { "Bdelete" } },
-  { "vim-scripts/ReplaceWithRegister", lazy = true,          event = "InsertEnter" },
+  { "famiu/bufdelete.nvim", lazy = true, cmd = { "Bdelete" } },
+  { "vim-scripts/ReplaceWithRegister", lazy = true, event = "InsertEnter" },
   -- Better repeat (.) with nvim (from tpope)
   --  use({ "tpope/vim-repeat" })
 
   -- Better surrounding
-  { "tpope/vim-surround",              lazy = true,          event = "InsertEnter" },
+  { "tpope/vim-surround", lazy = true, event = "InsertEnter" },
 
   --  -- Development
   --  use({ "tpope/vim-dispatch" })
   --  use({ "tpope/vim-commentary" })
   --  use({ "tpope/vim-rhubarb", event = "VimEnter" })
-  { "tpope/vim-unimpaired",            event = "InsertEnter" },
+  { "tpope/vim-unimpaired", event = "InsertEnter" },
   --  use({ "tpope/vim-vinegar" })
   --  use({ "tpope/vim-sleuth" })
   -- Replace word with register
-  { "gennaro-tedesco/nvim-peekup",     event = "InsertEnter" },
+  { "gennaro-tedesco/nvim-peekup", event = "InsertEnter" },
   {
     "rainbowhxch/beacon.nvim",
     lazy = true,
@@ -512,13 +508,13 @@ return {
     event = "InsertEnter",
     -- keys = { [[<leader>d]] },
     dependencies = {
-      { "nvim-dap-virtual-text",             "nvim-dap-ui",        "nvim-dap-python" },
+      { "nvim-dap-virtual-text", "nvim-dap-ui", "nvim-dap-python" },
       -- {"DAPIkstall.nvim"},
-      { "theHamsta/nvim-dap-virtual-text",   event = "InsertEnter" },
-      { "rcarriga/nvim-dap-ui",              event = "InsertEnter" },
-      { "mfussenegger/nvim-dap-python",      event = "InsertEnter" },
+      { "theHamsta/nvim-dap-virtual-text", event = "InsertEnter" },
+      { "rcarriga/nvim-dap-ui", event = "InsertEnter" },
+      { "mfussenegger/nvim-dap-python", event = "InsertEnter" },
       { "nvim-telescope/telescope-dap.nvim", event = "InsertEnter" },
-      { "leoluz/nvim-dap-go",                event = "InsertEnter" },
+      { "leoluz/nvim-dap-go", event = "InsertEnter" },
       { "jbyuki/one-small-step-for-vimkind", event = "InsertEnter" },
     },
     config = function()
@@ -582,7 +578,7 @@ return {
         },
         popup_mappings = {
           scroll_down = "<c-d>", -- binding to scroll down inside the popup
-          scroll_up = "<c-u>",   -- binding to scroll up inside the popup
+          scroll_up = "<c-u>", -- binding to scroll up inside the popup
         },
         window = {
           border = "double", -- none/single/double/shadow
@@ -632,7 +628,7 @@ return {
   }, -- Git Diff
   {
     "sindrets/diffview.nvim",
-              dependencies = "nvim-lua/plenary.nvim",
+    dependencies = "nvim-lua/plenary.nvim",
     config = function()
       require "plugins.configs.myGitDiff"
     end,
