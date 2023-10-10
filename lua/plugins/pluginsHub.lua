@@ -96,14 +96,18 @@ return {
       -- It will open most output to a selection including, dap, gen.nvim (AI)
       -- https://github.com/nvim-telescope/telescope-ui-select.nvim
       { "nvim-telescope/telescope-ui-select.nvim", event = "InsertEnter" },
+      -- Enhance extension that offers intelligent prioritization
+      -- when selecting files from your editing history
+      -- https://github.com/nvim-telescope/telescope-frecency.nvim
+      {
+        "nvim-telescope/telescope-frecency.nvim",
+        event = "InsertEnter",
+        config = function()
+          require("telescope").load_extension "frecency"
+        end,
+        dependencies = { "kkharji/sqlite.lua" },
+      },
     },
-  },
-  {
-    "nvim-telescope/telescope-frecency.nvim",
-    config = function()
-      require("telescope").load_extension "frecency"
-    end,
-    dependencies = { "kkharji/sqlite.lua" },
   },
 
   -- nvim-tree
@@ -679,7 +683,7 @@ return {
   {
     "kdheepak/lazygit.nvim",
     event = "InsertEnter",
-    cmd ={"LazyGit"},
+    cmd = { "LazyGit" },
     -- optional for floating window border decoration
     dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
     config = function()
