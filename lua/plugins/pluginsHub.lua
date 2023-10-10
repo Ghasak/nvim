@@ -90,14 +90,12 @@ return {
         -- https://github.com/nvim-telescope/telescope-fzf-native.nvim
         "nvim-telescope/telescope-fzf-native.nvim",
         build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
-        event = "InsertEnter"
+        event = "InsertEnter",
       },
       -- This is ui for showing menu for io.popen
       -- It will open most output to a selection including, dap, gen.nvim (AI)
       -- https://github.com/nvim-telescope/telescope-ui-select.nvim
-      { "nvim-telescope/telescope-ui-select.nvim",
-        event = "InsertEnter"
-      },
+      { "nvim-telescope/telescope-ui-select.nvim", event = "InsertEnter" },
     },
   },
   {
@@ -681,8 +679,12 @@ return {
   {
     "kdheepak/lazygit.nvim",
     event = "InsertEnter",
+    cmd ={"LazyGit"},
     -- optional for floating window border decoration
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
+    config = function()
+      require("telescope").load_extension "lazygit"
+    end,
   },
 
   -- ===========================================================================
