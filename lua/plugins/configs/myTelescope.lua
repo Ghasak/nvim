@@ -4,71 +4,61 @@ local M = {}
 local map = function(op, outer)
   outer = outer or { silent = true, noremap = true }
   return function(lhs, rhs, opts)
-
     if type(lhs) ~= "table" then
       lhs = { lhs }
     end
 
-    opts = vim.tbl_extend("force",
-      outer,
-      opts or {}
-    )
+    opts = vim.tbl_extend("force", outer, opts or {})
 
     for _, v in pairs(lhs) do
       vim.keymap.set(op or "n", v, rhs, opts)
     end
-
   end
 end
 
-vim.g.nmap = map("n")
-vim.g.imap = map("i")
-vim.g.vmap = map("v")
-vim.g.tmap = map("t")
+vim.g.nmap = map "n"
+vim.g.imap = map "i"
+vim.g.vmap = map "v"
+vim.g.tmap = map "t"
 
 -- Will be loaded
-local telescope = require("telescope")
-local builtin = require("telescope.builtin")
-local actions = require("telescope.actions")
-local themes = require("telescope.themes")
-
+local telescope = require "telescope"
+local builtin = require "telescope.builtin"
+local actions = require "telescope.actions"
+local themes = require "telescope.themes"
 
 -- Allow to open help files in bigger sized window
 -- read here: https://stackoverflow.com/questions/4687009/opening-help-in-a-full-window
-vim.cmd([[
+vim.cmd [[
 set helpheight=80
-  ]])
-
-
+  ]]
 
 M.setup = function()
-  local ivy = themes.get_ivy({
-    show_untracked = true
-  })
+  local ivy = themes.get_ivy {
+    show_untracked = true,
+  }
 
   vim.g.nmap("<leader>ff", function()
     -- if not pcall(builtin.git_files, ivy) then
     --     builtin.find_files(themes.get_ivy({ no_ignore = true }))
     -- end
-    builtin.find_files({ sorter = require('telescope.sorters').get_generic_fuzzy_sorter({}) })
+    builtin.find_files { sorter = require("telescope.sorters").get_generic_fuzzy_sorter {} }
   end)
 
   vim.g.nmap("<leader>fg", function()
     builtin.live_grep()
   end)
 
-  vim.g.nmap("<leader>fb",
-    function()
-      builtin.buffers(themes.get_dropdown({
-        previewer = false
-      }))
-    end)
+  vim.g.nmap("<leader>fb", function()
+    builtin.buffers(themes.get_dropdown {
+      previewer = false,
+    })
+  end)
 
   vim.g.nmap("<leader>fh", function()
     -- builtin.help_tags(ivy)
     --builtin.help_tags({ sorter = require('telescope.sorters').get_generic_fuzzy_sorter({}) })
-    builtin.help_tags({
-    })
+    builtin.help_tags {}
   end)
 
   vim.g.nmap("<leader>fp", function()
@@ -79,14 +69,13 @@ M.setup = function()
     builtin.colorscheme(ivy)
   end)
 
-  vim.keymap.set('n', ';e', function()
+  vim.keymap.set("n", ";e", function()
     builtin.diagnostics()
   end)
-
 end
 
 M.config = function()
-  telescope.setup({
+  telescope.setup {
     defaults = {
       vimgrep_arguments = {
         "rg",
@@ -98,14 +87,21 @@ M.config = function()
         "--smart-case",
       },
       borderchars = {
-        "═", "║","═","║","╔", "╗", "╝",  "╚",
+        "═",
+        "║",
+        "═",
+        "║",
+        "╔",
+        "╗",
+        "╝",
+        "╚",
         --"╭", "─", "╮", "│", "╯", "─", "╰", "│"
         --  "▛", "▀", "▜", "▐", "▟", "▄", "▙", "▌"
       },
 
       preview = {
         check_mine_type = false,
-        timeout = 100
+        timeout = 100,
       },
       file_ignore_patterns = { ".git/" },
 
@@ -134,12 +130,12 @@ M.config = function()
         i = {
           ["<c-k>"] = actions.move_selection_previous,
           ["<c-j>"] = actions.move_selection_next,
-          ['<c-d>'] = actions.delete_buffer
+          ["<c-d>"] = actions.delete_buffer,
         },
         n = {
-          ["<Esc>"] = actions.close
-        }
-      }
+          ["<Esc>"] = actions.close,
+        },
+      },
     },
     set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
     file_previewer = require("telescope.previewers").vim_buffer_cat.new,
@@ -148,23 +144,28 @@ M.config = function()
 
     dynamic_preview_title = true,
     extensions = {
+      ["ui-select"] = {
+        require("telescope.themes").get_dropdown {
+          -- even more opts
+        },
+      },
       fzf = {
         fuzzy = true,
         override_generic_sorter = true,
         override_file_sorter = true,
-        case_mode = "smart_case"
+        case_mode = "smart_case",
       },
       project = {
-        hidden_files = true
-      }
+        hidden_files = true,
+      },
     },
-  })
+  }
 
   --telescope.load_extension('project')
-  --telescope.load_extension("fzf")
+  telescope.load_extension("fzf")
+  telescope.load_extension "ui-select"
 
   M.setup()
 end
 
 return M
-

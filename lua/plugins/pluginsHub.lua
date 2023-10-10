@@ -82,7 +82,30 @@ return {
     config = function()
       require("plugins.configs.myTelescope").config()
     end,
-  }, -- nvim-tree
+    -- Dependencies are for the telescope extensions, check last segement of the telescope.
+    dependencies = {
+
+      {
+        -- This native loading fzf written in C
+        -- https://github.com/nvim-telescope/telescope-fzf-native.nvim
+        "nvim-telescope/telescope-fzf-native.nvim",
+        build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+      },
+      -- This is ui for showing menu for io.popen
+      -- It will open most output to a selection including, dap, gen.nvim (AI)
+      -- https://github.com/nvim-telescope/telescope-ui-select.nvim
+      { "nvim-telescope/telescope-ui-select.nvim" },
+    },
+  },
+  {
+    "nvim-telescope/telescope-frecency.nvim",
+    config = function()
+      require("telescope").load_extension "frecency"
+    end,
+    dependencies = { "kkharji/sqlite.lua" },
+  },
+
+  -- nvim-tree
   {
     "kyazdani42/nvim-tree.lua",
     lazy = true,
@@ -433,6 +456,16 @@ return {
   --     })
   --   end})
   { "ggandor/lightspeed.nvim", lazy = true, event = "InsertEnter" },
+
+  {
+    "VonHeikemen/fine-cmdline.nvim",
+    event = "VeryLazy",
+    cmd = "FineTerm",
+    dependencies = {
+      { "MunifTanjim/nui.nvim" },
+    },
+  },
+
   -- ===========================================================================
   --           Productivities and performance
   -- ===========================================================================
@@ -644,5 +677,21 @@ return {
     event = "InsertEnter",
     -- optional for floating window border decoration
     dependencies = { "nvim-lua/plenary.nvim" },
+  },
+
+  -- ===========================================================================
+  --                           AI Developement
+  -- ===========================================================================
+  {
+    "David-Kunz/gen.nvim",
+    event = { "InsertEnter" },
+    lazy = true,
+    cmd = { "Gen" },
+    config = function()
+      require("gen").prompts["Make_Style"] = {
+        prompt = "Transform the following text into the style of $input1: $text",
+        replace = true,
+      }
+    end,
   },
 }

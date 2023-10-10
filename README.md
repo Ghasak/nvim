@@ -5,8 +5,8 @@
 * [ChangingLog](#changinglog)
     * [V.0.9.2 Release Nvim](#v.0.9.2-release-nvim)
     * [v.0.9.1 Release Nvim](#v.0.9.1-release-nvim)
-    * [v.1.2.1 Release Nvim 0.9 with Lazy](#v.1.2.1-release-nvim-0.9-with-lazy)
-    * [Update release Nvim-workflow v0.1](#update-release-nvim-workflow-v0.1)
+    * [v.0.9.0 Release Nvim 0.9 with Lazy](#v.0.9.0-release-nvim-0.9-with-lazy)
+    * [v.0.8.0 Update release Nvim-workflow v0.1](#v.0.8.0-update-release-nvim-workflow-v0.1)
 * [Nvim Workflow](#nvim-workflow)
     * [Shortcuts](#shortcuts)
 * [Workflow notes](#workflow-notes)
@@ -43,13 +43,14 @@
   - [x] `nvim-saga` now works flawlessly.
   - [x] `ranger` now can open in new buffer, support the icons and other features.
   - [x] `terminal`: Terminal now uses the `saga` package to open the new terminal.
-  - [x] `neoformat`: Fixed manually (locally) the `rust.vim` formatter by adding the `--edition`
+  - [x] `conform`: Added formatter for both `rust` and `R` customized.
+  - [x] `gen.nvim`; Added AI with LLM language models support - model are locally installed.
 
 ### v.0.9.1 Release Nvim
 
 - [x] The following major realse shows a bit longer time to trigger the `nvim`.
 
-### v.1.2.1 Release Nvim 0.9 with Lazy
+### v.0.9.0 Release Nvim 0.9 with Lazy
 
 - [x] Working on the `nvim 0.9` modern APIs.
 - [x] The current version works under `nvim`
@@ -66,7 +67,7 @@
       the variable [check here](./docs/debugging_adapgers.md).
 - [x] adding more advanced topic here.
 
-### Update release Nvim-workflow v0.1
+### v.0.8.0 Update release Nvim-workflow v0.1
 
 As `nvim` is now updated to version `0.8` with a stable release. Several
 deprecated `3rd-plugins` and `APIs`. I have optimized the startup time and got
@@ -563,9 +564,10 @@ end
 
 ## UNDERSTANDING THE COLOR
 
-In `nvim-lua` configurations there are basically three layers that control the
-`color` of each `group`. `group` colors are the one defined for specific action
-in `nvim` such as: digit, tab, normal, background ..etc. These layers are:
+In `nvim-lua` configurations, there are essentially three layers that control
+the `color` of each `group`. Group colors refer to those defined for specific
+actions in `nvim`, such as digits, tabs, normal mode, and backgrounds, among
+others. These layers include:
 
 - A. Default Layer (this will be native to the color-scheme that you select.
   (mostly the tree-sitter parser colors are included)
