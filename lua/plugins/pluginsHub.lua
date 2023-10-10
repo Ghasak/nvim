@@ -90,11 +90,14 @@ return {
         -- https://github.com/nvim-telescope/telescope-fzf-native.nvim
         "nvim-telescope/telescope-fzf-native.nvim",
         build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+        event = "InsertEnter"
       },
       -- This is ui for showing menu for io.popen
       -- It will open most output to a selection including, dap, gen.nvim (AI)
       -- https://github.com/nvim-telescope/telescope-ui-select.nvim
-      { "nvim-telescope/telescope-ui-select.nvim" },
+      { "nvim-telescope/telescope-ui-select.nvim",
+        event = "InsertEnter"
+      },
     },
   },
   {
@@ -459,8 +462,11 @@ return {
 
   {
     "VonHeikemen/fine-cmdline.nvim",
-    event = "VeryLazy",
+    event = "CmdwinEnter",
     cmd = "FineTerm",
+    config = function()
+      require("plugins.configs.myFineCmdLineFloating").config()
+    end,
     dependencies = {
       { "MunifTanjim/nui.nvim" },
     },
