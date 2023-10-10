@@ -3,10 +3,10 @@
 <!-- vim-markdown-toc GitLab -->
 
 * [ChangeLog](#changelog)
-    * [Formatter plugin types](#formatter-plugin-types)
-        * [NeoFormat](#neoformat)
-        * [None-ls](#none-ls)
-        * [Conform](#conform)
+* [Formatter plugin types](#formatter-plugin-types)
+    * [NeoFormat](#neoformat)
+    * [None-ls](#none-ls)
+    * [Conform.nvim](#conformnvim)
 * [Languages specific](#languages-specific)
     * [RScript/R language](#rscriptr-language)
 
@@ -26,9 +26,9 @@
     - Now it support all my daily usages, and still some of them are not
       defined yet.
 
-### Formatter plugin types
+## Formatter plugin types
 
-#### NeoFormat
+### NeoFormat
 
 Current problem with the `rustfmt`, which based on the `toolchain` of Rust, the
 `rustc` foramt the old version of rust by defualt which support the
@@ -86,7 +86,7 @@ rustup component add rustfmt
 - Check the fix here `feat(rust): add global flag g:rustfmt_edition_opt #405`
   at - [global flat g:rustfmt_edition_opt](https://github.com/sbdchd/neoformat/pull/405)
 
-#### None-ls
+### None-ls
 
 This formatter is not working as I want, it has some difficulty to integrate it
 with the `configlsp.nvim`. The plugin is a shift from `null-ls` by the author
@@ -104,7 +104,7 @@ use {
 
 ```
 
-#### Conform
+### Conform.nvim
 
 This is my current formatter is greate, It supports all the languages and I use it as my daily drive.
 I make it works right out of the box. Check this plugin
