@@ -1,4 +1,5 @@
 # Helper fnction
+
 The following function supposes to detect if the list of packages are altered
 then the packer.nvim will be trigger automatically. It certainly don't need, as
 we have already implmentations in `nvim v.0.8`.
@@ -66,4 +67,5 @@ end
 ```
 
 ## REFERENCES
+
 - [nvim with lua](https://dpaste.org/NN2Tu/slim#L1,2,4,8,11,13,22,28,46,49,50,54)

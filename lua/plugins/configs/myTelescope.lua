@@ -37,12 +37,15 @@ M.setup = function()
   local ivy = themes.get_ivy {
     show_untracked = true,
   }
-
   vim.g.nmap("<leader>ff", function()
     -- if not pcall(builtin.git_files, ivy) then
-    --     builtin.find_files(themes.get_ivy({ no_ignore = true }))
+    --   builtin.find_files(themes.get_ivy { no_ignore = true })
     -- end
     builtin.find_files { sorter = require("telescope.sorters").get_generic_fuzzy_sorter {} }
+  end)
+
+  vim.g.nmap("<leader>fv", function()
+    telescope.extensions.frecency.frecency { sorter = require("telescope.sorters").get_generic_fuzzy_sorter {} }
   end)
 
   vim.g.nmap("<leader>fg", function()
@@ -61,6 +64,11 @@ M.setup = function()
     builtin.help_tags {}
   end)
 
+  vim.g.nmap("<leader>fy", function()
+    -- builtin.help_tags(ivy)
+    --builtin.help_tags({ sorter = require('telescope.sorters').get_generic_fuzzy_sorter({}) })
+    telescope.extensions.yank_history.yank_history {}
+  end)
   vim.g.nmap("<leader>fp", function()
     telescope.extensions.project.project {}
   end)
@@ -77,6 +85,15 @@ end
 M.config = function()
   telescope.setup {
     defaults = {
+      find_command = {
+        "fd",
+        ".",
+        "--type",
+        "file",
+        "--hidden",
+        "--strip-cwd-prefix",
+      },
+
       vimgrep_arguments = {
         "rg",
         "--color=never",
@@ -143,6 +160,21 @@ M.config = function()
     qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
 
     dynamic_preview_title = true,
+    pickers = {
+      find_files = {
+        find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
+
+        -- find_command = {
+        --   "fd",
+        --   ".",
+        --   "--type",
+        --   "file",
+        --   "--hidden",
+        --   "--strip-cwd-prefix",
+        -- },
+      },
+    },
+
     extensions = {
       ["ui-select"] = {
         require("telescope.themes").get_dropdown {
@@ -158,6 +190,23 @@ M.config = function()
       project = {
         hidden_files = true,
       },
+      frecency = {
+        --db_root = "/home/my_username/path/to/db_root",
+        show_scores = false,
+        show_unindexed = true,
+        ignore_patterns = { "*.git/*", "*/tmp/*" },
+        disable_devicons = false,
+      },
+      yank_history = {
+        picker = {
+          select = {
+            action = nil, -- nil to use default put action
+          },
+          telescope = {
+            mappings = nil, -- nil to use default mappings
+          },
+        },
+      },
     },
   }
 
@@ -166,8 +215,10 @@ M.config = function()
   telescope.load_extension "ui-select"
   telescope.load_extension "frecency"
   telescope.load_extension "lazygit"
-
-  M.setup()
+  telescope.load_extension "dap"
+  telescope.load_extension "yank_history"
 end
+
+M.setup()
 
 return M

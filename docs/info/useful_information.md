@@ -143,9 +143,11 @@ I use the following command to get all packages which are loaded on fly.
 
 ## How to change the color fo specific language
 
-- Assume you want to change the `inlay` and `comment` of the `Rust` file types only.
+- Assume you want to change the `inlay` and `comment` of the `Rust` file types
+  only.
 - We can use the following nvim API.
-  - We are linking the highlight that we created to the original highlight of the `Comment` in nvim.
+  - We are linking the highlight that we created to the original highlight of
+    the `Comment` in nvim.
 
 ```lua
 -------------------------------------------
@@ -153,7 +155,6 @@ I use the following command to get all packages which are loaded on fly.
 -- Define a new highlight group for comments in Rust files
 vim.api.nvim_command('highlight RustComment gui=italic guifg=#B2EF9B')
 -- Set the `comment` syntax group to use the new highlight group for Rust files
-vim.api
-    .nvim_command('autocmd FileType rust highlight! link Comment RustComment')
+vim.api.nvim_command('autocmd FileType rust highlight! link Comment RustComment')
 -------------------------------------------
 ```

@@ -911,14 +911,14 @@ cd ~/.local/share/nvim/site/pack/packer/opt/cmp-tabnine/
 
 ```sh
 -- Debugging
-    use { "puremourning/vimspector", event = "BufWinEnter" }
-    -- DAP
-    use { "mfussenegger/nvim-dap" }
-    use { "mfussenegger/nvim-dap-python" }
-    use { "theHamsta/nvim-dap-virtual-text" }
-    use { "rcarriga/nvim-dap-ui" }
-    use { "Pocco81/DAPInstall.nvim" }
-    use { "jbyuki/one-small-step-for-vimkind" }
+use { "puremourning/vimspector", event = "BufWinEnter" }
+-- DAP
+use { "mfussenegger/nvim-dap" }
+use { "mfussenegger/nvim-dap-python" }
+use { "theHamsta/nvim-dap-virtual-text" }
+use { "rcarriga/nvim-dap-ui" }
+use { "Pocco81/DAPInstall.nvim" }
+use { "jbyuki/one-small-step-for-vimkind" }
 ```
 
 

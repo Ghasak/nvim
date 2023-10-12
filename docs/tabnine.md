@@ -10,10 +10,10 @@ cmd:
 '/Users/gmbp/.local/share/nvim/site/pack/packer/opt/cmp-tabnine/binaries/4.4.149/x86_64-appl
 e-darwin/TabNine' is not executable
 stack traceback:
-        [C]: in function 'jobstart'
-        ...e/pack/packer/opt/cmp-tabnine/lua/cmp_tabnine/source.lua:273: in function 'on_exit'
-        ...e/pack/packer/opt/cmp-tabnine/lua/cmp_tabnine/source.lua:141: in function 'new'
-        ...ite/pack/packer/opt/cmp-tabnine/lua/cmp_tabnine/init.lua:20: in function <...ite/pack/packer/opt/cmp-tabnine/lua/cmp_tabnine/init.lua:19>
+[C]: in function 'jobstart'
+...e/pack/packer/opt/cmp-tabnine/lua/cmp_tabnine/source.lua:273: in function 'on_exit'
+...e/pack/packer/opt/cmp-tabnine/lua/cmp_tabnine/source.lua:141: in function 'new'
+...ite/pack/packer/opt/cmp-tabnine/lua/cmp_tabnine/init.lua:20: in function <...ite/pack/packer/opt/cmp-tabnine/lua/cmp_tabnine/init.lua:19>
 ```
 
 # How to fix with virtualenv

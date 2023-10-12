@@ -1,4 +1,4 @@
-require("notify").setup({
+require("notify").setup {
   -- Animation style (see below for details)
   stages = "fade_in_slide_out",
 
@@ -29,4 +29,4 @@ require("notify").setup({
     DEBUG = "",
     TRACE = "✎",
   },
-})
+}

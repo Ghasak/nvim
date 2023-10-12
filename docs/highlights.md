@@ -1,11 +1,14 @@
 # Highlights in Nvim
 
 ## Content
+
 There are several `api` for using the Highlights and changing the color for the
 `color-theme` in `Nvim`.
 
 ## Tools
+
 ### Playground
+
 One of the most important tool that developers use for developer their color
 schemes in `Nvim` is the `Neovim Treesitter Playground`. After Installing the
 package, you can go to your code and examine what is the highlight group that
@@ -17,6 +20,7 @@ is used for the given group under the curosor using the commands:
   while navigating.
 
 ### Color Picker
+
 I have installed a very useful `mac` application for given the `mac` color
 theme in place, and change to either `rgb` or `hash`.
 
@@ -38,5 +42,6 @@ theme in place, and change to either `rgb` or `hash`.
 ```
 
 ## References
+
 - [nvim-treesitter playground](https://github.com/nvim-treesitter/playground)
 - [github-vscode-theme](https://github.com/primer/github-vscode-theme/blob/main/src/classic/colors.json)

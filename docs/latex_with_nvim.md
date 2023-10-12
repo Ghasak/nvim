@@ -1,4 +1,5 @@
 # Latex with Nvim
+
 Assume you have th compiled `.pdf` and the `.tex` file are located at same
 directory, which are sharing same name. ## Steps
 
@@ -19,12 +20,12 @@ mylatex gh.tex
 ```
 
 ### 3. Run zathura (PDF READER)
+
 Get into the compliled version of same name as your `.tex` file, which is compiled at first time.
 
 ```shell
 command zathura <file_name.pdf>
 # commmand zathura gh.pdf
 ```
-
 
 ## REFERENCES

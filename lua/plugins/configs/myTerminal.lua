@@ -1,7 +1,6 @@
 local M = {}
 
 M.setup = function()
-
   require("toggleterm").setup {
     -- size can be a number or function which is passed the current terminal
     size = function(term)
@@ -15,11 +14,11 @@ M.setup = function()
     hide_numbers = true, -- hide the number column in toggleterm buffers
     shade_filetypes = {},
     shade_terminals = false,
-    shading_factor = '2', -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
+    shading_factor = "2", -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
     start_in_insert = true,
     insert_mappings = true, -- whether or not the open mapping applies in insert mode
     persist_size = true,
-    direction = 'horizontal', --'float',            --'vertical' | 'horizontal' | 'window' | 'float',
+    direction = "horizontal", --'float',            --'vertical' | 'horizontal' | 'window' | 'float',
     close_on_exit = true, -- close the terminal window when the process exits
     shell = vim.o.shell, -- change the default shell
     -- Highlight wihchi map to a highlight group name and a talbe of it's values
@@ -28,7 +27,7 @@ M.setup = function()
       FloatBorder = {
         guifg = "#B2C9AB",
         guibg = "#B2C9AB",
-      }
+      },
     },
     -- This field is only relevant if direction is set to 'float'
     float_opts = {
@@ -36,17 +35,16 @@ M.setup = function()
       -- see :h nvim_open_win for details on borders however
       -- the 'curved' border is a custom border type
       -- not natively supported but implemented in this plugin.
-      border = 'curved', --'double', --'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
+      border = "curved", --'double', --'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
       --width = 150,
       --height = 30,
       winblend = 3,
       highlights = {
         border = "Normal",
         --background = "Normal",
-      }
-    }
+      },
+    },
   }
-
 end
 
 return M

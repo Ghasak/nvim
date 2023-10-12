@@ -73,6 +73,7 @@ return {
   -- Telescope
   {
     "nvim-telescope/telescope.nvim",
+    tag = "0.1.4",
     lazy = true,
     event = "VimEnter",
     cmd = "Telescope",
@@ -90,22 +91,49 @@ return {
         -- https://github.com/nvim-telescope/telescope-fzf-native.nvim
         "nvim-telescope/telescope-fzf-native.nvim",
         build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
-        event = "InsertEnter",
+        event = "VimEnter",
       },
       -- This is ui for showing menu for io.popen
       -- It will open most output to a selection including, dap, gen.nvim (AI)
       -- https://github.com/nvim-telescope/telescope-ui-select.nvim
-      { "nvim-telescope/telescope-ui-select.nvim", event = "InsertEnter" },
+      { "nvim-telescope/telescope-ui-select.nvim", event = "VimEnter" },
       -- Enhance extension that offers intelligent prioritization
       -- when selecting files from your editing history
       -- https://github.com/nvim-telescope/telescope-frecency.nvim
       {
         "nvim-telescope/telescope-frecency.nvim",
-        event = "InsertEnter",
+        event = "VimEnter",
         config = function()
           require("telescope").load_extension "frecency"
         end,
         dependencies = { "kkharji/sqlite.lua" },
+      },
+      {
+        "gbprod/yanky.nvim",
+        event = "VimEnter",
+        config = function()
+          require("yanky").setup {
+            ring = {
+              history_length = 100,
+              storage = "shada",
+              sync_with_numbered_registers = true,
+              cancel_event = "update",
+              ignore_registers = { "_" },
+              update_register_on_cycle = false,
+            },
+            system_clipboard = {
+              sync_with_ring = true,
+            },
+            picker = {
+              select = {
+                action = nil, -- nil to use default put action
+              },
+              telescope = {
+                mappings = nil, -- nil to use default mappings
+              },
+            },
+          }
+        end,
       },
     },
   },
@@ -705,5 +733,13 @@ return {
         replace = true,
       }
     end,
+  },
+  -- ===========================================================================
+  --                          TMUX
+  -- ===========================================================================
+  {
+    "christoomey/vim-tmux-navigator",
+    cond = false, -- Loading the dap, if false it will not be loaded,
+    event = "InsertEnter",
   },
 }

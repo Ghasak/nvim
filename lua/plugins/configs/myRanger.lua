@@ -9,10 +9,9 @@ M.Style = function()
     " Make Ranger to be hidden after picking a file
     let g:rnvimr_enable_picker = 1
     " Disable a border for floating window
-    "let g:rnvimr_draw_border = 0
+    let g:rnvimr_draw_border = 1
     " Hide the files included in gitignore
     let g:rnvimr_hide_gitignore = 1
-    let g:rnvimr_draw_border = 1
     " Change the border's color
     let g:rnvimr_border_attr = {'fg': 4, 'bg': -1}
     " Replace `$EDITOR` candidate with this command to open the selected file
@@ -24,6 +23,7 @@ M.Style = function()
     let g:rnvimr_shadow_winblend = 70
     " Draw border with both
     let g:rnvimr_ranger_cmd = ['ranger', '--cmd=set draw_borders both']
+    let g:NERDTreeHijackNetrw = 0
     "Link CursorLine into RnvimrNormal highlight in the Floating window
     highlight link RnvimrNormal CursorLine
     "nnoremap <silent> <M-o> :RnvimrToggle<CR>
@@ -35,7 +35,7 @@ M.Style = function()
     " Resize floating window by single preset layout
     tnoremap <silent> <M-y> <C-\><C-n>:RnvimrResize 6<CR>
     " Map Rnvimr action
-    let g:rnvimr_action = {'<C-t>': 'NvimEdit tabedit','<C-x>': 'NvimEdit split','<C-v>': 'NvimEdit vsplit','gw': 'JumpNvimCwd','yw': 'EmitRangerCwd'}
+    let g:rnvimr_action = {'<CR>': 'NvimEdit tabedit','<l>': 'NvimEdit tabedit','<C-x>': 'NvimEdit split','<C-v>': 'NvimEdit vsplit','gw': 'JumpNvimCwd','yw': 'EmitRangerCwd'}
     " Add views for Ranger to adapt the size of floating window
     let g:rnvimr_ranger_views = [{'minwidth': 90, 'ratio': []},{'minwidth': 50, 'maxwidth': 89, 'ratio': [1,1]},{'maxwidth': 49, 'ratio': [1]}]
     " Customize the initial layout

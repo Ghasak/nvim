@@ -1,48 +1,48 @@
 return {
-    ui = {
-        -- Currently, only the round theme exists
-        theme = "round",
-        -- This option only works in Neovim 0.9
-        title = true,
-        -- Border type can be single, double, rounded, solid, shadow.
-        border = "double",
-        winblend = 0,
-        expand = "",
-        collapse = "",
-        preview = " ",
-        -- code_action = "",
-        code_action = "",
-        -- 󰶴
-        -- 󱂖  
-        diagnostic = "",
-        incoming = " ",
-        outgoing = " ",
-        hover = ' ',
-        kind = {}
-    },
+  ui = {
+    -- Currently, only the round theme exists
+    theme = "round",
+    -- This option only works in Neovim 0.9
+    title = true,
+    -- Border type can be single, double, rounded, solid, shadow.
+    border = "double",
+    winblend = 0,
+    expand = "",
+    collapse = "",
+    preview = " ",
+    -- code_action = "",
+    code_action = "",
+    -- 󰶴
+    -- 󱂖  
+    diagnostic = "",
+    incoming = " ",
+    outgoing = " ",
+    hover = " ",
+    kind = {},
+  },
 
-    beacon = {enable = true, frequency = 7},
-    symbol_in_winbar = {
-        enable = true,
-        separator = " ",
-        hide_keyword = true,
-        show_file = false, -- will show folder icon in the winbar in the top
-        folder_level = 2,
-        respect_root = false,
-        color_mode = true
-    },
+  beacon = { enable = true, frequency = 7 },
+  symbol_in_winbar = {
+    enable = true,
+    separator = " ",
+    hide_keyword = true,
+    show_file = false, -- will show folder icon in the winbar in the top
+    folder_level = 2,
+    respect_root = false,
+    color_mode = true,
+  },
 
-    outline = {
-        win_position = "right",
-        win_with = "",
-        win_width = 50,
-        show_detail = true,
-        auto_preview = true,
-        auto_refresh = true,
-        auto_close = true,
-        custom_sort = nil,
-        keys = {jump = "o", expand_collapse = "u", quit = "q"}
-    }
+  outline = {
+    win_position = "right",
+    win_with = "",
+    win_width = 50,
+    show_detail = true,
+    auto_preview = true,
+    auto_refresh = true,
+    auto_close = true,
+    custom_sort = nil,
+    keys = { jump = "o", expand_collapse = "u", quit = "q" },
+  },
 }
 -- -- Options with default value
 -- -- "single" | "double" | "rounded" | "bold" | "plus"

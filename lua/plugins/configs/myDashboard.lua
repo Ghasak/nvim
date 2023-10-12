@@ -20,7 +20,7 @@ return {
         desc = "Find File           ",
         desc_hl = "String",
         key = "b",
-        keymap = "<leader>ff",
+        --keymap = "<leader>ff",
         key_hl = "Number",
         action = "Telescope find_files",
       },

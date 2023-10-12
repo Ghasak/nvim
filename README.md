@@ -140,8 +140,7 @@ upgrades to my configuration file (to name few)
 
 ### Cargo with Rust
 
-To activite the `crate` plugin, you need to enter first to a buffer with `rust
-file` `*.rs`, which can be activited on `Insert` event. This will trigger also
+To activite the `crate` plugin, you need to enter first to a buffer with `rust file` `*.rs`, which can be activited on `Insert` event. This will trigger also
 `cmp-create` and also `nvim-crate`. You can also later for `crate-tomal` file
 to use the `keymapping: gH` on the crate name, which will trigger documentation
 about the crate history and other considerations.

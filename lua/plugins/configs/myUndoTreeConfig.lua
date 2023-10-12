@@ -1,11 +1,10 @@
 -- Here, I am using a vim-function with the formula <exec(fun, bool)>
-local exec = vim.api.nvim_exec 	-- execute Vimscript
+local exec = vim.api.nvim_exec -- execute Vimscript
 -- It seems that the (finish) doesnt work with the cmd in current configuration ... I removed already
 -- check here: (https://github.com/mbbill/undotree/blob/master/plugin/undotree.vim#L15)
 
-
-exec([[
-let g:loaded_undotree = 0
+exec(
+  [[
 let g:loaded_undotree = 1
 if has("persistent_undo")
    let target_path = expand('~/.undodir')
@@ -180,24 +179,6 @@ command! -n=0 -bar UndotreeShow     :call undotree#UndotreeShow()
 command! -n=0 -bar UndotreeFocus    :call undotree#UndotreeFocus()
 
 " vim: set et fdm=marker sts=4 sw=4:
-]],true)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+]],
+  true
+)

@@ -77,8 +77,8 @@ M.setup = function(dap)
                 return result
             end,
             cwd = "${workspaceFolder}",
-            stopOnEntry = false
-            -- terminal = "integrated"
+            stopOnEntry = false,
+            terminal = "integrated"
         }
     }
 

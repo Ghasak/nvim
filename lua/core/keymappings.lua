@@ -368,3 +368,6 @@ vim.api.nvim_set_keymap("n", "<leader>gg", ":LazyGit<CR>", { noremap = true, sil
 vim.api.nvim_set_keymap("n", "<leader>ai", ":Gen<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("v", "<leader>ai", ":Gen Enhance_Grammar_Spelling<CR>", { noremap = true, silent = true })
 -------------------------------
+
+-- vim.keymap.set("n", "<c-n>", "<Plug>(YankyCycleForward)")
+-- vim.keymap.set("n", "<c-p>", "<Plug>(YankyCycleBackward)")

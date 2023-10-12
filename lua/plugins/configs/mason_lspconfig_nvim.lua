@@ -64,8 +64,8 @@ M.setup = function()
   -- Tools for serers
   require("mason-tool-installer").setup {
     ensure_installed = {
-      "codelldb",
       "stylua",
+      "codelldb",
       "shfmt",
       "shellcheck",
       "black",

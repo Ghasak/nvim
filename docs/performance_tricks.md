@@ -1,6 +1,7 @@
 # Performance Tricks in Neovim
 
 ## Better surroundings
+
 This plugin give us the ability to perform `surroundings` easily
 
 ```lua
@@ -13,10 +14,10 @@ This plugin give us the ability to perform `surroundings` easily
 ```
 
 - Rules:
-2. To surroundings given word:      `y`+`s`+`w` then `" or '`
-3. To delete surroundings given word:    `d`+`s`+ `" or '`
-4. To change given surroundings :         `c`+`s`+ `' or "`
 
+2. To surroundings given word: `y`+`s`+`w` then `" or '`
+3. To delete surroundings given word: `d`+`s`+ `" or '`
+4. To change given surroundings : `c`+`s`+ `' or "`
 
 - Very nice trick
 
@@ -27,8 +28,11 @@ use({dbeniamine/cheat.sh-vim}) => use({"dbeniamine/cheat.sh-vim"})
 `y` + `s` + `i` + `{` + `"`
 
 ```
+
 ## Better replace with reggister
+
 This plugin is used for replacing yanked word with support to the command (.)
+
 ```lua
 
   use({"vim-scripts/ReplaceWithRegister",
@@ -37,16 +41,17 @@ This plugin is used for replacing yanked word with support to the command (.)
   })
 ```
 
-
 ## Past inside a quote
+
 For "replace-inner-quotes-to-yanked-text" you can use `vi"p`
 
 - Rules
-2. To yank a word:   `y`+`w`
-3. To replace with a registered yanked word:  `g`+`r`+`w`
+
+2. To yank a word: `y`+`w`
+3. To replace with a registered yanked word: `g`+`r`+`w`
 4. Repeat the yanked word using `.`
 5. Yanking a word without a white spaces `y` + `i` + `w`
 
-
 ## Reference
+
 - [How can replace string in quotes with string from buffer](https://stackoverflow.com/questions/4483743/how-can-replace-string-in-quotes-with-string-from-buffer)

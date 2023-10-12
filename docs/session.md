@@ -1,6 +1,7 @@
 # Session In Nvim
 
 ## Introduction
+
 The `session` in `nvim` is about creating a shortcut for your environment that
 you can jump to it anytime. Currently it doesn't support if the `Nvim-tree`
 window is opened, so, close it first then create the session.
@@ -53,6 +54,7 @@ nvim -S ~/.cache/nvim/sessions/myPythonProjectEnv
 ```
 
 ## Automate the loading
+
 I have created a function called `open_session` and store it in the
 `special_color_highlight.lua` module, to check more about this function.
 
@@ -63,6 +65,6 @@ I have created a function called `open_session` and store it in the
 - Only one caveat is that the nvim statusbar, doesn't show the correct
   `lsp-server` at the momenet (but it works without any problem).
 
-
 ## References
+
 - [How to use Session in Vim](https://bocoup.com/blog/sessions-the-vim-feature-you-probably-arent-using)

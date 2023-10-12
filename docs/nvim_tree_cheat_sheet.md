@@ -1,5 +1,6 @@
 # Nvim-Tree Cheat Sheet
-We can use the following cheat-sheet for possiblility of increasing  productivity.
+
+We can use the following cheat-sheet for possiblility of increasing productivity.
 
 ## Working with the File Explorer¶
 
@@ -18,23 +19,22 @@ shortcuts for its management, which are:
 - `g + ?` to open the help with all the predefined shortcuts for quick reference
 - `q` to close the file explorer
 
-
-
 ## Opening a File
+
 Positioned in the desired folder and with the file selected to be edited, we
 have the following combinations to open it:
 
--  `Enter` o `o` to open the file in a new buffer and place the cursor on the
-   first line of the file
--  `Tab` to open the file in a new buffer while keeping the cursor in nvimtree,
-   this for example is useful if you want to open several files at once
--  `Ctrl + t` to open the file in a new tab that can be managed separately from
-   the other buffers present
--  `Ctrl + v` to open the file in the buffer by dividing it vertically into two
-   parts, if there was already an open file this will be displayed side by side
-   with the new file
--  `Ctrl + h` to open the file like the command described above but dividing
-   the buffer horizontally.
+- `Enter` o `o` to open the file in a new buffer and place the cursor on the
+  first line of the file
+- `Tab` to open the file in a new buffer while keeping the cursor in nvimtree,
+  this for example is useful if you want to open several files at once
+- `Ctrl + t` to open the file in a new tab that can be managed separately from
+  the other buffers present
+- `Ctrl + v` to open the file in the buffer by dividing it vertically into two
+  parts, if there was already an open file this will be displayed side by side
+  with the new file
+- `Ctrl + h` to open the file like the command described above but dividing
+  the buffer horizontally.
 
 ## File Management¶
 
@@ -69,4 +69,5 @@ for deletion of a file, as a deletion would be irreversible.
   which are Y to copy the relative path and g + y to copy the absolute path
 
 ### References
+
 - [Reference - Nvim-Tree Advanced keybinding ](https://docs.rockylinux.org/books/nvchad/nvchad_ui/nvimtree/)

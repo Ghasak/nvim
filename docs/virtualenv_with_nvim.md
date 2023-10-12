@@ -4,6 +4,7 @@ As for now, I face no problem with the current `nvim` workflow, but sometime
 you want to get the `python` of the system default instead of the virtualenv.
 
 ## Using system python instead the virtualenv
+
 In case this is helpful to anyone, here is what I use instead:
 
 ```vim
@@ -28,7 +29,6 @@ else
 endif
 ```
 
-
-
 # Reference
+
 - [Neovim with virtualenv](https://github.com/neovim/neovim/issues/1887)

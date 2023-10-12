@@ -1,4 +1,4 @@
-# Auto Group and Auto command *
+# Auto Group and Auto command \*
 
 Simply use the following information
 
@@ -32,6 +32,6 @@ vim.api.nvim_create_autocmd("CmdLineLeave", {
 ```
 
 ## REFERENCES
+
 - [au.lua snippets](https://gist.github.com/numToStr/1ab83dd2e919de9235f9f774ef8076da)
 - [Neovim for Beginners - Lua autocmd and keymap functions](https://alpha2phi.medium.com/neovim-for-beginners-lua-autocmd-and-keymap-functions-3bdfe0bebe42)
-

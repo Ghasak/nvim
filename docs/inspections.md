@@ -1,16 +1,18 @@
 # Tools for inpsections in nvim
 
 ## Keymapping
+
 You can use one of the following,
 
 1. Telescope
-Assume you already triggered the `telescope` using `<leader>f`, then run:
+   Assume you already triggered the `telescope` using `<leader>f`, then run:
 
 ```vim
 :telescope keymapping
 ```
 
 2. nmap, noremap, map
+
 ```vim
 nmap <key>
 # Example
@@ -22,14 +24,14 @@ nmap <key>
 ```vim
 :map
 ```
+
 4. Using verbose
-It will show you when last time got setted.
+   It will show you when last time got setted.
+
 ```vim
 :verbose nmap <leader>
 
 ```
-
-
 
 ## Getting buffer name
 
@@ -41,12 +43,12 @@ It will show you when last time got setted.
 ```
 
 ## getting operation system info
+
 ```lua
 :lua vim.pretty_print(vim.loop.os_uname())
 ```
 
 ## Getting variables names in lua
-
 
 ```lua
 local max_job_limit = function()
@@ -64,8 +66,8 @@ end
 ```
 
 ## References
-- [keymapping form Lunarvim](https://github.com/LunarVim/LunarVim/blob/rolling/lua/lvim/keymappings.lua)
 
+- [keymapping form Lunarvim](https://github.com/LunarVim/LunarVim/blob/rolling/lua/lvim/keymappings.lua)
 
 ## HOW TO TO DEBUGE AND CHECK MODULES
 
@@ -78,6 +80,7 @@ exiting the `module_a` and then enter again the `module_a` if you want `:source
 %` or `:luafile %` to run. But, luckily, we have something can reload your modules without exisiting (you will need `plenary`)
 
 - FOR DEBUGGING PURPOSES ONLY USE THIS ON TOP OF YOUR `module_a`
+
 ```lua
 
 require('plenary.reload').reload_module('module_b', true)
@@ -88,11 +91,13 @@ require('plenary.reload').reload_module('plugins.configs.dap.dap_engine', true)
 
 Run the following example ...
 in `module_a` which is the `init.lua` inside the `dap` directory which is inside `configs` up to `plugins`
+
 ```lua
 require('plenary.reload').reload_module('plugins.configs.dap.dap_engine', true)
 local fn1 = require("plugins.configs.dap.dap_engine").setup()
 vim.pretty_print(fn1)
 ```
+
 Then inside `dap_engine.lua`, put the following:
 
 ```lua
@@ -109,6 +114,7 @@ return M
 ```
 
 ## Developement testing
+
 1. Create a `lua` file named `testing_file.lua` inside the `lua` directory as:
 
 ```shell
@@ -119,7 +125,9 @@ return M
   rwxr-xr-x   6   gmbp   staff    192 B     Fri Oct  7 15:54:01 2022    scripts/
   rw-r--r--   1   gmbp   staff    369 B     Fri Oct 21 19:56:12 2022    testing_file.lua
 ```
+
 Inside the `testing_file.lua` put the following:
+
 ```lua
 M = {}
 
@@ -134,6 +142,7 @@ end
 return M
 
 ```
+
 2. Inside your `init.lua` put the following:
 
 ```lua
@@ -142,42 +151,48 @@ require("core.myInspectorFucntions")
 local fn = require("testing_file")
 P(fn.setup())
 ```
+
 3. You will see that the file will be executed everytime we restart the `init.lua` exit and load the file again.
-but, there is a way to load the file that we can change the `testing_file.lua`
-and keep on printing the resutls in the `init.lua` everytime we change the
-`testing_file.lua`. Now, we need to do the following:
+   but, there is a way to load the file that we can change the `testing_file.lua`
+   and keep on printing the resutls in the `init.lua` everytime we change the
+   `testing_file.lua`. Now, we need to do the following:
 
 4. For developement, we need to use the following
+
 - Loading automaticall by calling
+
 ```lua
 require('plenary.reload').reload_module('plugins.configs.dap.dap_engine', true)
 
 ```
+
 - Or, using the command that we created called `RELOADED` created here `./lua/core/myInspectorFucntions.lua`
-    - Use first `RELOAD` command then `RELOADED testing_file` then eveytime you change the file, it will be changed as well.
-    - Later I have updated this requested feature, now lua will load the file we request to be loaded. This is so good feature for developement.
-
-
+  - Use first `RELOAD` command then `RELOADED testing_file` then eveytime you change the file, it will be changed as well.
+  - Later I have updated this requested feature, now lua will load the file we request to be loaded. This is so good feature for developement.
 
 ## REFERENCES
+
 - [loading the modules automatically ](https://www.reddit.com/r/neovim/comments/jxub94/reload_lua_config/)
 
 ## RUNTIME PATH
-`lua` programming `runtime`  can see up to the directory you named inside the
+
+`lua` programming `runtime` can see up to the directory you named inside the
 `lua` directory. Which means, you don't need to require(`lua.dir1.dir2`), and so on, as lua already can see `dir1`.
 
-
-
 ## Asking user for entry
+
 You can use the following, In your nvim commandline:
+
 ```lua
 :lua vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
 ```
+
 ## How to use codlens
 
 ```lua
 :lua vim.pretty_print(vim.lsp.codelens.get(bufnr))
 ```
+
 ## Getting stats of buffer
 
 ```lua

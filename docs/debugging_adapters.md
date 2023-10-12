@@ -50,7 +50,7 @@ system), and also for the `virtualenv` (virtualenv either local or like the pipe
 ## Several adapters of lldb
 
 - There are several adpaters for `lldb`, but only the one I install from the
-`brew` is working
+  `brew` is working
 
 ```shell
 brew install llvm
