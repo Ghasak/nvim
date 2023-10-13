@@ -272,7 +272,6 @@ return {
     "neovim/nvim-lspconfig",
     lazy = true,
     event = { "VeryLazy" },
-    -- event = {"VimEnter"},
     dependencies = {
       -- { "williamboman/nvim-lsp-installer" }, -- deperated
       { "williamboman/mason.nvim" },
@@ -434,7 +433,8 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     dependencies = { { "nvim-treesitter" }, { "nvim-web-devicons" } },
-    event = "VimEnter",
+    --event = "VimEnter",
+    event = "VeryLazy",
     config = function()
       require("plugins.configs.myLuaLine").setup()
     end,
@@ -443,7 +443,8 @@ return {
     "akinsho/nvim-bufferline.lua",
     lazy = true,
     -- event = "BufWritePre",  -- Only will be trigger when you save your buffer.
-    event = "CursorMoved",
+    --event = "CursorMoved",
+    event = "VeryLazy",
     dependencies = "nvim-web-devicons",
     config = function()
       require("plugins.configs.myBufferConfig").config()
@@ -451,6 +452,7 @@ return {
   }, -- This will  highlight the colors as #558817
   {
     "norcalli/nvim-colorizer.lua",
+    event = "VeryLazy",
     lazy = true,
     cmd = { "ColorizerToggle" },
     config = function()
@@ -468,6 +470,7 @@ return {
   {
     -- "npxbr/glow.nvim",
     "ellisonleao/glow.nvim",
+    event = "VeryLazy",
     ft = { "markdown" },
     config = function()
       require("plugins.configs.myGlowMark").setup()
@@ -577,14 +580,16 @@ return {
     event = "InsertEnter",
     -- keys = { [[<leader>d]] },
     dependencies = {
-      { "nvim-dap-virtual-text", "nvim-dap-ui", "nvim-dap-python" },
+      { "nvim-dap-virtual-text", event = "InsertEnter" },
+      { "nvim-dap-ui", event = "InsertEnter" },
+      { "nvim-dap-python", event = "InsertEnter" },
       -- {"DAPIkstall.nvim"},
       { "theHamsta/nvim-dap-virtual-text", event = "InsertEnter" },
       { "rcarriga/nvim-dap-ui", event = "InsertEnter" },
       { "mfussenegger/nvim-dap-python", event = "InsertEnter" },
       { "nvim-telescope/telescope-dap.nvim", event = "InsertEnter" },
-      { "leoluz/nvim-dap-go", event = "InsertEnter" },
-      { "jbyuki/one-small-step-for-vimkind", event = "InsertEnter" },
+      --{ "leoluz/nvim-dap-go", event = "InsertEnter" },
+      --{ "jbyuki/one-small-step-for-vimkind", event = "InsertEnter" },
     },
     config = function()
       require "plugins.configs.dap"
@@ -710,13 +715,13 @@ return {
   },
   {
     "kdheepak/lazygit.nvim",
-    event = "InsertEnter",
+    event = "VeryLazy",
     cmd = { "LazyGit" },
     -- optional for floating window border decoration
     dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
-    config = function()
-      require("telescope").load_extension "lazygit"
-    end,
+    -- config = function()
+    --   require("telescope").load_extension "lazygit"
+    -- end,
   },
 
   -- ===========================================================================

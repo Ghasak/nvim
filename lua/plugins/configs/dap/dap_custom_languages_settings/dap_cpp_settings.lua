@@ -23,12 +23,30 @@ function M.setup(dap)
   dap.configurations.cpp = {
     {
       name = "Launch file",
-      --type = "lldb",
-      type = "cppdbg",
+      type = "lldb",
       request = "launch",
       program = function()
-        return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+        local build_dir = vim.fn.getcwd() .. "/build/debug/"
+        local default_binary = build_dir .. "main"
+
+        -- Check if /build/debug/ directory exists
+        if vim.fn.isdirectory(build_dir) == 1 then
+          -- If "main" binary exists in /build/debug/, use it as default
+          if vim.fn.filereadable(default_binary) == 1 then
+            vim.notify("Loaded binary: main", vim.log.INFO)
+            return "${workspaceFolder}/build/debug/main"
+          else
+            -- Ask user to input the binary name within /build/debug/
+            return build_dir .. vim.fn.input("Name of the binary in /build/debug/: ", "[default:main]", "file")
+          end
+        else
+          -- Ask user to input the full relative path to the binary
+          return vim.fn.input("Full path to executable (relative to root directory): ", vim.fn.getcwd() .. "/", "file")
+        end
       end,
+      -- program = function()
+      --   return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+      -- end,
       cwd = "${workspaceFolder}",
       --     stopAtEntry = true,
       stopOnEntry = true,

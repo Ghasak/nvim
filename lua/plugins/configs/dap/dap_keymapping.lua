@@ -1,8 +1,57 @@
 local M = {}
 
 M.debugging_key_mapping = function()
+  --
+  --
+  --########################################################################
+  --
+  --   █▄▄ █▀█ █▀▀ ▄▀█ █▄▀ █▀█ █▀█ █ █▄░█ ▀█▀   █▄▄ ▄▀█ █▄░█ █▄░█ █▀▀ █▀█
+  --   █▄█ █▀▄ ██▄ █▀█ █░█ █▀▀ █▄█ █ █░▀█ ░█░   █▄█ █▀█ █░▀█ █░▀█ ██▄ █▀▄
+  --
+  --    Global function will show a banner once a breakpoint is setted.
+  --########################################################################
+
+  _G.set_breakpoint_and_update_global = function(debugger_name)
+    -- debugger name can be: debuggy, lldbcode, lldb-vscode, lldb, lldb-mi ..etc.
+    -- The debugger here will fetch the name of the field name from the  dap (e.g., dap.adapters["lldb-vscode"].name)
+    require("dap").toggle_breakpoint()
+    local async = require "plenary.async"
+    local notify = require("notify").async
+    local messege = nil
+    -- vim.notify(file)
+    async.run(function()
+      if debugger_name == "codelldb" or debugger_name == "cppdbg" then
+        messege = string.format(
+          "Using deubgging Adapter %s loaded from: %s at\n%s ... ",
+          debugger_name,
+          tostring(require("dap").adapters[debugger_name]["executable"]["command"]), -- Here is the adapter type, codelldb, lldb-vscode,
+          os.date "%H:%M:%S"
+        )
+      else
+        messege = string.format(
+          "Using deubgging Adapter %s loaded from: %s at\n%s ... ",
+          debugger_name,
+          tostring(require("dap").adapters[debugger_name].command), -- Here is the adapter type, codelldb, lldb-vscode,
+          os.date "%H:%M:%S"
+        )
+      end
+      notify(messege, vim.log.levels.INFO, { title = " DEBUGING ", duration = 50000 })
+    end, function() end)
+  end
+
+  --########################################################################
+  --                     KEY MAPPING FOR DEBUGGING
+  --########################################################################
+
   local map = require("core.utils").keymapping
-  map("n", "<leader>b", ':lua require"dap".toggle_breakpoint()<CR>')
+  if vim.bo.filetype == "cpp" then
+    --map("n", "<leader>b", ":lua set_breakpoint_and_update_global('lldb-vscode')<CR>")
+    map("n", "<leader>b", ":lua set_breakpoint_and_update_global('cppdbg')<CR>")
+  elseif vim.bo.filetype == "rust" then
+    map("n", "<leader>b", ":lua set_breakpoint_and_update_global('codelldb')<CR>")
+  else
+    map("n", "<leader>b", ':lua require"dap".set_breakpoint()<CR>')
+  end
   map("n", "<leader>B", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>")
   -- ------------------------- Navigation ------------------
   map("n", "<leader><F1>", ':lua require"dap".step_out()<CR>')
@@ -22,7 +71,7 @@ M.debugging_key_mapping = function()
   map("n", "<leader>d?", ':lua local widgets=require"dap.ui.widgets";widgets.centered_float(widgets.scopes)<CR>')
 
   map("n", "<leader>df", ":Telescope dap frames<CR>")
-  -- map('n', '<leader>dc', ':Telescope dap commands<CR>')
+  map("n", "<leader><leader>d", ":Telescope dap commands<CR>")
   map("n", "<leader>dt", ":Telescope dap list_breakpoints<CR>")
 end
 
