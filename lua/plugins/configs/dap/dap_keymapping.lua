@@ -93,7 +93,6 @@ M.debugging_key_mapping = function()
         )
         -- This will start the server automatically ..
         START_OPEN_DEBUGAD7_SERVER()
-
         notify(run_server_message, vim.log.levels.INFO, { title = " DEBUGING ", duration = 50000 })
       -- Run the server in backgroun Automatically
       else
@@ -109,6 +108,24 @@ M.debugging_key_mapping = function()
     end, function() end)
   end
 
+  -- Display a banner message indicating the Python debug environment being used.
+  --
+  -- This function creates an asynchronous notification banner that displays the Python
+  -- debug environment currently in use, based on the value of `vim.g.python_custom_command_path`.
+  --
+  -- @return None
+  _G.PYTHON_DIR_BANNER_MESSAGE = function()
+    require("plugins.configs.dap.dap_custom_languages_settings.dap_python_settings").checking_adpater_type()
+    require("dap").toggle_breakpoint()
+    local async = require "plenary.async"
+    local notify = require("notify").async
+    async.run(function()
+      -- Create the banner message
+      local message = string.format("Using python debugger at:\n%s", vim.g.python_custom_command_path)
+      notify(message, vim.log.levels.INFO, { title = " DEBUGGING ", duration = 5000 })
+    end, function() end)
+  end
+
   --########################################################################
   --                     KEY MAPPING FOR DEBUGGING
   --########################################################################
@@ -119,6 +136,8 @@ M.debugging_key_mapping = function()
     map("n", "<leader>b", ":lua set_breakpoint_and_update_global('cppdbg')<CR>")
   elseif vim.bo.filetype == "rust" then
     map("n", "<leader>b", ":lua set_breakpoint_and_update_global('codelldb')<CR>")
+  elseif vim.bo.filetype == "python" then
+    map("n", "<leader>b", ":lua PYTHON_DIR_BANNER_MESSAGE()<CR>")
   else
     map("n", "<leader>b", ':lua require"dap".set_breakpoint()<CR>')
   end

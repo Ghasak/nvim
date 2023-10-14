@@ -1,15 +1,36 @@
 local M = {}
 
-M.dap_adapters_python_fn = function()
-  -- https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation
-  _G.checking_adpater_type = function()
-    if os.getenv "VIRTUAL_ENV" == 1 then
-      vim.g.python_custom_command_path = string.format("%s/bin/python", os.getenv "VIRTUAL_ENV")
-    else
-      vim.g.python_custom_command_path = string.format("%s/opt/anaconda3/bin/python3", os.getenv "HOME")
-    end
+--- Configure the Python command path for Neovim based on environment variables.
+--
+-- This function attempts to determine the Python command path to be used by Neovim.
+-- It first checks the output of the `which python` command to find the first available
+-- Python option. If a valid Python path is found, it sets `vim.g.python_custom_command_path`
+-- to that path. If `which python` does not provide a valid option, it falls back to
+-- checking if the `VIRTUAL_ENV` environment variable is set and uses it as a backup option.
+-- If neither option is available, it defaults to the Anaconda Python path.
+--
+-- @return None
+M.checking_adpater_type = function()
+  -- Execute `which python` to obtain Python options
+  local handle = io.popen "which python"
+  ---@diagnostic disable-next-line: need-check-nil
+  local result = handle:read "*a"
+  -- Remove trailing newline and whitespace characters from the directory path
+  local python_path = string.gsub(result, "%s+", "") -- Removes all whitespace characters
+  ---@diagnostic disable-next-line: need-check-nil
+  handle:close()
+  -- Set Neovim's Python command path to the one obtained from `which python`
+  if os.getenv "VIRTUAL_ENV" ~= nil then
+    -- Fall back to using VIRTUAL_ENV if set
+    vim.g.python_custom_command_path = string.format("%s/bin/python", os.getenv "VIRTUAL_ENV")
+  else
+    vim.g.python_custom_command_path = python_path
   end
-  checking_adpater_type()
+end
+
+M.dap_adapters_python_fn = function()
+  require("plugins.configs.dap.dap_custom_languages_settings.dap_python_settings").checking_adpater_type()
+
   return {
     type = "executable",
     command = vim.g.python_custom_command_path,

@@ -33,7 +33,7 @@ M.dap_ui_setttings_fn = function(dap, dapui)
 
   -- require("dapui").setup({
   dapui.setup {
-    icons = { expanded = "▾", collapsed = "▸", current_frame = "▸" },
+    icons = { expanded = "󰞖 ", collapsed = " ", current_frame = " " },
     mappings = {
       -- Use a table to apply multiple mappings
       expand = { "<CR>", "<2-LeftMouse>" },

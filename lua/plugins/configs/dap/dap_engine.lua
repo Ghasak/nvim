@@ -2,6 +2,8 @@ local M = {}
 
 -- ---------------------------------------------------------------------------------
 --                          Adapter request settings - python
+--                          you will need debugpy adapter to be installed
+--                                   pip install debugpy
 -- ---------------------------------------------------------------------------------
 M.python_debuger_setup = function(dap)
   -- For development to resource your current buffer: require('plenary.reload').reload_module('plugins.configs.dap.dap_engine', true)
