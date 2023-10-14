@@ -1,4 +1,56 @@
+---@diagnostic disable: unused-local, unused-function, missing-fields
 local M = {}
+
+--[[
+    `START_OPEN_DEBUGAD7_SERVER()`
+    Purpose:
+    --------
+    Starts the OpenDebugAD7 server for debugging purposes using specified command-line arguments.
+    Description:
+    ------------
+    This function initializes and starts the OpenDebugAD7 server in the background using Neovim's built-in `jobstart` function.
+    The server listens on port `9999` and has response tracing and engine logging enabled.
+    If the server exits with an error (non-zero return value), a message is printed to the Neovim command line to notify the user.
+
+    Parameters:
+    -----------
+    None
+
+    Returns:
+    --------
+    None
+
+    Notes:
+    ------
+    - The OpenDebugAD7 binary is expected to be located in the
+    - `~/.local/share/nvim/mason/packages/cpptools/extension/debugAdapters/bin/` directory.
+    - If the server exits with a return value other than `0`, it indicates an error occurred.
+]]
+_G.START_OPEN_DEBUGAD7_SERVER = function()
+  local my_job_id = nil
+  local install_root_dir = vim.fn.stdpath "data" .. "/mason/packages/cpptools/extension/debugAdapters/bin/"
+  local cmd_OpenDebugAD7 = install_root_dir .. "OpenDebugAD7"
+  local args = { "--server=9999", "--trace=response", "--engineLogging" }
+
+  my_job_id = vim.fn.jobstart({ cmd_OpenDebugAD7, unpack(args) }, {
+    on_exit = function(j, return_val, event)
+      vim.notify(event)
+      vim.notify(j)
+      if return_val ~= 0 then
+        print "OpenDebugAD7 server exited with error!"
+      end
+    end,
+  })
+end
+
+-- This will stop the server, but we will not
+-- use it as the job ended once we exited the Nvim
+local function stop_open_debug_ad7_server()
+  if my_job_id and my_job_id > 0 then
+    vim.fn.jobstop(my_job_id)
+    my_job_id = nil
+  end
+end
 
 M.debugging_key_mapping = function()
   --
@@ -20,17 +72,35 @@ M.debugging_key_mapping = function()
     local messege = nil
     -- vim.notify(file)
     async.run(function()
-      if debugger_name == "codelldb" or debugger_name == "cppdbg" then
+      if debugger_name == "codelldb" then
         messege = string.format(
           "Using deubgging Adapter %s loaded from: %s at\n%s ... ",
           debugger_name,
           tostring(require("dap").adapters[debugger_name]["executable"]["command"]), -- Here is the adapter type, codelldb, lldb-vscode,
           os.date "%H:%M:%S"
         )
+      elseif debugger_name == "cppdbg" then
+        messege = string.format(
+          "Using deubgging Adapter %s loaded from: %s at\n%s ... ",
+          debugger_name,
+          tostring(require("dap").adapters[debugger_name]["executable"]["command"]), -- Here is the adapter type, codelldb, lldb-vscode,
+          os.date "%H:%M:%S"
+        )
+        run_server_message = string.format(
+          "Now, The OpenDebug7A server runs using:\n"
+            .. "./OpenDebugAD7 --server=9999 --trace=response --engineLogging\n"
+            .. "At Adapter Location in backgroun"
+        )
+        -- This will start the server automatically ..
+        START_OPEN_DEBUGAD7_SERVER()
+
+        notify(run_server_message, vim.log.levels.INFO, { title = " DEBUGING ", duration = 50000 })
+      -- Run the server in backgroun Automatically
       else
         messege = string.format(
           "Using deubgging Adapter %s loaded from: %s at\n%s ... ",
           debugger_name,
+          ---@diagnostic disable-next-line: undefined-field
           tostring(require("dap").adapters[debugger_name].command), -- Here is the adapter type, codelldb, lldb-vscode,
           os.date "%H:%M:%S"
         )

@@ -44,7 +44,13 @@ return {
       },
       { "p00f/nvim-ts-rainbow", event = "BufReadPre" },
       { "RRethy/nvim-treesitter-textsubjects", event = "InsertEnter" },
-      { "nvim-treesitter/nvim-treesitter-context", event = "InsertEnter" },
+      {
+        -- This plugin is alternative to nvim.context
+        "nvim-treesitter/nvim-treesitter-context",
+        cond = false, -- Loading the dap, if false it will not be loaded,
+        cmd = { "TSContextDisable", "TSContextEnable", "TSContextToggle" },
+        event = "InsertEnter",
+      },
     },
   },
   { "nvim-treesitter/playground", event = "InsertEnter" }, -- Better icons
@@ -134,6 +140,15 @@ return {
             },
           }
         end,
+      },
+      -- This will provide us with a nicer window for our telescope
+      -- to jump to definitions using multiple jump points instead
+      -- of always jumping horizontally from `vim.buf.lsp`, which
+      -- is always stuck and requires pressing `:q` to escape.
+      {
+        "gbrlsnchs/telescope-lsp-handlers.nvim",
+        --cond = false, -- Loading the dap, if false it will not be loaded,
+        event = "VimEnter",
       },
     },
   },
@@ -421,6 +436,19 @@ return {
   --         require'alpha'.setup(require'alpha.themes.dashboard'.config)
   --     end
   -- },
+
+  -- This plugin will show a small window for rename
+  -- parameter for examle, and many other parameters.
+
+  {
+    "stevearc/dressing.nvim",
+    event = { "VeryLazy" },
+    config = function()
+      require("dressing").setup {
+        border = "rounded",
+      }
+    end,
+  },
   {
     "glepnir/dashboard-nvim",
     event = "VimEnter",
@@ -452,7 +480,7 @@ return {
   }, -- This will  highlight the colors as #558817
   {
     "norcalli/nvim-colorizer.lua",
-    event = "VeryLazy",
+    event = "InsertEnter",
     lazy = true,
     cmd = { "ColorizerToggle" },
     config = function()
@@ -520,7 +548,10 @@ return {
   }, -- Adding acceleration to the mouse for faster/smooth motion
   { "rhysd/accelerated-jk", lazy = true, event = "VimEnter" },
   -- Deleting a given buffer without affecting
-  { "famiu/bufdelete.nvim", lazy = true, cmd = { "Bdelete" } },
+
+  --{ "famiu/bufdelete.nvim", lazy = true, cmd = { "Bdelete" } },
+  { "ojroques/nvim-bufdel", lazy = true, cmd = { "BufDel","BufDelAll", "BufDelOthers" } },
+
   { "vim-scripts/ReplaceWithRegister", lazy = true, event = "InsertEnter" },
   -- Better repeat (.) with nvim (from tpope)
   --  use({ "tpope/vim-repeat" })
@@ -745,6 +776,8 @@ return {
   {
     "christoomey/vim-tmux-navigator",
     cond = false, -- Loading the dap, if false it will not be loaded,
+    -- It will delete the keymapping (C-\), which affect my floating terminal,
+    -- I removed it already
     event = "InsertEnter",
   },
 }

@@ -162,16 +162,15 @@ M.config = function()
     dynamic_preview_title = true,
     pickers = {
       find_files = {
-        find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
-
-        -- find_command = {
-        --   "fd",
-        --   ".",
-        --   "--type",
-        --   "file",
-        --   "--hidden",
-        --   "--strip-cwd-prefix",
-        -- },
+        --find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
+        find_command = {
+          "fd",
+          ".",
+          "--type",
+          "file",
+          "--hidden",
+          "--strip-cwd-prefix",
+        },
       },
     },
 
@@ -207,6 +206,26 @@ M.config = function()
           },
         },
       },
+      lsp_handlers = {
+        location = {
+          telescope = {},
+          no_results_message = "No references found",
+        },
+        symbol = {
+          telescope = {},
+          no_results_message = "No symbols found",
+        },
+        call_hierarchy = {
+          telescope = {},
+          no_results_message = "No calls found",
+        },
+        disable = {
+          ["textDocument/codeAction"] = true,
+        },
+        code_action = {
+          telescope = require("telescope.themes").get_dropdown {},
+        },
+      },
     },
   }
 
@@ -217,6 +236,7 @@ M.config = function()
   telescope.load_extension "lazygit"
   telescope.load_extension "dap"
   telescope.load_extension "yank_history"
+  telescope.load_extension "lsp_handlers"
 end
 
 M.setup()

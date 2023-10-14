@@ -10,7 +10,6 @@ local function table_to_string(tbl)
   return table.concat(result, "\n")
 end
 
-
 function M.setup(dap)
   dap.adapters["lldb-vscode"] = {
     type = "executable",
@@ -42,7 +41,6 @@ function M.setup(dap)
             for idx, item in ipairs(files) do
               vim.notify(string.format("[%s] -> %s", idx, item))
             end
-            ------------------------------------------------------------
             return build_dir .. vim.fn.input "Name of the binary in /build/debug/: "
           end
         else
@@ -51,6 +49,14 @@ function M.setup(dap)
         end
       end,
       -- -----------------------------------------------------------------
+      -- Using -exec instead of ` for debugging commands
+      setupCommands = {
+        {
+          text = "-enable-pretty-printing",
+          description = "enable pretty printing",
+          ignoreFailures = false,
+        },
+      },
 
       cwd = vim.fn.getcwd(),
       stopOnEntry = false,

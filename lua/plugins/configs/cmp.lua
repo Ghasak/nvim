@@ -19,6 +19,7 @@
 local M = {}
 
 function M.setup()
+  ---@diagnostic disable-next-line: unused-local
   local types = require "cmp.types"
   local present, cmp = pcall(require, "cmp")
 
@@ -194,7 +195,7 @@ function M.setup()
         vim_item.abbr = vim_item.abbr:match "[^(]+"
 
         -- Removing the duplicates
-        local kind = vim_item.kind
+        --local kind = vim_item.kind
         vim_item.kind = " " .. (require("plugins.configs.lspkind_icons").icons[vim_item.kind] or "?") .. " "
         local source = entry.source.name
         vim_item.menu = "(" .. source .. ")"
@@ -327,50 +328,48 @@ function M.setup()
   }
 
   -- Database completion
-  vim.api.nvim_exec(
-    [[
-      autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })
-]],
-    false
-  )
+  -- vim.api.nvim_exec(
+  --   [[ autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} }) ]],
+  --   false
+  -- )
 
   ----------------------------------------------------------------------------------------------------------------------
   --
   --                            █▀▀ █▀▄▀█ █▀█ ▄▄ █▀▀ █▀▄▀█ █▀▄ █   █ █▄ █ █▀▀
   --                            █▄▄ █ ▀ █ █▀▀    █▄▄ █ ▀ █ █▄▀ █▄▄ █ █ ▀█ ██▄
- --
+  --
   ----------------------------------------------------------------------------------------------------------------------
   -- local feedkeys = require("cmp.utils.feedkeys")
   -- local keymap = require("cmp.utils.keymap")
   -- Function used to custom the mapping for the cmdline for both (:) and (\)
   local mapping_custom_fn = function()
     return {
-      -- ["<Tab>"] = {
-      --     c = function()
-      --         if cmp.visible() then
-      --             -- cmp.select_next_item()
-      --             cmp.select_next_item({
-      --                 behavior = types.cmp.SelectBehavior.Insert
-      --             })
-      --         else
-      --             -- feedkeys.call(keymap.t("<C-z>"), "n")
-      --             cmp.complete() -- added for fix the auto complete
-      --         end
-      --     end
-      -- },
-      -- ["<S-Tab>"] = {
-      --     c = function()
-      --         if cmp.visible() then
-      --             -- cmp.select_prev_item()
-      --             cmp.select_prev_item({
-      --                 behavior = types.cmp.SelectBehavior.Insert
-      --             })
-      --         else
-      --             -- feedkeys.call(keymap.t("<C-z>"), "n")
-      --             cmp.complete() -- added for fix the auto complete
-      --         end
-      --     end
-      -- },
+      ["<Tab>"] = {
+        c = function()
+          if cmp.visible() then
+            -- cmp.select_next_item()
+            cmp.select_next_item {
+              behavior = types.cmp.SelectBehavior.Insert,
+            }
+          else
+            -- feedkeys.call(keymap.t("<C-z>"), "n")
+            cmp.complete() -- added for fix the auto complete
+          end
+        end,
+      },
+      ["<S-Tab>"] = {
+        c = function()
+          if cmp.visible() then
+            -- cmp.select_prev_item()
+            cmp.select_prev_item {
+              behavior = types.cmp.SelectBehavior.Insert,
+            }
+          else
+            -- feedkeys.call(keymap.t("<C-z>"), "n")
+            cmp.complete() -- added for fix the auto complete
+          end
+        end,
+      },
       ["<C-n>"] = {
         c = function(fallback)
           if cmp.visible() then
@@ -414,6 +413,7 @@ function M.setup()
   -- local cmdline_mappings = cmp.mapping.preset.cmdline(filter_mode(mapping, "c"))
   -- local cmdline_view = {entries = "wildmenu"} -- <- If you want to make your cmp menu showed horizontally.
   -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+  ---@diagnostic disable-next-line: missing-fields
   cmp.setup.cmdline({ "/", "?" }, {
     -- mapping = cmp.mapping.preset.cmdline(), -- <- I have borrowed from this function the mapping table below,
     mapping = mapping_custom_fn(),

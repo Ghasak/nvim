@@ -1,6 +1,5 @@
 local init_modules = {
   "plugins.configs.dap.dap_engine",
-
 }
 
 for _, module in ipairs(init_modules) do
@@ -19,7 +18,6 @@ local dap_ui_status_ok, dapui = pcall(require, "dapui")
 if not dap_ui_status_ok then
   return
 end
-
 
 -- 1. dap_breakpoint [[ setting of the signs of the dap ]]
 -- 2. dap_ui_setting [[ setting of the signs of the dap ]]

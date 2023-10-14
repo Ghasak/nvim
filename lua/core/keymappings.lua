@@ -158,14 +158,13 @@ vim.api.nvim_set_keymap("n", "<space>+", ":vertical resize +5<CR>", { noremap = 
 vim.api.nvim_set_keymap("n", "<space>-", ":vertical resize -5<CR>", { noremap = true, silent = true })
 
 -- close windows without affecting other buffers
-vim.api.nvim_set_keymap("n", "<leader>w", "<cmd>Bdelete<cr>", { noremap = true, silent = false })
+--vim.api.nvim_set_keymap("n", "<leader>w", "<cmd>Bdelete<cr>", { noremap = true, silent = false })
+vim.api.nvim_set_keymap("n", "<leader>w", "<cmd>BufDel<cr>", { noremap = true, silent = false })
 
 -- Move to beginning and end of line in normal mode
 vim.api.nvim_set_keymap("n", "<leader>h", "<ESC>^", { noremap = true, silent = false })
 vim.api.nvim_set_keymap("n", "<leader>l", "<ESC>$", { noremap = true, silent = false })
 
--- close windows without affecting other buffers
-vim.api.nvim_set_keymap("n", "<leader>w", "<cmd>Bdelete<cr>", { noremap = true, silent = false })
 
 -- Rnvim (Ranger) for Nvim
 vim.api.nvim_set_keymap("n", "<Leader>r", ":RnvimrToggle<CR>", { noremap = true, silent = false })

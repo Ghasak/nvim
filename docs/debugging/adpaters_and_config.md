@@ -3,9 +3,11 @@
 <!-- vim-markdown-toc GitLab -->
 
 * [Adapters Types](#adapters-types)
+    * [Which Adapter I am using](#which-adapter-i-am-using)
     * [Table 1: Adapter Details](#table-1-adapter-details)
     * [Table 2: Adapter Maintainers and Open Source Status](#table-2-adapter-maintainers-and-open-source-status)
 * [Configure OpenDebugAD7](#configure-opendebugad7)
+    * [How to Automate the Server](#how-to-automate-the-server)
 * [Another Adapter](#another-adapter)
 
 <!-- vim-markdown-toc -->
@@ -23,6 +25,14 @@ adapter can have specific features, behaviors, and compatibility levels. Here's
 a table summarizing the major differences among the mentioned debugging
 adapters. Please note that this table is based on data available up to January
 2022, and there might be changes or updates after that time:
+
+### Which Adapter I am using
+
+| Adapter Name   | file type support | configuration file name  | Features                                                       | dap calling name   |
+| -------------- | ----------        | -------                  | ----------------------------------------                       | ------------------ |
+| OpenDebugAD7   | C/CPP             | dap_cpp_OpenDebugAD7.lua | binary location, Automatic server triggered, breakpoint banner | cppdbg             |
+| lldb-vscode    | C/CPP             | dap_cpp_lldb_vscode.lua  | binary location, Automatic executable, breakingpoint banner    | lldb-vscode        |
+| Codelldb       |                   |
 
 ### Table 1: Adapter Details
 
@@ -82,6 +92,9 @@ most accurate details.
   websites of these adapters.
 
 ## Configure OpenDebugAD7
+
+- Ensure you run using Mason to install `cpptools`, this will install the
+  adapter and configuration support for C/CPP and Rust. The steps are:
 
 1. Download using `Mason` the `cpptools` located at:
    `~/.local/share/nvim/mason/packages/cpptools/extension/debugAdapters/bin`
@@ -175,6 +188,28 @@ return M
 
 ```sh
 ./OpenDebugAD7 --server=9999 --trace=response --engineLogging
+```
+
+### How to Automate the Server
+
+In lua we can automate the servre to run and stop using
+
+```lua
+
+local job_id = nil
+
+local function start_open_debug_ad7_server()
+  local cmd = "~/.local/share/nvim/mason/packages/cpptools/extension/debugAdapters/bin/OpenDebugAD7"
+  local args = {"--server=9999", "--trace=response", "--engineLogging"}
+
+  job_id = vim.fn.jobstart({cmd, unpack(args)}, {
+    on_exit = function(j, return_val, event)
+      if return_val ~= 0 then
+        print("OpenDebugAD7 server exited with error!")
+      end
+    end
+  })
+end
 ```
 
 ## Another Adapter
