@@ -46,7 +46,7 @@ M.dap_configurations_python_fn = function()
       type = "python",
       request = "launch",
       name = "Launch file",
-      program = "${file}",
+      program = "${file}", -- You can launch with arg as -m src.main (for entire project)
       pythonPath = function()
         -- You could adapt this - to for example use the `VIRTUAL_ENV` environment variable.
         local env_path = string.format("%s/bin/python3", os.getenv "VIRTUAL_ENV")

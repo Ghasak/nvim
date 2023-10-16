@@ -1,4 +1,4 @@
-#  Neovim Configurations File (build v.01)
+# Neovim Configurations File (build v.01)
 
 <!-- vim-markdown-toc GitLab -->
 
@@ -52,6 +52,7 @@
 * [What the meaning of visual-mode](#what-the-meaning-of-visual-mode)
 * [Open Website from nvim, or go to file](#open-website-from-nvim-or-go-to-file)
 * [Encrypting files with :X](#encrypting-files-with-x)
+* [Align a Table fast](#align-a-table-fast)
 * [Spell Checking](#spell-checking-1)
 * [Arithmetic Expression](#arithmetic-expression)
     * [Increment and decrements](#increment-and-decrements)
@@ -92,12 +93,15 @@ are, to name few:
   called `feature/dev` to check and try any new feature or package.
 
 ### Nvim updates in nutshell
+
 You will always need to configure
+
 1. Packer for new library/package
-2. `LSInstall` to get the language sever setup and configurations.
+2. `LSPInstall` to get the language sever setup and configurations.
 3. `tree-sitter` for getting the syntax highlighting with much better way.
 
 ### About Branch and GitHub
+
 Once you have updated the `main` branch (change, modify, create ... etc.)
 The current working flow to address such updates with my `main` repository is:
 
@@ -119,6 +123,7 @@ The current working flow to address such updates with my `main` repository is:
    identical copy to our `nvim0.6 branch`.
 
 ## Update history
+
 I have upgraded my `nvim` to version `7.0` which is the latest to 20,
 
 ```shell
@@ -127,6 +132,7 @@ window.documention => cmp.config.window.bordered()
 ```
 
 ## Contents
+
 The following configurations are based on `lua` with `nvim` as my daily-working
 environment. Nowadays, the main `nvim` developers team have recommended using
 `lua scripting language` for the configurations file, namely the `init.lua`
@@ -136,19 +142,25 @@ instead of `init.vim` with vim scripting.
 ![Packer Package Manager](./assets/SS-02.png)
 
 ## Debugging Support
+
 I have added the most requested feature of `nvim0.6` with debugging support, right now I have finished:
+
 - [x] python debugger with `nvim-dap`, as shown below
-![python debugger with `nvim-dap`](./assets/SS-04.png)
+      ![python debugger with `nvim-dap`](./assets/SS-04.png)
 
 ## Features to be developed
+
 This section will be dedicated to show new feature for my new `nvim` IDE.
+
 ### Implement OpenAI
+
 - This is to be investigated later, as I need to pay for `openAi` for the amount
-of all `token` with `DaVinci` model. Simply use the `nvim.magic` to get the
-backend of the integration with `openAi`.
+  of all `token` with `DaVinci` model. Simply use the `nvim.magic` to get the
+  backend of the integration with `openAi`.
   - Maybe you can use `GPT-3’s free alternative`
 
 ### Implement GitHub Copilot
+
 The `Github Copilot` is built on top of `openAi` `DaVinci` model, I am already
 in the technical preview, and my `Github` account is already connected with the
 `copilot`. Steps that I followed are mainly from the repository of `GitHub
@@ -158,10 +170,10 @@ plugins' workflow.
 ### Implementation of Remote Server IDE
 
 Check
+
 - [Explanation](https://www.youtube.com/watch?v=wVAsbpByQ3o&ab_channel=senkwich)
 - [distance](https://github.com/chipsenkbeil/distant)
 - [distance.nvim](https://github.com/chipsenkbeil/distant.nvim)
-
 
 #### General notes
 
@@ -178,7 +190,7 @@ with `COC and COC-LSP` and my current one with `nvim-lsp`.
 #### DAILY COMMANDS
 
 | T   | Command                     | Descriptions                                                                                                                          | Reference                                   |
-| --- | ------------------------    | ------------------------------------------------------------------------------------------------------------------------------------- | ----------                                  |
+| --- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
 | 1   | HOME                        | Got to Stratify home page                                                                                                             |                                             |
 | 2   | bd                          | close a buffer                                                                                                                        |                                             |
 | 3   | leader + cc/cu              | Comment and uncomment                                                                                                                 | deprecated                                  |
@@ -230,12 +242,13 @@ with `COC and COC-LSP` and my current one with `nvim-lsp`.
 | 42  | leader t+m                  | `Activite` the table mode                                                                                                             |                                             |
 | 43  | leader b+n                  | Open terminal horizontally                                                                                                            |                                             |
 | 44  | leader g d                  | go to definition in nvim-lsp built-in, while (g d) will be using lspSaga                                                              |                                             |
-| 45  | g  h                        | hover with `lspsaga`, while F1 hover using `nvim-lsp` built-in.                                                                       |                                             |
+| 45  | g h                         | hover with `lspsaga`, while F1 hover using `nvim-lsp` built-in.                                                                       |                                             |
 | 46  | Neoformat -formatter        | Using the formatter with the nvim depending on the language server, (e.g., Lua: luastyla)                                             |                                             |
 | 47  | shift+f                     | first highlight to get (:\`\<,\`\>)norm (**A** for end of lines, **I** for beginning of lines) adding the text you want               | https://www.youtube.com/watch?v=gccGjwTZA7k |
 | 48  | \:setfiletype \<file_type\> | Select to open given unknown file with treesitter similar to a given file                                                             |
 
 ### Requirements
+
 The requirements that I am looking for in my IDE are: **note**, check sign means already implemented.
 
 - [x] Supporting a native `lua-lsp` with `nvim 6.0+`.
@@ -291,8 +304,8 @@ Things to be included in my current developed branch.
 - [x] Moving block of code on request.
 - [x] Navigate using `ctrl + j` and `k` for `omini-windows`.
 - [x] Installing `CCC-Server`, but not conflict with our `nvim-lspconfig`
-  language-servers, (this feature is not required anymore with
-  `lsp-config.lua`).
+      language-servers, (this feature is not required anymore with
+      `lsp-config.lua`).
 
 #### Things to be considered
 
@@ -307,9 +320,9 @@ You will need the following necessary packages
 #### Setup packer
 
 For more information on `Packer package manager` see:
+
 - [packer](https://github.com/wbthomason/packer.nvim).
 - `Packer` now support `on-save` `sync and loading` modules.
-
 
 ## Building Nvim from Scratch requires:
 
@@ -330,12 +343,16 @@ luarocks install --server=https://luarocks.org/dev luaformatter
 ```
 
 ## Useful information
+
 ### Execute lua in cmd
+
 For example, to get the operation system name we can run
+
 ```shell
 :lua print(vim.ovim.loop.os_uname().sysname) <- this will return Darwin.
 :lua print(jit.os)                           <- this will return OSX
 ```
+
 ## Some useful API functions
 
 ```sh
@@ -350,6 +367,7 @@ local extension = vim.fn.expand "%:F"
 #  This will get us the full path
 local file = vim.fn.expand("%:p")
 ```
+
 ## Testing the speed of neovim launching time.
 
 Use the command `vim-startuptime` which will offer a quick calculation of the launching time.
@@ -358,7 +376,9 @@ Use the command `vim-startuptime` which will offer a quick calculation of the la
 - [vim-startuptime website](https://github.com/rhysd/vim-startuptime)
 - Right now, I used individual location for my `nvim`, that I installed it manually at `$HOME/dev/bin/nvim`
 - [Neovim build from the source](https://github.com/neovim/neovim/wiki/Building-Neovim)
-- `Plugins directory` will be at same directory of our `nvim`, I have tried to change this directory, but it causes many problems. When you do a fresh installation, ensure you have removed these old directories:
+- `Plugins directory` will be at same directory of our `nvim`, I have tried to
+  change this directory, but it causes many problems. When you do a fresh
+  installation, ensure you have removed these old directories:
   - ~/.config/plugin
   - ~/.local/share/nvim
 
@@ -415,24 +435,27 @@ vim.cmd[[let g:clap_theme = 'material_design_dark']]
 ```
 
 ## Checking my key-mapping with
+
 You can use `:verbouse map`, or `:Telescope keymaps`, to check all the key bindings.
 
 ## Spell checking
-For spell checking, I am using the 'kamykn/spelunker.vim', and mapped the (ZL
-and Zl) for checking the spelling. This is less attractive compared to the
-`nvim spell checking` from `COC`.
+
+For spell checking, I am using 'kamykn/spelunker.vim' and mapped (ZL and Zl)
+for checking spelling. This is less attractive compared to the `nvim` spell
+checking from `COC`.
 
 ## Fuzzy Finding
 
-One of the coolest feature that has been implemented is the `fuzzy finder` in
-`lua`. For all the features that comes with the `Fuzzy Finder`, it allows
-also to get the `path` (directory in string form similar to the `VSCode` plugin).
+One of the most interesting features that has been implemented is the "fuzzy
+finder" in Lua. This feature offers all the advantages of a fuzzy search,
+including the ability to retrieve the path (directory represented as a string
+similar to the one provided by the VSCode plugin).
 
 - The mapping is located at `lua/scripts/myCommandWrapper.lua`, which will be
-  triggered in the `insert mode` with (`CTR-X`, then `CTRL-F`). It will automatically
-  complete the path while coding, while you are searching for any specific
-  word. This feature is still existed, but now we have `cmp-path` plugin which
-  is much better for this particular task.
+  triggered in the "insert mode" using the shortcut keys of "(Ctrl-X followed by
+  Ctrl-F)" to automatically complete a path while coding, specifically for
+  searching for any specific word. This feature still exists, but the new and
+  much better `cmp-path` plugin is now available for this particular task.
 
 - [Idea got it from](https://vi.stackexchange.com/questions/34392/path-completion-with-fzf-from-absolute-path)
   you will need the following plugins:
@@ -485,12 +508,12 @@ the given window without closing all the other buffers.
 ## Performance and optimization
 
 I have used two types of performance evaluators to check the startup speed by
-measuring each individual plugin launching time in milliseconds. First the
-`vim-startuptim ` which is assigned with a flag `--vimpath=nvim`. Second, the
-`packer profile` with `:PackerProfile
-profile=true`. Recently, I have also included a tool that comes with
-`impatient` plugin to cache plugins it called `LuaCacheProfile`. The results
-are shown below
+measuring each individual plugin launching time in milliseconds. Firstly, I
+used the `vim-startuptim` tool, which is assigned with a flag `--vimpath=nvim`.
+Secondly, I utilized the `packer profile` command with the option
+`profile=true`. In addition, I have also included a tool called
+`LuaCacheProfile`, which comes with the `impatient` plugin. The results are
+presented below:
 
 ```shell
   Config for sidebar.nvim took 78.00594ms
@@ -499,7 +522,9 @@ are shown below
   packadd for nvim-lspinstall took 1.211138ms
   Config for bufferline.nvim took 1.012205ms
 ```
+
 - Applying a stress test for the launching time for `nvim 0.6` with the new configurations `Thus. Jan. 6th 2022`.
+
 ```bash
 # Applying
 ╰ for ((i = 1; i < 10; i++)); do echo "\ue741 \uf432  Trial no. ${i}\n"; vim-startuptime --vimpath=nvim | head -n 4 | grep "Total Average"; done
@@ -526,7 +551,6 @@ Total Average: 506.968300 msec
 
 ```
 
-
 ## Table mode in nvim
 
 Using a plugin `vim-table-mode` to create a nice table, need to remember the following
@@ -535,20 +559,24 @@ Using a plugin `vim-table-mode` to create a nice table, need to remember the fol
 
 ### How it works
 
-1. Enter the first line, delimiting columns by the | symbol. The plugin reacts by inserting spaces between the text and the separator if you omit them:
+1. Enter the first line, separating columns using the pipe symbol. The plugin
+   responds by inserting spaces between the text and the separator if they are
+   omitted:
 
 ```shell
 | name | address | phone |
 ```
 
-2. In the second line (without leaving Insert mode), enter | twice. The plugin will write a properly formatted horizontal line:
+2. In the second line, type "||" twice to create a properly formatted
+   horizontal line.
 
 ```shell
 | name | address | phone |
 |------+---------+-------|
 ```
 
-3. When you enter the subsequent lines, the plugin will automatically adjust the formatting to match the text you’re entering every time you press |:
+3. When you type in the subsequent lines, the plugin will automatically adjust
+   its formatting to match the text that you're typing each time you press "|".
 
 | name                        | address             | phone                                          |
 | --------------------------- | ------------------- | ---------------------------------------------- |
@@ -568,6 +596,7 @@ Installing the `Julia-lsp` needs, read from the references `Julia Language Refer
 ```shell
 julia --project=~/.julia/environments/nvim-lspconfig -e 'using Pkg; Pkg.add("LanguageServer")'
 ```
+
 where `~/.julia/environments/nvim-lspconfig` is the location where the default
 configuration expects `LanguageServer.jl` to be installed. To update an
 existing install, use the following command:
@@ -575,26 +604,31 @@ existing install, use the following command:
 ```shell
 julia --project=~/.julia/environments/nvim-lspconfig -e 'using Pkg; Pkg.update()'
 ```
+
 - **Note**:
-In order to have `LanguageServer.jl` pick up installed packages or dependencies
-in a Julia project, you must make sure that the project is instantiated:
+  In order to have `LanguageServer.jl` pick up installed packages or dependencies
+  in a Julia project, you must make sure that the project is instantiated:
 
 ```shell
 julia --project=/path/to/my/project -e 'using Pkg; Pkg.instantiate()'
 ```
+
 - **Note**
-To install the `intractive REPL` of Julia with `jupyter` you can use, inside
-the `julia` REPL use `]` to access the `Pkg` the package manager of `nvim`.
+  To install the `intractive REPL` of Julia with `jupyter` you can use, inside
+  the `julia` REPL use `]` to access the `Pkg` the package manager of `nvim`.
 
 ### Adding auto-formatter for shell-scripts or bash
+
 For using `NeoVim`, if the language server is `shell-lsp` for `bash` or `shell`, you can add the autoformatter similar to `lua` as following.
+
 1. Instal Go to your system
 2. Install using Go the auto-shell-formatter, `Neoformat` must see it that it is being installed to your default shell (`zsh`)
+
 ```shell
 go install mvdan.cc/sh/v3/cmd/shfmt@latest
 ```
-3. you can source the `shfmt` to your terminal so that the `neoformat` can see it, as `export PATH=$PATH:$HOME/go/bin/`. You can also run it externally using
 
+3. you can source the `shfmt` to your terminal so that the `neoformat` can see it, as `export PATH=$PATH:$HOME/go/bin/`. You can also run it externally using
 
 ```shell
 shfmt -l -w script.sh
@@ -611,34 +645,45 @@ g + ~ : to switch between the capitlal to small letter and viceversa (you will n
 bonus
 g + U 3 w will do for 3 words a head and captilze each word.
 ```
+
 - [10 Advanced Vim Features You probably didn't know](https://www.youtube.com/watch?v=gccGjwTZA7k)
 
 ## Tips and tricks in NVIM
+
 The following tips and tricks are for heavy `nvim` usages
+
 ### Auto-complete
+
 editing `auto comoplete` can you use `Ctrl + p` or `Ctrl + n`
 
 ### Buffers
+
 You can use the following commands `:bnext`, `:bprevious` `buffers`, `bd` and `:enew` which
 allow us to work with buffers more accurately.
 
 ### Recordings
+
 Recording is just using the `Macros` in `Nvim`, this need to study more about
 this feature and to be added here later.
+
 - Press `q + a`.
 - Do the sub-task.
 - Close macro `q`
 - Apply the macro using `@a` or `@a 12` will be repeated 12 times.
 
 ### Norm command
+
 `normal` or `norm` can be used with a lot of features.
+
 #### Adding to end or beginning of lines
+
 NOTE: (Read entry 47 in the table commands above for our daily shortcuts)
 The following trick allow us to write to the end of lines or beginning of lines
 Simply you can use the following.
-1. Highlight all the lines using *shift + v* then use *:* to get: :`<,`>.
+
+1. Highlight all the lines using _shift + v_ then use _:_ to get: :`<,`>.
 2. Adding `normal` or `norm` to the formula.
-3. Adding to end you can use *A* to the beginning add *I*.
+3. Adding to end you can use _A_ to the beginning add _I_.
 4. Add your text to the end.
 
 ```shell
@@ -647,7 +692,9 @@ Simply you can use the following.
 :`<,`>norm $X this  will delete last character at the end.
 :`<,`>norm ^X this  will delete first character at the end.
 ```
+
 ## Executing CLI commands (from LINUX)
+
 We can use the following `:!command` that will be show the command with input and output
 
 ```shell
@@ -657,15 +704,21 @@ We can use the following `:!command` that will be show the command with input an
 ```
 
 ## Form multi-lines into one-line single line in vim
+
 You can first select using `shift+v` for horizontal selection, to select all the lines you have
 Then
+
 ```shell
 :'<,'>j
 ```
+
 or you can use
 `g + shift +j` g command means only hits `g` letter to trigger the vim function for this purpose
+
 ## Do the opposite, form one-line to multi-lines
+
 For sure we can do the opposite using, you can select the maximum number of your given string in oneline
+
 ```shell
 :set textwidth=10
 then use
@@ -673,41 +726,124 @@ g then q
 dont forget to reset after you finish
 :set textwidth=0
 ```
+
 - [Vim Tutorial - Join and Split Lines](https://www.youtube.com/watch?v=MA9WFO_WUOM)
 
 ## What the meaning of visual-mode
-`v`          :is selecting visually a segment of a a given line.
-`shift v`    :is selecting visually multi-lines horizontally
-`ctrl v`     :si selecting visually multi-lines vertically.
+
+`v` :is selecting visually a segment of a a given line.
+`shift v` :is selecting visually multi-lines horizontally
+`ctrl v` :si selecting visually multi-lines vertically.
 
 ## Open Website from nvim, or go to file
+
 the command `g` stand for `G-command` one of the features that I like is `gx`
 will open the link while the cursor on it in the browser. Open files / URLs with gf / gx
 
 ## Encrypting files with :X
+
 [this feature available only for `Vim`, and it is not available for `nvim`, We
 can add encryption to our file and only can be opened using the password we
 have offer
+
 1. to Encrypt
+
 ```shell
 :X
 ```
+
 It will allow to encrypt your file after you input and confirm your password for this file.
 
 2. To decryPt
-do same without passwords by hitting enter + enter
+   do same without passwords by hitting enter + enter
+
+## Align a Table fast
+
+The follow trick require the plugin `align.nvim` and `vim-table-mode`.
+
+1. Assume you have the following table
+
+```sh
+BufNewFile	starting to edit a file that doesn't exist
+BufReadPre	starting to edit a new buffer, before reading the file
+BufRead	starting to edit a new buffer, after reading the file
+BufReadPost	starting to edit a new buffer, after reading the file
+BufReadCmd	before starting to edit a new buffer Cmd-event
+FileReadPre	before reading a file with a ":read" command
+FileReadPost	after reading a file with a ":read" command
+```
+
+2. First align to `space` using regular expression `align.nvim` is used `ar`
+   keybinding in visual mode.
+
+   - Highlight in visual mode all the text
+   - Use `ar` then `:\s` in cmdline.
+
+```sh
+BufNewFile  	starting to edit a file that doesn't exist
+BufReadPre  	starting to edit a new buffer, before reading the file
+FileReadPre 	before reading a file with a ":read" command
+FileReadPost	after reading a file with a ":read" command
+```
+
+3. Now, ensure the table mode is on using `<leader>tm`.
+   - Put the cursor at the begning of the lines
+   - create in vertical visual mode `v` only to add `|` the pipe line.
+
+```sh
+| BufNewFile  |	starting to edit a file that doesn't exist
+| BufReadPre  |	starting to edit a new buffer, before reading the file
+| FileReadPre |	before reading a file with a ":read" command
+| FileReadPost|	after reading a file with a ":read" command
+
+```
+
+4. Now, select the second portion of the table using `v` visual mode - vertical
+   visual selection.
+   - Select all lines after highlighting in vertical visual mode using `$`
+     keybinding
+   - Adding a `|` at the end of each line can be done using `:'<,'>normal A |`
+
+```sh
+| BufNewFile  |	starting to edit a file that doesn't exist |
+| BufReadPre  |	starting to edit a new buffer, before reading the file |
+| FileReadPre |	before reading a file with a ":read" command |
+| FileReadPost|	after reading a file with a ":read" command |
+
+```
+
+5. Now it shoud align automatically if you have `table` plugin turn on. If not
+   then you can again perform the `ar` of the portion of right side of the
+   table. After we can add the `(-)` with double `|` to the second line.
+
+```sh
+
+| BufNewFile     | starting to edit a file that doesn't exist               |
+| -------------- | -------------------------------------------------------- |
+| BufReadPre     | starting to edit a new buffer, before reading the file   |
+| FileReadPre    | before reading a file with a ":read" command             |
+| FileReadPost   | after reading a file with a ":read" command              |
+
+```
+
+- Check out the [Align natively in Vim](https://vim.fandom.com/wiki/Regex-based_text_alignment) page, for more details.
 
 ## Spell Checking
+
 you can use `z=` once your cursor is on top of the wrong-spelling word, which
 will give you a list of all the possible options to fix the wrong spelling.
 To add a word to the custom dictionary use `zg` over the new word (e.g., treeSitter)
 it will be added to `~/.config/nvim/spell/en.utf-8.add`.
 
 ## Arithmetic Expression
+
 ### Increment and decrements
+
 You can basically do arithmetic in `nvim` such as
+
 - increment and decrements an integer value using `ctrl + a` or `ctrl +x` over the number (e.g., 144)
-Using it with number increment list with `macro`
+  Using it with number increment list with `macro`
+
 1. Record a macro using `q+a`
 2. make a line with a number then copy it for next line
 3. increment the number of the list using `ctrl+a`
@@ -715,13 +851,13 @@ Using it with number increment list with `macro`
 5. repeat the macro using `@a` or `@a 3` to repeat it three times
 
 ### Execution commands
+
 - Put the cursor over the following expression in a new line:
-echo $((100 + 54))
+  echo $((100 + 54))
 - You can execute a command in your `nvim buffer` using `:.!zsh` to redraw your command line and get you the results inside the buffer.
 - You can execute a command in your `nvim command palette` with `:!!zsh`
 
 ### Combine Commands
-
 
 1. Hello world
 2. Hello world
@@ -734,40 +870,45 @@ echo $((100 + 54))
 - Assume we have the text above. highlight all these lines
 - use :`<,`>s/\..\+//cig
 - It will get you all the numbers
-1
-2
-3
-4
-5
-6
-7
+  1
+  2
+  3
+  4
+  5
+  6
+  7
 - Highlight again and use `<,`>norm A + to add (+) to the end of each line
-1 +
-2 +
-3 +
-4 +
-5 +
-6 +
-7 +
+  1 +
+  2 +
+  3 +
+  4 +
+  5 +
+  6 +
+  7 +
 
 - Highlight again and use `<,`>join (or simply j) to join them all together.
-1 + 2 + 3 + 4 + 5 + 6 + 7 +
+  1 + 2 + 3 + 4 + 5 + 6 + 7 +
 - Finally get the value of this expression using `:.!zsh` as:
-echo $((1 + 2 + 3 + 4 + 5 + 6 + 7))
+  echo $((1 + 2 + 3 + 4 + 5 + 6 + 7))
 
 - Now we can get the final value as
-28
+  28
 
 ## How to increment a list (most elegant way)
+
 We can use the following steps:
+
 - Create a list with zeros as shown using `ctrl+v` then `shit + i` then `0` and enter.
+
 ```shell
 - [0] list number 1
 - [0] list number 1
 - [0] list number 1
 - [0] list number 1
 ```
+
 - Now you highlight `visual block` using `<C-v>` also knows as `ctrl+v` again the list at `0` and perform `g<C-a>`
+
 ```shell
 - [1] list number 1
 - [2] list number 2
@@ -779,19 +920,24 @@ We can use the following steps:
 - [Quick vim tips to generate and increment numbers](https://irian.to/blogs/quick-vim-tips-to-generate-and-increment-numbers/)
 
 ### More example
+
 1. Try to put some text with increment
+
 ```shell
 :for i in range(1,10) | put ='192.168.0.'.i | endfor
 ```
+
 2. Try to create counter with 00 prefixes
+
 ```shell
 :put =map(range(1,150), 'printf(''%04d'', v:val)')
 ```
+
 - [More tips and tricks about increments](https://vim.fandom.com/wiki/Making_a_list_of_numbers)
 
 ## How to capitalize first letter in many lines
-- [my comment can be found here](https://stackoverflow.com/questions/3126500/how-do-i-capitalize-the-first-letter-of-a-word-in-vim/72860055#728600550)
 
+- [my comment can be found here](https://stackoverflow.com/questions/3126500/how-do-i-capitalize-the-first-letter-of-a-word-in-vim/72860055#728600550)
 - [10 Advanced Vim Features You probably didn't know](https://www.youtube.com/watch?v=gccGjwTZA7k)
 - [dotfile](https://github.com/sdaschner/dotfiles/blob/master/.vimrc)
 
@@ -804,41 +950,49 @@ We can use the following steps:
 5. Press Shift + A to append text to every selected line.
 6. Type the text you want to append.
 7. Press Escape and the text will be appended across the selected lines.
+
 - [Vim Select the ends of multiple lines block mode ](https://stackoverflow.com/questions/10772598/vim-select-the-ends-of-multiple-lines-block-mode-but-where-the-ending-column-v)
 
 ## Language Server
+
 ### Adding Latex language server
+
 I have chosen the `latex:textlab` as my language sever for the latex to get all
 the features required to write in `latex`. Following the Steps
 
 1. Install the language server using
-I have chosen the `textlab` as it is developed with `Rust`,and it is superFast.
+   I have chosen the `textlab` as it is developed with `Rust`,and it is superFast.
 
 ```shell
 LSInstall latex
 # choice textab
 
 ```
+
 2. Compile your `file.text` into a `PDF` you need to use the following command
 
 ```shell
 latex -pdf file.text  <- This will complie your entire .text file at once.
-latex -pvc file.text  <- This will allow the  document to be complied while you write your code and once you save it will complied automatically
-# To exit the automatical compliation use Ctrl+Z
+latex -pvc file.text  <- This will allow the  document to be complied while you
+write your code and once you save it will complied automatically # To exit the
+automatical compliation use Ctrl+Z
 ```
+
 3. Automatically compile the Latex file to PDF
-Following the `nvim` plugin `knap` which can automatically compile the text file
-to PDF. The file should compile and display using one of the `pdf` reader that
-the author specified in his repository. The one I am using is the `Sioyek`
-which is faster and dynamically update the PDF while typing.
+   Following the `nvim` plugin `knap` which can automatically compile the text file
+   to PDF. The file should compile and display using one of the `pdf` reader that
+   the author specified in his repository. The one I am using is the `Sioyek`
+   which is faster and dynamically update the PDF while typing.
 
 - [knap plugin](https://github.com/frabjous/knap#mupdf)
 - [Sioyek pdf](https://sioyek.info), You need a cheat-sheet for `Sioyek`
 
-
 ## Troubleshooting, Bugs and Errors
+
 after running `nvim` it is a good pratice to use `:messages` or `:notifications` for debugging messages.
+
 1. Nvim 0.7
+
 - For`README.md` there was an issue can be solved using `:TSupdate`, follow here
   - [Fixing the issue of markup server error](https://github.com/nvim-treesitter/nvim-treesitter/issues/634)
 - Clang has an issue due to not adding the capabilities option for the `utf-8`
@@ -851,13 +1005,16 @@ after running `nvim` it is a good pratice to use `:messages` or `:notifications`
 capabilities.offsetEncoding = 'utf-8'
 
 ```
+
 - `Markdown-preview` doesn't do anything.
-This thread has allowed me to fix this problem as I needed to update the plugin dependencies using `:call mkdp#util#install()`
+  This thread has allowed me to fix this problem as I needed to update the plugin dependencies using `:call mkdp#util#install()`
 - [markdown-preview bugs and fixes](https://github.com/iamcco/markdown-preview.nvim/issues/188)
 
 2. Nvim 0.7.2
-I have encountered with the following problems
+   I have encountered with the following problems
+
 - `Language server error message` I have fixed by adding a function in the bottom on lsp-config.lua file
+
 ```lua
 -- suppress error messages from lang servers
 vim.notify = function(msg, log_level, _opts)
@@ -871,7 +1028,9 @@ vim.notify = function(msg, log_level, _opts)
     end
 end
 ```
+
 - `tabnine` was not updated because simply you can remove it first and re-install this plugin or you can go to
+
 ```lua
 -- Solution number -1-
 return require("packer").startup(
@@ -888,8 +1047,8 @@ cd ~/.local/share/nvim/site/pack/packer/opt/cmp-tabnine/
 ./install.sh
 
 ```
-- `tree-sitter` was broken for each language, simple I executed in nvim command line `:TSUpdate`
 
+- `tree-sitter` was broken for each language, simple I executed in nvim command line `:TSUpdate`
 
 ## References
 
@@ -920,7 +1079,3 @@ use { "rcarriga/nvim-dap-ui" }
 use { "Pocco81/DAPInstall.nvim" }
 use { "jbyuki/one-small-step-for-vimkind" }
 ```
-
-
-
-

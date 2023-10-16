@@ -60,7 +60,8 @@
 - [x] Refactoring and optimizing the workflow structure.
 - [x] Added session harboon designed for productivity.
 - [x] Added original function for launching `autoload`-`netrwPlugin`-
-- [x] Changed the nvim-web-devicons customized based on our requested color ([Read here](./docs/IconsColor.md))
+- [x] Changed the nvim-web-devicons customized based on our requested color
+      ([Read here](./docs/IconsColor.md))
 - [x] Added a color theme plugin created from scratch namely `github.nvim` theme.
 - [x] Add more support for the debugging session with `which-key` integration.
       Also added `virtual-text` supprot in the `dap` session to show the value of
@@ -86,11 +87,14 @@ upgrades to my configuration file (to name few)
 - [x] All packages are supported for the new version of `nvim`
 - [x] Startup time up to maximum 18 milliseconds tested on my `MacBook Max M1`
 - [x] Support several programming languages, with their components such assets
+
   - LSP configured with `mason` plugin, (also support lsp-saga, lsp-signature)
   - Linting support, Auto-formatter, intelligence, auto-completions,
   - Go to definition, hover, references, troubles, actions.
   - Debugging with `nvim-dap` support several protocols and programmings adapters.
-  - Dap now support the `virtualenv` type, which can trigger the adapter of the virtualenv to keep consistency.
+  - Dap now support the `virtualenv` type, which can trigger the adapter of the
+    virtualenv to keep consistency.
+
 - [x] Fixed the `cmp-line` support the `ctrl+j/k` for navigation.
 - [x] Added boarders to the `lsp/cmp` elements
 - [x] Auto-trigger `packer-plugins` when the list of plugins is upated.
@@ -146,8 +150,6 @@ trigger `cmp-create` and `nvim-crate`. You can later use the `keymapping:
 gH` on the crate name, which will trigger documentation about the crate history
 and other considerations.
 
-
-
 ### Auto Save
 
 By default, the file will be auto-saved based on the `auto-saved` plugin, which
@@ -173,7 +175,6 @@ P(fn.setup())
 ```
 
 ## More details for the configurations
-
 ## To do
 
 - [x] Configuration for the dap
@@ -233,22 +234,20 @@ The following command are super handy and useful when developign `lua` plugins.
 5. Since 0.8 we can now create
 
 ```vim
-
-      vim.cmd [[
-      autocmd BufEnter,CursorHold,InsertLeave,BufWritePost *.rs silent! lua vim.lsp.codelens.refresh()
-    ]]
+vim.cmd [[
+  autocmd BufEnter,CursorHold,InsertLeave,BufWritePost *.rs silent! lua vim.lsp.codelens.refresh()
+]]
 ```
 
 Now, it becomes as:
 
 ```lua
-    vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "CursorHold", "InsertLeave" }, {
-      pattern = { "*.rs" },
-      callback = function()
-        vim.lsp.codelens.refresh()
-      end
-
-    })
+vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "CursorHold", "InsertLeave" }, {
+  pattern = { "*.rs" },
+  callback = function()
+    vim.lsp.codelens.refresh()
+  end
+})
 ```
 
 6. undotree hint
@@ -391,8 +390,9 @@ vim.opt.statusline = status_line()
 
 ```
 
-To add color to `status-line` we can use the following, Go to the `one-darker` configuration file and add the following
-which can alter the group color of the `statusline`
+- To add color to `status-line` we can use the following, Go to the
+  `one-darker` configuration file and add the following which can alter the group
+  color of the `statusline`
 
 ```lua
      -- StatusLine
@@ -413,18 +413,18 @@ In command line prompt for `nvim` you can print the tables using one of the foll
 
 ### Order of execution in nvim
 
-Anything you put inside the `plugin` (notice there is not s), which is same
-directory that the `nvim-packer` store the `startup` it will be used to load
-the `nvim configuration` It is very useful to understand the directory order to
-put the configurations files that used by the nvim for speeding up the startup
-time.
+Anything you put inside the `plugin` (without a trailing 's'), which is located
+in the same directory as where `nvim-packer` stores its `startup`, will be used
+to load the `nvim configuration`. It's useful to understand the directory order
+for placing your configurations files to improve startup speed.
 
-- [x] Create a `test.lua` file at the `plugin` then it will source automatically.
-- [x] You can put a code inside this `test.lua` any code which can be loaded after all the `lua` files will be sourced and executed.
-- [x] Notice that `packer-plugins` is a global variable which will be
-      established after sourcing the `packer_compiled.lua`. It will check for a
-      plugin called `undotree` (the name should be same as the one from the GitHub
-      repository).Here, we will get (`wow`) when we open `init.lua` file automatically.
+- [x] Create a `test.lua` file at the plugin directory for automatic sourcing.
+- [x] You can put any code inside this `test.lua` that will be loaded and
+      executed after all Lua files are sourced.
+- [x] Note that the `packer-plugins` global variable is established after
+      sourcing the `packer_compiled.lua`. It checks for a plugin called `undotree`
+      (same as from the GitHub repository). This will automatically get loaded when
+      you open the `init.lua` file.
 
 ```lua
 if packer_plugins["undotree"] and packer_plugins["undotree"].loaded then

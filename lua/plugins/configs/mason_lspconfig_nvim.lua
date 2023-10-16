@@ -254,6 +254,22 @@ M.setup = function()
         cmd = { "R", "--slave", "-e", "languageserver::run()" },
       }
     end,
+    -- For C/C++ language
+    ["clangd"] = function()
+      lspconfig.clangd.setup {
+        on_attach = opts.on_attach,
+        capabilities = opts.capabilities,
+        handlers = opts.handlers,
+        filetypes = { "cpp", "c" },
+        ---@diagnostic disable-next-line: unused-local
+        on_new_config = function(new_config, new_cwd)
+          local status, cmake = pcall(require, "cmake-tools")
+          if status then
+            cmake.clangd_on_new_config(new_config)
+          end
+        end,
+      }
+    end,
   }
 end
 return M

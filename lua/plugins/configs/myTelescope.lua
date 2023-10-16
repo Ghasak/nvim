@@ -120,13 +120,20 @@ M.config = function()
         check_mine_type = false,
         timeout = 100,
       },
-      file_ignore_patterns = { ".git/" },
-
       prompt_prefix = "    ",
       selection_caret = "   ",
+      selection_strategy = "reset",
       -- prompt_prefix = "> ",
       -- selection_caret = "> ",
+      initial_mode = "insert",
       sorting_strategy = "ascending",
+      file_sorter = require("telescope.sorters").get_fuzzy_file,
+      generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
+      path_display = {},
+      winblend = 0,
+      color_devicons = true,
+      use_less = true,
+      file_ignore_patterns = { ".git/" },
       layout_config = {
         horizontal = {
           prompt_position = "bottom",
@@ -142,7 +149,6 @@ M.config = function()
         preview_cutoff = 120,
       },
 
-      color_devicons = true,
       mappings = {
         i = {
           ["<c-k>"] = actions.move_selection_previous,
@@ -163,6 +169,7 @@ M.config = function()
     pickers = {
       find_files = {
         --find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
+        -- find_command = {"rg", "--no-heading", "--with-filename", "--line-number", "--column", "--smart-case"},
         find_command = {
           "fd",
           ".",
@@ -226,17 +233,32 @@ M.config = function()
           telescope = require("telescope.themes").get_dropdown {},
         },
       },
+      -- Jump on markdown headers
+      heading = {
+        treesitter = true,
+        picker_opts = {
+          layout_config = { width = 0.8, preview_width = 0.5 },
+          layout_strategy = "horizontal",
+        },
+      },
     },
   }
 
   --telescope.load_extension('project')
   telescope.load_extension "fzf"
+  -- This is the best option to open window for selection instead the regular selection in cmdline
   telescope.load_extension "ui-select"
   telescope.load_extension "frecency"
+  -- See more feature about lazygit
   telescope.load_extension "lazygit"
+  -- Allow us to jump to dap point and other features
   telescope.load_extension "dap"
+  -- Allow us to see the register nicely for our current selection (<leader>fy)
   telescope.load_extension "yank_history"
+  -- This will allow us to jump to any go to definition using the lspconfig
   telescope.load_extension "lsp_handlers"
+  -- Jump on markdown heading easily within the given document (:Telescope heading), markdown files only.
+  telescope.load_extension "heading"
 end
 
 M.setup()

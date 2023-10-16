@@ -97,7 +97,7 @@ return {
         -- https://github.com/nvim-telescope/telescope-fzf-native.nvim
         "nvim-telescope/telescope-fzf-native.nvim",
         build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
-        event = "VimEnter",
+        event = "InsertEnter",
       },
       -- This is ui for showing menu for io.popen
       -- It will open most output to a selection including, dap, gen.nvim (AI)
@@ -149,6 +149,15 @@ return {
         "gbrlsnchs/telescope-lsp-handlers.nvim",
         --cond = false, -- Loading the dap, if false it will not be loaded,
         event = "VimEnter",
+      },
+      {
+        "crispgm/telescope-heading.nvim",
+        ft = { "makrdown" },
+        even = "InsertEnter",
+        ensure_installed = {
+          "markdown",
+          "rst",
+        },
       },
     },
   },
@@ -204,6 +213,9 @@ return {
   -- ==========================================================================
   -- 	                      Programming Language Servers
   -- =========================================================================
+  -- C/CPP CMake lsp Enhancer
+  { "Civitasv/cmake-tools.nvim", ft = { "cpp", "c" }, lazy = true },
+
   -- Rust lsp Enhancer
   { "simrat39/rust-tools.nvim", lazy = true, ft = "rust" },
   {
@@ -480,7 +492,7 @@ return {
   }, -- This will  highlight the colors as #558817
   {
     "norcalli/nvim-colorizer.lua",
-    event = "InsertEnter",
+    event = "VeryLazy",
     lazy = true,
     cmd = { "ColorizerToggle" },
     config = function()
@@ -550,7 +562,7 @@ return {
   -- Deleting a given buffer without affecting
 
   --{ "famiu/bufdelete.nvim", lazy = true, cmd = { "Bdelete" } },
-  { "ojroques/nvim-bufdel", lazy = true, cmd = { "BufDel","BufDelAll", "BufDelOthers" } },
+  { "ojroques/nvim-bufdel", lazy = true, cmd = { "BufDel", "BufDelAll", "BufDelOthers" } },
 
   { "vim-scripts/ReplaceWithRegister", lazy = true, event = "InsertEnter" },
   -- Better repeat (.) with nvim (from tpope)
@@ -640,6 +652,16 @@ return {
     ft = { "tex" },
     config = function()
       require "plugins.configs.myknap"
+    end,
+  },
+  -- Align easily in nvim
+  {
+    "Vonr/align.nvim",
+    branch = "v2",
+    lazy = true,
+    event = { "VeryLazy" },
+    init = function()
+      require("plugins.configs.myAlign").config()
     end,
   },
   -- Auto-save for nvim, which will save your work triggered on events: "InsertLeave", "TextChanged"
@@ -757,6 +779,9 @@ return {
 
   -- ===========================================================================
   --                           AI Developement
+  -- Models: https://ollama.ai/library
+  -- Run in terminal: ollama serve
+  -- Currently I'am using zephyr model
   -- ===========================================================================
   {
     "David-Kunz/gen.nvim",
@@ -764,14 +789,11 @@ return {
     lazy = true,
     cmd = { "Gen" },
     config = function()
-      require("gen").prompts["Make_Style"] = {
-        prompt = "Transform the following text into the style of $input1: $text",
-        replace = true,
-      }
+      require("plugins.configs.myGenAI").config()
     end,
   },
   -- ===========================================================================
-  --                          TMUX
+  --                          TMUX [not used for now]
   -- ===========================================================================
   {
     "christoomey/vim-tmux-navigator",

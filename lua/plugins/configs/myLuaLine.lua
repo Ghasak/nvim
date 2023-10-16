@@ -94,6 +94,18 @@ local lsp_func = function()
 end
 
 -- --------------------------------------------------------------------
+--              CMAKE TOOLS FORM cmake-tools
+--       https://github.com/Civitasv/cmake-tools.nvim
+--       /blob/master/docs/howto.md
+-- --------------------------------------------------------------------
+
+local status_cmake_tools_ok, cmake = pcall(require, "cmake-tools")
+if not status_cmake_tools_ok then
+  return M
+end
+
+local icons = require "plugins.configs.icons"
+-- --------------------------------------------------------------------
 --                      Operating System Icon
 -- --------------------------------------------------------------------
 local system_icon = function()
@@ -123,13 +135,20 @@ local function file_size(file)
     return ""
   end
   if size < 1024 then
+    ---@diagnostic disable-next-line: cast-local-type
+    size = tostring(size)
+    ---@diagnostic disable-next-line: cast-local-type
     size = string.format("󰖡 %d", size) .. "B"
   elseif size < 1024 * 1024 then
-    size = string.format("󰖡 %d", size / 1024) .. "KB"
+    ---@diagnostic disable-next-line: cast-local-type
+    size = string.format("󰖡 %d", math.floor(size / 1024)) .. "KB"
+    ---@diagnostic disable-next-line: cast-local-type
   elseif size < 1024 * 1024 * 1024 then
-    size = string.format("󰖡 %d", size / 1024 / 1024) .. "MB"
+    ---@diagnostic disable-next-line: cast-local-type
+    size = string.format("󰖡 %d", math.floor(size / 1024 / 1024)) .. "MB"
   else
-    size = string.format("󰖡 %d", size / 1024 / 1024 / 1024) .. "GB"
+    ---@diagnostic disable-next-line: cast-local-type
+    size = string.format("󰖡 %d", math.floor(size / 1024 / 1024 / 1024)) .. "GB"
   end
   return size .. space
 end
@@ -391,6 +410,23 @@ function M.setup()
         { "encoding" },
         { "filetype" },
         { lsp_func },
+        {
+          function()
+            local c_preset = cmake.get_configure_preset()
+            return "CMake: [" .. (c_preset and c_preset or "X") .. "]"
+          end,
+          icon = icons.ui.Search,
+          cond = function()
+            return cmake.is_cmake_project() and cmake.has_cmake_preset()
+          end,
+          on_click = function(n, mouse)
+            if n == 1 then
+              if mouse == "l" then
+                vim.cmd "CMakeSelectConfigurePreset"
+              end
+            end
+          end,
+        },
         { system_icon() },
         separator = nil,
       },

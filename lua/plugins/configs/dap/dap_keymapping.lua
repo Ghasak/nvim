@@ -52,6 +52,38 @@ local function stop_open_debug_ad7_server()
   end
 end
 
+-- Function to cut a string from the first occurrence of a substring to the end
+-- If the substring is not found, the entire string is returned.
+local function cutStringToEnd(fullString, substring)
+    local startPos, endPos = fullString:find(substring)
+
+    if startPos then
+        return fullString:sub(startPos)
+    else
+        return fullString
+    end
+end
+-- Function to cut a string from the beginning to a specified substring
+-- If the substring is not found, the entire string is returned.
+-- Function to cut a string from the beginning to the end or up to a specified substring
+local function cutStringToSubstring(fullString, substring)
+  local startPos, endPos
+
+  if substring == "" then
+    -- If the substring is an empty string, return an empty string
+    return ""
+  else
+    -- Otherwise, find the position of the specified substring
+    startPos, endPos = fullString:find(substring)
+  end
+
+  if startPos then
+    return fullString:sub(1, startPos - 1)
+  else
+    return fullString
+  end
+end
+
 M.debugging_key_mapping = function()
   --
   --
@@ -73,23 +105,29 @@ M.debugging_key_mapping = function()
     -- vim.notify(file)
     async.run(function()
       if debugger_name == "codelldb" then
+        local fullString = tostring(require("dap").adapters[debugger_name]["executable"]["command"])
+        local searchString = "mason"
+        local cutString = cutStringToEnd(fullString, searchString)
         messege = string.format(
-          "Using deubgging Adapter %s loaded from: %s at\n%s ... ",
+          "Using deubgging Adapter %s loaded from:\n%s at:\n%s ... ",
           debugger_name,
-          tostring(require("dap").adapters[debugger_name]["executable"]["command"]), -- Here is the adapter type, codelldb, lldb-vscode,
+          cutString, -- Here is the adapter type, codelldb, lldb-vscode,
           os.date "%H:%M:%S"
         )
       elseif debugger_name == "cppdbg" then
+        local fullString = tostring(require("dap").adapters[debugger_name]["executable"]["command"])
+        local searchString = "mason"
+        local cutString = cutStringToEnd(fullString, searchString)
         messege = string.format(
-          "Using deubgging Adapter %s loaded from: %s at\n%s ... ",
+          "Using deubgging Adapter %s loaded from:\n%s at:\n%s ... ",
           debugger_name,
-          tostring(require("dap").adapters[debugger_name]["executable"]["command"]), -- Here is the adapter type, codelldb, lldb-vscode,
+          cutString, -- Here is the adapter type, codelldb, lldb-vscode,
           os.date "%H:%M:%S"
         )
-        run_server_message = string.format(
+        local run_server_message = string.format(
           "Now, The OpenDebug7A server runs using:\n"
             .. "./OpenDebugAD7 --server=9999 --trace=response --engineLogging\n"
-            .. "At Adapter Location in backgroun"
+            .. "At Adapter Location in background"
         )
         -- This will start the server automatically ..
         START_OPEN_DEBUGAD7_SERVER()
@@ -109,10 +147,8 @@ M.debugging_key_mapping = function()
   end
 
   -- Display a banner message indicating the Python debug environment being used.
-  --
   -- This function creates an asynchronous notification banner that displays the Python
   -- debug environment currently in use, based on the value of `vim.g.python_custom_command_path`.
-  --
   -- @return None
   _G.PYTHON_DIR_BANNER_MESSAGE = function()
     require("plugins.configs.dap.dap_custom_languages_settings.dap_python_settings").checking_adpater_type()
