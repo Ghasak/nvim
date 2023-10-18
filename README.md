@@ -70,10 +70,11 @@
 
 ### v.0.8.0 Update release Nvim-workflow v0.1
 
-As `nvim` is now updated to version `0.8` with a stable release. Several
-deprecated `3rd-plugins` and `APIs`. I have optimized the startup time and got
-it reduced from 800 milliseconds to only 18 milliseconds. Now, `nvim` is faster
-than light with backwards compatibilities to some outdated `plugins` but
+As `nvim` has been updated to version `0.8`, which includes a stable release,
+several deprecated third-party plugins and APIs have also been optimized. As a
+result, the startup time has been reduced from 800 milliseconds to only 18
+milliseconds. With this optimization, `nvim` is now faster than light while
+maintaining backwards compatibility with some outdated plugins that are
 essential to my daily workflow.
 
 ![Current versions view](./assets/SS-07.png)
@@ -152,9 +153,10 @@ and other considerations.
 
 ### Auto Save
 
-By default, the file will be auto-saved based on the `auto-saved` plugin, which
-will be trigger once we start writting. To stop the auto-save, we can use the
-`keymapping: <leader>s` which will stop the autosave.
+By default, the file will automatically save based on the `auto-saved` plugin.
+This feature is triggered as soon as we begin writing. To stop this auto-save,
+we can use the keymapping `leader` + 's', which will prevent further automatic
+saves.
 
 ### For development
 
@@ -250,10 +252,10 @@ vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "CursorHold", "InsertL
 })
 ```
 
-6. undotree hint
-   Since we allow `undotree` to be triggered only when we call the undotree
-   kepmapping, then you should always hit at least once the `undotree` to trigger
-   it for the curretn buffer, which can keep tracking the changes.
+6. undotree hint Since we allow `undotree` to be triggered only when we call
+   the undotree kepmapping, then you should always hit at least once the
+`undotree` to trigger it for the curretn buffer, which can keep tracking the
+changes.
 
 ## Jump Motion
 
@@ -496,15 +498,12 @@ syn match GGX "\v<[A-Z]+>"
 ]])
 
 ```
-
 You can also specify some highlight using:
 
 ```shell
 vim.cmd([[highlight Visual cterm=bold ctermbg=Blue ctermfg=NONE]])
 ```
-
 There are three ways to highlight custom group (group created by user) these are
-
 1. Using direct nvim syntax
 
 ```vim
@@ -588,3 +587,6 @@ want to alter the color.
 ## MEASURE SPEED OF NEOVIM
 
 - [Speedup Neovim ](https://aca.github.io/neovim_startuptime.html)
+
+
+

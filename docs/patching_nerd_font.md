@@ -39,7 +39,7 @@ fontforge --script ./font-patcher --complete VictorMono-Regular.otf
 5. I have created a script that easily can forge any font (font must be
    mono/fixed size) using the script below.
 
-```shell
+```bash
 #!/usr/bin/env bash
 
 default_directory="$HOME/Desktop/nerd_font_patcher/source_font/VictorMonoAll/OTF/"

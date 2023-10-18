@@ -26,7 +26,9 @@ local function lsp_keymaps(bufnr)
     -- Enable completion triggered by <c-x><c-o>
 end
 
+---@diagnostic disable-next-line: unused-local
 M.custom_attach = function(client, bufnr)
+---@diagnostic disable-next-line: unused-function, unused-local
     local function buf_set_option(...)
         vim.api.nvim_buf_set_option(bufnr, ...)
     end

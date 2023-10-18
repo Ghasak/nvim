@@ -77,9 +77,9 @@ Therefore, it is time to upgrade the configuration file of `init.lua`. The
 native `nvim` module of `nvim-lsp` has become `nvim-diagonstics`, the built-in
 APIs are now different, which many other third-party-plugins haven't been
 supported yet. In this repository, I have migrated to the new `Nvim 0.6`, after
-fixing the `lsp-saga`, this including the `lsp-signture` which are both
-now working synchronously with the `lsp-connfig`. Features in this migration
-are, to name few:
+fixing the `lsp-saga`, this including the `lsp-signture` which are both now
+working synchronously with the `lsp-connfig`. Features in this migration are,
+to name few:
 
 - Now all packages are supported with the `NVIM v.07+`.
 - Some compatibility issues are now fixed with the `lsp-configs`, especially

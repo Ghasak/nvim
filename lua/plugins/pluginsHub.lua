@@ -665,7 +665,7 @@ return {
     end,
   },
   -- Auto-save for nvim, which will save your work triggered on events: "InsertLeave", "TextChanged"
-  -- We don't need the auto-saver anymore it seem, that is correct maybe, that is correct, try this
+  -- We don't need the auto-saver anymore it seem, that is correct maybe,try this
   -- use({
   --   "Pocco81/auto-save.nvim",
   --   --opt = true,

@@ -57,7 +57,12 @@ local init_modules = {
 for _, module in ipairs(init_modules) do
   load_module(module)
 end
+
 -- Loading the neovide configurations, once it neovide is lunched.
 if vim.g.neovide then
-  require("units.neovideConfig").neovide_config()
+  local status, neovide_config = pcall(require("units.neovideConfig").neovide_config)
+  if not status then
+    -- Handle any errors or exceptions
+    vim.print("Error: ", vim.log.levels.WARN, neovide_config)
+  end
 end

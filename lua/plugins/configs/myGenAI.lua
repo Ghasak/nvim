@@ -13,7 +13,7 @@ M.config = function()
     prompt = "Transform the following text into the style of $input1: $text",
     replace = true,
   }
-  gen.model = 'zephyr'
+  gen.model = 'zephyr:latest'
 end
 
 return M

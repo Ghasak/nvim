@@ -29,6 +29,7 @@ return {
           "DiagnosticHint",
           "DiagnosticLineNrHint",
           "DiagnosticLineNrWarn",
+          "neovide",
         },
       },
       workspace = {

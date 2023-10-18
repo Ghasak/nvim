@@ -25,6 +25,7 @@ vim.bo.expandtab = true
 vim.bo.shiftwidth = 2
 vim.bo.softtabstop = 2
 
+---@diagnostic disable-next-line: unused-local
 local mode_adapters = {
   insert_mode = "i",
   normal_mode = "n",
@@ -164,7 +165,6 @@ vim.api.nvim_set_keymap("n", "<leader>w", "<cmd>BufDel<cr>", { noremap = true, s
 -- Move to beginning and end of line in normal mode
 vim.api.nvim_set_keymap("n", "<leader>h", "<ESC>^", { noremap = true, silent = false })
 vim.api.nvim_set_keymap("n", "<leader>l", "<ESC>$", { noremap = true, silent = false })
-
 
 -- Rnvim (Ranger) for Nvim
 vim.api.nvim_set_keymap("n", "<Leader>r", ":RnvimrToggle<CR>", { noremap = true, silent = false })
@@ -364,8 +364,8 @@ vim.api.nvim_set_keymap("n", "<leader>gg", ":LazyGit<CR>", { noremap = true, sil
 ----             Check: https://github.com/David-Kunz/gen.nvim/tree/main
 ----             https://ollama.ai/download
 ---- *****************************************************************************************
-vim.api.nvim_set_keymap("n", "<leader>ai", ":Gen<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", "<leader>ai", ":Gen Enhance_Grammar_Spelling<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("v", "<leader>ai", ":Gen<CR>", { noremap = true, silent = true })
+--vim.api.nvim_set_keymap("v", "<leader>ai", ":Gen Enhance_Grammar_Spelling<CR>", { noremap = true, silent = true })
 -------------------------------
 
 -- vim.keymap.set("n", "<c-n>", "<Plug>(YankyCycleForward)")
