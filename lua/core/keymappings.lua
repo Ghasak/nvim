@@ -370,3 +370,15 @@ vim.api.nvim_set_keymap("v", "<leader>ai", ":Gen<CR>", { noremap = true, silent 
 
 -- vim.keymap.set("n", "<c-n>", "<Plug>(YankyCycleForward)")
 -- vim.keymap.set("n", "<c-p>", "<Plug>(YankyCycleBackward)")
+
+---- *****************************************************************************************
+-- For faster mapping for :Lazy Plugin Manager.
+---- *****************************************************************************************
+vim.keymap.set("n", "<leader>z", "<cmd>:Lazy<cr>", { desc = "Plugin Manager" })
+
+---- *****************************************************************************************
+----                             VIM-VISUAL-MULTI MODE
+----                               :help visual-multi
+---- *****************************************************************************************
+vim.keymap.set("n", "<leader>cu", "<Plug>(VM-Add-Cursor-Up)", { desc = "vim visual multi" })
+vim.keymap.set("n", "<leader>cd", "<Plug>(VM-Add-Cursor-Down)", { desc = "vim visual multi" })

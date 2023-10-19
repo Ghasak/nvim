@@ -83,4 +83,3 @@ vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1e222a" })
 
 -- Configure lazy.nvim
 lazy.setup(plugins, lazyManagerConfig)
-vim.keymap.set("n", "<leader>z", "<cmd>:Lazy<cr>", { desc = "Plugin Manager" })

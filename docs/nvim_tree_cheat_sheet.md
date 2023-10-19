@@ -1,6 +1,16 @@
 # Nvim-Tree Cheat Sheet
 
-We can use the following cheat-sheet for possiblility of increasing productivity.
+<!-- vim-markdown-toc GitLab -->
+
+* [Working with the File Explorer¶](#working-with-the-file-explorer)
+* [Opening a File](#opening-a-file)
+* [File Management](#file-management)
+    * [References](#references)
+
+<!-- vim-markdown-toc -->
+
+- We can use the following cheat-sheet for possiblility of increasing
+  productivity.
 
 ## Working with the File Explorer¶
 
@@ -36,7 +46,7 @@ have the following combinations to open it:
 - `Ctrl + h` to open the file like the command described above but dividing
   the buffer horizontally.
 
-## File Management¶
+## File Management
 
 Like all file explorers, in nvimtree you can create, delete, and rename files.
 Since this is always with a textual approach, you will not have a convenient

@@ -25,8 +25,8 @@ M.setup = function()
     -- NOTE: this is only a subset of alvues , any group palced here will be set for the terminal
     highlights = {
       FloatBorder = {
-        guifg = "#B2C9AB",
-        guibg = "#B2C9AB",
+       -- guifg = "#B2C9AB",
+       -- guibg = "#B2C9AB",
       },
     },
     -- This field is only relevant if direction is set to 'float'
@@ -35,10 +35,10 @@ M.setup = function()
       -- see :h nvim_open_win for details on borders however
       -- the 'curved' border is a custom border type
       -- not natively supported but implemented in this plugin.
-      border = "curved", --'double', --'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
+      border = "double", --'double', --'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
       --width = 150,
       --height = 30,
-      winblend = 3,
+      winblend = 10,
       highlights = {
         border = "Normal",
         --background = "Normal",

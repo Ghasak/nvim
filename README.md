@@ -177,6 +177,7 @@ P(fn.setup())
 ```
 
 ## More details for the configurations
+
 ## To do
 
 - [x] Configuration for the dap
@@ -254,8 +255,8 @@ vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "CursorHold", "InsertL
 
 6. undotree hint Since we allow `undotree` to be triggered only when we call
    the undotree kepmapping, then you should always hit at least once the
-`undotree` to trigger it for the curretn buffer, which can keep tracking the
-changes.
+   `undotree` to trigger it for the curretn buffer, which can keep tracking the
+   changes.
 
 ## Jump Motion
 
@@ -498,12 +499,15 @@ syn match GGX "\v<[A-Z]+>"
 ]])
 
 ```
+
 You can also specify some highlight using:
 
 ```shell
 vim.cmd([[highlight Visual cterm=bold ctermbg=Blue ctermfg=NONE]])
 ```
+
 There are three ways to highlight custom group (group created by user) these are
+
 1. Using direct nvim syntax
 
 ```vim
@@ -517,16 +521,16 @@ highlight GGX guifg=#EEEDBF
 highlights = {
 -- Common
 Visual = { bg = '$bright_orange', fmt = 'bold'},
-Normal = { fg = '$beautiful_black' ,bg = '$beautiful_black' },                                -- backgorund default color
-Terminal= { fg = '$beautiful_black' ,bg = '$beautiful_black' },                               -- terminal color for nvim
-EndOfBuffer = { fg = '$beautiful_black' ,bg = '$beautiful_black' },                           -- End of buffer color
-VertSplit = { fg = '$light_green' ,bg = '$beautiful_black' },                                 -- when using vertical split
-SignColumn = { fg = '$beautiful_black' ,bg = '$beautiful_black' },                            -- SignColumn control the edge of nvim buffer
+Normal = { fg = '$beautiful_black' ,bg = '$beautiful_black' },                               -- backgorund default color
+Terminal= { fg = '$beautiful_black' ,bg = '$beautiful_black' },                              -- terminal color for nvim
+EndOfBuffer = { fg = '$beautiful_black' ,bg = '$beautiful_black' },                          -- End of buffer color
+VertSplit = { fg = '$light_green' ,bg = '$beautiful_black' },                                -- when using vertical split
+SignColumn = { fg = '$beautiful_black' ,bg = '$beautiful_black' },                           -- SignColumn control the edge of nvim buffer
 -- Syntax
-String = {fg ='$light_green'},                                                                -- For only string in nvim
+String = {fg ='$light_green'},                                                               -- For only string in nvim
 -- nvim-tree
-NvimTreeVertSplit =  { fg = '$light_green' ,bg = '$beautiful_black' },                        -- When you split inside nvim-tree the fg will be activited
-NvimTreeNormal = { fg = '$light_green' ,bg = '$beautiful_black' },                            -- fg means files names, folder names ..etc.
+NvimTreeVertSplit =  { fg = '$light_green' ,bg = '$beautiful_black' },                       -- When you split inside nvim-tree the fg will be activited
+NvimTreeNormal = { fg = '$light_green' ,bg = '$beautiful_black' },                           -- fg means files names, folder names ..etc.
 NvimTreeEndOfBuffer = { fg = '$light_green' ,bg = '$beautiful_black' },
 NvimTreeGitNew = {fg ='$light_green'  },                                                      -- This will change only the
 -- GGX = {fg = '#EEEDBF'}
@@ -587,6 +591,3 @@ want to alter the color.
 ## MEASURE SPEED OF NEOVIM
 
 - [Speedup Neovim ](https://aca.github.io/neovim_startuptime.html)
-
-
-

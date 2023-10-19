@@ -33,26 +33,32 @@ return {
       require("plugins.configs.treesitter").setup()
     end,
     dependencies = {
-      {
-        "nvim-treesitter/nvim-treesitter-textobjects",
-        event = "InsertEnter",
-      },
-      { "windwp/nvim-ts-autotag", event = "InsertEnter" },
-      {
-        "JoosepAlviste/nvim-ts-context-commentstring",
-        event = "InsertEnter",
-      },
-      { "p00f/nvim-ts-rainbow", event = "BufReadPre" },
-      { "RRethy/nvim-treesitter-textsubjects", event = "InsertEnter" },
-      {
-        -- This plugin is alternative to nvim.context
-        "nvim-treesitter/nvim-treesitter-context",
-        cond = false, -- Loading the dap, if false it will not be loaded,
-        cmd = { "TSContextDisable", "TSContextEnable", "TSContextToggle" },
-        event = "InsertEnter",
-      },
+      { "p00f/nvim-ts-rainbow", event = "InsertEnter" },
     },
   },
+  ----------------------------------------------------------------
+  --                  treesitter tools
+  --  {all were in the dependencies of nvim-treesitter}
+  ----------------------------------------------------------------
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    event = "InsertEnter",
+  },
+  { "windwp/nvim-ts-autotag", event = "InsertEnter" },
+  {
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    event = "InsertEnter",
+  },
+  { "RRethy/nvim-treesitter-textsubjects", event = "InsertEnter" },
+  {
+    -- This plugin is alternative to nvim.context
+    "nvim-treesitter/nvim-treesitter-context",
+    cond = false, -- Loading the dap, if false it will not be loaded,
+    cmd = { "TSContextDisable", "TSContextEnable", "TSContextToggle" },
+    event = "InsertEnter",
+  },
+  ----------------------------------------------------------------
+
   { "nvim-treesitter/playground", event = "InsertEnter" }, -- Better icons
   {
     "kyazdani42/nvim-web-devicons",
@@ -199,7 +205,17 @@ return {
       require("plugins.configs.myTerminal").setup()
     end,
   }, -- Using floating terminal
-  { "voldikss/vim-floaterm", lazy = true, cmd = { "FloatermToggle" } },
+  --{ "voldikss/vim-floaterm", lazy = true, cmd = { "FloatermToggle" } },
+  -- Dired.nvim is simialr to Emacs dired for file managment
+  {
+    "X3eRo0/dired.nvim",
+    event = "InsertEnter",
+    dependencies = "MunifTanjim/nui.nvim",
+    config = function()
+      require("plugins.configs.myDired").config()
+    end,
+  },
+
   -- Using Rnvim  <Ranger>
   {
     "kevinhwang91/rnvimr",
@@ -677,6 +693,8 @@ return {
   --     }
   --   end,
   -- })
+  { "mg979/vim-visual-multi", lazy = true, event = "InsertEnter", branch = "master"
+ },
   -- ===========================================================================
   --                          Other Plugins
   -- ===========================================================================

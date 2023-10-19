@@ -64,6 +64,16 @@ M.setup = function()
     builtin.help_tags {}
   end)
 
+  -- The functions telescope_live_grep_in_path is created.
+  vim.keymap.set("n", "<leader>fD", function()
+    telescope_live_grep_in_path()
+  end)
+  -- vim.keymap.set('n', '<leader><space>',
+  --                function() telescope_files_or_git_files() end)
+  vim.keymap.set("n", "<leader>fd", function()
+    telescope_find_files_in_path()
+  end)
+
   vim.g.nmap("<leader>fy", function()
     -- builtin.help_tags(ivy)
     --builtin.help_tags({ sorter = require('telescope.sorters').get_generic_fuzzy_sorter({}) })

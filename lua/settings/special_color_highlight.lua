@@ -9,6 +9,7 @@ _G.highlight_upper_letter_cases = function()
   -- vim.api.nvim_command([[hi def link GGX Title]])
   -- Or create a new group
   -- vim.highlight.create('GGX', {guifg="#EEEDBF"}, true)
+  ---@diagnostic disable-next-line: undefined-global, param-type-mismatch
   vim.api.nvim_set_hl("GGX", { guifg = "#EEEDBF" }, true)
   -- vim.api.nvim_command([[highlight GGX guifg=#EEEDBF]])
   vim.api.nvim_command [[syn match GGX /[A-Z]+/]]
@@ -18,6 +19,7 @@ _G.highlight_upper_letter_cases = function()
   vim.cmd [[autocmd VimEnter ~/.config/nvim/* source %]]
 end
 
+---@diagnostic disable-next-line: unused-function, unused-local
 local function status_line()
   local mode = "%-5{%v:lua.string.upper(v:lua.vim.fn.mode())%}"
   local file_name = "%-.16t"
@@ -44,6 +46,7 @@ end
 -- vim.opt.statusline = status_line()
 -- this function will be trigger only when TextYankPost event happens.
 _G.highlight_while_yank = function()
+  ---@diagnostic disable-next-line: unused-local, undefined-field
   local exec = vim.api.nvim_exec -- execute Vimscript
   -- highlight on yank
   vim.highlight.create("YANK_HIGHLIGHT_COLOR_GROUP", { ctermbg = 0, guibg = "#FFC49B", guifg = "#EEEDBF" }, true)
@@ -153,11 +156,13 @@ vim.api.nvim_create_autocmd("BufEnter", {
 --                  Dependencies: notify, plenary
 -- ----------------------------------------------------------------------------------------
 -- Function to show the full path in nvim when you open a given file
+---@diagnostic disable-next-line: unused-local, unused-function
 local function show_full_path()
   local file = vim.fn.expand "%:p"
   local async = require "plenary.async"
   local notify = require("notify").async
   -- vim.notify(file)
+  ---@diagnostic disable-next-line: missing-parameter
   async.run(function()
     local messege = string.format(" %s at %s ... ", file, os.date "%H:%M:%S")
     notify(messege, "INFO", { title = " Initializing file" })
@@ -181,10 +186,12 @@ end
 --                    Custome function for showing flashing the line
 -- More detals: https://www.youtube.com/watch?v=2Hsr4drhAV4
 -- ----------------------------------------------------------------------------------------
+---@diagnostic disable-next-line: unused-local, unused-function
 local function line_flasher()
   local timer = vim.loop.new_timer()
   local i = 0
 
+  ---@diagnostic disable-next-line: need-check-nil
   timer:start(
     0,
     100,
@@ -199,6 +206,7 @@ local function line_flasher()
       -- end
 
       if i > 10 then
+        ---@diagnostic disable-next-line: need-check-nil
         timer:stop()
         print "timer stopped"
       end
@@ -208,14 +216,15 @@ local function line_flasher()
 end
 
 -- ----------------------------------------------------------------------------------------
--- -------------------                                       ------------------------------
+--                         Telescope Session Function
+-- ----------------------------------------------------------------------------------------
+-- Current function is used to switch to environment
+-- To create an environment use: mksession ~/.cache/nvim/sessions/<session_environment_name>
+-- We will map this function to the <leader><leader>p to load any project/session faster
+-- Read more about making sessions here:
+-- https://bocoup.com/blog/sessions-the-vim-feature-you-probably-arent-using
 -- ----------------------------------------------------------------------------------------
 _G.open_session = function()
-  -- Current function is used to switch to environment
-  -- To create an environment use: mksession ~/.cache/nvim/sessions/<session_environment_name>
-  -- We will map this function to the <leader><leader>p to load any project/session faster
-  -- Read more about making sessions here:
-  -- https://bocoup.com/blog/sessions-the-vim-feature-you-probably-arent-using
   local path = vim.fn.expand "~/.cache/nvim/sessions/"
   local ok, picker = pcall(require, "telescope.builtin")
   if ok then
@@ -265,3 +274,38 @@ _G.open_session = function()
     }
   end
 end
+
+-- ----------------------------------------------------------------------------------------
+--                            Telescope Helper Function
+-- ----------------------------------------------------------------------------------------
+-- nvim-telescope/telescope.nvim
+-- _G.telescope_find_files_in_path = function(path)
+--   local _path = path or vim.fn.input("Dir: ", "", "dir")
+--   require("telescope.builtin").find_files { search_dirs = { _path } }
+-- end
+-- _G.telescope_live_grep_in_path = function(path)
+--   local _path = path or vim.fn.input("Dir: ", "", "dir")
+--   require("telescope.builtin").live_grep { search_dirs = { _path } }
+-- end
+-- _G.telescope_files_or_git_files = function()
+--   local utils = require "telescope.utils"
+--   local builtin = require "telescope.builtin"
+--   local _, ret, _ = utils.get_os_command_output {
+--     "git",
+--     "rev-parse",
+--     "--is-inside-work-tree",
+--   }
+--   if ret == 0 then
+--     builtin.git_files()
+--   else
+--     builtin.find_files()
+--   end
+-- end
+-- vim.keymap.set("n", "<leader>fD", function()
+--   telescope_live_grep_in_path()
+-- end)
+-- -- vim.keymap.set('n', '<leader><space>',
+-- --                function() telescope_files_or_git_files() end)
+-- vim.keymap.set("n", "<leader>fd", function()
+--   telescope_find_files_in_path()
+-- end)
