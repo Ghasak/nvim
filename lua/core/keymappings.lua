@@ -350,7 +350,7 @@ vim.api.nvim_set_keymap("n", "<leader><leader>p", ":lua open_session()<CR>", { n
 --                              Find in visual mode (no plugin is required)
 --                       https://github.com/Ajnasz/nvim-rfind
 ---- *****************************************************************************************
-vim.keymap.set("x", "/", "<Esc>/\\%V")
+--vim.keymap.set("x", "/", "<Esc>/\\%V")
 
 ---- *****************************************************************************************
 ----                    Switching between Sessions (Projects)

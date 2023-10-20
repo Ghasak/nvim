@@ -1,7 +1,7 @@
 local M = {}
 M.config = function()
   require("dired").setup {
-    path_separator = "/",
+    --path_separator = "/",
     show_banner = false,
     show_hidden = true,
     show_dot_dirs = true,
@@ -12,6 +12,7 @@ M.config = function()
   --                For current dired
   -- ---------------------------------------------------
   vim.api.nvim_set_keymap("n", "<Leader>fj", ":Dired <CR>", { noremap = true, silent = false })
+  local dired_group = vim.api.nvim_create_augroup("dired", { clear = true })
 
   -- Create a mapping function based on the buffer name
   local function dired_key_mapping()
@@ -20,8 +21,8 @@ M.config = function()
     -- Check if the filetype is `dired`
     if vim.bo.filetype == "dired" then
       -- Set buffer-local mappings based on your requirements
-      map(0, "n", "h", ":DiredGoBack<CR>", opt)
-      map(0, "n", "l", ":DiredEnter<CR>", opt)
+      map(0, "n", "<C-h>", "<Plug>(dired_back)", opt)
+      map(0, "n", "<C-l>", "<Plug>(dired_enter)", opt)
     end
   end
   -- This is a modern lua api for autocmd  that will check always for the FileType
@@ -30,6 +31,7 @@ M.config = function()
     callback = function()
       dired_key_mapping()
     end,
+    group = dired_group,
   })
   -- These are not working as they will stick to any other buffer.
   -- -- Move to the parent directory
