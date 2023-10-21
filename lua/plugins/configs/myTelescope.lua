@@ -82,6 +82,9 @@ M.setup = function()
   vim.g.nmap("<leader>fp", function()
     telescope.extensions.project.project {}
   end)
+  vim.g.nmap("<leader>U", function()
+    telescope.extensions.undo.undo {}
+  end)
 
   vim.g.nmap("<leader>th", function()
     builtin.colorscheme(ivy)
@@ -251,6 +254,26 @@ M.config = function()
           layout_strategy = "horizontal",
         },
       },
+      undo = {
+        use_delta = true,
+        side_by_side = false,
+        diff_context_lines = vim.o.scrolloff,
+        entry_format = "state #$ID, $STAT, $TIME",
+        vertical = {
+          height = 0.8,
+          mirror = false,
+          preview_cutoff = 120,
+          prompt_position = "bottom",
+          width = 0.87,
+        },
+        mappings = {
+          i = {
+            ["<cr>"] = require("telescope-undo.actions").yank_additions,
+            ["<S-cr>"] = require("telescope-undo.actions").yank_deletions,
+            ["<C-cr>"] = require("telescope-undo.actions").restore,
+          },
+        },
+      },
     },
   }
 
@@ -269,6 +292,8 @@ M.config = function()
   telescope.load_extension "lsp_handlers"
   -- Jump on markdown heading easily within the given document (:Telescope heading), markdown files only.
   telescope.load_extension "heading"
+  -- Undo Telescope
+  telescope.load_extension "undo"
 end
 
 M.setup()

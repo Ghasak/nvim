@@ -440,43 +440,43 @@ print("wow")
 ```
 
 ```lua
- ├──     LICENSE
- ├──     README.md
- └──     VSCode_setting/
- │  ├────     README.md
- │  ├────     SS-01.png
- │  └────     init.vim
- └──     assets/
- │  ├────     SS-01.old
- │  ├────     SS-01.png
- │  ├────     SS-02.png
- │  ├────     SS-03.png
- │  ├────     SS-04.png
- │  └────     current_loaded_programming_langauge_servers.png
- ├──     init.lua
- └──     lua/
- │  └────     core/
- │  │  ├────     global.lua
- │  │  ├────     init.lua
- │  │  └────     keymappings.lua
- │  └────     plugins/
- │  │  └────     configs/
- │  │  │  ├────     init.lua
- │  │  │  ├────     myFzf.lua
- │  │  │  ├────     myImpatient.lua
- │  │  │  ├────     myNvimTree.lua
- │  │  │  ├────     myTelescope.lua
- │  │  │  ├────     myUndoTreeConfig.lua
- │  │  │  └────     onedark_config.lua
- │  │  ├────     init.lua
- │  │  ├────     packerPluginsManager.lua
- │  │  └────     packerPluginsManagerLoader.lua
- │  └────     settings/
- │  │  ├────     init.lua
- │  │  └────     options.lua
- └──     plugin/
- │  ├────     packer_compiled.lua
- │  └────     test.lua
+├──     LICENSE
+├──     README.md
+└──     VSCode_setting/
+│  ├────     README.md
+│  ├────     SS-01.png
+│  └────     init.vim
+└──     assets/
+│  ├────     SS-01.old
+│  ├────     SS-01.png
+│  ├────     SS-02.png
+│  ├────     SS-03.png
+│  ├────     SS-04.png
+│  └────     current_loaded_programming_langauge_servers.png
+├──     init.lua
+└──     lua/
+│  └────     core/
+│  │  ├────     global.lua
+│  │  ├────     init.lua
+│  │  └────     keymappings.lua
+│  └────     plugins/
+│  │  └────     configs/
+│  │  │  ├────     init.lua
+│  │  │  ├────     myFzf.lua
+│  │  │  ├────     myImpatient.lua
+│  │  │  ├────     myNvimTree.lua
+│  │  │  ├────     myTelescope.lua
+│  │  │  ├────     myUndoTreeConfig.lua
+│  │  │  └────     onedark_config.lua
+│  │  ├────     init.lua
+│  │  ├────     packerPluginsManager.lua
+│  │  └────     packerPluginsManagerLoader.lua
+│  └────     settings/
+│  │  ├────     init.lua
+│  │  └────     options.lua
+└──     plugin/
+│  ├────     packer_compiled.lua
+│  └────     test.lua
 ```
 
 Read more here

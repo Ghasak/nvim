@@ -1,5 +1,24 @@
 # Tools for inpsections in nvim
 
+<!-- vim-markdown-toc GitLab -->
+
+* [Keymapping](#keymapping)
+* [Getting buffer name](#getting-buffer-name)
+* [getting operation system info](#getting-operation-system-info)
+* [Getting variables names in lua](#getting-variables-names-in-lua)
+* [References](#references)
+* [HOW TO TO DEBUGE AND CHECK MODULES](#how-to-to-debuge-and-check-modules)
+* [Developement testing](#developement-testing)
+* [REFERENCES](#references-1)
+* [RUNTIME PATH](#runtime-path)
+* [Asking user for entry](#asking-user-for-entry)
+* [How to use codlens](#how-to-use-codlens)
+* [Getting stats of buffer](#getting-stats-of-buffer)
+* [vim.api.nvim_exec2](#vimapinvim_exec2)
+* [How to Run Inspector Helper](#how-to-run-inspector-helper)
+
+<!-- vim-markdown-toc -->
+
 ## Keymapping
 
 You can use one of the following,
@@ -198,3 +217,85 @@ You can use the following, In your nvim commandline:
 ```lua
 :lua vim.pretty_print(vim.api.nvim__buf_stats(vim.api.nvim_get_current_buf()))
 ```
+
+## vim.api.nvim_exec2
+
+This API is used to run Vim commands via Lua. This API serves as a replacement
+for the old version, and here's an example:
+
+- Added on 21/10/2023, using AI searching the web based on `Open.ai`.
+
+```lua
+local my_variable = 10
+--nvim_exec2({string.format(":echo  %s",my_variable)}, false) -- deprecated
+-- New usage
+vim.api.nvim_exec2(string.format(":echo  %s", my_variable), {output = false})
+```
+
+- To inspect the output produced by the `nvim_exec2` function when the `output`
+  option is set to `true`, you would typically capture the return value of the
+  function into a variable, and then examine the contents of the `output` field
+  in the returned dictionary. Here's a step-by-step process on how you could do
+  this in Lua within Neovim:
+
+1. **Execute the Vimscript Code with `nvim_exec2`:**
+   Execute your Vimscript code using `nvim_exec2`, with the `output` option set
+   to `true` in the optional parameters table, and capture the return value into a
+   variable.
+
+```lua
+local result = vim.api.nvim_exec2("echo 'Hello, World!'", {output = true})
+```
+
+2. **Inspect the `output` Field:**
+   The `output` field in the returned dictionary will contain any output
+   produced by the Vimscript code. You can inspect this field to see the output.
+
+```lua
+print(result.output)
+```
+
+In this example, you would see `Hello, World!` printed to Neovim's command line.
+
+3. **Examine Other Fields (if any):**
+   If there are other fields in the returned dictionary, you can examine them
+   as well to get more information about the execution.
+
+```lua
+for key, value in pairs(result) do
+    print(key, value)
+end
+```
+
+This will print all keys and values in the returned dictionary, which might
+provide additional information about the execution of the Vimscript code.
+Remember, the `output` option in `nvim_exec2` only captures and returns
+non-error and non-shell output. If there are errors during the execution, they
+would not be captured in the `output` field, but would cause `nvim_exec2` to
+fail with a Vimscript error, updating `v:errmsg` instead【20†source】.
+
+## How to Run Inspector Helper
+
+- In the core module, locate the `init.lua` file and include it in the list of
+  modules loaded along with others, as shown in the following:
+
+```lua
+
+local init_modules = {
+  -- following options are the default
+  "core.global",
+  --"core.event",
+  --"core.utils",
+  "core.myInspectorFucntions",
+  "core.keymappings",
+}
+```
+
+- You will notice that pressing "Ctrl" + "Enter" will load your buffer, making it
+  very useful when developing a plugin.
+
+- For example, it will prompt you to select a file to load. Simply add the
+  filename to obtain the current buffer.
+  - Lets do this example, in your `init.lua` file
+  - put `vim.print("Hello World")` in this buffer save it then `Ctrl` +
+    `Enter`.

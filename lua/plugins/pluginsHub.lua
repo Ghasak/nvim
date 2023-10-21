@@ -159,11 +159,15 @@ return {
       {
         "crispgm/telescope-heading.nvim",
         ft = { "makrdown" },
-        even = "InsertEnter",
+        event = "InsertEnter",
         ensure_installed = {
           "markdown",
           "rst",
         },
+      },
+      {
+        "debugloop/telescope-undo.nvim",
+        event = "InsertEnter",
       },
     },
   },
@@ -693,8 +697,7 @@ return {
   --     }
   --   end,
   -- })
-  { "mg979/vim-visual-multi", lazy = true, event = "InsertEnter", branch = "master"
- },
+  { "mg979/vim-visual-multi", lazy = true, event = "InsertEnter", branch = "master" },
   -- ===========================================================================
   --                          Other Plugins
   -- ===========================================================================

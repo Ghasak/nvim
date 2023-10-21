@@ -1,5 +1,5 @@
 function horizontal_terminal_custom_fn()
-  local exec = vim.api.nvim_exec -- execute Vimscript
+  -- local exec = vim.api.nvim_exec -- execute Vimscript -- deprecated
 
   vim.cmd [[
 "==============================================================================

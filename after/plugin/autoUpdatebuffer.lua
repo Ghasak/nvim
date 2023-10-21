@@ -1,11 +1,8 @@
 function AUTOLOADER_FN()
-
   -- Here, I am using a vim-function with the formula <exec(fun, bool)>
-  local exec = vim.api.nvim_exec -- execute Vimscript
+  --local exec = vim.api.nvim_exec -- execute Vimscript
 
-
-
-  exec([[
+  vim.cmd [[
 
 " #######################################################################################
 "
@@ -183,22 +180,19 @@ au FocusGained,BufEnter * :silent! !
 au FocusLost,WinLeave * :silent! noautocmd w
 
 
-]] , true)
-
-
-
+]]
 end
 
-local function auto_schedular_custom_event_fn()
-  vim.api.nvim_create_autocmd({ "BufLeave", "BufWinLeave" },
-    {
-      pattern = { "*" },
-      group = vim.api.nvim_create_augroup("auto-saver", { clear = true }),
-      callback = AUTOLOADER_FN
-    }
-  )
-
-end
+-- local function auto_schedular_custom_event_fn()
+--   vim.api.nvim_create_autocmd({ "BufLeave", "BufWinLeave" },
+--     {
+--       pattern = { "*" },
+--       group = vim.api.nvim_create_augroup("auto-saver", { clear = true }),
+--       callback = AUTOLOADER_FN
+--     }
+--   )
+--
+-- end
 
 -- Here, we call the function to perform the auto-buffer-saver, when we leave the buffer, or the window
 --auto_schedular_custom_event_fn()

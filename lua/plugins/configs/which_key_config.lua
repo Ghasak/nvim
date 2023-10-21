@@ -65,6 +65,28 @@ M.config = function()
       noremap = true,
       nowait = false,
     })
+
+    -- Define keymap for dired file manager
+    local keymap_dired_main = {
+      f = {
+        name = "Dired File Manager",
+        j = {
+          { ":Dired <CR>", "Toggle Dired UI" },
+          ["<C-h>"] = { "<Plug>(dired_back)", "Go to parent directory" },
+          ["<C-l>"] = { "<Plug>(dired_enter)", "Go to child directory" },
+          ["."] = { "<Plug>(dired_toggle_hidden)", "Toggle hidden files" },
+        },
+      },
+    }
+
+    which_key.register(keymap_dired_main, {
+      mode = "n",
+      prefix = "<leader>",
+      buffer = nil,
+      silent = true,
+      noremap = true,
+      nowait = false,
+    })
   end
 end
 return M
