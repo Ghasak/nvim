@@ -2,6 +2,8 @@ local M = {}
 
 ------------------------------------------------------------
 -- Function to convert table to string
+------------------------------------------------------------
+---@diagnostic disable-next-line: unused-function, unused-local
 local function table_to_string(tbl)
   local result = {}
   for k, v in pairs(tbl) do
@@ -9,6 +11,7 @@ local function table_to_string(tbl)
   end
   return table.concat(result, "\n")
 end
+------------------------------------------------------------
 
 function M.setup(dap)
   dap.adapters["lldb-vscode"] = {
@@ -72,6 +75,7 @@ function M.setup(dap)
     },
   }
 
+  -- This will log the debugger output to $HOME/.cache/nvim/dap.log
   dap.set_log_level "DEBUG"
 end
 

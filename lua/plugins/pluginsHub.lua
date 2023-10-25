@@ -112,14 +112,14 @@ return {
       -- Enhance extension that offers intelligent prioritization
       -- when selecting files from your editing history
       -- https://github.com/nvim-telescope/telescope-frecency.nvim
-      {
-        "nvim-telescope/telescope-frecency.nvim",
-        event = "VimEnter",
-        config = function()
-          require("telescope").load_extension "frecency"
-        end,
-        dependencies = { "kkharji/sqlite.lua" },
-      },
+      -- {
+      --   "nvim-telescope/telescope-frecency.nvim",
+      --   event = "VimEnter",
+      --   config = function()
+      --     require("telescope").load_extension "frecency"
+      --   end,
+      --   dependencies = { "kkharji/sqlite.lua" },
+      -- },
       {
         "gbprod/yanky.nvim",
         event = "VimEnter",

@@ -1,23 +1,26 @@
 # Tools for inpsections in nvim
 
-<!-- vim-markdown-toc GitLab -->
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+**Table of Contents**
 
-* [Keymapping](#keymapping)
-* [Getting buffer name](#getting-buffer-name)
-* [getting operation system info](#getting-operation-system-info)
-* [Getting variables names in lua](#getting-variables-names-in-lua)
-* [References](#references)
-* [HOW TO TO DEBUGE AND CHECK MODULES](#how-to-to-debuge-and-check-modules)
-* [Developement testing](#developement-testing)
-* [REFERENCES](#references-1)
-* [RUNTIME PATH](#runtime-path)
-* [Asking user for entry](#asking-user-for-entry)
-* [How to use codlens](#how-to-use-codlens)
-* [Getting stats of buffer](#getting-stats-of-buffer)
-* [vim.api.nvim_exec2](#vimapinvim_exec2)
-* [How to Run Inspector Helper](#how-to-run-inspector-helper)
+- [Tools for inpsections in nvim](#tools-for-inpsections-in-nvim)
+    - [Keymapping](#keymapping)
+    - [Getting buffer name](#getting-buffer-name)
+    - [getting operation system info](#getting-operation-system-info)
+    - [Getting variables names in lua](#getting-variables-names-in-lua)
+    - [References](#references)
+    - [HOW TO TO DEBUGE AND CHECK MODULES](#how-to-to-debuge-and-check-modules)
+    - [Developement testing](#developement-testing)
+    - [REFERENCES](#references)
+    - [RUNTIME PATH](#runtime-path)
+    - [Asking user for entry](#asking-user-for-entry)
+    - [How to use codlens](#how-to-use-codlens)
+    - [Getting stats of buffer](#getting-stats-of-buffer)
+    - [vim.api.nvim_exec2](#vimapinvim_exec2)
+    - [How to Run Inspector Helper](#how-to-run-inspector-helper)
 
-<!-- vim-markdown-toc -->
+<!-- markdown-toc end -->
+
 
 ## Keymapping
 

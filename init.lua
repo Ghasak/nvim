@@ -66,3 +66,5 @@ if vim.g.neovide then
     vim.print("Error: ", vim.log.levels.WARN, neovide_config)
   end
 end
+
+

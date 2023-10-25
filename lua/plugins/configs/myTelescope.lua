@@ -281,7 +281,7 @@ M.config = function()
   telescope.load_extension "fzf"
   -- This is the best option to open window for selection instead the regular selection in cmdline
   telescope.load_extension "ui-select"
-  telescope.load_extension "frecency"
+  --telescope.load_extension "frecency"
   -- See more feature about lazygit
   telescope.load_extension "lazygit"
   -- Allow us to jump to dap point and other features

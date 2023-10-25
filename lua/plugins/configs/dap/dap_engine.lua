@@ -41,7 +41,7 @@ M.cpp_debuger_setup = function(dap)
   local async = require "plenary.async"
   local notify = require("notify").async
 
-  vim.g.my_adpater_loader_selector = 0
+  vim.g.my_adpater_loader_selector = 4
 
   if vim.bo.filetype == "cpp" then
     if vim.g.my_adpater_loader_selector == 1 then
@@ -51,7 +51,6 @@ M.cpp_debuger_setup = function(dap)
       --   ▄█▄     Status: Working, selecting binary: automated
       -- ############################################################################################
       require("plugins.configs.dap.dap_custom_languages_settings.dap_cpp_settings").setup(dap)
-
     elseif vim.g.my_adpater_loader_selector == 2 then
       -- ############################################################################################
       --  █▀█      TYPE: Command, Adapter: lldb-vscode, Adapter: built from LLVM-Project
@@ -71,6 +70,13 @@ M.cpp_debuger_setup = function(dap)
       --  █▄▄█▄      server = "local OpenDebugAD7 = install_root_dir .. "OpenDebugAD7"
       --  ░░░█░         Status: Working, binary selection: automated
       -- ############################################################################################
+      ----------------- Just for showing banner ------------------
+      -- vim.notify(file)
+      async.run(function()
+        local messege = string.format("Using OpenDebugAD7 for debugging  \nRun at:%s", os.date "%H:%M:%S")
+        notify(messege, vim.log.levels.INFO, { title = " Debugging Support " })
+      end, function() end)
+      ------------------------------------------------------------
       require("plugins.configs.dap.dap_custom_languages_settings.dap_cpp_OpenDebugAD7").setup(dap)
     else
       ----------------- Just for showing banner ------------------
