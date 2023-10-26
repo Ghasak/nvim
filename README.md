@@ -36,7 +36,6 @@
 
 <!-- markdown-toc end -->
 
-
 ## ChangingLog
 
 ### V.0.9.2 Release Nvim
@@ -593,3 +592,4 @@ want to alter the color.
 ## MEASURE SPEED OF NEOVIM
 
 - [Speedup Neovim ](https://aca.github.io/neovim_startuptime.html)
+

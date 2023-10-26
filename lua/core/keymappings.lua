@@ -42,6 +42,13 @@ vim.keymap.set("n", "-", "<C-x>")
 -- Delete a word backwards
 vim.keymap.set("n", "dw", 'vb"_d')
 
+-- Select to the end of line in visual mode
+vim.keymap.set("v", "<S-a>", "$", { desc = "Select to end of lines in visual block" })
+vim.keymap.set("v", "<S-l>", "^", { desc = "Select to beginning of lines in visual block" })
+-- vim.api.nvim_set_keymap('v', '<S-a>', '$', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('v', '<S-l>', '^', { noremap = true, silent = true })
+
+
 -- Better paste with indentation
 vim.keymap.set("n", ",p", "o<Esc>p")
 vim.keymap.set("n", ",P", "O<Esc>p")
@@ -264,7 +271,7 @@ vim.api.nvim_set_keymap(
 vim.api.nvim_set_keymap(
   "v",
   "<leader>fr",
-  ':lua require("conform").format({ lsp_fallback = true, async = true, timeout_ms = 500 })<CR>',
+  ':lua require("conform").format({ lsp_fallback = false, async = true, timeout_ms = 500 })<CR>',
   {
     noremap = true,
     silent = true,
@@ -382,3 +389,7 @@ vim.keymap.set("n", "<leader>z", "<cmd>:Lazy<cr>", { desc = "Plugin Manager" })
 ---- *****************************************************************************************
 vim.keymap.set("n", "<leader>cu", "<Plug>(VM-Add-Cursor-Up)", { desc = "vim visual multi" })
 vim.keymap.set("n", "<leader>cd", "<Plug>(VM-Add-Cursor-Down)", { desc = "vim visual multi" })
+
+
+
+

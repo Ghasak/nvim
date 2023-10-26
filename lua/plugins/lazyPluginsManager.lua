@@ -78,8 +78,9 @@ local status_ok, lazy = pcall(require, "lazy")
 if not status_ok then
   return
 end
+
 -- Change the color of the lazynvim floating window
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1e222a" })
-
+vim.api.nvim_set_hl(0, "Pmenu", { bg = "#2d333b" })
 -- Configure lazy.nvim
 lazy.setup(plugins, lazyManagerConfig)

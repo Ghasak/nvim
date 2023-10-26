@@ -1,14 +1,24 @@
 # How to patch Nerd Font
 
-<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 
-**Table of Contents**
+<!-- vim-markdown-toc GitLab -->
 
-- [How to patch Nerd Font](#how-to-patch-nerd-font)
-  - [How to do](#how-to-do)
-  - [Reference](#reference)
+* [Font selector](#font-selector)
+* [How to do](#how-to-do)
+* [Reference](#reference)
 
-<!-- markdown-toc end -->
+<!-- vim-markdown-toc -->
+
+## Font selector
+
+- Currently I am using the font `fantasque-sans`, which support nerod icons, install it using:
+
+```sh
+brew tap homebrew/cask-fonts #You only need to do this once for cask-fonts
+brew install --cask font-fantasque-sans-mono
+```
+
+- [fantasque-sans](https://github.com/belluzj/fantasque-sans)
 
 There are several steps to be taken to patch your favoriate font, patching
 means it will add all the `nerdfont` four selected font. Here is how I did it

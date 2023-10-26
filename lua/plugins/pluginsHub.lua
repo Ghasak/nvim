@@ -112,14 +112,14 @@ return {
       -- Enhance extension that offers intelligent prioritization
       -- when selecting files from your editing history
       -- https://github.com/nvim-telescope/telescope-frecency.nvim
-      -- {
-      --   "nvim-telescope/telescope-frecency.nvim",
-      --   event = "VimEnter",
-      --   config = function()
-      --     require("telescope").load_extension "frecency"
-      --   end,
-      --   dependencies = { "kkharji/sqlite.lua" },
-      -- },
+      {
+        "nvim-telescope/telescope-frecency.nvim",
+        event = "VimEnter",
+        config = function()
+          require("telescope").load_extension "frecency"
+        end,
+        dependencies = { "kkharji/sqlite.lua" },
+      },
       {
         "gbprod/yanky.nvim",
         event = "VimEnter",
@@ -262,11 +262,14 @@ return {
   {
     "iamcco/markdown-preview.nvim",
     ft = { "markdown" },
-    cmd = "MarkdownPreview",
-    build = "cd app && npm install",
-    config = function()
-      vim.g.mkdp_filetypes = { "markdown" }
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    --build = "cd app && npm install",
+    build = function()
+      vim.fn["mkdp#util#install"]()
     end,
+    -- config = function()
+    --   vim.g.mkdp_filetypes = { "markdown" }
+    -- end,
   },
   {
     "mzlogin/vim-markdown-toc",

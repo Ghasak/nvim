@@ -20,7 +20,8 @@ M.config = function()
       markdown = { "prettier" },
       graphal = { "prettier" },
       lua = { "stylua" },
-      cpp = { "clang-format" },
+      --cpp = { "clang-format" },
+      cpp = { "my_cpp_formatter" },
       python = { "yapf", "isort", "black" },
       r = { "my_r_formatter" },
       rmd = { "my_r_formatter" },
@@ -40,6 +41,12 @@ M.config = function()
       --    Formatter for Rust
       -- ***************************
       my_rust_formatter = { command = "rustfmt", args = { "--edition=2021" } },
+      my_cpp_formatter = {
+        command = "/opt/homebrew/bin/clang-format",
+        --args = "--style=file:~/Desktop/devCode/cppDev/AnimationEngineCPP/.clang-format",
+        args = "--style=file",
+        stdin = true,
+      },
       -- ***************************
       --    Formatter for R-Language
       -- ***************************

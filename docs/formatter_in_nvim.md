@@ -9,11 +9,15 @@
     * [Conform.nvim](#conformnvim)
 * [Languages specific](#languages-specific)
     * [RScript/R language](#rscriptr-language)
+* [Clang-format support](#clang-format-support)
+    * [Note:](#note)
+    * [Link:](#link)
 
 <!-- vim-markdown-toc -->
 
 ## ChangeLog
 
+- `2023-10-26`: added support for the `clang-format` now it runs based on the instructions file of `.clang-format`.
 - `2023-10-09`: Added the conform.nvim formatter with robust configurations for
   all languages.
   - [x] Add loader to the `require("conform")` to ensure safely loading.
@@ -149,3 +153,88 @@ install.packages("readr")
 ```
 
 2. `style` which is come installed with the R distribution automatically [read here](https://cran.r-project.org/web/packages/styler/index.html).
+
+## Clang-format support
+
+1. Adding a configuration for your `conform.nvim` plugin as following. Notice
+   that you can pass the exact file directory of `.clang-format`, and here you
+   have two stratgies, either
+   - You follow the a single file you put in your home directory like
+     `.clang-format`, and point to it, like `--args =
+"--style=file:~/Desktop/devCode/cppDev/AnimationEngineCPP/.clang-format"`,
+     or,
+   - Make it load the specific `.clang-format` file from your project home,
+     using `file`. directory.
+
+```lua
+  my_cpp_formatter = {
+    command = "/opt/homebrew/bin/clang-format",
+    --args = "--style=file:~/Desktop/devCode/cppDev/AnimationEngineCPP/.clang-format",
+    args = "--style=file",
+    stdin = true,
+  },
+```
+
+2. You can add for your project any configuration, such as, here, I have added `.clang-format` file with the following content.
+
+```sh
+
+---
+Language:        Cpp
+BasedOnStyle:  Google
+AccessModifierOffset: -4
+Standard:        c++17
+IndentWidth:     4
+TabWidth:        4
+UseTab:          Never
+ColumnLimit:     100
+AlignAfterOpenBracket: Align
+BinPackParameters: false
+AlignEscapedNewlines: Left
+AlwaysBreakTemplateDeclarations: Yes
+PackConstructorInitializers: Never
+BreakConstructorInitializersBeforeComma: false
+IndentPPDirectives: BeforeHash
+SortIncludes:    Never
+DerivePointerAlignment: false
+PointerAlignment: Left
+...
+
+```
+
+3. You can add later the keymapping in `nvim`, and its better to use the option
+   `lsp_fallback` = `false`, to know you are really loading the correct
+   formatter, `in cpp its my_cpp_formatter`, otherwise, it will reterive to the
+   origianl supported by the `lspconfig` server.
+
+```lua
+':lua require("conform").format({ lsp_fallback = false, async = true, timeout_ms = 500 })<CR>',
+```
+
+### Note:
+
+To make the pointer on the left when formatting, I use the following format
+`.clang-format` support: The answer is that Google's style (one can inspect it
+with `clang-format -style=google -dump-config | less`) defines:
+
+```sh
+DerivePointerAlignment: true
+```
+
+- The documentation says it:
+  - If true, analyze the formatted file for the most common alignment of `&`
+    and `*`. Pointer and reference alignment styles are going to be updated
+    according to the preferences found in the file. PointerAlignment is then used
+    only as fallback. Which means one must explicitly set
+    `DerivePointerAlignment: false` if one wants to handle it by oneself.
+- After that you can add the `PointerAlignment`, which will work as we need.
+
+### Link:
+
+- [why-do-the-pointeralignment-options-not-work](https://stackoverflow.com/questions/56537847/why-do-the-pointeralignment-options-not-work)
+- [Neoformat](https://github.com/sbdchd/neoformat/blob/master/autoload/neoformat/formatters/c.vim)
+- [vim-autoformat](https://github.com/vim-autoformat/vim-autoformat/blob/master/plugin/defaults.vim)
+- [ClangFormatStyleOptions](https://clang.llvm.org/docs/ClangFormatStyleOptions.html)
+- [lspvimbufformat_parameters_make_tab_indent_4](https://www.reddit.com/r/neovim/comments/12ndqo5/lspvimbufformat_parameters_make_tab_indent_4/)
+- [formatter.nvim](https://github.com/mhartington/formatter.nvim)
+- [does_vimlspbufformat_apply_clangd_formatting](https://www.reddit.com/r/neovim/comments/12otscq/does_vimlspbufformat_apply_clangd_formatting/)
