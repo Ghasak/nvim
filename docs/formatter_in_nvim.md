@@ -17,7 +17,8 @@
 
 ## ChangeLog
 
-- `2023-10-26`: added support for the `clang-format` now it runs based on the instructions file of `.clang-format`.
+- `2023-10-26`: added support for the `clang-format` now it runs based on the
+  instructions file of `.clang-format`.
 - `2023-10-09`: Added the conform.nvim formatter with robust configurations for
   all languages.
   - [x] Add loader to the `require("conform")` to ensure safely loading.
@@ -34,12 +35,12 @@
 
 ### NeoFormat
 
-Current problem with the `rustfmt`, which based on the `toolchain` of Rust, the
+Current, problem with the `rustfmt`, which based on the `toolchain` of Rust, the
 `rustc` foramt the old version of rust by defualt which support the
 `--edition=2015`. If you want to run for modern syntax of edition `2021` for
 example, then you must pass the flag `--edition=2020`.
 
-1. Ensure you have already installed the `rustfmt` using
+1. Ensure you have already installed the `rustfmt` using:
 
 ```shell
 rustup component add rustfmt
@@ -47,9 +48,9 @@ rustup component add rustfmt
 
 2. Using `Neovim` is our default formatter for any given buffer, but for Rust,
    it seems there is an issue that the arg `--edition` in not passed to the
-   `rustfmt` command. The consequences is that it will affect any code which is not
-   written in the given version for rustc, in this case, a code written in `2021` syntax
-   will not be parsed correctly.
+   `rustfmt` command. The consequences is that it will affect any code which is
+   not written in the given version for rustc, in this case, a code written in
+   `2021` syntax will not be parsed correctly.
 
 - Working around solution, either
 
@@ -101,17 +102,15 @@ replacement. Before the name was `null-ls` and called using
 - Using the lsp
 
 ```lua
-use {
-    "jose-elias-alvarez/null-ls.nvim",
-    requires = { "neovim/nvim-lspconfig", "nvim-lua/plenary.nvim" }
-}
+use { "jose-elias-alvarez/null-ls.nvim", requires = { "neovim/nvim-lspconfig",
+    "nvim-lua/plenary.nvim" } }
 
 ```
 
 ### Conform.nvim
 
-This is my current formatter is greate, It supports all the languages and I use it as my daily drive.
-I make it works right out of the box. Check this plugin
+This is my current formatter is greate, It supports all the languages and I use
+it as my daily drive. I make it works right out of the box. Check this plugin
 [here](https://github.com/stevearc/conform.nvim/blob/master/doc/recipes.md#format-command)
 and [here](https://github.com/stevearc/conform.nvim#formatopts-callback) You
 can see that, the following
@@ -144,7 +143,7 @@ can see that, the following
 
 ### RScript/R language
 
-In order to make it works, you will need to install the following libraries
+In order to make it works, you will need to install the following libraries:
 
 1. `readr` package, [read here](https://readr.tidyverse.org)
 
@@ -160,8 +159,7 @@ install.packages("readr")
    that you can pass the exact file directory of `.clang-format`, and here you
    have two stratgies, either
    - You follow the a single file you put in your home directory like
-     `.clang-format`, and point to it, like `--args =
-"--style=file:~/Desktop/devCode/cppDev/AnimationEngineCPP/.clang-format"`,
+     `.clang-format`, and point to it, like `--args = "--style=file:~/Desktop/devCode/cppDev/AnimationEngineCPP/.clang-format"`,
      or,
    - Make it load the specific `.clang-format` file from your project home,
      using `file`. directory.
@@ -175,7 +173,8 @@ install.packages("readr")
   },
 ```
 
-2. You can add for your project any configuration, such as, here, I have added `.clang-format` file with the following content.
+2. You can add for your project any configuration, such as, here, I have added
+   `.clang-format` file with the following content.
 
 ```sh
 

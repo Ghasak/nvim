@@ -99,12 +99,11 @@ end
 --       /blob/master/docs/howto.md
 -- --------------------------------------------------------------------
 
-local status_cmake_tools_ok, cmake = pcall(require, "cmake-tools")
-if not status_cmake_tools_ok then
-  return M
-end
-
-local icons = require "plugins.configs.icons"
+-- local status_cmake_tools_ok, cmake = pcall(require, "cmake-tools")
+-- if not status_cmake_tools_ok then
+--   return M
+-- end
+--local icons = require "plugins.configs.icons"
 -- --------------------------------------------------------------------
 --                      Operating System Icon
 -- --------------------------------------------------------------------
@@ -410,23 +409,23 @@ function M.setup()
         { "encoding" },
         { "filetype" },
         { lsp_func },
-        {
-          function()
-            local c_preset = cmake.get_configure_preset()
-            return "CMake: [" .. (c_preset and c_preset or "X") .. "]"
-          end,
-          icon = icons.ui.Search,
-          cond = function()
-            return cmake.is_cmake_project() and cmake.has_cmake_preset()
-          end,
-          on_click = function(n, mouse)
-            if n == 1 then
-              if mouse == "l" then
-                vim.cmd "CMakeSelectConfigurePreset"
-              end
-            end
-          end,
-        },
+        -- {
+        --   function()
+        --     local c_preset = cmake.get_configure_preset()
+        --     return "CMake: [" .. (c_preset and c_preset or "X") .. "]"
+        --   end,
+        --   icon = icons.ui.Search,
+        --   cond = function()
+        --     return cmake.is_cmake_project() and cmake.has_cmake_preset()
+        --   end,
+        --   on_click = function(n, mouse)
+        --     if n == 1 then
+        --       if mouse == "l" then
+        --         vim.cmd "CMakeSelectConfigurePreset"
+        --       end
+        --     end
+        --   end,
+        -- },
         { system_icon() },
         separator = nil,
       },

@@ -234,7 +234,7 @@ return {
   -- 	                      Programming Language Servers
   -- =========================================================================
   -- C/CPP CMake lsp Enhancer
-  { "Civitasv/cmake-tools.nvim", ft = { "cpp", "c" }, lazy = true },
+  --{ "Civitasv/cmake-tools.nvim", ft = { "cpp", "c" }, lazy = true , event = "InsertEnter"},
 
   -- Rust lsp Enhancer
   { "simrat39/rust-tools.nvim", lazy = true, ft = "rust" },
@@ -282,7 +282,6 @@ return {
   {
     "folke/neodev.nvim",
     ft = "lua",
-
     event = "InsertEnter",
   },
   -- lsp_signature.nvim
@@ -438,7 +437,8 @@ return {
   -- I will using conform
   {
     "stevearc/conform.nvim",
-    event = { "BufReadPre", "BufNewFile" },
+    --event = { "BufReadPre", "BufNewFile" },
+    event = { "InsertEnter" },
     lazy = true,
     config = function()
       require("plugins.configs.myConform").config()
@@ -477,7 +477,7 @@ return {
 
   {
     "stevearc/dressing.nvim",
-    event = { "VeryLazy" },
+    event = { "InsertEnter" },
     config = function()
       require("dressing").setup {
         border = "rounded",
@@ -515,7 +515,7 @@ return {
   }, -- This will  highlight the colors as #558817
   {
     "norcalli/nvim-colorizer.lua",
-    event = "VeryLazy",
+    event = "InsertEnter",
     lazy = true,
     cmd = { "ColorizerToggle" },
     config = function()
@@ -524,7 +524,7 @@ return {
   }, -- smooth scroll
   {
     "karb94/neoscroll.nvim",
-    event = "VimEnter",
+    event = "InsertEnter",
     lazy = true,
     config = function()
       require("plugins.configs.others").neoscroll()
@@ -533,7 +533,7 @@ return {
   {
     -- "npxbr/glow.nvim",
     "ellisonleao/glow.nvim",
-    event = "VeryLazy",
+    event = "InsertEnter",
     ft = { "markdown" },
     config = function()
       require("plugins.configs.myGlowMark").setup()
@@ -581,7 +581,8 @@ return {
       vim.g.CoolTotalMatches = 1
     end,
   }, -- Adding acceleration to the mouse for faster/smooth motion
-  { "rhysd/accelerated-jk", lazy = true, event = "VimEnter" },
+  --{ "rhysd/accelerated-jk", lazy = true, event = "VimEnter" },
+  { "rhysd/accelerated-jk", lazy = true, event = "VeryLazy" },
   -- Deleting a given buffer without affecting
 
   --{ "famiu/bufdelete.nvim", lazy = true, cmd = { "Bdelete" } },
@@ -682,7 +683,7 @@ return {
     "Vonr/align.nvim",
     branch = "v2",
     lazy = true,
-    event = { "VeryLazy" },
+    event = { "InsertEnter" },
     init = function()
       require("plugins.configs.myAlign").config()
     end,
@@ -761,7 +762,7 @@ return {
   -- ===========================================================================
   {
     "APZelos/blamer.nvim",
-    event = "VimEnter",
+    event = "InsertEnter",
     config = function()
       require("plugins.configs.myGitBlamer").BlamerSetting()
     end,
@@ -792,7 +793,7 @@ return {
   },
   {
     "kdheepak/lazygit.nvim",
-    event = "VeryLazy",
+    event = "InsertEnter",
     cmd = { "LazyGit" },
     -- optional for floating window border decoration
     dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },

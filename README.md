@@ -167,8 +167,8 @@ We can use add the following to the top of the file
 require("core.myInspectorFucntions")
 ```
 
-to reguest the necessary `custom-development` functions that I created.
-Then, for development you can use this as an example
+In order to request the required custom-development functions that I have
+created, please refer to the following as an example:
 
 - assume you have a file called `testing_file` at the `lua` directory
 
@@ -258,6 +258,10 @@ vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "CursorHold", "InsertL
    the undotree kepmapping, then you should always hit at least once the
    `undotree` to trigger it for the curretn buffer, which can keep tracking the
    changes.
+
+6. otree hint To ensure that undotree is triggered for the current buffer,
+you should always hit it at least once. This will allow undotree to track your changes efficiently.
+
 
 ## Jump Motion
 
@@ -592,4 +596,3 @@ want to alter the color.
 ## MEASURE SPEED OF NEOVIM
 
 - [Speedup Neovim ](https://aca.github.io/neovim_startuptime.html)
-

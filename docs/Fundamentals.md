@@ -220,7 +220,15 @@ with `COC and COC-LSP` and my current one with `nvim-lsp`.
 | 45  | g h                         | hover with `lspsaga`, while F1 hover using `nvim-lsp` built-in.                                                                       |                                             |
 | 46  | Neoformat -formatter        | Using the formatter with the nvim depending on the language server, (e.g., Lua: luastyla)                                             |                                             |
 | 47  | shift+f                     | first highlight to get (:\`\<,\`\>)norm (**A** for end of lines, **I** for beginning of lines) adding the text you want               | https://www.youtube.com/watch?v=gccGjwTZA7k |
-| 48  | \:setfiletype \<file_type\> | Select to open given unknown file with treesitter similar to a given file                                                             |
+| 48  | \:setfiletype \<file_type\> | Select to open given unknown file with treesitter similar to a given file                                                             |                                             |
+| 49  | \^y, \^e                    | line shift                                                                                                                            |                                             |
+| 50  | zz, zt, zb                  | big line shift                                                                                                                        |                                             |
+| 51  | gg, G                       | top/ bottom                                                                                                                           |                                             |
+| 52  | $, _ , 0                    | end / beginning                                                                                                                       |                                             |
+| 53  | \[\[,\]\]                   | block                                                                                                                                 |                                             |
+| 54  | \[c,\]c                     | change                                                                                                                                |                                             |
+| 55  | \[g,\]g                     | error                                                                                                                                 |                                             |
+| 56  | ^o, ^i                      | jump list                                                                                                                             |                                             |
 
 ### Requirements
 
@@ -383,11 +391,11 @@ Use the command `vim-startuptime` which will offer a quick calculation of the la
 vim.cmd[[let g:clap_theme = 'material_design_dark']]
 ```
 
-- [x] ~/.local/share/nvim/site/pack/packer/start/vim-clap/autoload/clap/themes/material_design_dark.vim.modified.now.used
-- Simply changed the color of the background to fit my terminal.
+- [x] `~/.local/share/nvim/site/pack/packer/start/vim-clap/autoload/clap/themes/material_design_dark.vim.modified.now.used`
+- Simply, changed the color of the background to fit my terminal.
 
 ```sh
-  " Author: liuchengxu <xuliuchengxlc@gmail.com>
+  " Author: liuchengxu <xuliuchengxlc@gmail.com>"
   " Description: Clap theme based on the material_design_dark theme."
   let s:save_cpo = &cpoptions
   set cpoptions&vim
@@ -415,29 +423,29 @@ You can use `:verbouse map`, or `:Telescope keymaps`, to check all the key bindi
 
 ## Spell checking
 
-For spell checking, I am using 'kamykn/spelunker.vim' and mapped (ZL and Zl)
+For spell checking, I am using `kamykn/spelunker.vim` and mapped (ZL and Zl)
 for checking spelling. This is less attractive compared to the `nvim` spell
 checking from `COC`.
 
 ## Fuzzy Finding
 
-One of the most interesting features that has been implemented is the "fuzzy
-finder" in Lua. This feature offers all the advantages of a fuzzy search,
+One of the most interesting features that has been implemented is the `fuzzy
+finder` in Lua. This feature offers all the advantages of a fuzzy search,
 including the ability to retrieve the path (directory represented as a string
 similar to the one provided by the VSCode plugin).
 
 - The mapping is located at `lua/scripts/myCommandWrapper.lua`, which will be
-  triggered in the "insert mode" using the shortcut keys of "(Ctrl-X followed by
-  Ctrl-F)" to automatically complete a path while coding, specifically for
+  triggered in the "insert mode" using the shortcut keys of `(Ctrl-X followed by
+Ctrl-F)` to automatically complete a path while coding, specifically for
   searching for any specific word. This feature still exists, but the new and
   much better `cmp-path` plugin is now available for this particular task.
 
 - [Idea got it from](https://vi.stackexchange.com/questions/34392/path-completion-with-fzf-from-absolute-path)
   you will need the following plugins:
 
-```shell
-  use{'junegunn/fzf', run = "fzf#install()"}
-  use{'junegunn/fzf.vim'}
+```sh
+use{'junegunn/fzf', run = "fzf#install()"}
+use{'junegunn/fzf.vim'}
 ```
 
 - [`FZY` finder repository](https://github.com/junegunn/fzf.vim)
@@ -473,8 +481,8 @@ similar to the one provided by the VSCode plugin).
 
 ## How to close your windows without affecting other buffers
 
-You can use `Bdelete`. I have mapped this to `<leader>w`, this will allow to close
-the given window without closing all the other buffers.
+You can use `Bdelete`. I have mapped this to `<leader>w`, this will allow to
+close the given window without closing all the other buffers.
 
 ## Highlight words in vim with (f/t/F/T)
 
@@ -498,7 +506,8 @@ presented below:
   Config for bufferline.nvim took 1.012205ms
 ```
 
-- Applying a stress test for the launching time for `nvim 0.6` with the new configurations `Thus. Jan. 6th 2022`.
+- Applying a stress test for the launching time for `nvim 0.6` with the new
+  configurations `Thus. Jan. 6th 2022`.
 
 ```bash
 # Applying
@@ -703,5 +712,3 @@ use { "rcarriga/nvim-dap-ui" }
 use { "Pocco81/DAPInstall.nvim" }
 use { "jbyuki/one-small-step-for-vimkind" }
 ```
-
-

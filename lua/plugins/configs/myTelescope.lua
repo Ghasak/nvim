@@ -284,7 +284,7 @@ M.config = function()
   -- Jump to most common places
   telescope.load_extension "frecency"
   -- See more feature about lazygit
-  telescope.load_extension "lazygit"
+  --telescope.load_extension "lazygit"
   -- Allow us to jump to dap point and other features
   telescope.load_extension "dap"
   -- Allow us to see the register nicely for our current selection (<leader>fy)

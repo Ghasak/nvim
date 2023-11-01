@@ -2,7 +2,8 @@
 
 ## ChangeLog
 
-- `2023-09-23 16:32`: I have updated the ranger to open automatically the buffer for given file.
+- `2023-09-23 16:32`: I have updated the ranger to open automatically the
+  buffer for given file.
 
 ## Rnvimr
 

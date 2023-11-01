@@ -1,9 +1,9 @@
 local M = {}
 local merge_tb = vim.tbl_deep_extend
 
-M.load_config = function()
-  config = {}
-end
+-- M.load_config = function()
+--   config = {}
+-- end
 
 M.remove_disabled_keys = function(chadrc_mappings, default_mappings)
   if not chadrc_mappings then
@@ -42,6 +42,7 @@ end
 
 M.load_mappings = function(section, mapping_opt)
   vim.schedule(function()
+    ---@diagnostic disable-next-line: unused-local, unused-function
     local function set_section_map(section_values)
       if section_values.plugin then
         return
@@ -62,38 +63,59 @@ M.load_mappings = function(section, mapping_opt)
         end
       end
     end
+    ---@diagnostic disable-next-line: empty-block
     if type(section) == "string" then
     end
   end)
 end
 
+local exclude_files = { "NvimTree_1", "[lazy]", "" }
+local function is_excluded_file(file)
+  for _, v in ipairs(exclude_files) do
+    if v == file then
+      return true
+    end
+  end
+  return false
+end
+
+local function load_plugin(plugin)
+  require("lazy").load { plugins = plugin }
+
+  if plugin == "nvim-lspconfig" then
+    vim.cmd "silent! do FileType"
+  end
+end
+
+local function deferred_load_plugin(plugin)
+  vim.schedule(function()
+    load_plugin(plugin)
+  end, 0)
+end
+
 M.lazy_load = function(plugin)
+  if not plugin or plugin == "" then
+    return
+  end -- Ensure plugin parameter is valid
+
   vim.api.nvim_create_autocmd({ "BufRead", "BufWinEnter", "BufNewFile" }, {
     group = vim.api.nvim_create_augroup("BeLazyOnFileOpen" .. plugin, {}),
+
     callback = function()
       local file = vim.fn.expand "%"
-      local condition = file ~= "NvimTree_1" and file ~= "[lazy]" and file ~= ""
 
-      if condition then
+      if not is_excluded_file(file) then
         vim.api.nvim_del_augroup_by_name("BeLazyOnFileOpen" .. plugin)
 
-        -- dont defer for treesitter as it will show slow highlighting
-        -- This deferring only happens only when we do "nvim filename"
-        if plugin ~= "nvim-treesitter" then
-          vim.schedule(function()
-            require("lazy").load { plugins = plugin }
-            if plugin == "nvim-lspconfig" then
-              vim.cmd "silent! do FileType"
-            end
-          end)
+        if plugin == "nvim-treesitter" then
+          load_plugin(plugin)
         else
-          require("lazy").load { plugins = plugin }
+          deferred_load_plugin(plugin)
         end
       end
     end,
   })
 end
-
 -- Keymapping function
 M.keymapping = function(mode, lhs, rhs, opts)
   local options = { noremap = true }

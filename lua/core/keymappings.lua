@@ -35,6 +35,7 @@ local mode_adapters = {
   command_mode = "c",
 }
 
+
 vim.keymap.set("n", "x", '"_x')
 -- Increment/decrement
 vim.keymap.set("n", "+", "<C-a>")
