@@ -1,38 +1,45 @@
 # MODERN NVIM CONFIG
+
+[![Clang analysis](https://neovim.io/doc/reports/clang/badge.svg)](https://neovim.io/doc/reports/clang)
+[![Packages](https://repology.org/badge/tiny-repos/neovim.svg)](https://repology.org/metapackage/neovim)
+[![License](https://img.shields.io/badge/License-GNU%20GPL-blue)](https://github.com/Ghasak/nvim/blob/main/LICENSE)
+[![LuaRocks](https://img.shields.io/luarocks/v/mfussenegger/nvim-dap?logo=lua&color=purple)](https://luarocks.org/modules/mfussenegger/nvim-dap)
+
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+
 **Table of Contents**
 
 - [MODERN NVIM CONFIG](#modern-nvim-config)
-    - [ChangingLog](#changinglog)
-        - [V.0.9.2 Release Nvim](#v092-release-nvim)
-        - [v.0.9.1 Release Nvim](#v091-release-nvim)
-        - [v.0.9.0 Release Nvim 0.9 with Lazy](#v090-release-nvim-09-with-lazy)
-        - [v.0.8.0 Update release Nvim-workflow v0.1](#v080-update-release-nvim-workflow-v01)
-    - [Nvim Workflow](#nvim-workflow)
-        - [Shortcuts](#shortcuts)
-    - [Workflow notes](#workflow-notes)
-        - [Cargo with Rust](#cargo-with-rust)
-        - [Auto Save](#auto-save)
-        - [For development](#for-development)
-    - [More details for the configurations](#more-details-for-the-configurations)
-    - [To do](#to-do)
-    - [Major Changes in Nvim 0.8](#major-changes-in-nvim-08)
-    - [General Configuration helper](#general-configuration-helper)
-    - [USEFUL COMMANDS](#useful-commands)
-    - [Jump Motion](#jump-motion)
-        - [Things to be considered](#things-to-be-considered)
-        - [Migration for Nvim 0.8](#migration-for-nvim-08)
-        - [Nvim with Lua API](#nvim-with-lua-api)
-        - [For mapping keyboard](#for-mapping-keyboard)
-        - [Telescope commands](#telescope-commands)
-        - [Events managment in nvim](#events-managment-in-nvim)
-        - [Make statusline from scratch](#make-statusline-from-scratch)
-        - [Debugging in lua](#debugging-in-lua)
-        - [Order of execution in nvim](#order-of-execution-in-nvim)
-        - [Adding upper case (captial letter)](#adding-upper-case-captial-letter)
-    - [UNDERSTANDING THE COLOR](#understanding-the-color)
-    - [VIM EVENTS](#vim-events)
-    - [MEASURE SPEED OF NEOVIM](#measure-speed-of-neovim)
+  - [ChangingLog](#changinglog)
+    - [V.0.9.2 Release Nvim](#v092-release-nvim)
+    - [v.0.9.1 Release Nvim](#v091-release-nvim)
+    - [v.0.9.0 Release Nvim 0.9 with Lazy](#v090-release-nvim-09-with-lazy)
+    - [v.0.8.0 Update release Nvim-workflow v0.1](#v080-update-release-nvim-workflow-v01)
+  - [Nvim Workflow](#nvim-workflow)
+    - [Shortcuts](#shortcuts)
+  - [Workflow notes](#workflow-notes)
+    - [Cargo with Rust](#cargo-with-rust)
+    - [Auto Save](#auto-save)
+    - [For development](#for-development)
+  - [More details for the configurations](#more-details-for-the-configurations)
+  - [To do](#to-do)
+  - [Major Changes in Nvim 0.8](#major-changes-in-nvim-08)
+  - [General Configuration helper](#general-configuration-helper)
+  - [USEFUL COMMANDS](#useful-commands)
+  - [Jump Motion](#jump-motion)
+    - [Things to be considered](#things-to-be-considered)
+    - [Migration for Nvim 0.8](#migration-for-nvim-08)
+    - [Nvim with Lua API](#nvim-with-lua-api)
+    - [For mapping keyboard](#for-mapping-keyboard)
+    - [Telescope commands](#telescope-commands)
+    - [Events managment in nvim](#events-managment-in-nvim)
+    - [Make statusline from scratch](#make-statusline-from-scratch)
+    - [Debugging in lua](#debugging-in-lua)
+    - [Order of execution in nvim](#order-of-execution-in-nvim)
+    - [Adding upper case (captial letter)](#adding-upper-case-captial-letter)
+  - [UNDERSTANDING THE COLOR](#understanding-the-color)
+  - [VIM EVENTS](#vim-events)
+  - [MEASURE SPEED OF NEOVIM](#measure-speed-of-neovim)
 
 <!-- markdown-toc end -->
 
@@ -182,12 +189,13 @@ P(fn.setup())
 ## To do
 
 - [x] Configuration for the dap
-- [install dap for rust-analyzer, integrated with rust-tools](https://github.com/alpha2phi/neovim-for-beginner/blob/50-package-manager/lua/config/lsp/installer.lua)
+- [install dap for rust-analyzer, integrated with
+  rust-tools](https://github.com/alpha2phi/neovim-for-beginner/blob/50-package-manager/lua/config/lsp/installer.lua)
 - [x] Adding only the `keymapping-window`.
 - [x] spell-checking for nvim such as
-- [Spelunker.vim](https://github.com/kamykn/spelunker.vim)
-  The current configurations are from the needs of getting the best optimized `IDE` for
-  the startup time.
+- [Spelunker.vim](https://github.com/kamykn/spelunker.vim) The current
+  configurations are from the needs of getting the best optimized `IDE` for the
+  startup time.
 
 ## Major Changes in Nvim 0.8
 
@@ -259,9 +267,8 @@ vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "CursorHold", "InsertL
    `undotree` to trigger it for the curretn buffer, which can keep tracking the
    changes.
 
-6. otree hint To ensure that undotree is triggered for the current buffer,
-you should always hit it at least once. This will allow undotree to track your changes efficiently.
-
+7. otree hint To ensure that undotree is triggered for the current buffer,
+   you should always hit it at least once. This will allow undotree to track your changes efficiently.
 
 ## Jump Motion
 

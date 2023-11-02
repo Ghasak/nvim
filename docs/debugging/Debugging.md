@@ -3,6 +3,16 @@
 The following is not for `Rust` execlusivly, you still can use same for
 `C/C++`, `Objective-C` ..etc.
 
+```
+DAP-Client ----- Debug Adapter ------- Debugger ------ Debugee
+(nvim-dap)  |   (per language)  |   (per language)    (your app)
+            |                   |
+            |        Implementation specific communication
+            |        Debug adapter and debugger could be the same process
+            |
+     Communication via the Debug Adapter Protocol
+```
+
 ## Using Terminal
 
 Following the steps to debug our current project. Assume you have already
