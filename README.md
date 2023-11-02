@@ -4,6 +4,10 @@
 [![Packages](https://repology.org/badge/tiny-repos/neovim.svg)](https://repology.org/metapackage/neovim)
 [![License](https://img.shields.io/badge/License-GNU%20GPL-blue)](https://github.com/Ghasak/nvim/blob/main/LICENSE)
 [![LuaRocks](https://img.shields.io/luarocks/v/mfussenegger/nvim-dap?logo=lua&color=purple)](https://luarocks.org/modules/mfussenegger/nvim-dap)
+---
+![Vim](https://img.shields.io/badge/VIM-%2311AB00.svg?style=for-the-badge&logo=vim&logoColor=white)
+[![Lua](https://img.shields.io/badge/lua-%232C2D72.svg?style=for-the-badge&logo=lua&logoColor=white)]()
+![Markdown](https://img.shields.io/badge/markdown-%23000000.svg?style=for-the-badge&logo=markdown&logoColor=white)
 
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 
@@ -603,3 +607,7 @@ want to alter the color.
 ## MEASURE SPEED OF NEOVIM
 
 - [Speedup Neovim ](https://aca.github.io/neovim_startuptime.html)
+
+## Reference
+- [Markdown Badges](https://ileriayo.github.io/markdown-badges/)
+
