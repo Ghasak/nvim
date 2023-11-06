@@ -702,6 +702,48 @@ return {
   --   end,
   -- })
   { "mg979/vim-visual-multi", lazy = true, event = "InsertEnter", branch = "master" },
+
+  --FOLDING THE CODE
+  -- Here, the dependencies, statuscol, will remove the numbers 2, 3, 4 ..etc. for the folding level.
+  -- The configuration is customized and can be seen at my_ufo.lua
+  {
+    "kevinhwang91/nvim-ufo",
+    --event = "VimEnter",
+    cmd = {
+      "Command",
+      "UfoEnable",
+      "UfoDisable",
+      "UfoInspect",
+      "UfoAttach", -- This will allow to trigger the folding
+      "UfoDetach",
+      "UfoEnableFold",
+      "UfoDisableFold",
+    },
+
+    dependencies = {
+      "kevinhwang91/promise-async",
+      {
+        "luukvbaal/statuscol.nvim",
+        config = function()
+          local builtin = require "statuscol.builtin"
+          require("statuscol").setup {
+            -- foldfunc = "builtin",
+            -- setopt = true,
+            relculright = true,
+            segments = {
+              { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+              { text = { "%s" }, click = "v:lua.ScSa" },
+              { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
+            },
+          }
+        end,
+      },
+    },
+    config = function()
+      require("plugins.configs.my_ufo").config()
+    end,
+  },
+
   -- ===========================================================================
   --                          Other Plugins
   -- ===========================================================================

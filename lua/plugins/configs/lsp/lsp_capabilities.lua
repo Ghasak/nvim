@@ -11,6 +11,11 @@ if not status_cmp_ok then
   return M
 end
 
+-- Add folding capabilities required by ufo.nvim
+M.capabilities.textDocument.foldingRange = {
+  dynamicRegistration = false,
+  lineFoldingOnly = true,
+}
 -- Otherwise, add more capabilities to the language server
 M.capabilities.textDocument.completion.completionItem.documentationFormat = {
   "markdown",

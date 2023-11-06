@@ -20,31 +20,31 @@ opt.mouse = "a" -- enable mouse support, clicking and scrolling,
 -- <<defaults write com.googlecode.iterm2 AlternateMouseScroll -bool true>>
 opt.clipboard = "unnamedplus" -- copy/paste to system clipboard
 
-vim.cmd([[
+vim.cmd [[
 set clipboard=unnamed
 if has("unnamedplus") " X11 support
     set clipboard+=unnamedplus
 endif
-]])
+]]
 
-vim.cmd([[
+vim.cmd [[
 set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 set termencoding=utf-8
 set encoding=utf-8
-]])
+]]
 
-vim.cmd([[
+vim.cmd [[
 set encoding=utf-8
 set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
 set fileformats=unix,dos,mac
-]])
+]]
 
 opt.swapfile = false -- don't use swapfile
 
 -- mapping for paste  Ref: https://vim.fandom.com/wiki/Replace_a_word_with_yanked_text
-vim.cmd([[
+vim.cmd [[
   xnoremap p "_dP
-]])
+]]
 --
 
 -----------------------------------------------------------
@@ -54,15 +54,15 @@ vim.g.neovide_scale_factor = 1.0
 -----------------------------------------------------------
 --               For Tmux Support colors
 -----------------------------------------------------------
-vim.cmd([[
+vim.cmd [[
 set background=dark
 set t_Co=256
-]])
+]]
 
-vim.cmd([[
+vim.cmd [[
 set modifiable
 set write
-]])
+]]
 -----------------------------------------------------------
 --              Spelling and dictionary
 --        This takes so much time costing around 30 millsec
@@ -93,7 +93,7 @@ opt.pumheight = 10
 opt.encoding = "utf-8"
 opt.updatetime = 300
 opt.timeoutlen = 500
-cmd([[set formatoptions-=cro]]) -- Stop newline continution of comments
+cmd [[set formatoptions-=cro]] -- Stop newline continution of comments
 opt.laststatus = 2 -- originally its 0,  this will allow lua statusline to be shown, otherwise it will not
 opt.backup = false -- Recommended by COC
 opt.writebackup = false -- Recommended by COC
@@ -102,16 +102,16 @@ opt.conceallevel = 0
 opt.tabstop = 2
 opt.shiftwidth = 2
 opt.wildignore =
-    ".git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**"
+  ".git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**"
 opt.fillchars = {
-    vert = "▕", -- alternatives │
-    fold = " ",
-    eob = " ", -- suppress ~ at EndOfBuffer
-    diff = "╱", -- alternatives = ⣿ ░ ─
-    msgsep = "‾",
-    foldopen = "▾",
-    foldsep = "│",
-    foldclose = "▸"
+  vert = "▕", -- alternatives │
+  fold = " ",
+  eob = " ", -- suppress ~ at EndOfBuffer
+  diff = "╱", -- alternatives = ⣿ ░ ─
+  msgsep = "‾",
+  foldopen = "▾",
+  foldsep = "│",
+  foldclose = "▸",
 }
 -----------------------------------------------------------
 -- Neovim UI
@@ -119,7 +119,7 @@ opt.fillchars = {
 opt.syntax = "enable" -- enable syntax highlighting
 opt.number = true -- show line number
 opt.showmatch = true -- highlight matching parenthesis
-opt.foldmethod = "marker" -- enable folding (default 'foldmarker')
+opt.foldmethod = "manual" -- enable folding (default 'foldmarker'), if not manual, the ufo.nvim will not work.
 opt.colorcolumn = "130" -- line lenght marker at 80 columns
 -- to show the color of the vertical ruler set to 120 width for now
 -- vim.cmd([[hi ColorColumn ctermbg=0 guibg=lightgray]])
@@ -134,7 +134,7 @@ opt.smartcase = true -- ignore lowercase for the whole pattern
 -- ===========================================================================
 
 -- remove whitespace on save
-vim.cmd([[au BufWritePre * :%s/\s\+$//e]])
+vim.cmd [[au BufWritePre * :%s/\s\+$//e]]
 -----------------------------------------------------------
 -- Memory, CPU
 -----------------------------------------------------------
@@ -160,43 +160,43 @@ opt.tabstop = 4 -- 1 tab == 4 spaces
 opt.smartindent = true -- autoindent new lines
 opt.autoindent = true
 -- don't auto commenting new lines
-vim.cmd([[au BufEnter * set fo-=c fo-=r fo-=o]])
+vim.cmd [[au BufEnter * set fo-=c fo-=r fo-=o]]
 
 -- remove line lenght marker for selected filetypes
-vim.cmd([[
+vim.cmd [[
   autocmd FileType text,markdown,xml,html,xhtml,javascript setlocal cc=0
-]])
+]]
 
 -- 2 spaces for selected filetypes
-vim.cmd([[
+vim.cmd [[
   autocmd FileType xml,html,xhtml,css,scss,javascript,lua,yaml setlocal shiftwidth=2 tabstop=2
-]])
+]]
 
 -- 8 spaces for Go files
-vim.cmd([[autocmd FileType go setlocal shiftwidth=8 tabstop=8]])
+vim.cmd [[autocmd FileType go setlocal shiftwidth=8 tabstop=8]]
 
 -- IndentLine
 -- g.indentLine_setColors = 0  -- set indentLine color
 -- g.indentLine_char = '|'       -- set indentLine character
 
 -- disable IndentLine for markdown files (avoid concealing)
-vim.cmd([[
+vim.cmd [[
 	autocmd FileType markdown let g:indentLine_enabled=0
-]])
+]]
 
 -- Configurations for the mac
-local global = require("core.global")
+local global = require "core.global"
 if global.is_mac then
-    vim.g.clipboard = {
-        name = "macOS-clipboard",
-        copy = {["+"] = "pbcopy", ["*"] = "pbcopy"},
-        paste = {["+"] = "pbpaste", ["*"] = "pbpaste"},
-        cache_enabled = 0
-    }
+  vim.g.clipboard = {
+    name = "macOS-clipboard",
+    copy = { ["+"] = "pbcopy", ["*"] = "pbcopy" },
+    paste = { ["+"] = "pbpaste", ["*"] = "pbpaste" },
+    cache_enabled = 0,
+  }
 
-    -- vim.g.python_host_prog = "/usr/bin/python2"
-    vim.g.python_host_prog = "$HOME/anaconda3/bin/python2" -- '/usr/local/bin/python3'
-    vim.g.python3_host_prog = "$HOME/anaconda3/bin/python3" -- '/usr/local/bin/python3'
+  -- vim.g.python_host_prog = "/usr/bin/python2"
+  vim.g.python_host_prog = "$HOME/anaconda3/bin/python2" -- '/usr/local/bin/python3'
+  vim.g.python3_host_prog = "$HOME/anaconda3/bin/python3" -- '/usr/local/bin/python3'
 end
 -----------------------------------------------------------
 --          Glow for Markdown
@@ -214,42 +214,55 @@ vim.opt.termguicolors = true
 
 -- Disable some builtin vim plugins
 local disabled_built_ins = {
-    "2html_plugin", "getscript", "getscriptPlugin", "gzip", "logipat",
-    -- "netrw",
-    -- "netrwPlugin",
-    -- "netrwSettings",
-    -- "netrwFileHandlers",
-    "matchit", "matchparen", "tar", "tarPlugin", "rrhelper", "vimball",
-    "vimballPlugin", "zip", "zipPlugin"
+  "2html_plugin",
+  "getscript",
+  "getscriptPlugin",
+  "gzip",
+  "logipat",
+  -- "netrw",
+  -- "netrwPlugin",
+  -- "netrwSettings",
+  -- "netrwFileHandlers",
+  "matchit",
+  "matchparen",
+  "tar",
+  "tarPlugin",
+  "rrhelper",
+  "vimball",
+  "vimballPlugin",
+  "zip",
+  "zipPlugin",
 }
 
-for _, plugin in pairs(disabled_built_ins) do g["loaded_" .. plugin] = 1 end
+for _, plugin in pairs(disabled_built_ins) do
+  g["loaded_" .. plugin] = 1
+end
 
 local disable_distribution_plugins = function()
-    vim.g.loaded_gzip = 1
-    vim.g.loaded_tar = 1
-    vim.g.loaded_tarPlugin = 1
-    vim.g.loaded_zip = 1
-    vim.g.loaded_zipPlugin = 1
-    vim.g.loaded_getscript = 1
-    vim.g.loaded_getscriptPlugin = 1
-    vim.g.loaded_vimball = 1
-    vim.g.loaded_vimballPlugin = 1
-    vim.g.loaded_matchit = 1
-    vim.g.loaded_matchparen = 1
-    vim.g.loaded_2html_plugin = 1
-    vim.g.loaded_logiPat = 1
-    vim.g.loaded_rrhelper = 1
-    vim.g.loaded_netrw = 1
-    vim.g.loaded_netrwPlugin = 1
-    vim.g.loaded_netrwSettings = 1
-    vim.g.loaded_netrwFileHandlers = 1
+  vim.g.loaded_gzip = 1
+  vim.g.loaded_tar = 1
+  vim.g.loaded_tarPlugin = 1
+  vim.g.loaded_zip = 1
+  vim.g.loaded_zipPlugin = 1
+  vim.g.loaded_getscript = 1
+  vim.g.loaded_getscriptPlugin = 1
+  vim.g.loaded_vimball = 1
+  vim.g.loaded_vimballPlugin = 1
+  vim.g.loaded_matchit = 1
+  vim.g.loaded_matchparen = 1
+  vim.g.loaded_2html_plugin = 1
+  vim.g.loaded_logiPat = 1
+  vim.g.loaded_rrhelper = 1
+  vim.g.loaded_netrw = 1
+  vim.g.loaded_netrwPlugin = 1
+  vim.g.loaded_netrwSettings = 1
+  vim.g.loaded_netrwFileHandlers = 1
 end
 
 -----------------------------------------------------------
 --            Remove whitespace on save
 -----------------------------------------------------------
-vim.cmd([[au BufWritePre * :%s/\s\+$//e]])
+vim.cmd [[au BufWritePre * :%s/\s\+$//e]]
 
 -----------------------------------------------------------
 -- This will auto load the nvim if the file got changed
@@ -277,7 +290,7 @@ vim.cmd([[au BufWritePre * :%s/\s\+$//e]])
 -----------------------------------------------------------
 --                 Ruler Color for Nvimm
 -----------------------------------------------------------
-vim.cmd([[highlight ColorColumn ctermbg=black guibg=#373d46]])
+vim.cmd [[highlight ColorColumn ctermbg=black guibg=#373d46]]
 
 -----------------------------------------------------------
 --            ON YANKING HIGHLIGHT
@@ -294,12 +307,12 @@ vim.cmd([[highlight ColorColumn ctermbg=black guibg=#373d46]])
 --
 -- This is implementation of the same above for the Nvim using Lua API
 vim.api.nvim_create_autocmd("TextYankPost", {
-    -- group = vim.api.nvim_create_augroup('highlight_yank'),
-    desc = "Hightlight selection on yank",
-    pattern = "*",
-    callback = function()
-        vim.highlight.on_yank({higroup = "TextYankPost_style", timeout = 700})
-    end
+  -- group = vim.api.nvim_create_augroup('highlight_yank'),
+  desc = "Hightlight selection on yank",
+  pattern = "*",
+  callback = function()
+    vim.highlight.on_yank { higroup = "TextYankPost_style", timeout = 700 }
+  end,
 })
 -- ===========================================================================
 --            This will highlight the Cursor Line Number ()
@@ -327,9 +340,9 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 -- It will be triggered once, we enter the buffer.
 -- ===============================================================
 vim.api.nvim_create_autocmd("BufEnter", {
-    nested = true,
-    callback = function()
-        vim.cmd([[
+  nested = true,
+  callback = function()
+    vim.cmd [[
 function! HighlightSearch(timer)
     if (g:firstCall)
         let g:originalStatusLineHLGroup = execute("hi StatusLine")
@@ -372,27 +385,31 @@ augroup betterSeachHighlighting
     autocmd CmdlineLeave * let g:searching = 0
 
 augroup END
-]])
-    end
+]]
+  end,
 })
 
 -- ===========================================================================
 --                 Create Directories for Caching files
 -- ===========================================================================
 local createdir = function()
-    -- This function is used to create cache directories for our nvim sessionn
-    local data_dir = {
-        global.cache_dir .. "backup", global.cache_dir .. "session",
-        global.cache_dir .. "swap", global.cache_dir .. "tags",
-        global.cache_dir .. "undo"
-    }
-    for key, dirx in pairs(data_dir) do
-        -- if vim.fn.empty(vim.fn.glob(dirx)) > 0 then
-        vim.api.nvim_command(
-            ([[echohl WarningMsg | echomsg "[-] The directory:%s is not existed, will be created ." | echohl None]]):format(
-                dirx))
-        os.execute("mkdir -p " .. dirx)
-    end
+  -- This function is used to create cache directories for our nvim sessionn
+  local data_dir = {
+    global.cache_dir .. "backup",
+    global.cache_dir .. "session",
+    global.cache_dir .. "swap",
+    global.cache_dir .. "tags",
+    global.cache_dir .. "undo",
+  }
+  for key, dirx in pairs(data_dir) do
+    -- if vim.fn.empty(vim.fn.glob(dirx)) > 0 then
+    vim.api.nvim_command(
+      ([[echohl WarningMsg | echomsg "[-] The directory:%s is not existed, will be created ." | echohl None]]):format(
+        dirx
+      )
+    )
+    os.execute("mkdir -p " .. dirx)
+  end
 end
 
 -- ===========================================================================
@@ -402,37 +419,54 @@ end
 -- ===========================================================================
 -- Moder Lua auto-command for launching netrwPlugin which shipped with the nvim
 -- Previously: Instead of callback I used -> command = ":silent! Explore",
-local mygroup = vim.api.nvim_create_augroup("loading_netrwPlugin",
-                                            {clear = true})
-vim.api.nvim_create_autocmd({"VimEnter"}, {
-    pattern = {"*"},
-    callback = function()
-        -- Getting the file name that you pass when you launch nvim,
-        local current_file = vim.fn.expand("%")
-        -- if we have already file_name, then, we edit it
-        if current_file ~= "" then
-            vim.cmd(":silent! edit " .. current_file)
-        else
-            -- We will check if the window (buffer) is the lazy nvim, as it conflict if the buffer (popup menu) is lazy
-            local lazy_popup_buf_exists = false
-            -- We will get list of all current opened buffers
-            local buf_list = vim.api.nvim_list_bufs()
-            for _, buf in ipairs(buf_list) do
-                -- We will obtain from the table only the filetype
-                local buf_ft = vim.api.nvim_buf_get_option(buf, 'filetype')
-                if buf_ft == "lazy" then
-                    lazy_popup_buf_exists = true
-                end
-            end -- Check if vim-floaterm is loaded
-            local has_floaterm, _ = pcall(require, 'floaterm')
-            if not lazy_popup_buf_exists and not has_floaterm then
-                -- Then we can safely loading netrwPlugin at startup
-                vim.cmd(":silent! Explore")
-            end
+local mygroup = vim.api.nvim_create_augroup("loading_netrwPlugin", { clear = true })
+vim.api.nvim_create_autocmd({ "VimEnter" }, {
+  pattern = { "*" },
+  callback = function()
+    -- Getting the file name that you pass when you launch nvim,
+    local current_file = vim.fn.expand "%"
+    -- if we have already file_name, then, we edit it
+    if current_file ~= "" then
+      vim.cmd(":silent! edit " .. current_file)
+    else
+      -- We will check if the window (buffer) is the lazy nvim, as it conflict if the buffer (popup menu) is lazy
+      local lazy_popup_buf_exists = false
+      -- We will get list of all current opened buffers
+      local buf_list = vim.api.nvim_list_bufs()
+      for _, buf in ipairs(buf_list) do
+        -- We will obtain from the table only the filetype
+        local buf_ft = vim.api.nvim_buf_get_option(buf, "filetype")
+        if buf_ft == "lazy" then
+          lazy_popup_buf_exists = true
         end
-    end,
-    group = mygroup
+      end -- Check if vim-floaterm is loaded
+      local has_floaterm, _ = pcall(require, "floaterm")
+      if not lazy_popup_buf_exists and not has_floaterm then
+        -- Then we can safely loading netrwPlugin at startup
+        vim.cmd ":silent! Explore"
+      end
+    end
+  end,
+  group = mygroup,
 })
+
+-- ===========================================================================
+--                     -- GOT REPLACED BY UFO NVIM --
+-- ===========================================================================
+-- To enhance grammar and spelling, we're modifying the original sentence.
+-- Instead of two hyphens followed by a space, we're using three consecutive hyphens (--),
+-- indicating a section break or a heading. This is common in Markdown syntax.
+-- ===========================================================================
+vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+vim.o.foldcolumn = "1" -- '0' is not bad
+vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+vim.o.foldlevelstart = 99
+vim.o.foldenable = true
+
+-- ===========================================================================
+--                   OLD JUNKS FROM PERVIOUS CONFIGS
+-- ===========================================================================
+
 -- Or simply use
 -- vim.cmd([[
 -- " Open Netrw after Vim starts up

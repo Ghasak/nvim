@@ -105,6 +105,7 @@ M.setup = function()
     handlers = require("plugins.configs.lsp.lsp_handlers").handlers,
     special_attach = require("plugins.configs.lsp.lsp_special_attach").custom_attach,
   }
+
   --
   mason_lspconfig.setup_handlers {
     -- The first entry (without a key) will be the default handler
@@ -113,7 +114,7 @@ M.setup = function()
     function(server_name) -- Default handler (optional)
       lspconfig[server_name].setup {
         on_attach = opts.on_attach,
-        capabilities = opts.capabilities,
+        capabilities = vim.deepcopy(opts.capabilities),
         handlers = opts.handlers,
       }
     end,

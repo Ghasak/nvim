@@ -392,5 +392,11 @@ vim.keymap.set("n", "<leader>cu", "<Plug>(VM-Add-Cursor-Up)", { desc = "vim visu
 vim.keymap.set("n", "<leader>cd", "<Plug>(VM-Add-Cursor-Down)", { desc = "vim visual multi" })
 
 
-
+---- *****************************************************************************************
+----                         For folding with nvim
+---- *****************************************************************************************
+-- vim.keymap.set("n", "<leader>1", ":foldclose<CR>", { desc = "vim visual multi" })
+-- vim.keymap.set("v", "<leader>1", ":fold<CR>", { desc = "vim visual multi" })
+-- vim.keymap.set("n", "<leader>2", ":foldopen<CR>", { desc = "vim visual multi" })
+--
 
