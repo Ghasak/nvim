@@ -120,33 +120,33 @@ return {
         end,
         dependencies = { "kkharji/sqlite.lua" },
       },
-      {
-        "gbprod/yanky.nvim",
-        event = "VimEnter",
-        config = function()
-          require("yanky").setup {
-            ring = {
-              history_length = 100,
-              storage = "shada",
-              sync_with_numbered_registers = true,
-              cancel_event = "update",
-              ignore_registers = { "_" },
-              update_register_on_cycle = false,
-            },
-            system_clipboard = {
-              sync_with_ring = true,
-            },
-            picker = {
-              select = {
-                action = nil, -- nil to use default put action
-              },
-              telescope = {
-                mappings = nil, -- nil to use default mappings
-              },
-            },
-          }
-        end,
-      },
+      -- {
+      --   "gbprod/yanky.nvim",
+      --   event = "VimEnter",
+      --   config = function()
+      --     require("yanky").setup {
+      --       ring = {
+      --         history_length = 100,
+      --         storage = "shada",
+      --         sync_with_numbered_registers = true,
+      --         cancel_event = "update",
+      --         ignore_registers = { "_" },
+      --         update_register_on_cycle = false,
+      --       },
+      --       system_clipboard = {
+      --         sync_with_ring = true,
+      --       },
+      --       picker = {
+      --         select = {
+      --           action = nil, -- nil to use default put action
+      --         },
+      --         telescope = {
+      --           mappings = nil, -- nil to use default mappings
+      --         },
+      --       },
+      --     }
+      --   end,
+      -- },
       -- This will provide us with a nicer window for our telescope
       -- to jump to definitions using multiple jump points instead
       -- of always jumping horizontally from `vim.buf.lsp`, which

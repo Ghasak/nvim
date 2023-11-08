@@ -288,7 +288,7 @@ M.config = function()
   -- Allow us to jump to dap point and other features
   telescope.load_extension "dap"
   -- Allow us to see the register nicely for our current selection (<leader>fy)
-  telescope.load_extension "yank_history"
+  --telescope.load_extension "yank_history"
   -- This will allow us to jump to any go to definition using the lspconfig
   telescope.load_extension "lsp_handlers"
   -- Jump on markdown heading easily within the given document (:Telescope heading), markdown files only.

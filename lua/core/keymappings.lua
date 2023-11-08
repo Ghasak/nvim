@@ -358,7 +358,7 @@ vim.api.nvim_set_keymap("n", "<leader><leader>p", ":lua open_session()<CR>", { n
 --                              Find in visual mode (no plugin is required)
 --                       https://github.com/Ajnasz/nvim-rfind
 ---- *****************************************************************************************
---vim.keymap.set("x", "/", "<Esc>/\\%V")
+vim.keymap.set("x", "/", "<Esc>/\\%V")
 
 ---- *****************************************************************************************
 ----                    Switching between Sessions (Projects)
@@ -390,8 +390,6 @@ vim.keymap.set("n", "<leader>z", "<cmd>:Lazy<cr>", { desc = "Plugin Manager" })
 ---- *****************************************************************************************
 vim.keymap.set("n", "<leader>cu", "<Plug>(VM-Add-Cursor-Up)", { desc = "vim visual multi" })
 vim.keymap.set("n", "<leader>cd", "<Plug>(VM-Add-Cursor-Down)", { desc = "vim visual multi" })
-
-
 ---- *****************************************************************************************
 ----                         For folding with nvim
 ---- *****************************************************************************************
