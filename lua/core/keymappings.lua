@@ -398,3 +398,11 @@ vim.keymap.set("n", "<leader>cd", "<Plug>(VM-Add-Cursor-Down)", { desc = "vim vi
 -- vim.keymap.set("n", "<leader>2", ":foldopen<CR>", { desc = "vim visual multi" })
 --
 
+
+---- *****************************************************************************************
+----                  SUPPORT FOR TELEKASTEN NOTES (OBSIDIAN)
+---- *****************************************************************************************
+-- Launch panel if nothing is typed after <leader>z
+vim.keymap.set("n", "<leader>tk", "<cmd>Telekasten panel<CR>")
+
+

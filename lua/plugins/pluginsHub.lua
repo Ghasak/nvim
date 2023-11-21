@@ -112,14 +112,14 @@ return {
       -- Enhance extension that offers intelligent prioritization
       -- when selecting files from your editing history
       -- https://github.com/nvim-telescope/telescope-frecency.nvim
-      {
-        "nvim-telescope/telescope-frecency.nvim",
-        event = "VimEnter",
-        config = function()
-          require("telescope").load_extension "frecency"
-        end,
-        dependencies = { "kkharji/sqlite.lua" },
-      },
+--      {
+--        "nvim-telescope/telescope-frecency.nvim",
+--        event = "VimEnter",
+--        config = function()
+--          require("telescope").load_extension "frecency"
+--        end,
+--        dependencies = { "kkharji/sqlite.lua" },
+--      },
       -- {
       --   "gbprod/yanky.nvim",
       --   event = "VimEnter",
@@ -569,7 +569,7 @@ return {
   },
 
   -- ===========================================================================
-  --           Productivities and performance
+  --           PRODUCTIVITIES AND PERFORMANCE
   -- ===========================================================================
 
   -- Clear highlight when you search for a word automatically
@@ -619,7 +619,7 @@ return {
   },
 
   -- ===========================================================================
-  --                        Debugger Tools
+  --                        DEBUGGER TOOLS
   -- ===========================================================================
   -- Debugging
   -- use({ "puremourning/vimspector", event = "BufWinEnter" })
@@ -664,7 +664,7 @@ return {
   },
 
   -- ===========================================================================
-  --                         For Editor
+  --                         FOR EDITOR
   -- ===========================================================================
   -- Allow making tables in Markup-language (*.md) files.
   { "dhruvasagar/vim-table-mode", lazy = true, event = "InsertEnter" },
@@ -744,8 +744,26 @@ return {
     end,
   },
 
+  -- A Neovim (lua) plugin for working with a text-based,
+  -- markdown zettelkasten / wiki and mixing it with a journal, based on telescope.nvim.
+  {
+    "renerocksai/telekasten.nvim",
+    event = "InsertEnter",
+    cmd = { "Telekasten" },
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+      {
+        "renerocksai/calendar-vim",
+        cmd = { "Calendar" },
+      },
+    },
+    config = function()
+      require("plugins.configs.myTelekasten").config()
+    end,
+  },
+
   -- ===========================================================================
-  --                          Other Plugins
+  --                          OTHER PLUGINS
   -- ===========================================================================
   {
     "terrortylor/nvim-comment",
@@ -756,7 +774,7 @@ return {
   },
 
   -- ===========================================================================
-  --                        Nvim Keymapping Manager
+  --                        NVIM KEYMAPPING MANAGER
   -- ===========================================================================
   {
     "folke/which-key.nvim",
@@ -800,7 +818,7 @@ return {
     end,
   }, --
   -- ===========================================================================
-  --                            Git and Diff
+  --                            GIT AND DIFF
   -- ===========================================================================
   {
     "APZelos/blamer.nvim",
@@ -845,7 +863,8 @@ return {
   },
 
   -- ===========================================================================
-  --                           AI Developement
+  --                           AI DEVELOPEMENT
+  -- ===========================================================================
   -- Models: https://ollama.ai/library
   -- Run in terminal: ollama serve
   -- Currently I'am using zephyr model
@@ -860,7 +879,7 @@ return {
     end,
   },
   -- ===========================================================================
-  --                          TMUX [not used for now]
+  --                          TMUX [NOT USED FOR NOW]
   -- ===========================================================================
   {
     "christoomey/vim-tmux-navigator",

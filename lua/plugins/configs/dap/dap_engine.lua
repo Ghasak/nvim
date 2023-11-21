@@ -41,7 +41,7 @@ M.cpp_debuger_setup = function(dap)
   local async = require "plenary.async"
   local notify = require("notify").async
 
-  vim.g.my_adpater_loader_selector = 4
+  vim.g.my_adpater_loader_selector = 2
 
   if vim.bo.filetype == "cpp" then
     if vim.g.my_adpater_loader_selector == 1 then

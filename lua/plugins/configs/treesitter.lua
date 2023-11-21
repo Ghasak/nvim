@@ -46,7 +46,7 @@ function M.setup()
       -- termcolors = {} -- table of colour name strings
     },
     indent = { enable = true, disable = { "yaml", "python" } },
-    context_commentstring = { enable = true, enable_autocmd = false },
+    --context_commentstring = { enable = true, enable_autocmd = false },
   }
 end
 

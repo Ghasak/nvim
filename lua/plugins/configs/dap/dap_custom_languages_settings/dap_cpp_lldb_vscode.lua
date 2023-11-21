@@ -14,16 +14,21 @@ end
 ------------------------------------------------------------
 
 function M.setup(dap)
-  dap.adapters["lldb-vscode"] = {
+  dap.adapters["lldb-dap"] = {
     type = "executable",
-    command = vim.loop.os_homedir() .. "/.cpp_debug_adpater/llvm-build/bin/lldb-vscode",
-    name = "lldb-vscode",
+    -- Notice: the lldb-vscode => changed to lldb-dap by
+    -- Read the comment of
+    -- https ://discourse.llvm.org/t/rfc-rename-lldb-vscode-to-lldb-dap/74075
+    --"/.cpp_debug_adpater/llvm-build/bin/lldb-vscode", [this build is removed on Nov.10th]
+    -- the new llvm-project is built again on Sat. Nov. 11th 2023
+    command = vim.loop.os_homedir() .. "/buildspace/llvm-inst/bin/lldb-dap",
+    name = "lldb-dap",
   }
 
   dap.configurations.cpp = {
     {
       name = "Launch",
-      type = "lldb-vscode",
+      type = "lldb-dap",
       --MIDebuggerPath = "/Users/gmbp/.cpp_debug_adpater/lldb-mi/build/src/lldb-mi",
       request = "launch",
       --program = "${workspaceFolder}/build/debug/main", -- Pointing to the binary
