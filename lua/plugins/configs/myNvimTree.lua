@@ -4,8 +4,8 @@ if not status_ok then
 end
 
 -- Added for loading the nvim-tree, it seems the above is not working at the moment, to be maintained later.
-vim.cmd [[highlight NvimTreeFolderIcon guifg = gray]]
-vim.cmd [[highlight NvimTreeIndentMarker guifg = gray]]
+--vim.cmd [[highlight NvimTreeFolderIcon guifg = gray]]
+--vim.cmd [[highlight NvimTreeIndentMarker guifg = gray]]
 -- disable netrw at the very start of your init.lua (strongly advised)
 vim.g.loaded = 1
 vim.g.loaded_netrwPlugin = 1

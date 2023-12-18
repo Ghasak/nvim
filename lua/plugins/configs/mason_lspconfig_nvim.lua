@@ -49,9 +49,9 @@ M.setup = function()
       "tsserver",
       "texlab",
       "clangd", -- "dockerls", "docker_compose_language_service", "jsonls", "r_language_server", "vimls"
-      "r_language_server",
+      --"r_language_server",
       "jqls",
-      "cmake",
+      --"cmake",
     },
     ui = {
       -- Whether to automatically check for new versions when opening the :Mason window.
@@ -246,15 +246,15 @@ M.setup = function()
         },
       }
     end,
-    ["r_language_server"] = function()
-      lspconfig.r_language_server.setup {
-        on_attach = opts.on_attach,
-        capabilities = opts.capabilities,
-        handlers = opts.handlers,
-        filetypes = { "r", "rmd" },
-        cmd = { "R", "--slave", "-e", "languageserver::run()" },
-      }
-    end,
+    -- ["r_language_server"] = function()
+    --   lspconfig.r_language_server.setup {
+    --     on_attach = opts.on_attach,
+    --     capabilities = opts.capabilities,
+    --     handlers = opts.handlers,
+    --     filetypes = { "r", "rmd" },
+    --     cmd = { "R", "--slave", "-e", "languageserver::run()" },
+    --   }
+    -- end,
     -- For C/C++ language
     ["clangd"] = function()
       lspconfig.clangd.setup {

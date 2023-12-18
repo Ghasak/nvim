@@ -13,6 +13,65 @@ return {
       -- require("plugins.configs.onedark_config").setup()
     end,
   },
+
+  {
+    "xiyaowong/transparent.nvim",
+    cmd = {
+      "TransparentDisabl",
+      "TransparentToggle",
+      "TransparentEnable",
+    },
+    config = function()
+      -- This is just a test
+      require("transparent").setup { -- Optional, you don't have to run setup.
+        groups = { -- table: default groups
+          "Normal",
+          "NormalNC",
+          "Comment",
+          "Constant",
+          "Special",
+          "Identifier",
+          "Statement",
+          "PreProc",
+          "Type",
+          "Underlined",
+          "Todo",
+          "String",
+          "Function",
+          "Conditional",
+          "Repeat",
+          "Operator",
+          "Structure",
+          "LineNr",
+          "NonText",
+          "SignColumn",
+          "CursorLine",
+          "CursorLineNr",
+          "StatusLine",
+          "StatusLineNC",
+          "EndOfBuffer",
+        },
+        extra_groups = {
+          "NormalFloat", -- plugins which have float panel such as Lazy, Mason, LspInfo
+          "NvimTreeNormal", -- NvimTree
+          "NvimTreeNC",
+          "NvimTreeEndOfBuffer",
+          "IndentBlanklineContext",
+          "IndentBlanklineContextChar",
+          "IndentBlanklineContext",
+          "IndentBlanklineContextSpaceChar",
+          "IndentBlanklineIndent1",
+          "IndentBlanklineIndent2",
+          "IndentBlanklineIndent3",
+          "IndentBlanklineIndent4",
+          "IblIndent",
+
+        }, -- table: additional groups that should be cleared
+        exclude_groups = {}, -- table: groups you don't want to clear
+      }
+    end,
+  },
+
   -- ==========================================================================
   -- 	                      Utilities for NVIM IDE Env
   -- ==========================================================================
@@ -112,14 +171,14 @@ return {
       -- Enhance extension that offers intelligent prioritization
       -- when selecting files from your editing history
       -- https://github.com/nvim-telescope/telescope-frecency.nvim
---      {
---        "nvim-telescope/telescope-frecency.nvim",
---        event = "VimEnter",
---        config = function()
---          require("telescope").load_extension "frecency"
---        end,
---        dependencies = { "kkharji/sqlite.lua" },
---      },
+      --      {
+      --        "nvim-telescope/telescope-frecency.nvim",
+      --        event = "VimEnter",
+      --        config = function()
+      --          require("telescope").load_extension "frecency"
+      --        end,
+      --        dependencies = { "kkharji/sqlite.lua" },
+      --      },
       -- {
       --   "gbprod/yanky.nvim",
       --   event = "VimEnter",
