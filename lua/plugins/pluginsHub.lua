@@ -641,7 +641,7 @@ return {
     end,
   }, -- Adding acceleration to the mouse for faster/smooth motion
   --{ "rhysd/accelerated-jk", lazy = true, event = "VimEnter" },
-  { "rhysd/accelerated-jk", lazy = true, event = "VeryLazy" },
+  --{ "rhysd/accelerated-jk", lazy = true, event = "VeryLazy" },
   -- Deleting a given buffer without affecting
 
   --{ "famiu/bufdelete.nvim", lazy = true, cmd = { "Bdelete" } },
