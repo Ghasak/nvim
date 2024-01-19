@@ -1,7 +1,5 @@
 # Adapter and Configurations
 
-
-
 <!-- vim-markdown-toc GitLab -->
 
 * [Adapters Types](#adapters-types)

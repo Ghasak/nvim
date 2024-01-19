@@ -224,7 +224,7 @@ with `COC and COC-LSP` and my current one with `nvim-lsp`.
 | 49  | \^y, \^e                    | line shift                                                                                                                            |                                             |
 | 50  | zz, zt, zb                  | big line shift                                                                                                                        |                                             |
 | 51  | gg, G                       | top/ bottom                                                                                                                           |                                             |
-| 52  | $, _ , 0                    | end / beginning                                                                                                                       |                                             |
+| 52  | $, \_ , 0                   | end / beginning                                                                                                                       |                                             |
 | 53  | \[\[,\]\]                   | block                                                                                                                                 |                                             |
 | 54  | \[c,\]c                     | change                                                                                                                                |                                             |
 | 55  | \[g,\]g                     | error                                                                                                                                 |                                             |
@@ -232,11 +232,6 @@ with `COC and COC-LSP` and my current one with `nvim-lsp`.
 | 57  | d0                          | while you are on beginning of line you want to delete all up to the first column                                                      |                                             |
 | 58  | d^                          | At beginning of the column delete all spaces until first letter of your line                                                          |                                             |
 | 59  | :g/^ /norm dw               | delete a word at the beginning of the line for all lines                                                                              |                                             |
-
-
-
-
-
 
 ### Requirements
 
@@ -598,14 +593,13 @@ shfmt -l -w script.sh
 
 ### Adding Latex language server
 
-I have chosen the `latex:textlab` as my language sever for the latex to get all
-the features required to write in `latex`. Following the Steps
+I have selected the `latex:textlab` language server for Latex to acquire all
+the necessary features required to write in LaTeX. Following the Steps
 
-1. Install the language server using
-   I have chosen the `textlab` as it is developed with `Rust`,and it is superFast.
+1. Install the language server using `textlab`, as it is developed with Rust and is superFast.
 
 ```shell
-LSInstall latex
+LSPInstall latex
 # choice textab
 
 ```
@@ -720,3 +714,9 @@ use { "rcarriga/nvim-dap-ui" }
 use { "Pocco81/DAPInstall.nvim" }
 use { "jbyuki/one-small-step-for-vimkind" }
 ```
+
+
+
+
+
+
