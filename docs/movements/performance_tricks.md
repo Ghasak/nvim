@@ -6,6 +6,7 @@
 * [Better replace with register](#better-replace-with-register)
 * [Past inside a quote](#past-inside-a-quote)
 * [Searching for multiple words](#searching-for-multiple-words)
+* [Delete space before and after - position of cursor](#delete-space-before-and-after-position-of-cursor)
 * [Reference](#reference)
 
 <!-- vim-markdown-toc -->
@@ -91,6 +92,13 @@ There are two simple ways to highlight multiple words in vim editor.
 - Basically, the first puts you in the regular expression mode so that you do
   not need to put any extra back slashes before every pipe or other delimiters
   used for searching.
+
+## Delete space before and after - position of cursor
+
+| idx | keybinding | situation                                                                                                | note              |
+| --- | ---------- | -------------------------------------------------------------------------------------------------------- | ----------------- |
+| 1   | `d 0`      | cursor at the begging of the word and want <br> to delete all things way to begging of a line            | delete to begging |
+| 2   | `d i w`    | cursor at the begging of a line and want to <br> delete all the white spaces up to the begging of a word | delete inner word |
 
 ## Reference
 

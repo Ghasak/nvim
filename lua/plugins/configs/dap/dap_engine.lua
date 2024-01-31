@@ -41,7 +41,7 @@ M.cpp_debuger_setup = function(dap)
   local async = require "plenary.async"
   local notify = require("notify").async
 
-  vim.g.my_adpater_loader_selector = 2
+  vim.g.my_adpater_loader_selector = 1
 
   if vim.bo.filetype == "cpp" then
     if vim.g.my_adpater_loader_selector == 1 then
@@ -50,6 +50,11 @@ M.cpp_debuger_setup = function(dap)
       -- ░█░     command = "/opt/homebrew/opt/llvm/bin/lldb-vscode",
       -- ▄█▄     Status: Working, selecting binary: automated
       -- ############################################################################################
+
+      async.run(function()
+        local messege = string.format("Using codelldb for debugging  \nRun at:%s", os.date "%H:%M:%S")
+        notify(messege, vim.log.levels.INFO, { title = " Debugging Support " })
+      end, function() end)
       require("plugins.configs.dap.dap_custom_languages_settings.dap_cpp_settings").setup(dap)
     elseif vim.g.my_adpater_loader_selector == 2 then
       -- ############################################################################################

@@ -63,6 +63,7 @@ local function cutStringToEnd(fullString, substring)
         return fullString
     end
 end
+
 -- Function to cut a string from the beginning to a specified substring
 -- If the substring is not found, the entire string is returned.
 -- Function to cut a string from the beginning to the end or up to a specified substring

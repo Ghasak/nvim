@@ -5,6 +5,7 @@ function M.setup(dap)
   -- dap_install.config("codelldb", {})
   -- local dap = require "dap"
   local install_root_dir = vim.fn.stdpath "data" .. "/mason/packages/cpptools/extension/debugAdapters/bin/"
+  -- Run `chmod +x lldb-mi` in case you update the adapters
   local miDebuggerPath = vim.fn.stdpath "data" .. "/mason/packages/cpptools/extension/debugAdapters/lldb-mi/bin/lldb-mi"
   local OpenDebugAD7 = install_root_dir .. "OpenDebugAD7"
 
