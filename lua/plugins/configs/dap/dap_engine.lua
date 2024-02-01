@@ -41,7 +41,7 @@ M.cpp_debuger_setup = function(dap)
   local async = require "plenary.async"
   local notify = require("notify").async
 
-  vim.g.my_adpater_loader_selector = 1
+  vim.g.my_adpater_loader_selector = 2  -- [2] is the best option as it is similar to rust
 
   if vim.bo.filetype == "cpp" then
     if vim.g.my_adpater_loader_selector == 1 then
@@ -67,13 +67,13 @@ M.cpp_debuger_setup = function(dap)
       -- ############################################################################################
       -- █▀▀█      TYPE: Command, Adapter: lldb-vscode, Adapter: built from LLVM-Project
       -- ░░▀▄      command = "$HOME/.cpp_debug_adpater/llvm-build/bin/lldb-vscode",
-      -- █▄▄█      Status: Working, binary selection: automated
+      -- █▄▄█      Status: [not] Working, binary selection: automated
       -- ############################################################################################
     elseif vim.g.my_adpater_loader_selector == 4 then
       -- ############################################################################################
       -- ░█▀█░      TYPE: Server, Adapter: OpenDebugAD7, Adapter: Downloaded Mason cpptools
       -- █▄▄█▄      server = "local OpenDebugAD7 = install_root_dir .. "OpenDebugAD7"
-      -- ░░░█░         Status: Working, binary selection: automated
+      -- ░░░█░      Status: Working, binary selection: automated
       -- ############################################################################################
       ----------------- Just for showing banner ------------------
       -- vim.notify(file)

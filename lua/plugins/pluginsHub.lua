@@ -16,6 +16,7 @@ return {
 
   {
     "xiyaowong/transparent.nvim",
+    cond = false, -- load this plugin
     config = function()
       require("transparent").setup { -- Optional, you don't have to run setup.
         groups = { -- table: default groups
