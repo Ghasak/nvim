@@ -55,13 +55,13 @@ end
 -- Function to cut a string from the first occurrence of a substring to the end
 -- If the substring is not found, the entire string is returned.
 local function cutStringToEnd(fullString, substring)
-    local startPos, endPos = fullString:find(substring)
+  local startPos, endPos = fullString:find(substring)
 
-    if startPos then
-        return fullString:sub(startPos)
-    else
-        return fullString
-    end
+  if startPos then
+    return fullString:sub(startPos)
+  else
+    return fullString
+  end
 end
 
 -- Function to cut a string from the beginning to a specified substring
@@ -94,7 +94,16 @@ M.debugging_key_mapping = function()
   --   █▄█ █▀▄ ██▄ █▀█ █░█ █▀▀ █▄█ █ █░▀█ ░█░   █▄█ █▀█ █░▀█ █░▀█ ██▄ █▀▄
   --
   --    Global function will show a banner once a breakpoint is setted.
+  -- It will read the `vim.g.adapter_type = "adapter_name"` from dap_engine.lua
   --########################################################################
+
+  -- to know more about debugging -> :lua vim.print(require('dap').adpaters)
+  -- then use :messages to check which adapter you are using
+
+  local function fullString_fn(debugger_name)
+    --tostring(require("dap").adapters[debugger_name]["executable"]["command"])
+    return tostring(require("dap").adapters[debugger_name].executable.command)
+  end
 
   _G.set_breakpoint_and_update_global = function(debugger_name)
     -- debugger name can be: debuggy, lldbcode, lldb-vscode, lldb, lldb-mi ..etc.
@@ -106,7 +115,7 @@ M.debugging_key_mapping = function()
     -- vim.notify(file)
     async.run(function()
       if debugger_name == "codelldb" then
-        local fullString = tostring(require("dap").adapters[debugger_name]["executable"]["command"])
+        local fullString = fullString_fn(debugger_name)
         local searchString = "mason"
         local cutString = cutStringToEnd(fullString, searchString)
         messege = string.format(
@@ -116,7 +125,7 @@ M.debugging_key_mapping = function()
           os.date "%H:%M:%S"
         )
       elseif debugger_name == "cppdbg" then
-        local fullString = tostring(require("dap").adapters[debugger_name]["executable"]["command"])
+        local fullString = fullString_fn(debugger_name)
         local searchString = "mason"
         local cutString = cutStringToEnd(fullString, searchString)
         messege = string.format(
@@ -170,7 +179,7 @@ M.debugging_key_mapping = function()
   local map = require("core.utils").keymapping
   if vim.bo.filetype == "cpp" then
     --map("n", "<leader>b", ":lua set_breakpoint_and_update_global('lldb-vscode')<CR>")
-    map("n", "<leader>b", ":lua set_breakpoint_and_update_global('cppdbg')<CR>")
+    map("n", "<leader>b", ":lua set_breakpoint_and_update_global(vim.g.adapter_type)<CR>")
   elseif vim.bo.filetype == "rust" then
     map("n", "<leader>b", ":lua set_breakpoint_and_update_global('codelldb')<CR>")
   elseif vim.bo.filetype == "python" then
@@ -191,8 +200,9 @@ M.debugging_key_mapping = function()
   map("n", "<leader>dc", ':lua require"dap".terminate()<CR>')
   map("n", "<leader>dr", ':lua require"dap".repl.toggle({}, "vsplit")<CR><C-w>l')
   map("n", "<leader>de", ':lua require"dap".set_exception_breakpoints({"all"})<CR>')
-  map("n", "<leader>da", ':lua require"debugHelper".attach()<CR>')
-  map("n", "<leader>dA", ':lua require"debugHelper".attachToRemote()<CR>')
+  map("n", "<leader>da", ':lua require"dap".continue()<CR>')
+  -- map("n", "<leader>da", ':lua require"debugHelper".attach()<CR>')
+  -- map("n", "<leader>dA", ':lua require"debugHelper".attachToRemote()<CR>')
   map("n", "<leader>di", ':lua require"dap.ui.widgets".hover()<CR>')
   map("n", "<leader>d?", ':lua local widgets=require"dap.ui.widgets";widgets.centered_float(widgets.scopes)<CR>')
 

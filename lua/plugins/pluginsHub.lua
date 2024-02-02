@@ -14,81 +14,81 @@ return {
     end,
   },
 
-  {
-    "xiyaowong/transparent.nvim",
-    cond = false, -- load this plugin
-    config = function()
-      require("transparent").setup { -- Optional, you don't have to run setup.
-        groups = { -- table: default groups
-          "Normal",
-          "NormalNC",
-          "Comment",
-          "Constant",
-          "Special",
-          "Identifier",
-          "Statement",
-          "PreProc",
-          "Type",
-          "Underlined",
-          "Todo",
-          "String",
-          "Function",
-          "Conditional",
-          "Repeat",
-          "Operator",
-          "Structure",
-          "LineNr",
-          "NonText",
-          "SignColumn",
-          "CursorLine",
-          "CursorLineNr",
-          "StatusLine",
-          "StatusLineNC",
-          "EndOfBuffer",
-          "NeoTreeNormal",
-          "VertSplit",
-          "GitSignsAdd",
-          "GitSignsAddNr",
-          "GitSignsAddLn",
-          "GitSignsChange",
-          "GitSignsChangeNr",
-          "GitSignsChangeLn",
-          "GitSignsDelete",
-          "GitSignsDeleteNr",
-          "GitSignsDeleteLn",
-          "GitSignsDelete",
-          "GitSignsDeleteNr",
-          "GitSignsDeleteLn",
-          "GitSignsChangeNr",
-          "GitSignsChangeLn",
-        },
-
-        extra_groups = {
-          "NeoTreeNormal",
-          "NeoTreeEndOfBuffer",
-          "NormalFloat", -- plugins which have float panel such as Lazy, Mason, LspInfo
-          "NvimTreeNormal", -- NvimTree
-          "NvimTreeNC",
-          "NvimTreeEndOfBuffer",
-          "IndentBlanklineContext",
-          "IndentBlanklineContextChar",
-          "IndentBlanklineContext",
-          "IndentBlanklineContextSpaceChar",
-          "IndentBlanklineIndent1",
-          "IndentBlanklineIndent2",
-          "IndentBlanklineIndent3",
-          "IndentBlanklineIndent4",
-          "IblIndent",
-          "GitGutterAdd",
-          "GitGutterChange",
-          "GitGutterDelete",
-          "NvimTreeVertSplit",
-        }, -- table: additional groups that should be cleared
-        exclude_groups = {}, -- table: groups you don't want to clear
-      }
-    end,
-  },
-
+  -- {
+  --   "xiyaowong/transparent.nvim",
+  --   cond = false, -- load this plugin
+  --   config = function()
+  --     require("transparent").setup { -- Optional, you don't have to run setup.
+  --       groups = { -- table: default groups
+  --         "Normal",
+  --         "NormalNC",
+  --         "Comment",
+  --         "Constant",
+  --         "Special",
+  --         "Identifier",
+  --         "Statement",
+  --         "PreProc",
+  --         "Type",
+  --         "Underlined",
+  --         "Todo",
+  --         "String",
+  --         "Function",
+  --         "Conditional",
+  --         "Repeat",
+  --         "Operator",
+  --         "Structure",
+  --         "LineNr",
+  --         "NonText",
+  --         "SignColumn",
+  --         "CursorLine",
+  --         "CursorLineNr",
+  --         "StatusLine",
+  --         "StatusLineNC",
+  --         "EndOfBuffer",
+  --         "NeoTreeNormal",
+  --         "VertSplit",
+  --         "GitSignsAdd",
+  --         "GitSignsAddNr",
+  --         "GitSignsAddLn",
+  --         "GitSignsChange",
+  --         "GitSignsChangeNr",
+  --         "GitSignsChangeLn",
+  --         "GitSignsDelete",
+  --         "GitSignsDeleteNr",
+  --         "GitSignsDeleteLn",
+  --         "GitSignsDelete",
+  --         "GitSignsDeleteNr",
+  --         "GitSignsDeleteLn",
+  --         "GitSignsChangeNr",
+  --         "GitSignsChangeLn",
+  --       },
+  --
+  --       extra_groups = {
+  --         "NeoTreeNormal",
+  --         "NeoTreeEndOfBuffer",
+  --         "NormalFloat", -- plugins which have float panel such as Lazy, Mason, LspInfo
+  --         "NvimTreeNormal", -- NvimTree
+  --         "NvimTreeNC",
+  --         "NvimTreeEndOfBuffer",
+  --         "IndentBlanklineContext",
+  --         "IndentBlanklineContextChar",
+  --         "IndentBlanklineContext",
+  --         "IndentBlanklineContextSpaceChar",
+  --         "IndentBlanklineIndent1",
+  --         "IndentBlanklineIndent2",
+  --         "IndentBlanklineIndent3",
+  --         "IndentBlanklineIndent4",
+  --         "IblIndent",
+  --         "GitGutterAdd",
+  --         "GitGutterChange",
+  --         "GitGutterDelete",
+  --         "NvimTreeVertSplit",
+  --       }, -- table: additional groups that should be cleared
+  --       exclude_groups = {}, -- table: groups you don't want to clear
+  --     }
+  --   end,
+  -- },
+  --
   -- ==========================================================================
   -- 	                      Utilities for NVIM IDE Env
   -- ==========================================================================
@@ -276,7 +276,7 @@ return {
     config = function()
       require "plugins.configs.myFzf"
     end,
-  }, -- Terminal
+  }, -- Floating Terminal
   {
     "akinsho/toggleterm.nvim",
     keys = { [[<C-\>]] },

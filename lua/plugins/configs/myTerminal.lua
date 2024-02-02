@@ -1,6 +1,7 @@
 local M = {}
 
 M.setup = function()
+  local c = require "onedark.colors"
   require("toggleterm").setup {
     -- size can be a number or function which is passed the current terminal
     size = function(term)
@@ -25,9 +26,21 @@ M.setup = function()
     -- NOTE: this is only a subset of alvues , any group palced here will be set for the terminal
     highlights = {
       FloatBorder = {
-       -- guifg = "#B2C9AB",
-       -- guibg = "#B2C9AB",
+        -- guifg = "#B2C9AB",
+        -- guibg = "#B2C9AB",
       },
+
+      NormalFloat = {
+        guibg = "#181a1f",
+        --link = "Normal",
+      },
+
+      -- Normal = {
+      --   guibg = "#2d333b",
+      -- },
+      -- Normal = {
+      --   guibg = c.bg0
+      -- },
     },
     -- This field is only relevant if direction is set to 'float'
     float_opts = {
@@ -41,7 +54,7 @@ M.setup = function()
       winblend = 10,
       highlights = {
         border = "Normal",
-        --background = "Normal",
+        background = "Normal",
       },
     },
   }
