@@ -406,3 +406,8 @@ vim.keymap.set("n", "<leader>cd", "<Plug>(VM-Add-Cursor-Down)", { desc = "vim vi
 vim.keymap.set("n", "<leader>tk", "<cmd>Telekasten panel<CR>")
 
 
+
+-- Delete a word back using shift + Esc
+vim.api.nvim_set_keymap('i', '<S-Esc>', '<C-w>', { noremap = true, silent = true })
+
+

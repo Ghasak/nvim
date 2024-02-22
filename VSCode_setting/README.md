@@ -23,7 +23,7 @@ flawlessly.
   `nvim` version this symlink will be broken, so you need to create a new
   symlink to the new nvim version similarly.)
 
-```shell
+```sh
 ln -s ~/dev/bin/nvim  /usr/local/bin/nvim
 ```
 
@@ -36,7 +36,7 @@ python that you are working on I usuaully use:
 
 ### For Global python
 
-```shell
+```sh
 python3 -m install --user --upgrade pynvim
 ```
 
@@ -44,11 +44,11 @@ python3 -m install --user --upgrade pynvim
 
 this will work for both `pipenv` or `virtualenv`
 
-```shell
+```sh
 python3 -m install --upgrade pynvim
 ```
 
-```shell
+```sh
 "vscode-neovim.neovimExecutablePaths.darwin": "/usr/local/bin/nvim",
 # This one is not needed //"vscode-neovim.neovimExecutablePaths.darwin": " /Users/ghasak.ibrahim/dev/bin/nvim",
 "vscode-neovim.neovimExecutablePaths.linux": "/usr/local/bin/nvim",

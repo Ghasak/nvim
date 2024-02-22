@@ -8,7 +8,7 @@ M.setup = function()
     pager = false,
     shadow = false,
     style = "dark",
-    width = 140,
+    width = 300,
   }
 end
 

@@ -680,6 +680,7 @@ return {
   --  use({ "tpope/vim-sleuth" })
   -- Replace word with register
   { "gennaro-tedesco/nvim-peekup", event = "InsertEnter" },
+
   {
     "rainbowhxch/beacon.nvim",
     lazy = true,
@@ -965,3 +966,6 @@ return {
     event = "InsertEnter",
   },
 }
+
+
+
