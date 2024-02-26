@@ -14,6 +14,7 @@ M.config = function()
     replace = true,
   }
   gen.model = 'zephyr:latest'
+  --gen.model = 'gemma:7b'
 end
 
 return M
