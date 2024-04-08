@@ -129,7 +129,7 @@ return {
   {
     -- This plugin is alternative to nvim.context
     "nvim-treesitter/nvim-treesitter-context",
-    cond = false, -- Loading the dap, if false it will not be loaded,
+    cond = false, -- Loading the context, if false it will not be loaded,
     cmd = { "TSContextDisable", "TSContextEnable", "TSContextToggle" },
     event = "InsertEnter",
   },
@@ -709,7 +709,6 @@ return {
     event = "InsertEnter",
     config = function()
       require("nvim-dap-virtual-text").setup {
-        -- display_callback = function(variable, _buf, _stackframe, _node)
         display_callback = function(variable, _, _, _)
           return variable.name .. "  󰞮 󱚟   " .. variable.value
         end,
@@ -719,27 +718,25 @@ return {
   },
   {
     "mfussenegger/nvim-dap",
-    cond = true, -- Loading the dap, if false it will not be loaded,
+    cond = true,
     lazy = true,
     event = "InsertEnter",
-    -- keys = { [[<leader>d]] },
     dependencies = {
       { "nvim-dap-virtual-text", event = "InsertEnter" },
-      { "nvim-dap-ui", event = "InsertEnter" },
       { "nvim-dap-python", event = "InsertEnter" },
-      -- {"DAPIkstall.nvim"},
-      { "theHamsta/nvim-dap-virtual-text", event = "InsertEnter" },
-      { "rcarriga/nvim-dap-ui", event = "InsertEnter" },
+      -- Added dependencies for the dap-ui
+      {
+        "rcarriga/nvim-dap-ui",
+        dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
+        event = "InsertEnter",
+      },
       { "mfussenegger/nvim-dap-python", event = "InsertEnter" },
       { "nvim-telescope/telescope-dap.nvim", event = "InsertEnter" },
-      --{ "leoluz/nvim-dap-go", event = "InsertEnter" },
-      --{ "jbyuki/one-small-step-for-vimkind", event = "InsertEnter" },
     },
     config = function()
       require "plugins.configs.dap"
     end,
   },
-
   -- ===========================================================================
   --                         FOR EDITOR
   -- ===========================================================================
@@ -966,6 +963,5 @@ return {
     event = "InsertEnter",
   },
 }
-
 
 

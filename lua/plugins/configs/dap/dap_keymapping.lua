@@ -27,25 +27,22 @@ local M = {}
     - If the server exits with a return value other than `0`, it indicates an error occurred.
 ]]
 _G.START_OPEN_DEBUGAD7_SERVER = function()
-  local my_job_id = nil
   local install_root_dir = vim.fn.stdpath "data" .. "/mason/packages/cpptools/extension/debugAdapters/bin/"
   local cmd_OpenDebugAD7 = install_root_dir .. "OpenDebugAD7"
   local args = { "--server=9999", "--trace=response", "--engineLogging" }
+  local on_exit = function(_, return_val, event)
+    vim.notify(event)
+    if return_val ~= 0 then
+      print "OpenDebugAD7 server exited with error!"
+    end
+  end
 
-  my_job_id = vim.fn.jobstart({ cmd_OpenDebugAD7, unpack(args) }, {
-    on_exit = function(j, return_val, event)
-      vim.notify(event)
-      vim.notify(j)
-      if return_val ~= 0 then
-        print "OpenDebugAD7 server exited with error!"
-      end
-    end,
-  })
+  vim.fn.jobstart({ cmd_OpenDebugAD7, unpack(args) }, { on_exit = on_exit })
 end
 
 -- This will stop the server, but we will not
 -- use it as the job ended once we exited the Nvim
-local function stop_open_debug_ad7_server()
+local function stop_open_debug_ad7_server(my_job_id)
   if my_job_id and my_job_id > 0 then
     vim.fn.jobstop(my_job_id)
     my_job_id = nil
@@ -112,6 +109,7 @@ M.debugging_key_mapping = function()
     local async = require "plenary.async"
     local notify = require("notify").async
     local messege = nil
+
     -- vim.notify(file)
     async.run(function()
       if debugger_name == "codelldb" then
@@ -178,14 +176,13 @@ M.debugging_key_mapping = function()
 
   local map = require("core.utils").keymapping
   if vim.bo.filetype == "cpp" then
-    --map("n", "<leader>b", ":lua set_breakpoint_and_update_global('lldb-vscode')<CR>")
     map("n", "<leader>b", ":lua set_breakpoint_and_update_global(vim.g.adapter_type)<CR>")
   elseif vim.bo.filetype == "rust" then
     map("n", "<leader>b", ":lua set_breakpoint_and_update_global('codelldb')<CR>")
   elseif vim.bo.filetype == "python" then
     map("n", "<leader>b", ":lua PYTHON_DIR_BANNER_MESSAGE()<CR>")
   else
-    map("n", "<leader>b", ':lua require"dap".set_breakpoint()<CR>')
+    map("n", "<leader>b", ':lua require"dap".toggle_breakpoint()<CR>')
   end
   map("n", "<leader>B", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>")
   -- ------------------------- Navigation ------------------

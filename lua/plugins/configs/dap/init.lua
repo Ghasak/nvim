@@ -11,13 +11,18 @@ end
 
 local dap_status_ok, dap = pcall(require, "dap")
 if not dap_status_ok then
+  print("dap module not found or failed to load")
   return
 end
 
+-- Attempt to load dapui
 local dap_ui_status_ok, dapui = pcall(require, "dapui")
 if not dap_ui_status_ok then
+  -- Handle the case when dapui module doesn't exist or fails to load
+  print("dapui module not found or failed to load")
   return
 end
+
 
 -- 1. dap_breakpoint [[ setting of the signs of the dap ]]
 -- 2. dap_ui_setting [[ setting of the signs of the dap ]]
@@ -30,3 +35,5 @@ require("plugins.configs.dap.dap_engine").python_debuger_setup(dap)
 require("plugins.configs.dap.dap_engine").rust_debuger_setup(dap)
 require("plugins.configs.dap.dap_engine").cpp_debuger_setup(dap)
 require("plugins.configs.dap.dap_keymapping").debugging_key_mapping()
+
+

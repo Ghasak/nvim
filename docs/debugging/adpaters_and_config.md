@@ -2,6 +2,7 @@
 
 <!-- vim-markdown-toc GitLab -->
 
+* [[IMPORTANT] Notes about using Adapters](#important-notes-about-using-adapters)
 * [Adapters Types](#adapters-types)
     * [Which Adapter I am using](#which-adapter-i-am-using)
     * [Table 1: Adapter Details](#table-1-adapter-details)
@@ -17,6 +18,12 @@ found that there are several ways to construct configurations. Basically, there
 are two methods: configuring as a `executable` or as a `server`. These are the two
 classifications of the most available adapters for C, C++, and Rust.
 
+## [IMPORTANT] Notes about using Adapters
+
+1. Ensure that you already build your latest program to obtain the latest binary.
+2. Ensure that you already give permission to your adapters binary like lldb-mi or lldb-vscode.
+3. Ensure that the dap, dapui, and all related debugger plugins are already initalized.
+
 ## Adapters Types
 
 Debugging adapters serve as intermediaries between a debugger (like LLDB or
@@ -28,11 +35,11 @@ adapters. Please note that this table is based on data available up to January
 
 ### Which Adapter I am using
 
-| Adapter Name   | file type support | configuration file name  | Features                                                       | dap calling name   |
-| -------------- | ----------        | -------                  | ----------------------------------------                       | ------------------ |
-| OpenDebugAD7   | C/CPP             | dap_cpp_OpenDebugAD7.lua | binary location, Automatic server triggered, breakpoint banner | cppdbg             |
-| lldb-vscode    | C/CPP             | dap_cpp_lldb_vscode.lua  | binary location, Automatic executable, breakingpoint banner    | lldb-vscode        |
-| Codelldb       |                   |
+| Adapter Name | file type support | configuration file name  | Features                                                       | dap calling name |
+| ------------ | ----------------- | ------------------------ | -------------------------------------------------------------- | ---------------- |
+| OpenDebugAD7 | C/CPP             | dap_cpp_OpenDebugAD7.lua | binary location, Automatic server triggered, breakpoint banner | cppdbg           |
+| lldb-vscode  | C/CPP             | dap_cpp_lldb_vscode.lua  | binary location, Automatic executable, breakingpoint banner    | lldb-vscode      |
+| Codelldb     |                   |
 
 ### Table 1: Adapter Details
 
@@ -213,4 +220,3 @@ end
 ```
 
 ## Another Adapter
-

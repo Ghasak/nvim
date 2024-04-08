@@ -2,6 +2,13 @@
 --local exec = vim.api.nvim_exec2 -- execute Vimscript
 -- It seems that the (finish) doesnt work with the cmd in current configuration ... I removed already
 -- check here: (https://github.com/mbbill/undotree/blob/master/plugin/undotree.vim#L15)
+
+-- Set maximum number of changes that can be undone
+vim.o.undolevels = 1000
+
+-- Set maximum number of lines to save for undo on buffer reload
+vim.o.undoreload = 100000
+
 vim.api.nvim_exec2(
   [[
 let g:loaded_undotree = 1

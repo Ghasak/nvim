@@ -31,7 +31,6 @@ function M.setup(dap)
       program = function()
         local build_dir = vim.fn.getcwd() .. "/build/debug/"
         local default_binary = build_dir .. "main"
-
         -- Check if /build/debug/ directory exists
         if vim.fn.isdirectory(build_dir) == 1 then
           -- If "main" binary exists in /build/debug/, use it as default

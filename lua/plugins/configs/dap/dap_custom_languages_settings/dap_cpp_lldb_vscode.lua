@@ -67,7 +67,7 @@ function M.setup(dap)
       },
 
       cwd = vim.fn.getcwd(),
-      stopOnEntry = false,
+      stopOnEntry = true,
       args = {},
       runInTerminal = false,
       env = function()

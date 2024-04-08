@@ -40,15 +40,14 @@ end
 M.cpp_debuger_setup = function(dap)
   local async = require "plenary.async"
   local notify = require("notify").async
-
-  vim.g.my_adpater_loader_selector = 2 -- [2] is the best option as it is similar to rust
+  vim.g.my_adpater_loader_selector = 4 -- [2] is the best option as it is similar to rust
 
   if vim.bo.filetype == "cpp" then
-      -- ############################################################################################
-      -- ▄█░     TYPE: Command, Adapter: lldb-vscode, Adapter: from binary installed with homebrew.
-      -- ░█░     command = "/opt/homebrew/opt/llvm/bin/lldb-vscode",
-      -- ▄█▄     Status: Working, selecting binary: automated
-      -- ############################################################################################
+    -- ############################################################################################
+    -- ▄█░     TYPE: Command, Adapter: lldb-vscode, Adapter: from binary installed with homebrew.
+    -- ░█░     command = "/opt/homebrew/opt/llvm/bin/lldb-vscode",
+    -- ▄█▄     Status: Working, selecting binary: automated
+    -- ############################################################################################
     if vim.g.my_adpater_loader_selector == 1 then
       vim.g.adapter_type = "codelldb"
       async.run(function()

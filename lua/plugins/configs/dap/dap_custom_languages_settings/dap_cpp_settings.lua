@@ -48,8 +48,7 @@ function M.setup(dap)
       --   return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
       -- end,
       cwd = "${workspaceFolder}",
-      --     stopAtEntry = true,
-      stopOnEntry = true,
+      stopAtEntry = true,
       args = {},
       env = function()
         local variables = {}
