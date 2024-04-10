@@ -707,11 +707,14 @@ return {
     -- keys = { [[<leader>d]] },
     dependencies = {
       { "nvim-dap-virtual-text", event = "InsertEnter" },
-      { "nvim-dap-ui", event = "InsertEnter" },
       { "nvim-dap-python", event = "InsertEnter" },
       -- {"DAPIkstall.nvim"},
       { "theHamsta/nvim-dap-virtual-text", event = "InsertEnter" },
-      { "rcarriga/nvim-dap-ui", event = "InsertEnter" },
+      {
+        "rcarriga/nvim-dap-ui",
+        dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
+        event = "InsertEnter",
+      },
       { "mfussenegger/nvim-dap-python", event = "InsertEnter" },
       { "nvim-telescope/telescope-dap.nvim", event = "InsertEnter" },
       --{ "leoluz/nvim-dap-go", event = "InsertEnter" },

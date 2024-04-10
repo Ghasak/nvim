@@ -11,11 +11,15 @@ end
 
 local dap_status_ok, dap = pcall(require, "dap")
 if not dap_status_ok then
+  -- Handle the case when the dap module doesn't exist or fails to load
+  print "dap module not found or failed to load ..."
   return
 end
 
 local dap_ui_status_ok, dapui = pcall(require, "dapui")
 if not dap_ui_status_ok then
+  -- Handle the case when dapui module doesn't exist or fails  to load
+  print "dapui module not found or failed to load ..."
   return
 end
 
