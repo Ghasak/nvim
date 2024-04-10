@@ -46,18 +46,25 @@ Simply you can use the following.
 3. Adding to end you can use _A_ to the beginning add _I_.
 4. Add your text to the end.
 
-```shell
+```sh
 :`<,`>norm A whatever you will add to end of all lines.
 :`<,`>norm I whatever you will add to beginning of all lines.
 :`<,`>norm $X this  will delete last character at the end.
 :`<,`>norm ^X this  will delete first character at the end.
 ```
 
+- for example to insert "ABC" at the begining of each line:
+
+```sh
+Go to command mode
+% norm I ABC
+```
+
 ### Executing CLI commands (from LINUX)
 
 We can use the following `:!command` that will be show the command with input and output
 
-```shell
+```sh
 # This command will be used to sort alot of lines uniquly
 :`<,`>! sort # for sorting
 :`<,`>! wc -l  # for count number of lines
@@ -68,7 +75,7 @@ We can use the following `:!command` that will be show the command with input an
 You can first select using `shift+v` for horizontal selection, to select all the lines you have
 Then
 
-```shell
+```sh
 :'<,'>j
 ```
 
@@ -79,7 +86,7 @@ or you can use
 
 For sure we can do the opposite using, you can select the maximum number of your given string in oneline
 
-```shell
+```sh
 :set textwidth=10
 then use
 g then q
@@ -123,7 +130,7 @@ have offer
 
 1. to Encrypt
 
-```shell
+```sh
 :X
 ```
 
@@ -138,7 +145,7 @@ Editing `auto comoplete` can you use `Ctrl + p` or `Ctrl + n`
 
 ### How to capitalize and deCapitalize in NeoVim
 
-```shell
+```sh
 Using the keybinding
 g + u : for first letter capitalize (change upper to lower, you need to do that on the letter you want to change then escape then l or h only once)
 g + U : for capitalize all the letters (change upper to upper, you need to do that on the letter you want to change then escape then l or h only once)
@@ -162,14 +169,14 @@ Using a plugin `vim-table-mode` to create a nice table, need to remember the fol
    responds by inserting spaces between the text and the separator if they are
    omitted:
 
-```shell
+```sh
 | name | address | phone |
 ```
 
 2. In the second line, type "||" twice to create a properly formatted
    horizontal line.
 
-```shell
+```sh
 | name | address | phone |
 |------+---------+-------|
 ```
@@ -189,7 +196,7 @@ The follow trick require the plugin `align.nvim` and `vim-table-mode`.
 1. Assume you have the following table
 
 ```sh
-BufNewFile	starting to edit a file that doesn't exist
+BufNewFile	starting to edit a file that doesnt exist
 BufReadPre	starting to edit a new buffer, before reading the file
 BufRead	starting to edit a new buffer, after reading the file
 BufReadPost	starting to edit a new buffer, after reading the file
@@ -205,7 +212,7 @@ FileReadPost	after reading a file with a ":read" command
    - Use `ar` then `:\s` in cmdline.
 
 ```sh
-BufNewFile  	starting to edit a file that doesn't exist
+BufNewFile  	starting to edit a file that doesnt exist
 BufReadPre  	starting to edit a new buffer, before reading the file
 FileReadPre 	before reading a file with a ":read" command
 FileReadPost	after reading a file with a ":read" command
@@ -216,7 +223,7 @@ FileReadPost	after reading a file with a ":read" command
    - create in vertical visual mode `v` only to add `|` the pipe line.
 
 ```sh
-| BufNewFile  |	starting to edit a file that doesn't exist
+| BufNewFile  |	starting to edit a file that doesnt exist
 | BufReadPre  |	starting to edit a new buffer, before reading the file
 | FileReadPre |	before reading a file with a ":read" command
 | FileReadPost|	after reading a file with a ":read" command
@@ -230,7 +237,7 @@ FileReadPost	after reading a file with a ":read" command
    - Adding a `|` at the end of each line can be done using `:'<,'>normal A |`
 
 ```sh
-| BufNewFile  |	starting to edit a file that doesn't exist |
+| BufNewFile  |	starting to edit a file that doesnt exist |
 | BufReadPre  |	starting to edit a new buffer, before reading the file |
 | FileReadPre |	before reading a file with a ":read" command |
 | FileReadPost|	after reading a file with a ":read" command |
@@ -243,7 +250,7 @@ FileReadPost	after reading a file with a ":read" command
 
 ```sh
 
-| BufNewFile     | starting to edit a file that doesn't exist               |
+| BufNewFile     | starting to edit a file that does not exist              |
 | -------------- | -------------------------------------------------------- |
 | BufReadPre     | starting to edit a new buffer, before reading the file   |
 | FileReadPre    | before reading a file with a ":read" command             |
@@ -331,7 +338,7 @@ We can use the following steps:
 
 - Create a list with zeros as shown using `ctrl+v` then `shit + i` then `0` and enter.
 
-```shell
+```sh
 - [0] list number 1
 - [0] list number 1
 - [0] list number 1
@@ -340,7 +347,7 @@ We can use the following steps:
 
 - Now you highlight `visual block` using `<C-v>` also knows as `ctrl+v` again the list at `0` and perform `g<C-a>`
 
-```shell
+```sh
 - [1] list number 1
 - [2] list number 2
 - [3] list number 3
@@ -354,13 +361,13 @@ We can use the following steps:
 
 1. Try to put some text with increment
 
-```shell
+```sh
 :for i in range(1,10) | put ='192.168.0.'.i | endfor
 ```
 
 2. Try to create counter with 00 prefixes
 
-```shell
+```sh
 :put =map(range(1,150), 'printf(''%04d'', v:val)')
 ```
 
@@ -409,5 +416,3 @@ and can greatly enhance your workflow. For example:
     <span>Something</span>
 </body>
 ```
-
-
