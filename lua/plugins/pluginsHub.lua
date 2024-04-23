@@ -346,6 +346,7 @@ return {
     -- config = function()
     --   vim.g.mkdp_filetypes = { "markdown" }
     -- end,
+    dependencies = { "zhaozg/vim-diagram", "aklt/plantuml-syntax" },
   },
   {
     "mzlogin/vim-markdown-toc",
@@ -643,6 +644,8 @@ return {
       { "MunifTanjim/nui.nvim" },
     },
   },
+
+
 
   -- ===========================================================================
   --           PRODUCTIVITIES AND PERFORMANCE
