@@ -116,6 +116,12 @@ vim.api.nvim_set_keymap("v", ">", ">gv", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<TAB>", ":bnext<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<S-TAB>", ":bprevious<CR>", { noremap = true, silent = true })
 
+-- delete backward a single word using `Shift+Del (backspace)`.
+-- For Normal Mode
+vim.api.nvim_set_keymap("n", "<S-BS>", "db", { noremap = true, silent = true })
+-- For Insert Mode
+vim.api.nvim_set_keymap("i", "<S-BS>", "<C-w>", { noremap = true, silent = true })
+
 -- map the leader in nvim to space
 vim.g.mapleader = " "
 -- Explorer with Nvim-tree( ensure first the undotree is not toggled )
@@ -413,16 +419,16 @@ vim.api.nvim_set_keymap("i", "<S-Esc>", "<C-w>", { noremap = true, silent = true
 
 function _G.Toggle_venn()
   --local async = require "plenary.async"
-  local notify = require("notify")
+  local notify = require "notify"
   local message, title
 
   -- Check if Venn is enabled
   if vim.b.venn_enabled then
     -- Venn is currently enabled, so disable it
-    message = string.format("[OFF] VENN DIAGRAMS Status: deactivated at:\n%s", os.date("%H:%M:%S"))
+    message = string.format("[OFF] VENN DIAGRAMS Status: deactivated at:\n%s", os.date "%H:%M:%S")
     title = "Venn Deactivated"
     vim.cmd [[setlocal ve=]]
-    local maps = {"J", "K", "L", "H"}
+    local maps = { "J", "K", "L", "H" }
     for _, key in ipairs(maps) do
       vim.api.nvim_buf_del_keymap(0, "n", key)
     end
@@ -430,7 +436,7 @@ function _G.Toggle_venn()
     vim.b.venn_enabled = nil
   else
     -- Venn is currently disabled, so enable it
-    message = string.format("[ON] VENN DIAGRAMS Status: activated at:\n%s", os.date("%H:%M:%S"))
+    message = string.format("[ON] VENN DIAGRAMS Status: activated at:\n%s", os.date "%H:%M:%S")
     title = "Venn Activated"
     vim.b.venn_enabled = true
     vim.cmd [[setlocal ve=all]]

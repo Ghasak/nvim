@@ -2,7 +2,15 @@
 
 A plugin to draw digrams intractivly with neovim.
 
-## How to install
+## How to use it
+
+- The diagram can be created using the following steps
+
+1. In `INSERT` mode as I have specified in the lazy.nvim hub which I use for
+   loading all my plugins. Activate the `venn.nvim` plugin using `<leader>v`.
+2. Once you write your word for example `START` which as a a starting point for my digram.
+3. Highlight using `C-v` but take some margins before the word and after of it and also on top of it and bottom of it.
+4. Use `f` to create a box, and `JKHL` for creat the arrow direction.
 
 ```sh
        ┌─────────────┐
@@ -57,7 +65,7 @@ local venn_hint_ascii   = [[
  + corners ^  ^^   overwritten corners                                                  |<──────┐                                │
                               _<C-c>_                                                   |       │                                │
 ]]                                                                                      |       │                                │
-```                                                                                     |       │                                │
+                                                                                        |       │                                │
                                                                                         |       │                                │
 up = '▲', down = '▼', left = '◄', right = '►',                                          |       │  ┌──────────────────────────┐  │
                                                                                         |       │  │ANOTHERDEA IS GIVEN HERE├──┘
@@ -95,6 +103,4 @@ up = '▲', down = '▼', left = '◄', right = '►',                          
                                                     │  STAETING POINT  ├─────────────────────────────────┘
                                                     └──────────────────┘
 
-
-
-
+```
