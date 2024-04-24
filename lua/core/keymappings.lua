@@ -35,7 +35,6 @@ local mode_adapters = {
   command_mode = "c",
 }
 
-
 vim.keymap.set("n", "x", '"_x')
 -- Increment/decrement
 vim.keymap.set("n", "+", "<C-a>")
@@ -48,7 +47,6 @@ vim.keymap.set("v", "<S-a>", "$", { desc = "Select to end of lines in visual blo
 vim.keymap.set("v", "<S-l>", "^", { desc = "Select to beginning of lines in visual block" })
 -- vim.api.nvim_set_keymap('v', '<S-a>', '$', { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('v', '<S-l>', '^', { noremap = true, silent = true })
-
 
 -- Better paste with indentation
 vim.keymap.set("n", ",p", "o<Esc>p")
@@ -398,16 +396,54 @@ vim.keymap.set("n", "<leader>cd", "<Plug>(VM-Add-Cursor-Down)", { desc = "vim vi
 -- vim.keymap.set("n", "<leader>2", ":foldopen<CR>", { desc = "vim visual multi" })
 --
 
-
 ---- *****************************************************************************************
 ----                  SUPPORT FOR TELEKASTEN NOTES (OBSIDIAN)
 ---- *****************************************************************************************
 -- Launch panel if nothing is typed after <leader>z
 vim.keymap.set("n", "<leader>tk", "<cmd>Telekasten panel<CR>")
 
-
-
 -- Delete a word back using shift + Esc
-vim.api.nvim_set_keymap('i', '<S-Esc>', '<C-w>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap("i", "<S-Esc>", "<C-w>", { noremap = true, silent = true })
 
+---- *****************************************************************************************
+----                               VENN NVIM DIGRAMS
+----                reference: https://github.com/jbyuki/venn.nvim
+---- *****************************************************************************************
+-- venn.nvim: enable or disable keymappings
 
+function _G.Toggle_venn()
+  --local async = require "plenary.async"
+  local notify = require("notify")
+  local message, title
+
+  -- Check if Venn is enabled
+  if vim.b.venn_enabled then
+    -- Venn is currently enabled, so disable it
+    message = string.format("[OFF] VENN DIAGRAMS Status: deactivated at:\n%s", os.date("%H:%M:%S"))
+    title = "Venn Deactivated"
+    vim.cmd [[setlocal ve=]]
+    local maps = {"J", "K", "L", "H"}
+    for _, key in ipairs(maps) do
+      vim.api.nvim_buf_del_keymap(0, "n", key)
+    end
+    vim.api.nvim_buf_del_keymap(0, "v", "f")
+    vim.b.venn_enabled = nil
+  else
+    -- Venn is currently disabled, so enable it
+    message = string.format("[ON] VENN DIAGRAMS Status: activated at:\n%s", os.date("%H:%M:%S"))
+    title = "Venn Activated"
+    vim.b.venn_enabled = true
+    vim.cmd [[setlocal ve=all]]
+    vim.api.nvim_buf_set_keymap(0, "n", "J", "<C-v>j:VBox<CR>", { noremap = true })
+    vim.api.nvim_buf_set_keymap(0, "n", "K", "<C-v>k:VBox<CR>", { noremap = true })
+    vim.api.nvim_buf_set_keymap(0, "n", "L", "<C-v>l:VBox<CR>", { noremap = true })
+    vim.api.nvim_buf_set_keymap(0, "n", "H", "<C-v>h:VBox<CR>", { noremap = true })
+    vim.api.nvim_buf_set_keymap(0, "v", "f", ":VBox<CR>", { noremap = true })
+  end
+
+  -- Notify the user of the change
+  notify(message, "info", { title = title, timeout = 5000 })
+end
+
+-- Toggle key mappings for Venn using <leader>v
+vim.api.nvim_set_keymap("n", "<leader>v", ":lua Toggle_venn()<CR>", { noremap = true, silent = true })

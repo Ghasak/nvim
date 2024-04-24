@@ -13,10 +13,13 @@ bazel run client:devserver
 ```
 
 2. It will operate on port `8080` by default, but I have managed to change it
-   using the following
+   using the following:
 
-- Go to the client directory of the `~/Desktop/devCode/javaScriptHub/asciiflow` project.
-- Use `vim webpack.config.js` and add the line `port: 9090, // Set the development server to listen on port 9090 for example`.
+- Navigate to the client directory of the project located in
+  `~/Desktop/devCode/javaScriptHub/asciiflow`. Use `vim webpack.config.js` and
+
+- Insert the line `port: 9090, // Set the development server to listen on port 9090 for example` within it. Refer to the attached `webpack.config.js Template`
+  to ensure correctness at the end. Check the file after making this addition.
 
 ## Installation
 
@@ -53,6 +56,69 @@ bazel run client:devserver
 
 Read more [here](https://github.com/lewish/asciiflow)
 
+## webpack.config.js Template
 
+```ts
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { env } = require("process");
 
+module.exports = (env, argv) => ({
+  plugins:
+    argv.mode != "production"
+      ? [
+          new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, "index.html"),
+            inject: false,
+          }),
+        ]
+      : [],
+  devServer: {
+    static: {
+      directory: path.resolve(__dirname),
+    },
 
+    port: 9090, // Set the development server to listen on port 9090
+  },
+  entry: {
+    bundle: path.resolve(__dirname, "./app.js"),
+  },
+  devtool: false,
+  output: {
+    path: path.resolve(__dirname),
+    filename: "[name].js",
+    publicPath: "/",
+  },
+  resolve: {
+    alias: {
+      "#asciiflow": path.resolve("."),
+    },
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.(?:js|mjs|cjs)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: [["@babel/preset-env", { targets: "defaults" }]],
+            plugins: [
+              [
+                "@babel/plugin-proposal-decorators",
+                {
+                  version: "2023-05",
+                },
+              ],
+            ],
+          },
+        },
+      },
+    ],
+  },
+});
+```

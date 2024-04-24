@@ -645,8 +645,6 @@ return {
     },
   },
 
-
-
   -- ===========================================================================
   --           PRODUCTIVITIES AND PERFORMANCE
   -- ===========================================================================
@@ -956,6 +954,22 @@ return {
     end,
   },
   -- ===========================================================================
+  --                          VENN NVIM
+  --             This plugin for draw ascii digrams intractively.
+  --       Ref: https://github.com/jbyuki/venn.nvim?tab=readme-ov-file
+  -- ===========================================================================
+
+  {
+    "jbyuki/venn.nvim",
+    --"ghasak/venn.nvim",
+    event = "InsertEnter",
+    lazy = true,
+    cmd = { "VBox" },
+    config = function()
+      require("plugins.configs.myVennDiagram").config()
+    end,
+  },
+  -- ===========================================================================
   --                          TMUX [NOT USED FOR NOW]
   -- ===========================================================================
   {
@@ -966,5 +980,3 @@ return {
     event = "InsertEnter",
   },
 }
-
-
