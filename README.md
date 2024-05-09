@@ -1,6 +1,5 @@
 # MODERN NVIM CONFIG
 
-[![Clang analysis](https://neovim.io/doc/reports/clang/badge.svg)](https://neovim.io/doc/reports/clang)
 [![Packages](https://repology.org/badge/tiny-repos/neovim.svg)](https://repology.org/metapackage/neovim)
 [![License](https://img.shields.io/badge/License-GNU%20GPL-blue)](https://github.com/Ghasak/nvim/blob/main/LICENSE)
 [![LuaRocks](https://img.shields.io/luarocks/v/mfussenegger/nvim-dap?logo=lua&color=purple)](https://luarocks.org/modules/mfussenegger/nvim-dap)
@@ -616,5 +615,7 @@ want to alter the color.
 ## Reference
 
 - [Markdown Badges](https://ileriayo.github.io/markdown-badges/)
+
+
 
 
