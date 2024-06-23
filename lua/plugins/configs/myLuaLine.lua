@@ -192,7 +192,8 @@ end
 
 -- REQUIRES LSP
 local function hsp_progress()
-  local messages = vim.lsp.util.get_progress_messages()
+  --local messages = vim.lsp.util.get_progress_messages()
+  local messages = vim.lsp.status()
   if #messages == 0 then
     return ""
   end
@@ -287,7 +288,7 @@ end
 
 -- REQUIRES LSP
 local function Icon_LSP_Progress()
-  local messages = vim.lsp.util.get_progress_messages()
+  local messages = vim.lsp.status()
   if #messages == 0 then
     return ""
   end

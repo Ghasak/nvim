@@ -138,8 +138,7 @@ This section will be dedicated to show new feature for my new `nvim` IDE.
 
 The `Github Copilot` is built on top of `openAi` `DaVinci` model, I am already
 in the technical preview, and my `Github` account is already connected with the
-`copilot`. Steps that I followed are mainly from the repository of `GitHub
-copilot`. I remapped the `TAB` to `leader TAB` to not affect any other
+`copilot`. Steps that I followed are mainly from the repository of `GitHub copilot`. I remapped the `TAB` to `leader TAB` to not affect any other
 plugins' workflow.
 
 ### Implementation of Remote Server IDE
@@ -432,14 +431,12 @@ checking from `COC`.
 
 ## Fuzzy Finding
 
-One of the most interesting features that has been implemented is the `fuzzy
-finder` in Lua. This feature offers all the advantages of a fuzzy search,
+One of the most interesting features that has been implemented is the `fuzzy finder` in Lua. This feature offers all the advantages of a fuzzy search,
 including the ability to retrieve the path (directory represented as a string
 similar to the one provided by the VSCode plugin).
 
 - The mapping is located at `lua/scripts/myCommandWrapper.lua`, which will be
-  triggered in the "insert mode" using the shortcut keys of `(Ctrl-X followed by
-Ctrl-F)` to automatically complete a path while coding, specifically for
+  triggered in the "insert mode" using the shortcut keys of `(Ctrl-X followed by Ctrl-F)` to automatically complete a path while coding, specifically for
   searching for any specific word. This feature still exists, but the new and
   much better `cmp-path` plugin is now available for this particular task.
 
@@ -714,11 +711,3 @@ use { "rcarriga/nvim-dap-ui" }
 use { "Pocco81/DAPInstall.nvim" }
 use { "jbyuki/one-small-step-for-vimkind" }
 ```
-
-
-
-
-
-
-
-

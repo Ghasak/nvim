@@ -163,8 +163,7 @@ upgrades to my configuration file (to name few)
 
 To activate the `crate` plugin, you need to enter first into a buffer with
 `rustfile` `*.rs`, which can be activated on the `Insert` event. This will also
-trigger `cmp-create` and `nvim-crate`. You can later use the `keymapping:
-gH` on the crate name, which will trigger documentation about the crate history
+trigger `cmp-create` and `nvim-crate`. You can later use the `keymapping: gH` on the crate name, which will trigger documentation about the crate history
 and other considerations.
 
 ### Auto Save
@@ -599,6 +598,7 @@ others. These layers include:
 - B. Tree-Sitter Color-Groups which used once you install the `nvim-treesitter`
 - C. Component of the `plugins` that alter the colors (e.g., statuline,
   bufferline, nvim-tree and lsp configurations)
+
 - D. The user custom individual colors defined.
 
 `Configurations` : to change the color, you need to consider to which level you
@@ -615,7 +615,6 @@ want to alter the color.
 ## Reference
 
 - [Markdown Badges](https://ileriayo.github.io/markdown-badges/)
-
 
 
 
