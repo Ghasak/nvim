@@ -3,7 +3,7 @@
 The following is not for `Rust` execlusivly, you still can use same for
 `C/C++`, `Objective-C` ..etc.
 
-```
+```sh
 DAP-Client ----- Debug Adapter ------- Debugger ------ Debugee
 (nvim-dap)  |   (per language)  |   (per language)    (your app)
             |                   |

@@ -14,6 +14,36 @@ return {
     end,
   },
 
+  -- {
+  --   "scottmckendry/cyberdream.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     require("cyberdream").setup {
+  --       -- Enable transparent background
+  --       transparent =false,
+  --
+  --       -- Enable italics comments
+  --       italic_comments = false,
+  --
+  --       -- Replace all fillchars with ' ' for the ultimate clean look
+  --       hide_fillchars = false,
+  --
+  --       -- Modern borderless telescope theme
+  --       borderless_telescope =false,
+  --
+  --       -- Set terminal colors used in `:terminal`
+  --       terminal_colors = true,
+  --
+  --       theme = {
+  --         variant = "light", -- use "light" for the light variant. Also accepts "auto" to set dark or light colors based on the current value of `vim.o.background`
+  --       },
+  --     }
+  --
+  --     vim.cmd "colorscheme cyberdream"
+  --   end,
+  -- },
+  --
   -- Or with configuration
   -- {
   --   "projekt0n/github-nvim-theme",
@@ -621,15 +651,34 @@ return {
       require("plugins.configs.others").neoscroll()
     end,
   }, -- Markdown, Markup-language better view (two plugins)
+  -- {
+  --   -- "npxbr/glow.nvim",
+  --   "ellisonleao/glow.nvim",
+  --   event = "InsertEnter",
+  --   ft = { "markdown" },
+  --   config = function()
+  --     require("plugins.configs.myGlowMark").setup()
+  --   end,
+  -- },
+
   {
-    -- "npxbr/glow.nvim",
-    "ellisonleao/glow.nvim",
+    "MeanderingProgrammer/markdown.nvim",
     event = "InsertEnter",
     ft = { "markdown" },
+    cmd = { "RenderMarkdown" },
+    main = "render-markdown",
+    opts = {},
+    name = "render-markdown", -- Only needed if you have another plugin named markdown.nvim
+    --dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" }, -- if you use the mini.nvim suite
+    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
+    dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
+
     config = function()
-      require("plugins.configs.myGlowMark").setup()
+      require("plugins.configs.myMarkdown").config()
     end,
-  }, -- vim-eftt (highlight the f/t/F/T mappings)
+  },
+
+  -- vim-eftt (highlight the f/t/F/T mappings)
   -- Source, https://github.com/hrsh7th/vim-eft
   {
     "hrsh7th/vim-eft",
@@ -868,41 +917,16 @@ return {
   {
     "folke/which-key.nvim",
     event = "InsertEnter",
+    keys = {
+      {
+        "<leader>?",
+        function()
+          require("which-key").show { global = false }
+        end,
+        desc = "Buffer Local Keymaps (which-key)",
+      },
+    },
     config = function()
-      vim.o.timeout = true
-      vim.o.timeoutlen = 2000 -- This will control the which-key popup window interval, default 300,
-      require("which-key").setup {
-        icons = {
-          breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
-          separator = " ➜ ", -- symbol used between a key and it's label
-          group = "+", -- symbol prepended to a group
-        },
-        popup_mappings = {
-          scroll_down = "<c-d>", -- binding to scroll down inside the popup
-          scroll_up = "<c-u>", -- binding to scroll up inside the popup
-        },
-        window = {
-          border = "double", -- none/single/double/shadow
-        },
-        layout = {
-          spacing = 6, -- spacing between columns
-        },
-        hidden = {
-          "<silent>",
-          "<cmd>",
-          "<Cmd>",
-          "<CR>",
-          "call",
-          "lua",
-          "^:",
-          "^ ",
-        },
-        triggers_blacklist = {
-          -- list of mode / prefixes that should never be hooked by WhichKey
-          i = { "j", "k" },
-          v = { "j", "k" },
-        },
-      }
       require("plugins.configs.which_key_config").config()
     end,
   }, --
@@ -994,5 +1018,3 @@ return {
     event = "InsertEnter",
   },
 }
-
-
