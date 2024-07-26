@@ -408,9 +408,9 @@ return {
   -- lsp_signature.nvim
   {
     "glepnir/lspsaga.nvim",
-    -- event = "BufReadPre",
+    event = "BufReadPre",
     branch = "main",
-    event = "InsertEnter",
+    --event = "InsertEnter",
     -- ft = {'c', 'cpp', 'lua', 'rust', 'go', 'python', 'bash'},
     -- event = 'LspAttach',
     config = function()

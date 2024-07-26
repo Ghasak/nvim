@@ -28,7 +28,7 @@ theme in place, and change to either `rgb` or `hash`.
 
 ### github theme
 
-```shell
+```sh
   "black": "#1b1f23",
   "white": "#fff",
   "gray": ["#fafbfc", "#f6f8fa", "#e1e4e8", "#d1d5da", "#959da5", "#6a737d", "#586069", "#444d56", "#2f363d", "#24292e"],
