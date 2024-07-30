@@ -408,9 +408,9 @@ return {
   -- lsp_signature.nvim
   {
     "glepnir/lspsaga.nvim",
-    event = "BufReadPre",
+    --event = "BufReadPre",
     branch = "main",
-    --event = "InsertEnter",
+    event = "InsertEnter",
     -- ft = {'c', 'cpp', 'lua', 'rust', 'go', 'python', 'bash'},
     -- event = 'LspAttach',
     config = function()
@@ -903,13 +903,14 @@ return {
   -- ===========================================================================
   --                          OTHER PLUGINS
   -- ===========================================================================
-  {
-    "terrortylor/nvim-comment",
-    event = "CursorMoved",
-    config = function()
-      require("nvim_comment").setup()
-    end,
-  },
+  -- No longer needed since v.10
+  -- {
+  --   "terrortylor/nvim-comment",
+  --   event = "CursorMoved",
+  --   config = function()
+  --     require("nvim_comment").setup()
+  --   end,
+  -- },
 
   -- ===========================================================================
   --                        NVIM KEYMAPPING MANAGER

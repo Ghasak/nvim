@@ -16,6 +16,7 @@ local vim = vim
 -- General
 -----------------------------------------------------------
 opt.mouse = "a" -- enable mouse support, clicking and scrolling,
+opt.mousemodel=extend -- since v.10
 -- Now I use, option from my mac If you use iTerm,
 -- <<defaults write com.googlecode.iterm2 AlternateMouseScroll -bool true>>
 opt.clipboard = "unnamedplus" -- copy/paste to system clipboard
@@ -481,6 +482,7 @@ vim.o.foldenable = true
 -- By default, you will see the
 -- ===========================================================================
 -- cmd([[set guicursor=]]) -- This will keep the cursor form changing. [important command]
+--cmd ([[set guicursor+=n-v-c:blinkon1-blinkoff1]]) -- since v.10
 -----------------------------------------------------------
 --              Cursor shape
 -----------------------------------------------------------

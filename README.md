@@ -53,6 +53,20 @@
 
 ## ChangingLog
 
+### V.0.10 Release
+
+- [x] Adding the following color highlights to the githubG.nvim our colorschme, which includes:
+  - [x] LspInlayHint,
+  - [x] WinSeparator,
+  - [x] WinBar and WinBarNC
+
+- What has been added since `v.0.10`, read more [neovim news-0.10](https://neovim.io/doc/user/news-0.10.html)
+    - hl-FloatBorder is linked to hl-NormalFloat instead of hl-WinSeparator.
+    - hl-NormalFloat is not linked to hl-Pmenu.
+    - hl-WinBar has different background.
+    - hl-WinBarNC is similar to hl-WinBar but not bold.
+    - hl-WinSeparator is linked to hl-Normal instead of hl-VertSplit.
+
 ### V.0.9.2 Release Nvim
 
 - [x] This version has no issue in performance, I just included minor fixes for some libraries.
@@ -161,16 +175,17 @@ upgrades to my configuration file (to name few)
 
 ### Cargo with Rust
 
-To activate the `crate` plugin, you need to enter first into a buffer with
-`rustfile` `*.rs`, which can be activated on the `Insert` event. This will also
-trigger `cmp-create` and `nvim-crate`. You can later use the `keymapping: gH` on the crate name, which will trigger documentation about the crate history
-and other considerations.
+To enable the `crate` plugin, you need to enter a buffer with file extension
+'.rs' associated with 'rustfile' first. This can be triggered on the 'Insert'
+event. It also activates 'cmp-create' and 'nvim-crate'. Later, you can use the
+'keymapping: gH' on the crate name, which will display documentation about the
+crate history and other considerations.
 
 ### Auto Save
 
 By default, the file will automatically save based on the `auto-saved` plugin.
 This feature is triggered as soon as we begin writing. To stop this auto-save,
-we can use the keymapping `leader` + 's', which will prevent further automatic
+we can use the keymapping `leader` + `s`, which will prevent further automatic
 saves.
 
 ### For development
@@ -615,3 +630,6 @@ want to alter the color.
 ## Reference
 
 - [Markdown Badges](https://ileriayo.github.io/markdown-badges/)
+
+
+

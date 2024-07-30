@@ -1,7 +1,7 @@
 return {
   ui = {
     -- Currently, only the round theme exists
-    theme = "double",
+    theme = "round",
     -- This option only works in Neovim 0.9
     title = true,
     -- Border type can be single, double, rounded, solid, shadow.
