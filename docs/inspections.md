@@ -139,7 +139,7 @@ return M
 
 1. Create a `lua` file named `testing_file.lua` inside the `lua` directory as:
 
-```shell
+```sh
   rwxr-xr-x   8   gmbp   staff    256 B     Fri Oct 21 18:26:35 2022    core/
   rwxr-xr-x   6   gmbp   staff    192 B     Fri Oct 21 01:55:21 2022    plugins/
   rwxr-xr-x   4   gmbp   staff    128 B     Fri Oct 14 12:25:51 2022    units/
