@@ -524,7 +524,7 @@ Read more here
 -- highlight def link <you_custom_group_name> guifg=<hash-color-name>
 -- Then assign to the specific pattern that you want to highlight
 
-```shell
+```sh
 vim.cmd([[
 hi def link GGX Title
 syn match GGX /[A-Z]+/
@@ -630,8 +630,6 @@ want to alter the color.
 ## Reference
 
 - [Markdown Badges](https://ileriayo.github.io/markdown-badges/)
-
-
 
 
 

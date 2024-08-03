@@ -31,8 +31,8 @@ M.setup = function()
       },
 
       NormalFloat = {
-        guibg = "#181a1f",
-        --link = "Normal",
+        --guibg = "#181a1f",
+        link = "Normal",
       },
 
       -- Normal = {
