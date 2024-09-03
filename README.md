@@ -328,7 +328,7 @@ check `:h deprecated`
 
 - [pretty_print](https://github.com/max397574)
 
-```shell
+```sh
 vim.pretty_print("")
 ```
 
@@ -371,7 +371,7 @@ which means using `vim.keymap.set()`
 
 - [x] Using reqular nvim
 
-```shell
+```sh
 vim.api.nvim_set_keymap("i", "<c-j>", '("<C-n>")', {
 	noremap = true,
 	silent = true,
@@ -384,7 +384,7 @@ vim.api.nvim_set_keymap("i", "<c-j>", '("<C-n>")', {
 
 In the `cmd` you can use
 
-```shell
+```sh
 :Telescope keymaps, registers, vim_options, jumplist, loclist, filetypes ..etc.
 
 ```
@@ -536,7 +536,7 @@ syn match GGX "\v<[A-Z]+>"
 
 You can also specify some highlight using:
 
-```shell
+```sh
 vim.cmd([[highlight Visual cterm=bold ctermbg=Blue ctermfg=NONE]])
 ```
 
@@ -619,6 +619,7 @@ others. These layers include:
 `Configurations` : to change the color, you need to consider to which level you
 want to alter the color.
 
+
 ## VIM EVENTS
 
 - [list all vim script events](https://tech.saigonist.com/b/code/list-all-vim-script-events.html)
@@ -630,6 +631,7 @@ want to alter the color.
 ## Reference
 
 - [Markdown Badges](https://ileriayo.github.io/markdown-badges/)
+
 
 
 
