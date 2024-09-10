@@ -46,7 +46,7 @@ M.setup = function()
       "pyright",
       "lua_ls",
       "rust_analyzer",
-      "tsserver",
+      --"ts_ls",
       "texlab",
       "clangd", -- "dockerls", "docker_compose_language_service", "jsonls", "r_language_server", "vimls"
       "r_language_server",
@@ -229,8 +229,8 @@ M.setup = function()
         },
       }
     end,
-    ["tsserver"] = function()
-      lspconfig.tsserver.setup {
+    ["ts_ls"] = function() -- Deprecates the tsserver server
+      lspconfig.ts_ls.setup {
         on_attach = opts.on_attach,
         capabilities = opts.capabilities,
         handlers = opts.handlers,

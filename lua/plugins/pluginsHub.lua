@@ -1,3 +1,4 @@
+---@diagnostic disable, 2: 2
 return {
   {
     "ghasak/githubG.nvim",
