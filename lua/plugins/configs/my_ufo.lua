@@ -116,7 +116,11 @@ M.config = function()
     -- *****************************
     ---@diagnostic disable-next-line: unused-local
     provider_selector = function(bufnr, filetype, buftype)
-      return { "lsp", "indent" }
+      if filetype == "lua" then
+        return { "indent" }
+      else
+        return { "lsp", "indent" }
+      end
     end,
   }
 end

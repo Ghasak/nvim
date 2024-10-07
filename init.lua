@@ -74,3 +74,6 @@ if vim.g.transparent_enabled then
   --require('transparent').clear_prefix('lualine')
 end
 
+
+
+

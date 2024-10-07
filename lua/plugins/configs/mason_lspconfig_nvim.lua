@@ -223,7 +223,10 @@ M.setup = function()
           python = {
             analysis = {
               -- Disable strict type checking
-              typeCheckingMode = "off",
+              typeCheckingMode = "off", -- As per your original setup
+              autoSearchPaths = true,
+              useLibraryCodeForTypes = true,
+              extraPaths = { "./src" }, -- Explicitly add src to the path
             },
           },
         },

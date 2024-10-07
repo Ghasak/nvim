@@ -23,11 +23,9 @@ Normal, Insert, and Visual modes:
 
 ## VIM GRAMMER
 
-```vim
+```sh
   +--------+     +-----------+     +--------+     +--------+
-  |        |     |           |     |        |     |        |
   | count  |---->| operator  |---->| count  |---->| motion |
-  |        |     |           |     |        |     |        |
   +--------+     +-----------+     +--------+     +--------+
       ^                ^               ^              ^
       |                |               |              |
@@ -36,6 +34,7 @@ Normal, Insert, and Visual modes:
    Number of      to Perform       Number of    through Text
   Repetitions     (e.g., delete,   Repetitions   (e.g., word,
                   change, yank)                  end of line)
+
 
   +-------------------------------------------------------------------+
   |                          VIM COMMAND GRAMMAR                      |
@@ -205,7 +204,7 @@ represent all possible delete operations in Vim is a bit challenging due to the
 limitations of text representation, but here's a simple diagram that attempts
 to show some of the fundamental delete commands in Vim:
 
-```
+```sh
                          +---+
                          | k |
                          | ^ |

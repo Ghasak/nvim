@@ -52,13 +52,13 @@ system), and also for the `virtualenv` (virtualenv either local or like the pipe
 - There are several adpaters for `lldb`, but only the one I install from the
   `brew` is working
 
-```shell
+```sh
 brew install llvm
 ```
 
 it is located at
 
-```shell
+```sh
 $(brew --prefix llvm)/bin
 ```
 

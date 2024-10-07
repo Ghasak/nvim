@@ -86,7 +86,7 @@ The current working flow to address such updates with my `main` repository is:
 2. Switch to the release branch currently I am using the `nvim0.7` branch, using
    `git checkout nvim0.7`,
 
-```shell
+```sh
   - git merge main
   - git add -a
   - git commit -m "some message"
@@ -101,7 +101,7 @@ The current working flow to address such updates with my `main` repository is:
 
 I have upgraded my `nvim` to version `7.0` which is the latest to 20,
 
-```shell
+```sh
 window.documention => cmp.config.window.bordered()
 
 ```
@@ -333,7 +333,7 @@ luarocks install --server=https://luarocks.org/dev luaformatter
 
 For example, to get the operation system name we can run
 
-```shell
+```sh
 :lua print(vim.ovim.loop.os_uname().sysname) <- this will return Darwin.
 :lua print(jit.os)                           <- this will return OSX
 ```
@@ -373,7 +373,7 @@ Use the command `vim-startuptime` which will offer a quick calculation of the la
 
 1. In the command prompt of `Nvim`, you can use the following configurations.
 
-```shell
+```sh
 ! cd /directory/direcotyr_2/direcotry_3
 ! mkdir <name>
 ! touch <name>.extention
@@ -381,7 +381,7 @@ Use the command `vim-startuptime` which will offer a quick calculation of the la
 
 2. Accessing the prompt to open browser
 
-```shell
+```sh
 !open -a "Safari" <link, e.g www.google.com>
 ```
 
@@ -498,7 +498,7 @@ Secondly, I utilized the `packer profile` command with the option
 `LuaCacheProfile`, which comes with the `impatient` plugin. The results are
 presented below:
 
-```shell
+```sh
   Config for sidebar.nvim took 78.00594ms
   Sequenced loading took 11.807982ms
   packadd for vim-matchup took 1.459474ms
@@ -545,7 +545,7 @@ Installing the `Julia-lsp` needs, read from the references `Julia Language Refer
 
 `LanguageServer.jl` can be installed with `julia` and `Pkg`:
 
-```shell
+```sh
 julia --project=~/.julia/environments/nvim-lspconfig -e 'using Pkg; Pkg.add("LanguageServer")'
 ```
 
@@ -553,7 +553,7 @@ where `~/.julia/environments/nvim-lspconfig` is the location where the default
 configuration expects `LanguageServer.jl` to be installed. To update an
 existing install, use the following command:
 
-```shell
+```sh
 julia --project=~/.julia/environments/nvim-lspconfig -e 'using Pkg; Pkg.update()'
 ```
 
@@ -561,7 +561,7 @@ julia --project=~/.julia/environments/nvim-lspconfig -e 'using Pkg; Pkg.update()
   In order to have `LanguageServer.jl` pick up installed packages or dependencies
   in a Julia project, you must make sure that the project is instantiated:
 
-```shell
+```sh
 julia --project=/path/to/my/project -e 'using Pkg; Pkg.instantiate()'
 ```
 
@@ -576,13 +576,13 @@ For using `NeoVim`, if the language server is `shell-lsp` for `bash` or `shell`,
 1. Instal Go to your system
 2. Install using Go the auto-shell-formatter, `Neoformat` must see it that it is being installed to your default shell (`zsh`)
 
-```shell
+```sh
 go install mvdan.cc/sh/v3/cmd/shfmt@latest
 ```
 
 3. you can source the `shfmt` to your terminal so that the `neoformat` can see it, as `export PATH=$PATH:$HOME/go/bin/`. You can also run it externally using
 
-```shell
+```sh
 shfmt -l -w script.sh
 ```
 
@@ -595,7 +595,7 @@ the necessary features required to write in LaTeX. Following the Steps
 
 1. Install the language server using `textlab`, as it is developed with Rust and is superFast.
 
-```shell
+```sh
 LSPInstall latex
 # choice textab
 
@@ -603,7 +603,7 @@ LSPInstall latex
 
 2. Compile your `file.text` into a `PDF` you need to use the following command
 
-```shell
+```sh
 latex -pdf file.text  <- This will complie your entire .text file at once.
 latex -pvc file.text  <- This will allow the  document to be complied while you
 write your code and once you save it will complied automatically # To exit the
@@ -630,7 +630,7 @@ after running `nvim` it is a good pratice to use `:messages` or `:notifications`
 - Clang has an issue due to not adding the capabilities option for the `utf-8`
   - [nvim language server - clang ](https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#clangd)
 
-```shell
+```sh
 # First I added this one but it was not working
 -- capabilities.offsetEncoding = {'utf-8', 'utf-16'}
 # Then remvoed the lua-table (a.k.a. dictionary)
