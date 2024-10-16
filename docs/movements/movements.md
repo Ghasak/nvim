@@ -14,6 +14,7 @@
 * [Encrypting files with :X](#encrypting-files-with-x)
     * [Auto-complete](#auto-complete)
     * [How to capitalize and deCapitalize in NeoVim](#how-to-capitalize-and-decapitalize-in-neovim)
+    * [Useful trick for `norm gE^yiW$p`](#useful-trick-for-norm-geyiwp)
     * [Table mode in nvim](#table-mode-in-nvim)
         * [How it works](#how-it-works)
         * [Align a Table fast](#align-a-table-fast)
@@ -47,13 +48,16 @@ Simply you can use the following.
 4. Add your text to the end.
 
 ```sh
-:`<,`>norm A whatever you will add to end of all lines.
-:`<,`>norm I whatever you will add to beginning of all lines.
-:`<,`>norm $X this  will delete last character at the end.
-:`<,`>norm ^X this  will delete first character at the end.
+:`<,`>norm A          --> whatever you will add to end of all lines.
+:`<,`>norm I          --> whatever you will add to beginning of all lines.
+:`<,`>norm $X         --> this will delete last character at the end.
+:`<,`>norm ^X         --> this will delete first character at the end.
+:`<,`>norm gEdiW      --> this will delete the last word in several lines.
+:`<,`>norm gEdiWbdl   --> delete up to two word from the back.
+:`<,`>norm gE^yiW$p   --> I will explain this at the end
 ```
 
-- for example to insert "ABC" at the begining of each line:
+- For example to insert "ABC" at the begining of each line:
 
 ```sh
 Go to command mode
@@ -156,6 +160,82 @@ g + U 3 w will do for 3 words a head and captilze each word.
 ```
 
 - [10 Advanced Vim Features You probably didn't know](https://www.youtube.com/watch?v=gccGjwTZA7k)
+
+### Useful trick for `norm gE^yiW$p`
+
+- Imagine we have the follwoing
+
+```vim
+        self.first_name: str   =
+        self.last_name: str   =
+        self.age: int   =
+        self.salary: float   =
+
+:`<,`>norm gE^yiW$p
+
+```
+
+1. Start with the line: using `vip`
+   - gE : Move to the beginning of str.
+     - gE moves the cursor to the beginning of the previous word or the beginning of the current word (if you are already at the end of it).
+     - It does not move to the beginning of the line—instead, it focuses on words and their boundaries, treating punctuation differently from b (another word motion).
+   - ^ : Jump to the start of the line (self.first_name).
+   - yiW: Yank the word first_name.
+   - $ : Move to the end of the line (after =).
+   - p : Paste first_name after =.
+
+- I also used `'<,'>norm gE^wwyiw$p` which applied
+
+1. use `vip` for the following
+
+```vim
+        self.first_name: str   =
+        self.last_name: str   =
+        self.age: int   =
+        self.salary: float   =
+
+```
+
+2. the output will have
+
+```vim
+
+       self.first_name: str   = first_name
+       self.last_name: str   = last_name
+       self.age: int   = age
+       self.salary: float   = salary
+
+```
+
+3. You can also do other types of combinitions such as
+
+```vim
+'<,'>norm gE$3bdiw
+```
+
+4. Assume we have
+
+```vim
+
+        self.first_name: str   = first_name
+        self.last_name: str   = last_name
+        self.age: int   = age
+        self.salary: float   = salary
+```
+
+and applying `'<,'>norm f=wdiw `, which will start from the begging of the line, now use `vip` as the cursor under any character (stands for vitual inside paragraph).
+
+- **note**: gE: Moves to the beginning of the last word on the current line.
+
+```vim
+
+        self.first_name: str   = first_name
+        self.last_name: str   = last_name
+        self.age: int   = age
+        self.salary: float   = salary
+```
+
+---
 
 ### Table mode in nvim
 

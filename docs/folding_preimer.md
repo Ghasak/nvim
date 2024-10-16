@@ -2,6 +2,7 @@
 
 <!-- vim-markdown-toc GitLab -->
 
+* [ChangeLog](#changelog)
 * [1. FOLD METHODS](#1-fold-methods)
     * [1.1. Types](#11-types)
         * [1.1.1. Manual](#111-manual)
@@ -17,9 +18,13 @@
 
 <!-- vim-markdown-toc -->
 
+## ChangeLog
+
+- `10/07/2024 15:54:47`: I am using now `UFO` with `UFOAttach`.
+
 The following configurations are based on the explanation by the
 [ref1](https://www.youtube.com/watch?v=f_f08KnAJOQ). The author of this video
-shows there are several ways to create folding
+shows there are several ways to create folding.
 
 ## 1. FOLD METHODS
 
@@ -109,7 +114,3 @@ works flawlessly
 ## 2. References
 
 - [Code Foldign in Neovim - Andrew Courter](https://www.youtube.com/watch?v=f_f08KnAJOQ)
-
-
-
-

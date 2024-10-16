@@ -158,3 +158,9 @@ vim.api.nvim_command('highlight RustComment gui=italic guifg=#B2EF9B')
 vim.api.nvim_command('autocmd FileType rust highlight! link Comment RustComment')
 -------------------------------------------
 ```
+
+## LSP provider investigation
+
+```lua
+:lua print(vim.inspect(vim.lsp.buf_get_clients()[1].server_capabilities))
+```
