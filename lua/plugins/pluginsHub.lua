@@ -307,6 +307,7 @@ return {
   }, -- undotree
   {
     "mbbill/undotree",
+    event = "VimEnter",
     config = function()
       require "plugins.configs.myUndoTreeConfig"
     end,
