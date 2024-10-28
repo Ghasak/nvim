@@ -456,12 +456,14 @@ end
 -- Toggle key mappings for Venn using <leader>v
 vim.api.nvim_set_keymap("n", "<leader>v", ":lua Toggle_venn()<CR>", { noremap = true, silent = true })
 
-
 -- Create a keymap to toggle markdown rendering
 vim.api.nvim_set_keymap(
-  'n',                       -- Normal mode
-  '<leader>m',               -- The keybinding, you can change '<leader>m' to your preferred key combination
-  ':RenderMarkdown toggle<CR>',  -- The command to toggle the markdown rendering
-  { noremap = true, silent = true }  -- Keymap options
+  "n", -- Normal mode
+  "<leader>m", -- The keybinding, you can change '<leader>m' to your preferred key combination
+  ":RenderMarkdown toggle<CR>", -- The command to toggle the markdown rendering
+  { noremap = true, silent = true } -- Keymap options
 )
+
+-- Execute the vim script in a given buffer
+vim.keymap.set("n", "<leader>R", ":so %<CR>", { desc = "Execute" })
 

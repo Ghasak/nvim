@@ -231,6 +231,7 @@ with `COC and COC-LSP` and my current one with `nvim-lsp`.
 | 57  | d0                          | while you are on beginning of line you want to delete all up to the first column                                                      |                                             |
 | 58  | d^                          | At beginning of the column delete all spaces until first letter of your line                                                          |                                             |
 | 59  | :g/^ /norm dw               | delete a word at the beginning of the line for all lines                                                                              |                                             |
+| 60  | " or @                      | will open the navigation windows for registers                                                                                        |                                             |
 
 ### Requirements
 

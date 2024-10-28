@@ -29,8 +29,8 @@ there are two simple ways to edit an existing macro instead.
 
 If you found this useful, you might also enjoy:
 
-- [Vim Macros and You](https://thoughtbot.com/blog/vim-macros-and-you)
+ [Vim Macros and You](https://thoughtbot.com/blog/vim-macros-and-you)
 - [thoughtbot is filled with vim and vigor](https://thoughtbot.com/blog/thoughtbot-is-filled-with-vim-and-vigor)
 
 
-
+i- [placeholder](placeholder)0j

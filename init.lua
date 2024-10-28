@@ -75,3 +75,12 @@ if vim.g.transparent_enabled then
 end
 
 
+
+
+
+
+
+
+
+
+

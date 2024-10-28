@@ -16,16 +16,16 @@ local vim = vim
 -- General
 -----------------------------------------------------------
 opt.mouse = "a" -- enable mouse support, clicking and scrolling,
-opt.mousemodel=extend -- since v.10
+opt.mousemodel = extend -- since v.10
 -- Now I use, option from my mac If you use iTerm,
 -- <<defaults write com.googlecode.iterm2 AlternateMouseScroll -bool true>>
 opt.clipboard = "unnamedplus" -- copy/paste to system clipboard
 
 vim.cmd [[
-set clipboard=unnamed
-if has("unnamedplus") " X11 support
-    set clipboard+=unnamedplus
-endif
+  set clipboard=unnamed
+  if has("unnamedplus") " X11 support
+      set clipboard+=unnamedplus
+  endif
 ]]
 
 vim.cmd [[
@@ -82,7 +82,7 @@ set write
 -----------------------------------------------------------
 -- the Primeagen config
 -----------------------------------------------------------
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.opt.undodir = os.getenv "HOME" .. "/.vim/undodir"
 -----------------------------------------------------------
 -- Configurations form my old vim script
 -----------------------------------------------------------
