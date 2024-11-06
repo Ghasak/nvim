@@ -119,9 +119,9 @@ vim.api.nvim_set_keymap("n", "<S-TAB>", ":bprevious<CR>", { noremap = true, sile
 
 -- delete backward a single word using `Shift+Del (backspace)`.
 -- For Normal Mode
-vim.api.nvim_set_keymap("n", "<S-BS>", "db", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-S-BS>", "db", { noremap = true, silent = true })
 -- For Insert Mode
-vim.api.nvim_set_keymap("i", "<S-BS>", "<C-w>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("i", "<C-S-BS>", "<C-w>", { noremap = true, silent = true })
 
 -- map the leader in nvim to space
 vim.g.mapleader = " "
@@ -410,9 +410,6 @@ vim.keymap.set("n", "<leader>cd", "<Plug>(VM-Add-Cursor-Down)", { desc = "vim vi
 -- Launch panel if nothing is typed after <leader>z
 vim.keymap.set("n", "<leader>tk", "<cmd>Telekasten panel<CR>")
 
--- Delete a word back using shift + Esc
-vim.api.nvim_set_keymap("i", "<S-Esc>", "<C-w>", { noremap = true, silent = true })
-
 ---- *****************************************************************************************
 ----                               VENN NVIM DIGRAMS
 ----                reference: https://github.com/jbyuki/venn.nvim
@@ -466,4 +463,3 @@ vim.api.nvim_set_keymap(
 
 -- Execute the vim script in a given buffer
 vim.keymap.set("n", "<leader>R", ":so %<CR>", { desc = "Execute" })
-

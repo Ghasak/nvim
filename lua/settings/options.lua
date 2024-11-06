@@ -80,14 +80,11 @@ set write
 -- vim.opt.spelllang = { 'en_us' }
 
 -----------------------------------------------------------
--- the Primeagen config
------------------------------------------------------------
-vim.opt.undodir = os.getenv "HOME" .. "/.vim/undodir"
------------------------------------------------------------
 -- Configurations form my old vim script
 -----------------------------------------------------------
 opt.cmdheight = 1 -- vim.cmd('set cmdheight=0') -- Control the height of cmdline
 opt.wrap = false
+vim.o.wrapscan = false -- Disable search wrapping to stop at EOF instead of cycling to the top.
 opt.relativenumber = true
 opt.errorbells = false
 opt.signcolumn = "yes"

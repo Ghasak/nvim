@@ -3,6 +3,8 @@ function M.setup()
   -- extra options
   vim.opt.termguicolors = true
   vim.opt.list = true -- This added a (-) at each word you type in nvim
+  -- Define a gray color for the indent line of the current scope
+  local gray_highlight = "IblIndentGray"
 
   local highlight_scope = {
     -- Mixed scoe colored - my preference
@@ -16,6 +18,7 @@ function M.setup()
     "IblIndent",
     "IblIndent",
     "IblIndent",
+
     -- If you want a colored scope
     -- "RainbowRed", "RainbowYellow", "RainbowBlue", "RainbowOrange",
     -- "RainbowGreen", "RainbowViolet", "RainbowCyan"
@@ -55,5 +58,3 @@ function M.setup()
 end
 
 return M
-
-
