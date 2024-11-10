@@ -11,7 +11,7 @@ function! BetterSubV2() abort
   endif
 endfunction
 
-nnoremap <leader>Z :call BetterSubV2()<CR>
+nnoremap <leader>z :call BetterSubV2()<CR>
 
 "1. Source this buffer using :so %
 "2. Yank the `first`

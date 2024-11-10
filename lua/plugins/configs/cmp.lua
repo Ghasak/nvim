@@ -102,6 +102,7 @@ function M.setup()
   cmp.setup {
     sources = {
       { name = "nvim_lsp" },
+      { name = "vim-dadbod-completion" }, -- Enables Dadbod-based SQL completions
       { name = "luasnip", option = { use_show_condition = false } },
       { name = "buffer" },
       { name = "nvim_lua" },
@@ -332,6 +333,25 @@ function M.setup()
   --   [[ autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} }) ]],
   --   false
   -- )
+
+  -- Import the 'cmp' module
+
+  -- Create an autocommand group named 'DadbodCompletion'
+  vim.api.nvim_create_augroup("DadbodCompletion", { clear = true })
+  -- Define an autocommand for SQL file types
+  vim.api.nvim_create_autocmd("FileType", {
+    group = "DadbodCompletion",
+    pattern = { "sql", "mysql", "plsql" },
+    callback = function()
+      -- Set up 'nvim-cmp' for the current buffer
+      cmp.setup.buffer {
+        sources = {
+          { name = "vim-dadbod-completion" },
+          -- You can add other sources here if needed
+        },
+      }
+    end,
+  })
 
   ----------------------------------------------------------------------------------------------------------------------
   --

@@ -498,10 +498,8 @@ return {
     "hrsh7th/nvim-cmp",
     event = "InsertEnter",
     lazy = true,
-    config = function()
-      require("plugins.configs.cmp").setup()
-    end,
     dependencies = {
+      { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-nvim-lua",
@@ -526,6 +524,10 @@ return {
       "rafamadriz/friendly-snippets",
       "honza/vim-snippets",
     },
+
+    config = function()
+      require("plugins.configs.cmp").setup()
+    end,
   }, -- TabNine auto-compleletions
   {
     "tzachar/cmp-tabnine",
@@ -905,7 +907,6 @@ return {
   {
     "junegunn/vim-peekaboo",
     event = "InsertEnter",
-
   },
 
   -- ===========================================================================
@@ -1026,4 +1027,44 @@ return {
     -- I removed it already
     event = "InsertEnter",
   },
+
+  -- ==========================================================================
+  -- 	                  DATA BASES AND SQL SERVER CONTORLLER
+  -- =========================================================================
+
+  {
+    "kristijanhusak/vim-dadbod-ui",
+    dependencies = {
+      { "tpope/vim-dadbod", lazy = true },
+      { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true }, -- Optional
+    },
+    cmd = {
+      "DBUI",
+      "DBUIToggle",
+      "DBUIAddConnection",
+      "DBUIFindBuffer",
+    },
+    init = function()
+      -- Your DBUI configuration
+      require("plugins.configs.mydadbod").config()
+    end,
+  },
+
+  -- https://www.youtube.com/watch?v=MDlYsGbKJyQ&ab_channel=CheesedUp
+  --   {
+  --     "kndndrj/nvim-dbee",
+  --     ft = { "sql", "mysql", "plsql" },
+  --     dependencies = {
+  --       "MunifTanjim/nui.nvim",
+  --     },
+  --     build = function()
+  --       -- Install tries to automatically detect the install method.
+  --       -- if it fails, try calling it with one of these parameters:
+  --       --    "curl", "wget", "bitsadmin", "go"
+  --       require("dbee").install()
+  --     end,
+  --     config = function()
+  --       require("dbee").setup(--[[optional config]])
+  --     end,
+  --   },
 }

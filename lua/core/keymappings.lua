@@ -241,8 +241,10 @@ vim.cmd [[
 
 ---- *****************************************************************************************
 ----                    Checking spelling - Builtin suggesions
+--       remember in macOS use fn + F6 as we mapped all functions to be used with Fn keys
 ---- *****************************************************************************************
 vim.api.nvim_set_keymap("n", "<F6>", ":set spell! spelllang=en<CR>", { noremap = true, silent = true })
+
 -- Add a spell word to your custom dictionary using
 -- -> zg (as z for spell and g for good word)
 -- -> zw (as z for spell and w for bad word)

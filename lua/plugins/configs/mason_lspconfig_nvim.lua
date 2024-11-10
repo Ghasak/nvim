@@ -258,6 +258,22 @@ M.setup = function()
         cmd = { "R", "--slave", "-e", "languageserver::run()" },
       }
     end,
+    -- for SQL npm install -g sql-language-server
+    ["sqlls"] = function()
+      lspconfig.sqlls.setup {
+        on_attach = opts.on_attach,
+        capabilities = opts.capabilities,
+        handlers = opts.handlers,
+        filetypes = { "sql" },
+        cmd = { "sql-language-server", "up", "--method", "stdio" },
+        root_dir = function(fname)
+          return lspconfig.util.root_pattern ".git"(fname)
+            or lspconfig.util.path.dirname(fname)
+            or lspconfig.util.root_pattern "config.yml"(fname)
+            or vim.fn.getcwd()
+        end,
+      }
+    end,
     -- For C/C++ language
     ["clangd"] = function()
       lspconfig.clangd.setup {

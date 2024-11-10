@@ -26,6 +26,7 @@ M.config = function()
       r = { "my_r_formatter" },
       rmd = { "my_r_formatter" },
       rust = { "my_rust_formatter" },
+      sql = { "my_sql_formatter" },
     },
     -- ***************************
     -- Format on save feature
@@ -46,6 +47,10 @@ M.config = function()
         --args = "--style=file:~/Desktop/devCode/cppDev/AnimationEngineCPP/.clang-format",
         args = "--style=file",
         stdin = true,
+      },
+      my_sql_formatter = {
+        command = "/opt/homebrew/bin/sql-formatter",
+        stdin = true, -- Ensure the input streamed directly to the formatter inside the R session, as you see in `stdin` above.
       },
       -- ***************************
       --    Formatter for R-Language

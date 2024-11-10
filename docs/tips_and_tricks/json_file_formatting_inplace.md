@@ -72,4 +72,3 @@ Formatted JSON after running `:%!jq .`:
 ```
 
 This should give you a cleaner and more readable output in your buffer.
-

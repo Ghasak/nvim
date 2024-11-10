@@ -1,7 +1,7 @@
 # NVIM WITH FZF NAVIGATION
 
-You can use `fzf` outside of `nvim` in your terminal to select a file and then open it in `nvim`. Here’s how you can achieve that:
-
+You can use `fzf` outside of `nvim` in your terminal to select a file and then
+open it in `nvim`. Here’s how you can achieve that:
 
 ### 1. Using `fzf` with `nvim` in Terminal
 
@@ -68,4 +68,3 @@ fznvim() {
 Then, after restarting your terminal or sourcing your shell config (`source ~/.bashrc` or `source ~/.zshrc`), you can use the `fznvim` command to quickly select and open a file from `fzf` in `nvim`.
 
 This gives you the power of `fzf` directly in your terminal for quick file selection and editing with `nvim`.
-
