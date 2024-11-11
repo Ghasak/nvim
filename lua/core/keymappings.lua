@@ -44,8 +44,8 @@ vim.keymap.set("n", "-", "<C-x>")
 vim.keymap.set("n", "dw", 'vb"_d')
 
 -- Select to the end of line in visual mode
-vim.keymap.set("v", "<S-a>", "$", { desc = "Select to end of lines in visual block" })
-vim.keymap.set("v", "<S-l>", "^", { desc = "Select to beginning of lines in visual block" })
+--vim.keymap.set("v", "<S-a>", "$", { desc = "Select to end of lines in visual block" })
+--vim.keymap.set("v", "<S-l>", "^", { desc = "Select to beginning of lines in visual block" })
 -- vim.api.nvim_set_keymap('v', '<S-a>', '$', { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('v', '<S-l>', '^', { noremap = true, silent = true })
 
@@ -392,8 +392,9 @@ vim.api.nvim_set_keymap("v", "<leader>ai", ":Gen<CR>", { noremap = true, silent 
 vim.keymap.set("n", "<leader>z", "<cmd>:Lazy<cr>", { desc = "Plugin Manager" })
 
 ---- *****************************************************************************************
-----                             VIM-VISUAL-MULTI MODE
+----                             VIM-VISUAL-MULTI CURSOR MODE
 ----                               :help visual-multi
+----                          PLUGIN: "mg979/vim-visual-multi"
 ---- *****************************************************************************************
 vim.keymap.set("n", "<leader>cu", "<Plug>(VM-Add-Cursor-Up)", { desc = "vim visual multi" })
 vim.keymap.set("n", "<leader>cd", "<Plug>(VM-Add-Cursor-Down)", { desc = "vim visual multi" })

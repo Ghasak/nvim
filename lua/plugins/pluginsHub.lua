@@ -843,7 +843,7 @@ return {
   --     }
   --   end,
   -- })
-  { "mg979/vim-visual-multi", lazy = true, event = "InsertEnter", branch = "master" },
+  --{ "mg979/vim-visual-multi", lazy = true, event = "InsertEnter", branch = "master" },
 
   --FOLDING THE CODE
   -- Here, the dependencies, statuscol, will remove the numbers 2, 3, 4 ..etc. for the folding level.
