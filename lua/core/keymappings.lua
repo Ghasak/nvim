@@ -466,3 +466,7 @@ vim.api.nvim_set_keymap(
 
 -- Execute the vim script in a given buffer
 vim.keymap.set("n", "<leader>R", ":so %<CR>", { desc = "Execute" })
+
+
+vim.api.nvim_set_keymap("n", "<leader>mm", ":Telescope marks<CR>", { noremap = true, silent = true })
+
