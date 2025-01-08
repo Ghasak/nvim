@@ -49,7 +49,7 @@ M.setup = function()
       --"ts_ls",
       "texlab",
       "clangd", -- "dockerls", "docker_compose_language_service", "jsonls", "r_language_server", "vimls"
-      "r_language_server",
+      -- "r_language_server",
       "jqls",
       "cmake",
     },

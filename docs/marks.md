@@ -120,6 +120,13 @@ them effectively:
   :delm!
   ```
 
+- To delete all marks read more [here](https://stackoverflow.com/questions/11450817/vim-how-do-i-clear-all-marks),
+
+```sh
+:delm! | delm A-Z0-9
+```
+
+
 ### 5. **Navigating to Special Marks**
 
 Vim/Neovim also creates special marks automatically:

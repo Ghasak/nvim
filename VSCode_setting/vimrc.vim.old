@@ -1,0 +1,398 @@
+"" Source your .vimrc
+"source ~/.vimrc
+":action IdeaVim.ReloadVimRc.reload
+
+"" -- Suggested options --
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+set scrolloff=5
+
+" Do incremental searching.
+set incsearch
+
+" Don't use Ex mode, use Q for formatting.
+map Q gq
+
+
+"" -- Map IDE actions to IdeaVim -- https://jb.gg/abva4t
+"" Map \r to the Reformat Code action
+"map \r <Action>(ReformatCode)
+
+"" Map <leader>d to start debug
+"map <leader>d <Action>(Debug)
+
+"" Map \b to toggle the breakpoint on the current line
+"map \b <Action>(ToggleLineBreakpoint)
+
+
+" Find more examples here: https://jb.gg/share-ideavimrc
+"Turn off the sound bell in terminal ... "
+set visualbell
+set noerrorbells
+" Using NerdTree"
+set NERDTree
+
+"Editing and Reloading the Config"
+" ====================================================="
+nnoremap \e :e ~/.ideavimrc<CR>
+nnoremap \r :action IdeaVim.ReloadVimRc.reload<CR>
+" ====================================================="
+set ignorecase
+set smartcase
+set scrolloff=3 " 3 lines above/below cursor when scrolling
+
+" Emulated Plugins
+set surround
+" set easymotion
+set NERDTree
+
+" Copy to system clipboard as well
+set clipboard+=unnamed
+set clipboard+=ideaput
+
+" Use Idea to join lines smartly
+set ideajoin
+
+" Multiple cursors support
+set multiple-cursors
+
+" These settings are from - https://github.com/Valloric/dotfiles/blob/master/intellij/ideavimrc
+
+" let mapleader = ","
+let mapleader = " "
+" let maplocalleader = ","
+
+" Create new vertical splits on right and horizontals on below
+" set splitright
+" set splitbelow
+
+
+" Use Q for formatting the current paragraph (or visual selection)
+vmap Q gq
+nmap Q gqap
+
+" These create newlines like o and O but stay in normal mode
+nmap zj o<Esc>k
+nmap zk O<Esc>j
+
+" key bindings for quickly moving between windows
+" h left, l right, k up, j down
+" nmap <leader>h <c-w>hce
+" nmap <leader>l <c-w>l
+" nmap <leader>k <c-w>k
+" nmap <leader>j <c-w>j
+
+" Closing tabs
+nmap <leader>q :action CloseContent<cr>
+nmap <leader>Q :action ReopenClosedTab<cr>
+
+" Switch projects
+nmap <leader>ww :action NextProjectWindow<cr>
+
+" To navigate between split panes
+nmap <leader>wo :action NextSplitter<cr>
+nmap <leader>wp :action PrevSplitter<cr>
+" Alt+Tab is quite good for this action
+" nmap <leader>j :action PrevSplitter<cr>
+nmap ,s :action PrevSplitter<cr>
+
+" Full screen window
+nmap <leader>wf :action HideAllWindows<cr>
+
+" Splits manipulation
+nmap <leader>ws :action SplitHorizontally<cr>
+nmap <leader>wv :action SplitVertically<cr>
+nmap <leader>wc :action Unsplit<cr>
+nmap <leader>wC :action UnsplitAll<cr>
+nmap <leader>wd :action OpenEditorInOppositeTabGroup<cr>
+" nmap <leader><leader> :action VimFilePrevious<cr>
+" nmap <leader>, :action VimFilePrevious<cr>
+" nmap <leader>ww :action JumpToLastWindow<cr>
+
+" NERDTree
+"map <leader>ft :NERDTree<CR>
+map <leader>ft :NERDTreeToggle<CR>
+map <leader>nf :NERDTreeFind<CR>
+
+
+" Navigation
+nmap <c-o> :action Back<cr>
+
+nmap gd <Action>(GotoTypeDeclaration)
+nmap gf <Action>(Forward)
+nmap gl <Action>(QuickJavaDoc)
+nmap gL <Action>(QuickImplementations)
+nmap gy <Action>(ShowErrorDescription)
+
+" Window navigation like Spacemacs Evil mode
+nnoremap <leader>wh :wincmd h<CR>  " Move to the left window
+nnoremap <leader>wl :wincmd l<CR>  " Move to the right window
+nnoremap <leader>wj :wincmd j<CR>  " Move to the bottom window
+nnoremap <leader>wk :wincmd k<CR>  " Move to the top window
+
+nmap <leader>l :action Forward<cr>
+nmap <leader>L :action RecentLocations<cr>
+nmap <leader>u :action FindUsages<cr>
+nmap <leader>C :action CallHierarchy<cr>
+nmap <leader>f :action GotoFile<cr>
+" map <leader>t :action GotoTypes<cr>
+nmap <leader>c :action GotoClass<cr>
+nmap <leader>s :action GotoSymbol<cr>
+nmap <leader>m :action ToggleBookmark<cr>
+nmap <leader>; :action FileStructurePopup<cr>
+nmap <leader>M :action ActivateStructureToolWindow<cr>
+nmap <leader>d :action ShowErrorDescription<cr>
+nmap <leader>i :action GotoImplementation<cr>
+nmap <leader>U :action GotoSuperMethod<cr>
+nmap <leader>I :action SelectIn<cr>
+nmap <leader>e :action RecentFiles<cr>
+nmap <leader>a :action RecentChangedFiles<cr>
+"nmap <leader>t :action GotoTest<cr>
+nmap <leader>b :action ShowBookmarks<cr>
+
+
+
+" Useful Git actions
+nmap <leader>gb :action Git.Branches<cr>
+nmap <leader>gp :action Git.Pull<cr>
+nmap <leader>gu :action Git.Push<cr>
+nmap <leader>gr :action Git.Rebase<cr>
+nmap <leader>gm :action Git.Merge<cr>
+
+" nmap <leader>a :action Switcher<cr>
+nmap ,a :action GotoAction<cr>
+
+" Errors
+nmap <leader>x :action GotoNextError<cr>
+nmap <leader>X :action GotoPreviousError<cr>
+
+" Refactorings
+vmap T :action Refactorings.QuickListPopupAction<cr>
+vmap <leader>rm :action ExtractMethod<cr>
+nmap <leader>rr :action RenameElement<cr>
+nmap <leader>rg :action Generate<cr>
+nmap <leader>rI :action OptimizeImports<cr>
+" Inspection
+nmap <leader>rc :action InspectCode<cr>
+
+" VCS operations
+nmap <leader>yy :action Vcs.Show.Local.Changes<cr>
+nmap <leader>yp :action Vcs.QuickListPopupAction<cr>
+nmap <leader>ya :action Annotate<cr>
+nmap <leader>yl :action Vcs.Show.Log<cr>
+nmap <leader>yd :action Compare.LastVersion<cr>
+nmap <leader>yP :action Git.Pull<cr>
+nmap <leader>yr :action Git.ResolveConflicts<cr>
+nmap <leader>yo :action Github.Open.In.Browser<cr>
+
+" Terminal
+nmap <leader>T :action ActivateTerminalToolWindow<cr>
+nnoremap <c-t> :action ActivateTerminalToolWindow<CR>
+nnoremap <leader>t :action Terminal.OpenInTerminal<CR>
+
+" Gradle
+nmap <leader>G :action ActivateGradleToolWindow<cr>
+
+" External GVim
+nmap <leader>v :action Tool_External Tools_mvim<cr>
+
+" External Emacs
+nmap <leader>E :action Tool_External Tools_emacsclient<cr>
+
+" External Sublime Text
+nmap <leader>S :action Tool_External Tools_sublime_text<cr>
+
+" IdeaVim uses 'a' for alt instead of Vim's 'm'
+nmap <a-j> 15gj
+nmap <a-k> 15gk
+
+" Won't work in visual mode (with vmap) for some reason.
+" Use default map of <c-/> for that.
+nmap gcc :action CommentByLineComment<cr>
+
+" unimpaired mappings - from https://github.com/saaguero/ideavimrc/blob/master/.ideavimrc
+nnoremap [<space> O<esc>j
+nnoremap ]<space> o<esc>k
+nnoremap [q :action PreviousOccurence<cr>
+nnoremap ]q :action NextOccurence<cr>
+nnoremap [m :action MethodUp<cr>
+nnoremap ]m :action MethodDown<cr>
+nnoremap [c :action VcsShowPrevChangeMarker<cr>
+nnoremap ]c :action VcsShowNextChangeMarker<cr>
+" Tabs
+nnoremap [b :action PreviousTab<cr>
+nnoremap ]b :action NextTab<cr>
+
+" Search
+nmap <leader>/ :action Find<cr>
+nmap <leader>\ :action FindInPath<cr>
+
+" Moving lines
+nmap ]e :action MoveLineDown<cr>
+nmap [e :action MoveLineUp<cr>
+" Moving statements
+nmap [s :action MoveStatementUp<cr>
+nmap ]s :action MoveStatementDown<cr>
+
+" Building, Running and Debugging
+nmap ,c :action CompileDirty<cr>
+nmap ,r :action Run<cr>
+nmap ,R :action RunAnything<cr>
+nmap ,b :action Debug<cr>
+nmap ,c :action RunClass<cr>
+nmap ,d :action DebugClass<cr>
+nmap ,t :action RerunTests<cr>
+nmap ,T :action RerunFailedTests<cr>
+nmap ,p :action ToggleLineBreakpoint<cr>
+nmap ,i :action ParameterInfo<cr>
+
+" Useful Quick actions
+nmap ,, :action QuickJavaDoc<cr>
+nmap ,H :action LocalHistory.ShowHistory<cr>
+nmap ,e :action JumpToLastChange<cr>
+" AceJump shortcut
+nmap <leader>j :action AceAction<cr>
+nmap ,yy :action CopySourceRootPath<cr>
+nmap ,ya :action CopyAbsolutePath<cr>
+nmap ,l :action RecentLocations<cr>
+nmap ,S :action ShowProjectStructureSettings<cr>
+
+" Pin/Unpin active tab
+nmap \p :action PinActiveTabToggle<cr>
+
+
+" Navigation Windows "
+"nnoremap <c-\> :action SplitVertically<CR>
+nnoremap <c--> :action SplitHorizontally<CR>
+nnoremap <c-=> :action Unsplit<CR>
+nnoremap <c-m> :action MoveEditorToOppositeTabGroup<CR>
+sethandler <c-j> a:vim
+sethandler <c-k> a:vim
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+"nnoremap <c-j> <c-w>j
+"nnoremap <c-k> <c-w>k
+nnoremap <TAB> :action PreviousTab<CR>
+nnoremap <s-TAB> :action NextTab<CR>
+nnoremap <Leader>en :action EditSourceInNewWindow<CR>
+nnoremap <Leader>n :action NextWindow<CR>
+nnoremap <Leader>q :action CloseContent<CR>
+nnoremap <Leader>qa :action CloseAllEditors<CR>
+
+
+
+
+
+" Editing source code "
+set ideajoin
+set idearefactormode=keep
+vnoremap < <gv
+vnoremap > >gv
+nnoremap [[ :action MethodUp<CR>
+nnoremap ]] :action MethodDown<CR>
+nnoremap zc :action CollapseRegion<CR>
+nnoremap zo :action ExpandRegion<CR>
+nnoremap <leader>zc :action CollapseAllRegions<CR>
+nnoremap <leader>zo :action ExpandAllRegions<CR>
+nnoremap <leader>c :action CommentByLineComment<CR>
+nnoremap <leader>r :action Refactorings.QuickListPopupAction<CR>
+nnoremap <Leader>=  :action ReformatCode<CR>
+nnoremap <leader>o :action OptimizeImports<CR>
+nnoremap <c-r> :action RecentFiles<CR>
+nnoremap <leader>l :action RecentLocations<CR>
+nnoremap <leader>h  :action LocalHistory.ShowHistory<CR>
+nnoremap ge :action GotoNextError<CR>
+nnoremap gE :action GotoPreviousError<CR>
+
+" Searching and Source Code Navigation"
+set incsearch
+nnoremap <c-/> :action FindInPath<CR>
+nnoremap <c-a> :action GotoAction<CR>
+nnoremap <c-f> :action GotoFile<CR>
+nnoremap <leader>u :action FindUsages<CR>
+nnoremap <leader>s :action GotoRelated<CR>
+nnoremap <leader>h :action CallHierarchy<CR>
+nnoremap <leader>b :action ShowNavBar<CR>
+nnoremap <c-s> :action FileStructurePopup<CR>
+nnoremap <c-o> :action GotoSymbol<CR>
+nnoremap gc :action GotoClass<CR>
+nnoremap gi :action GotoImplementation<CR>
+nnoremap gd :action GotToDeclaration<CR>
+nnoremap gp :action GotToSuperMethod<CR>
+nnoremap gt :action GotoTest<CR>
+nnoremap gb :action Back<CR>
+nnoremap gf :action Forward<CR>
+
+" Tool Window "
+nnoremap <c-p> :action JumpToLastWindow<CR>
+nnoremap <c-x> :action HideAllWindows<CR>
+
+" Running and Debugging "
+nnoremap ,r :action ContextRun<CR>
+nnoremap ,c :action RunClass<CR>
+nnoremap ,f :action ChooseRunConfiguration<CR>
+nnoremap ,t :action ActivateRunToolWindow<CR>
+nnoremap ,u :action Rerun<CR>
+nnoremap ,b :action ToggleLineBreakpoint<CR>
+nnoremap ,d :action ContextDebug<CR>
+nnoremap ,n :action ActivateDebugToolWindow<CR>
+
+
+
+"Distraction - Free Mode"
+nnoremap <c-z> :action ToggleDistractionFreeMode<CR>
+
+" Terminal "
+"nnoremap <c-t> :action ActivateTerminalToolWindow<CR>
+"nnoremap <leader>t :action Terminal.OpenInTerminal<CR>
+"nnoremap <leader>t :action ActivateTerminalToolWindow<CR>
+nnoremap <c-t> :action ActivateTerminalToolWindow<CR>
+nnoremap <leader>wt :action ActivateTerminalToolWindow<CR>
+nnoremap <leader>wf :action HideAllWindows<cr>
+nnoremap <leader>j :action ActivateTerminalToolWindow<CR>
+
+
+
+
+
+" JumpToLastChange                                   <M-S-BS>
+" JumpToLastWindow                                   <F12>
+
+" QuickActionPopup                                   <M-A-CR>
+" QuickActions
+" QuickChangeScheme                                  <C-À>
+" QuickDocCopy                                       <M-C>
+" QuickEvaluateExpression                            <M-A-F8> button=1 clickCount=1 modifiers=512
+" QuickFixes
+" QuickImplementations                               <A- > <M-Y>
+" QuickJavaDoc                                       <F1> <C-J> button=2 clickCount=1 modifiers=128
+
+
+" Clojure specific mappings for Cursive
+" nmap \a :action ActivateREPLToolWindow<cr>
+"nmap \c :action :cursive.repl.actions/clear-repl<cr>
+"nmap \l :action :cursive.repl.actions/load-file<cr>
+"nmap \o :action :cursive.repl.actions/jump-to-output<cr>
+"nmap \r :action :cursive.repl.actions/jump-to-repl<cr>
+"nmap \t :action :cursive.testing.actions/run-ns-tests<cr>
+"nmap \T :action :cursive.testing.actions/rerun-last-test<cr>
+"nmap \C :action :cursive.testing.actions/remove-test-markers<cr>
+
+" Python specific mappings
+" Format code with Black fomatter
+" nmap \p :action Tool_External Tools_Black<cr>
+
+" https://youtrack.jetbrains.com/issue/VIM-1846
+nnoremap <BS> <C-S-6>
+nnoremap <leader><leader> <C-S-6>
+" nnoremap <leader><leader> :action Switcher<cr>
+
+" Increase or decrease font size
+nnoremap <C-=> :action EditorIncreaseFontSize<cr>
+nnoremap <C--> :action EditorDecreaseFontSize<cr>
+nnoremap <C-\> :action ActivateTerminalToolWindow<CR>
+
+"References"
+"https://towardsdatascience.com/the-essential-ideavim-remaps-291d4cd3971b
+
+

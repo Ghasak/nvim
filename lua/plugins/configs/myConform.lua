@@ -27,6 +27,7 @@ M.config = function()
       rmd = { "my_r_formatter" },
       rust = { "my_rust_formatter" },
       sql = { "my_sql_formatter" },
+      toml = { "my_toml_formatter" },
     },
     -- ***************************
     -- Format on save feature
@@ -51,6 +52,11 @@ M.config = function()
       my_sql_formatter = {
         command = "/opt/homebrew/bin/sql-formatter",
         stdin = true, -- Ensure the input streamed directly to the formatter inside the R session, as you see in `stdin` above.
+      },
+      my_toml_formatter = {
+        command = "/opt/homebrew/bin/taplo",
+        args = {"format"},
+        stdin = true,
       },
       -- ***************************
       --    Formatter for R-Language

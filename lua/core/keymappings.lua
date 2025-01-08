@@ -467,6 +467,38 @@ vim.api.nvim_set_keymap(
 -- Execute the vim script in a given buffer
 vim.keymap.set("n", "<leader>R", ":so %<CR>", { desc = "Execute" })
 
-
+-- Easy way to jump on marks read more about marks in nvim for saving and storing positions.
 vim.api.nvim_set_keymap("n", "<leader>mm", ":Telescope marks<CR>", { noremap = true, silent = true })
 
+
+
+
+
+
+-- Swtich between buffers of last visited buffer only with curretn buffer similar to spacemacs
+
+-- Maintain a history of buffers
+local buffer_history = {}
+
+-- Autocommand to track buffer history
+vim.api.nvim_create_autocmd("BufEnter", {
+  callback = function()
+    local bufnr = vim.api.nvim_get_current_buf()
+    -- Remove the buffer if it exists in the history
+    for i, buf in ipairs(buffer_history) do
+      if buf == bufnr then
+        table.remove(buffer_history, i)
+        break
+      end
+    end
+    -- Add the buffer to the front of the history
+    table.insert(buffer_history, 1, bufnr)
+  end
+})
+
+-- Keymap to switch between the two most recent buffers
+vim.keymap.set('n', '<leader>tab', function()
+  if #buffer_history > 1 then
+    vim.api.nvim_set_current_buf(buffer_history[2])
+  end
+end, { noremap = true, silent = true })

@@ -56,16 +56,17 @@
 ### V.0.10 Release
 
 - [x] Adding the following color highlights to the githubG.nvim our colorschme, which includes:
+
   - [x] LspInlayHint,
   - [x] WinSeparator,
   - [x] WinBar and WinBarNC
 
 - What has been added since `v.0.10`, read more [neovim news-0.10](https://neovim.io/doc/user/news-0.10.html)
-    - hl-FloatBorder is linked to hl-NormalFloat instead of hl-WinSeparator.
-    - hl-NormalFloat is not linked to hl-Pmenu.
-    - hl-WinBar has different background.
-    - hl-WinBarNC is similar to hl-WinBar but not bold.
-    - hl-WinSeparator is linked to hl-Normal instead of hl-VertSplit.
+  - hl-FloatBorder is linked to hl-NormalFloat instead of hl-WinSeparator.
+  - hl-NormalFloat is not linked to hl-Pmenu.
+  - hl-WinBar has different background.
+  - hl-WinBarNC is similar to hl-WinBar but not bold.
+  - hl-WinSeparator is linked to hl-Normal instead of hl-VertSplit.
 
 ### V.0.9.2 Release Nvim
 
@@ -619,7 +620,6 @@ others. These layers include:
 `Configurations` : to change the color, you need to consider to which level you
 want to alter the color.
 
-
 ## VIM EVENTS
 
 - [list all vim script events](https://tech.saigonist.com/b/code/list-all-vim-script-events.html)
@@ -631,6 +631,3 @@ want to alter the color.
 ## Reference
 
 - [Markdown Badges](https://ileriayo.github.io/markdown-badges/)
-
-
-
