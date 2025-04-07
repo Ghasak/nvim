@@ -28,6 +28,7 @@ M.config = function()
       rust = { "my_rust_formatter" },
       sql = { "my_sql_formatter" },
       toml = { "my_toml_formatter" },
+      latex = {"my_latex_formatter"},
     },
     -- ***************************
     -- Format on save feature
@@ -58,6 +59,14 @@ M.config = function()
         args = {"format"},
         stdin = true,
       },
+
+
+      my_latex_formatter = {
+        command = "/opt/homebrew/bin/latexindent",
+        --args = {"format"},
+        stdin = true,
+      },
+
       -- ***************************
       --    Formatter for R-Language
       -- ***************************

@@ -13,7 +13,7 @@ M.config = function()
     prompt = "Transform the following text into the style of $input1: $text",
     replace = true,
   }
-  gen.model = "zephyr:latest"
+  gen.model = "qwen2.5-coder:14b"
   gen.init = function(options)
     pcall(io.popen, "ollama serve > /dev/null 2>&1 &")
   end

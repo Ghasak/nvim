@@ -148,3 +148,6 @@ some trigger key.
 ## Reference
 
 - [List of all Vim script events](https://tech.saigonist.com/b/code/list-all-vim-script-events.html)
+
+
+

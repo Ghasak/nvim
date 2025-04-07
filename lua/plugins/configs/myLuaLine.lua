@@ -47,7 +47,7 @@ local lsp_func = function()
   local servers = {}
   local path = vim.fn.stdpath "data"
   path = string.format("%s", path)
-  local clients = vim.lsp.get_active_clients()
+  local clients = vim.lsp.get_clients()
   local buff_ft = vim.bo.filetype
   local next = next
   if next(clients) == nil then

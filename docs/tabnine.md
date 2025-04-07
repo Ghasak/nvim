@@ -4,7 +4,7 @@ The following plugin for nvim with tabnine `tzachar/cmp-tabnine`, will crash
 when you have a `virtualenv` with python, due to the problem with the
 compatibilities required to be installed.
 
-```shell
+```sh
 Error executing vim.schedule lua callback: Vim:E475: Invalid value for argument
 cmd:
 '/Users/gmbp/.local/share/nvim/site/pack/packer/opt/cmp-tabnine/binaries/4.4.149/x86_64-appl
@@ -26,13 +26,13 @@ You need to provide the following:
 
 - packer manager
 
-```shell
+```sh
 ~/.local/share/nvim/site/pack/packer/opt/cmp-tabnine/binaries/4.4.149
 ```
 
 - lazy nvim
 
-```shell
+```sh
 ~/.local/share/nvim/lazy/cmp-tabnine/binaries/4.4.285
 ```
 

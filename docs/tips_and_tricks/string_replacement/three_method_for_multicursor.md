@@ -51,7 +51,3 @@ Same like the one above but we use for the left tag
    - \w+ select word
    - \1 get what you have stored in the bracket usign `(\w+)`
 
-
-
-
-

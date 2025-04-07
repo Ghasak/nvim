@@ -380,20 +380,34 @@ return {
     config = function()
       require("trouble").setup {}
     end,
-  }, -- markdown-preview using :markdown Preview
-  {
-    "iamcco/markdown-preview.nvim",
-    ft = { "markdown" },
-    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-    --build = "cd app && npm install",
-    build = function()
-      vim.fn["mkdp#util#install"]()
-    end,
-    -- config = function()
-    --   vim.g.mkdp_filetypes = { "markdown" }
-    -- end,
-    dependencies = { "zhaozg/vim-diagram", "aklt/plantuml-syntax" },
+
   },
+  -- markdown-preview using :markdown Preview
+-- install with yarn or npm
+{
+  "iamcco/markdown-preview.nvim",
+  cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+  build = "cd app && yarn install",
+  init = function()
+    vim.g.mkdp_filetypes = { "markdown" }
+  end,
+  ft = { "markdown" },
+    dependencies = { "zhaozg/vim-diagram", "aklt/plantuml-syntax" },
+},
+
+  -- {
+  --   "iamcco/markdown-preview.nvim",
+  --   ft = { "markdown" },
+  --   cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+  --   --build = "cd app && npm install",
+  --   build = function()
+  --     vim.fn["mkdp#util#install"]()
+  --   end,
+  --   -- config = function()
+  --   --   vim.g.mkdp_filetypes = { "markdown" }
+  --   -- end,
+  --   dependencies = { "zhaozg/vim-diagram", "aklt/plantuml-syntax" },
+  -- },
   {
     "mzlogin/vim-markdown-toc",
     ft = { "markdown" },
