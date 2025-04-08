@@ -63,11 +63,43 @@ local dap = require "dap"
 require("dap").set_log_level "INFO"
 dap.defaults.fallback.terminal_win_cmd = "80vsplit new"
 
-vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "red", linehl = "", numhl = "" })
--- vim.fn.sign_define('DapBreakpoint', {text='', texthl='', linehl='', numhl=''})
-vim.fn.sign_define("DapBreakpointRejected", { text = "", texthl = "yellow", linehl = "", numhl = "" })
-vim.fn.sign_define("DapStopped", { text = "", texthl = "green", linehl = "", numhl = "" })
-vim.fn.sign_define("DapLogPoint", { text = "", texthl = "blue", linehl = "", numhl = "" })
+-- vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "red", linehl = "", numhl = "" })
+-- -- vim.fn.sign_define('DapBreakpoint', {text='', texthl='', linehl='', numhl=''})
+-- vim.fn.sign_define("DapBreakpointRejected", { text = "", texthl = "yellow", linehl = "", numhl = "" })
+-- vim.fn.sign_define("DapStopped", { text = "", texthl = "green", linehl = "", numhl = "" })
+-- vim.fn.sign_define("DapLogPoint", { text = "", texthl = "blue", linehl = "", numhl = "" })
+
+vim.diagnostic.config({
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = "",
+      [vim.diagnostic.severity.WARN] = "",
+      [vim.diagnostic.severity.INFO] = "",
+      [vim.diagnostic.severity.HINT] = "",
+    },
+    texthl = {
+      [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+      [vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
+      [vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
+      [vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
+    },
+    numhl = {
+      [vim.diagnostic.severity.ERROR] = "",
+      [vim.diagnostic.severity.WARN] = "",
+      [vim.diagnostic.severity.INFO] = "",
+      [vim.diagnostic.severity.HINT] = "",
+    },
+    linehl = {
+      [vim.diagnostic.severity.ERROR] = "",
+      [vim.diagnostic.severity.WARN] = "",
+      [vim.diagnostic.severity.INFO] = "",
+      [vim.diagnostic.severity.HINT] = "",
+    },
+  },
+})
+
+
+
 
 --         █▀█ █▄█ ▀█▀ █░█ █▀█ █▄░█   █░░ ▄▀█ █▄░█ █▀▀ █░█ ▄▀█ █▀▀ █▀▀   █▀▄ █▀▀ █▄▄ █░█ █▀▀ █▀▀ █▀▀ █▀█
 --         █▀▀ ░█░ ░█░ █▀█ █▄█ █░▀█   █▄▄ █▀█ █░▀█ █▄█ █▄█ █▀█ █▄█ ██▄   █▄▀ ██▄ █▄█ █▄█ █▄█ █▄█ ██▄ █▀▄

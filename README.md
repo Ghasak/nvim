@@ -53,6 +53,11 @@
 
 ## ChangingLog
 
+### V.0.11 Release
+- [x] Fixed using `:checkhealth vim.deprecated` many API such as:
+    - [x]  `set terencoding=utf-8`
+    - [x]  `vim.lsp.get_active_clients` become `vim.lsp.get_clients`.
+
 ### V.0.10 Release
 
 - [x] Adding the following color highlights to the githubG.nvim our colorschme, which includes:
@@ -631,6 +636,8 @@ want to alter the color.
 ## Reference
 
 - [Markdown Badges](https://ileriayo.github.io/markdown-badges/)
+
+
 
 
 

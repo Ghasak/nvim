@@ -1,7 +1,7 @@
 local M = {}
 
 M.setup = function()
-  ---- *****************************************************************************************
+ ---- *****************************************************************************************
   ----                                Prerequisites settings supports
   ---- *****************************************************************************************
   -- Pre settings for Rust language servers
@@ -268,7 +268,8 @@ M.setup = function()
         cmd = { "sql-language-server", "up", "--method", "stdio" },
         root_dir = function(fname)
           return lspconfig.util.root_pattern ".git"(fname)
-            or lspconfig.util.path.dirname(fname)
+            -- or lspconfig.util.path.dirname(fname)
+            or vim.fs.dirname(fname)
             or lspconfig.util.root_pattern "config.yml"(fname)
             or vim.fn.getcwd()
         end,
