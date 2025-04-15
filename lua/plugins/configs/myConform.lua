@@ -41,8 +41,11 @@ M.config = function()
     -- },
     -- Define custom formatters here
     formatters = {
-      my_java_formatter = { command = "google-java-format", args = {"--replace"}},
-      -- ***************************
+      my_java_formatter = {
+        command = "google-java-format",
+        args = { "-" },
+        stdin = true,
+      }, -- ***************************
       --    Formatter for Rust
       -- ***************************
       my_rust_formatter = { command = "rustfmt", args = { "--edition=2021" } },
