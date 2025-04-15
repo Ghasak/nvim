@@ -116,6 +116,7 @@ them effectively:
   ```
 
 - To delete all marks, use:
+
   ```
   :delm!
   ```
@@ -125,7 +126,6 @@ them effectively:
 ```sh
 :delm! | delm A-Z0-9
 ```
-
 
 ### 5. **Navigating to Special Marks**
 
@@ -177,7 +177,6 @@ Marks can help reselect or jump back to the selected area quickly.
 These tips should help you use marks in Vim and Neovim to organize navigation
 within and across files efficiently!
 
-
 ## Note
 
 In Vim and Neovim, marks are typically associated with lowercase (`a-z`) and
@@ -200,6 +199,7 @@ These marks are managed by Vim and are not intended for manual setting or modifi
 **Setting and Using Marks:**
 
 - **Local Marks (within the same file):**
+
   - Set a mark: `m{letter}` (e.g., `ma` sets mark 'a').
   - Jump to the mark: `` `{letter}` `` (e.g., `` `a`` jumps to mark 'a').
 
@@ -207,6 +207,10 @@ These marks are managed by Vim and are not intended for manual setting or modifi
   - Set a mark: `m{UppercaseLetter}` (e.g., `mA` sets mark 'A').
   - Jump to the mark: `` `{UppercaseLetter}` `` (e.g., `` `A`` jumps to mark 'A').
 
-For more detailed information on using marks in Vim, you can refer to the [Vim Tips Wiki on Using Marks](https://vim.fandom.com/wiki/Using_marks).
+For more detailed information on using marks in Vim, you can refer to the [Vim
+Tips Wiki on Using Marks](https://vim.fandom.com/wiki/Using_marks).
 
-In summary, while Vim provides numerical marks for tracking positions in previously edited files, these are managed automatically and are not available for manual setting or global jumping. For user-defined marks, it's recommended to use lowercase and uppercase letters.
+In summary, while Vim provides numerical marks for tracking positions in
+previously edited files, these are managed automatically and are not available
+for manual setting or global jumping. For user-defined marks, it's recommended
+to use lowercase and uppercase letters.

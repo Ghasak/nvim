@@ -1,7 +1,7 @@
 local M = {}
 
 M.setup = function()
- ---- *****************************************************************************************
+  ---- *****************************************************************************************
   ----                                Prerequisites settings supports
   ---- *****************************************************************************************
   -- Pre settings for Rust language servers
@@ -52,6 +52,7 @@ M.setup = function()
       -- "r_language_server",
       "jqls",
       "cmake",
+      "jdtls", -- Using java here
     },
     ui = {
       -- Whether to automatically check for new versions when opening the :Mason window.
@@ -290,6 +291,13 @@ M.setup = function()
           end
         end,
       }
+    end,
+    -- <<< ADD jdtls HANDLER HERE >>>
+    ["jdtls"] = function()
+      -- Handled by nvim-jdtls setup below (if using nvim-jdtls)
+      -- If NOT using nvim-jdtls, you'd configure basic jdtls here,
+      -- but nvim-jdtls is highly recommended.
+      -- See Step 3 below for the recommended approach with nvim-jdtls.
     end,
   }
 end

@@ -28,7 +28,8 @@ M.config = function()
       rust = { "my_rust_formatter" },
       sql = { "my_sql_formatter" },
       toml = { "my_toml_formatter" },
-      latex = {"my_latex_formatter"},
+      latex = { "my_latex_formatter" },
+      java = { "my_java_formatter" },
     },
     -- ***************************
     -- Format on save feature
@@ -40,6 +41,7 @@ M.config = function()
     -- },
     -- Define custom formatters here
     formatters = {
+      my_java_formatter = { command = "google-java-format", args = {"--replace"}},
       -- ***************************
       --    Formatter for Rust
       -- ***************************
@@ -56,10 +58,9 @@ M.config = function()
       },
       my_toml_formatter = {
         command = "/opt/homebrew/bin/taplo",
-        args = {"format"},
+        args = { "format" },
         stdin = true,
       },
-
 
       my_latex_formatter = {
         command = "/opt/homebrew/bin/latexindent",

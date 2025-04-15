@@ -39,7 +39,7 @@ adapters. Please note that this table is based on data available up to January
 | ------------ | ----------------- | ------------------------ | -------------------------------------------------------------- | ---------------- |
 | OpenDebugAD7 | C/CPP             | dap_cpp_OpenDebugAD7.lua | binary location, Automatic server triggered, breakpoint banner | cppdbg           |
 | lldb-vscode  | C/CPP             | dap_cpp_lldb_vscode.lua  | binary location, Automatic executable, breakingpoint banner    | lldb-vscode      |
-| Codelldb     |                   |
+| Codelldb     |                   |                          |                                                                |                  |
 
 ### Table 1: Adapter Details
 

@@ -380,20 +380,19 @@ return {
     config = function()
       require("trouble").setup {}
     end,
-
   },
   -- markdown-preview using :markdown Preview
--- install with yarn or npm
-{
-  "iamcco/markdown-preview.nvim",
-  cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-  build = "cd app && yarn install",
-  init = function()
-    vim.g.mkdp_filetypes = { "markdown" }
-  end,
-  ft = { "markdown" },
+  -- install with yarn or npm
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    build = "cd app && yarn install",
+    init = function()
+      vim.g.mkdp_filetypes = { "markdown" }
+    end,
+    ft = { "markdown" },
     dependencies = { "zhaozg/vim-diagram", "aklt/plantuml-syntax" },
-},
+  },
 
   -- {
   --   "iamcco/markdown-preview.nvim",
@@ -436,6 +435,17 @@ return {
       { "nvim-treesitter/nvim-treesitter" }, -- optional
       { "kyazdani42/nvim-web-devicons" }, -- optional
     },
+
+    -- Java Enhancements (Highly Recommended)
+    {
+      "mfussenegger/nvim-jdtls",
+      ft = "java", -- Lazy-load on opening Java files
+      dependencies = { "neovim/nvim-lspconfig", "mfussenegger/nvim-dap" },
+      -- config = function()
+      --   -- This configuration relies on nvim-jdtls to configure lspconfig for jdtls
+      --   -- require("plugins.configs.lsp.custom_servers.javaConfig").config()
+      -- end,
+    },
   }, -- lsp stuff
   {
     "williamboman/mason.nvim",
@@ -473,6 +483,7 @@ return {
       require("plugins.configs.mason_lspconfig_nvim").setup()
     end,
   }, -- Adding lsp signature for nvim
+
   {
     "ray-x/lsp_signature.nvim",
     event = "InsertEnter",
