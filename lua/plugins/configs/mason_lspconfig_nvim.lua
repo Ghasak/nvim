@@ -53,6 +53,22 @@ M.setup = function()
       "jqls",
       "cmake",
       "jdtls", -- Using java here
+      "java-test",
+      "bash-debug-adapter",
+      "black",
+      "cmake-language-server",
+      "codelldb",
+      "cpptools",
+      "debugpy",
+      "isort",
+      "java-debug-adapter",
+      "jq-lsp",
+      "lua-language-server",
+      "prettierd",
+      "shellcheck",
+      "shfmt",
+      "stylua",
+      "vscode-java-decompiler",
     },
     ui = {
       -- Whether to automatically check for new versions when opening the :Mason window.
@@ -298,6 +314,7 @@ M.setup = function()
       -- If NOT using nvim-jdtls, you'd configure basic jdtls here,
       -- but nvim-jdtls is highly recommended.
       -- See Step 3 below for the recommended approach with nvim-jdtls.
+      -- handled by ../../../ftplugin/java.lua
     end,
   }
 end

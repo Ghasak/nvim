@@ -1,40 +1,12 @@
----############################################################################
----#                                                                          #
----#                         ░▀▀█░█▀█░█░█░█▀█░░░░                             #
----#                         ░░░█░█▀█░▀▄▀░█▀█░░░░                             #
----#                         ░▀▀░░▀░▀░░▀░░▀░▀░░░░                             #
----#        ░█░░░█▀█░█▀█░█▀▀░█░█░█▀█░█▀▀░█▀▀░░░█▀▀░█▀▀░█▀▄░█░█░█▀▀░█▀▄░░░░    #
----#        ░█░░░█▀█░█░█░█░█░█░█░█▀█░█░█░█▀▀░░░▀▀█░█▀▀░█▀▄░▀▄▀░█▀▀░█▀▄░░░░    #
----#        ░▀▀▀░▀░▀░▀░▀░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀▀▀░░░▀▀▀░▀▀▀░▀░▀░░▀░░▀▀▀░▀░▀░░░░    #
----#             ░█▀▀░█▀█░█▀█░█▀▀░▀█▀░█▀▀░░░░░░█▀▀░▀█▀░█░░░█▀▀                #
----#             ░█░░░█░█░█░█░█▀▀░░█░░█░█░░░░░░█▀▀░░█░░█░░░█▀▀                #
----#             ░▀▀▀░▀▀▀░▀░▀░▀░░░▀▀▀░▀▀▀░▀░░░░▀░░░▀▀▀░▀▀▀░▀▀▀                #
----#                                                                          #
----############################################################################
--- Created with: https://budavariam.github.io/asciiart-text/
--- Using Pagga font
--- :MasonInstall java-test
--- :MasonInstall java-debug-adapter
--- :MasonInstall jdtls
---
 local jdtls = require "jdtls"
 local home = os.getenv "HOME"
 
 -- Path to Java 17+ (Adjust if necessary)
--- local java_home = home .. "/.sdkman/candidates/java/17.0.10-tem"
--- local java_home = home .. "/.sdkman/candidates/java/17.0.10-zulu"
-local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
-local java_home = home .. "/.sdkman/candidates/java/21.0.2-zulu"
+-- local java_17_plus_home = home .. "/.sdkman/candidates/java/17.0.10-tem"
+-- local java_17_plus_home = home .. "/.sdkman/candidates/java/17.0.10-zulu"
+local java_17_plus_home = home .. "/.sdkman/candidates/java/21.0.2-zulu"
 
 local workspace_dir = home .. "/.cache/jdtls-workspaces/" .. vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
-
--- Needed for debugging
-local bundles = {
-  vim.fn.glob(home .. "/.local/share/nvim/mason/share/java-debug-adapter/com.microsoft.java.debug.plugin.jar"),
-}
-
--- Needed for running/debugging unit tests
-vim.list_extend(bundles, vim.split(vim.fn.glob(home .. "/.local/share/nvim/mason/share/java-test/*.jar", 1), "\n"))
 
 -- Get JDTLS install path robustly
 local jdtls_install_path
@@ -144,18 +116,18 @@ end
 -- The actual jdtls configuration
 local config = {
   cmd = {
-    java_home .. "/bin/java",
+    java_17_plus_home .. "/bin/java",
     "-Declipse.application=org.eclipse.jdt.ls.core.id1",
     "-Dosgi.bundles.defaultStartLevel=4",
     "-Declipse.product=org.eclipse.jdt.ls.core.product",
     "-Dlog.protocol=true",
     "-Dlog.level=ALL",
-    "-Xms1g",
-    "--add-modules=ALL-SYSTEM",
-    "--add-opens",
-    "java.base/java.util=ALL-UNNAMED",
-    "--add-opens",
-    "java.base/java.lang=ALL-UNNAMED",
+    -- "-Xms1g",
+    -- "--add-modules=ALL-SYSTEM",
+    -- "--add-opens",
+    -- "java.base/java.util=ALL-UNNAMED",
+    -- "--add-opens",
+    -- "java.base/java.lang=ALL-UNNAMED",
     "-jar",
     jdtls_launcher,
     "-configuration",
@@ -164,24 +136,16 @@ local config = {
     workspace_dir,
   },
   root_dir = require("jdtls.setup").find_root { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" },
-
   on_attach = require("plugins.configs.lsp.lsp_attach").custom_attach,
   capabilities = require("plugins.configs.lsp.lsp_capabilities").capabilities,
   handlers = require("plugins.configs.lsp.lsp_handlers").handlers,
-
   settings = {
     java = {
-      home = java_home,
+      home = java_17_plus_home,
       eclipse = { downloadSources = true },
       configuration = {
         updateBuildConfiguration = "interactive",
-        runtimes = {
-          { name = "JavaSE-21", path = home .. "/.sdkman/candidates/java/21.0.2-zulu", default = true },
-          { name = "JavaSE-17", path = home .. "/.sdkman/candidates/java/17.0.10-tem" },
-          { name = "JavaSE-17", path = home .. "/.sdkman/candidates/java/17.0.10-zulu" },
-          { name = "JavaSE-18", path = home .. "/.sdkman/candidates/java/18.0.1-zulu" },
-          { name = "JavaSE-1.8", path = home .. "/.sdkman/candidates/java/8.0.332-zulu" },
-        },
+        runtimes = { { name = "JavaSE-17", path = java_17_plus_home } }, -- Configure other JDKs if needed
       },
       maven = { downloadSources = true },
       implementationsCodeLens = { enabled = true },
@@ -189,13 +153,6 @@ local config = {
       references = { includeDecompiledSources = true },
     },
     signatureHelp = { enabled = true },
-    format = {
-      enabled = true,
-      -- Formatting works by default, but you can refer to a specific file/URL if you choose
-      -- settings = {
-      --   url = "https://github.com/google/styleguide/blob/gh-pages/intellij-java-google-style.xml",
-      --   profile = "GoogleStyle",
-    },
     completion = {
       favoriteStaticMembers = {
         "org.hamcrest.MatcherAssert.assertThat",
@@ -208,18 +165,6 @@ local config = {
       },
       importOrder = { "java", "javax", "com", "org" },
     },
-    sources = {
-      organizeImports = {
-        starThreshold = 9999,
-        staticStarThreshold = 9999,
-      },
-    },
-    codeGeneration = {
-      toString = {
-        template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
-      },
-      useBlocks = true,
-    },
   },
   init_options = {
     bundles = bundles, -- Pass the collected bundles for debug adapter, etc.
@@ -229,41 +174,51 @@ local config = {
 
 -- Start the jdtls language server
 jdtls.start_or_attach(config)
--- Needed for debugging
-config["on_attach"] = function(client, bufnr)
-  jdtls.setup_dap { hotcodereplace = "auto" }
-  require("jdtls.dap").setup_dap_main_class_configs()
-end
 
---Add keymaps specific to Java/jdtls after attach (optional, but useful)
-vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("UserLspJavaSettings", { clear = true }),
-  pattern = "*.java",
-  callback = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    if client and client.name == "jdtls" then
-      vim.keymap.set("n", "<leader>co", jdtls.organize_imports, { buffer = args.buf, desc = "JDTLS Organize Imports" })
-      vim.keymap.set("n", "<leader>cv", jdtls.extract_variable, { buffer = args.buf, desc = "JDTLS Extract Variable" })
-      vim.keymap.set("v", "<leader>cv", function()
-        jdtls.extract_variable(true)
-      end, { buffer = args.buf, desc = "JDTLS Extract Variable (Visual)" })
-      vim.keymap.set("n", "<leader>cc", jdtls.extract_constant, { buffer = args.buf, desc = "JDTLS Extract Constant" })
-      vim.keymap.set("v", "<leader>cc", function()
-        jdtls.extract_constant(true)
-      end, { buffer = args.buf, desc = "JDTLS Extract Constant (Visual)" })
-      vim.keymap.set("v", "<leader>cm", function()
-        jdtls.extract_method(true)
-      end, { buffer = args.buf, desc = "JDTLS Extract Method (Visual)" })
-      vim.keymap.set("n", "<leader>djc", function()
-        jdtls.compile()
-      end, { buffer = args.buf, desc = "JDTLS Compile" })
-      vim.keymap.set("n", "<leader>djt", function()
-        jdtls.test_class()
-      end, { buffer = args.buf, desc = "JDTLS Debug Test Class" })
-      vim.keymap.set("n", "<leader>djm", function()
-        jdtls.test_nearest_method()
-      end, { buffer = args.buf, desc = "JDTLS Debug Test Method" })
-      require("jdtls.dap").setup_dap_main_class_configs()
-    end
-  end,
-})
+-- -- Add keymaps specific to Java/jdtls after attach (optional, but useful)
+-- vim.api.nvim_create_autocmd("LspAttach", {
+--   group = vim.api.nvim_create_augroup("UserLspJavaSettings", { clear = true }),
+--   pattern = "*.java",
+--   callback = function(args)
+--     local client = vim.lsp.get_client_by_id(args.data.client_id)
+--     if client and client.name == "jdtls" then
+--       vim.keymap.set(
+--         "n",
+--         "<leader>co",
+--         jdtls.organize_imports,
+--         { buffer = args.buf, desc = "JDTLS Organize Imports" }
+--       )
+--       vim.keymap.set(
+--         "n",
+--         "<leader>cv",
+--         jdtls.extract_variable,
+--         { buffer = args.buf, desc = "JDTLS Extract Variable" }
+--       )
+--       vim.keymap.set("v", "<leader>cv", function()
+--         jdtls.extract_variable(true)
+--       end, { buffer = args.buf, desc = "JDTLS Extract Variable (Visual)" })
+--       vim.keymap.set(
+--         "n",
+--         "<leader>cc",
+--         jdtls.extract_constant,
+--         { buffer = args.buf, desc = "JDTLS Extract Constant" }
+--       )
+--       vim.keymap.set("v", "<leader>cc", function()
+--         jdtls.extract_constant(true)
+--       end, { buffer = args.buf, desc = "JDTLS Extract Constant (Visual)" })
+--       vim.keymap.set("v", "<leader>cm", function()
+--         jdtls.extract_method(true)
+--       end, { buffer = args.buf, desc = "JDTLS Extract Method (Visual)" })
+--       vim.keymap.set("n", "<leader>djc", function()
+--         jdtls.compile()
+--       end, { buffer = args.buf, desc = "JDTLS Compile" })
+--       vim.keymap.set("n", "<leader>djt", function()
+--         jdtls.test_class()
+--       end, { buffer = args.buf, desc = "JDTLS Debug Test Class" })
+--       vim.keymap.set("n", "<leader>djm", function()
+--         jdtls.test_nearest_method()
+--       end, { buffer = args.buf, desc = "JDTLS Debug Test Method" })
+--       require("jdtls.dap").setup_dap_main_class_configs()
+--     end
+--   end,
+-- })
