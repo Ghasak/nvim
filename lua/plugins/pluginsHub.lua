@@ -426,6 +426,7 @@ return {
     --event = "BufReadPre",
     branch = "main",
     event = "InsertEnter",
+    -- event = "BufEnter",
     -- ft = {'c', 'cpp', 'lua', 'rust', 'go', 'python', 'bash'},
     -- event = 'LspAttach',
     config = function()

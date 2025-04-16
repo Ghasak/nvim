@@ -16,9 +16,16 @@
 -- :MasonInstall java-test
 -- :MasonInstall java-debug-adapter
 -- :MasonInstall jdtls
+-- ○ lua-async-await
+-- ○ nvim-java
+-- ○ nvim-java-core
+-- ○ nvim-java-dap
+-- ○ nvim-java-refactor
+-- ○ nvim-java-test
+-- ○ spring-boot.nvim
 --
 local jdtls = require "jdtls"
-local home = os.getenv "HOME"
+local home = vim.env.HOME -- Get the home directory
 
 -- Path to Java 17+ (Adjust if necessary)
 -- local java_home = home .. "/.sdkman/candidates/java/17.0.10-tem"
@@ -107,7 +114,7 @@ else
 end
 
 -- Find bundles using vim.fn.glob
-local bundles = {} -- Initialize empty table for bundles
+-- local bundles = {} -- Initialize empty table for bundles
 
 -- Find Debug bundles
 if dap_install_path ~= "" then
@@ -156,6 +163,12 @@ local config = {
     "java.base/java.util=ALL-UNNAMED",
     "--add-opens",
     "java.base/java.lang=ALL-UNNAMED",
+    -- Add Lombok agent
+    "-javaagent:"
+      .. home
+      .. "/.m2/repository/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar",
+    "-classpath",
+    home .. "/.m2/repository/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar",
     "-jar",
     jdtls_launcher,
     "-configuration",
@@ -172,6 +185,13 @@ local config = {
   settings = {
     java = {
       home = java_home,
+      import = {
+        gradle = {
+          wrapper = {
+            enabled = true,
+          },
+        },
+      },
       eclipse = { downloadSources = true },
       configuration = {
         updateBuildConfiguration = "interactive",
@@ -183,7 +203,23 @@ local config = {
           { name = "JavaSE-1.8", path = home .. "/.sdkman/candidates/java/8.0.332-zulu" },
         },
       },
-      maven = { downloadSources = true },
+      maven = { downloadSources = true, userSettings = home .. "/.m2/settings.xml" },
+      annotationProcessing = {
+        enabled = true,
+        profile = "default",
+        profiles = {
+          default = {
+            sourceLevel = "21",
+            annotationProcessorPaths = {
+              {
+                groupId = "org.projectlombok",
+                artifactId = "lombok",
+                version = "1.18.34",
+              },
+            },
+          },
+        },
+      },
       implementationsCodeLens = { enabled = true },
       referencesCodeLens = { enabled = true },
       references = { includeDecompiledSources = true },
@@ -227,12 +263,15 @@ local config = {
   },
 }
 
--- Start the jdtls language server
-jdtls.start_or_attach(config)
+require("lspsaga").setup(require "plugins.configs.mySaga")
 -- Needed for debugging
 config["on_attach"] = function(client, bufnr)
+  -- Your existing dap setup
   jdtls.setup_dap { hotcodereplace = "auto" }
   require("jdtls.dap").setup_dap_main_class_configs()
+  -- Include the original on_attach from your lsp config
+  require("plugins.configs.lsp.lsp_attach").custom_attach(client, bufnr)
+  -- print("Hover supported: ", client.server_capabilities.hoverProvider)
 end
 
 --Add keymaps specific to Java/jdtls after attach (optional, but useful)
@@ -267,3 +306,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
   end,
 })
+
+-- Start the jdtls language server
+jdtls.start_or_attach(config)

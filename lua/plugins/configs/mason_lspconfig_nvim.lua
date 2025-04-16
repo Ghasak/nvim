@@ -40,35 +40,18 @@ M.setup = function()
   end
 
   -- Extension to bridge mason.nvim with the lspconfig plugin
-  mason_lspconfig.setup {
-    -- A list of servers to automatically install if they're not already installed.,
+  require("mason-lspconfig").setup {
+    -- A list of LSP servers to automatically install if they're not already installed.
     ensure_installed = {
-      "pyright",
-      "lua_ls",
-      "rust_analyzer",
-      --"ts_ls",
-      "texlab",
-      "clangd", -- "dockerls", "docker_compose_language_service", "jsonls", "r_language_server", "vimls"
-      -- "r_language_server",
-      "jqls",
-      "cmake",
-      "jdtls", -- Using java here
-      "java-test",
-      "bash-debug-adapter",
-      "black",
-      "cmake-language-server",
-      "codelldb",
-      "cpptools",
-      "debugpy",
-      "isort",
-      "java-debug-adapter",
-      "jq-lsp",
-      "lua-language-server",
-      "prettierd",
-      "shellcheck",
-      "shfmt",
-      "stylua",
-      "vscode-java-decompiler",
+      "pyright", -- Python LSP
+      "lua_ls", -- Lua LSP
+      "rust_analyzer", -- Rust LSP
+      "texlab", -- LaTeX LSP
+      "clangd", -- C/C++ LSP
+      "jdtls", -- Java LSP
+      "cmake", -- CMake LSP
+      "jqls", -- JQ LSP
+      -- "java-language-server",
     },
     ui = {
       -- Whether to automatically check for new versions when opening the :Mason window.
@@ -77,22 +60,36 @@ M.setup = function()
       border = "double",
     },
   }
-  -- 3.) >> Mason-tool-installer: installing speicific linterning and tools for specific lps.
-  -- Tools for serers
+
+  -- Mason-tool-installer: installing specific linters, formatters, debug adapters, and other tools
   require("mason-tool-installer").setup {
     ensure_installed = {
-      "stylua",
-      "codelldb",
-      "shfmt",
-      "shellcheck",
-      "black",
-      "isort",
-      "prettierd",
+      -- Formatters
+      "stylua", -- Lua formatter
+      "shfmt", -- Shell formatter
+      "black", -- Python formatter
+      "isort", -- Python import sorter
+      "prettierd", -- Multi-language formatter
+
+      -- Linters
+      "shellcheck", -- Shell script linter
+
+      -- Debug Adapters
+      "codelldb", -- C/C++/Rust debug adapter
+      "debugpy", -- Python debug adapter
+      "java-debug-adapter", -- Java debug adapter
+      "bash-debug-adapter", -- Bash debug adapter
+
+      -- Java-specific tools
+      "java-test", -- Java test runner for JUnit
+      "vscode-java-decompiler", -- Java decompiler
+
+      -- Other tools
+      "cpptools", -- C/C++ debug tools
     },
     auto_update = false,
     run_on_start = true,
   }
-
   -- 4.) >> lspconfig main loader for the lsp
   local lspconfig_status_ok, lspconfig = pcall(require, "lspconfig")
   if not lspconfig_status_ok then
