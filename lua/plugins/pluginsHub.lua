@@ -485,8 +485,7 @@ return {
     end,
   },
 
-
---[[
+  --[[
   🛠️ Category: Developer Tools / Learning Aids
 
   🔌 Plugin: popfix
@@ -500,9 +499,9 @@ return {
   Acts as a UI dependency for other developer plugins like `nvim-cheat.sh`.
   You usually don’t interact with it directly.
 ]]
-{ "RishabhRD/popfix", event = "InsertEnter" },
+  { "RishabhRD/popfix", event = "InsertEnter" },
 
---[[
+  --[[
   🛠️ Category: Developer Tools / Learning Aids
 
   🔌 Plugin: nvim-cheat.sh
@@ -518,9 +517,89 @@ return {
   💡 Tip:
   Run `:CheatSH` followed by a language and query, e.g. `:CheatSH lua table`
 ]]
-{ "RishabhRD/nvim-cheat.sh", event = "InsertEnter" },
+  { "RishabhRD/nvim-cheat.sh", event = "InsertEnter" },
 
+  {
+    "linrongbin16/lsp-progress.nvim",
+    event = "LspAttach",
+    config = function()
+      require("lsp-progress").setup {
+        client_format = function(client_name, spinner, series_messages)
+          for _, series in ipairs(series_messages) do
+            if not series.done then
+              return spinner
+            end
+          end
+          return "✓" -- Optional: return checkmark when all tasks are done
+        end,
+        series_format = function(title, message, percentage, done)
+          return { msg = "", done = done } -- Suppress message text
+        end,
+      }
 
+      -- 👇 Add this *here*, after setup()
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "LspProgressStatusUpdated",
+        callback = require("lualine").refresh,
+      })
+    end,
+  },
+
+  {
+    "nvim-lualine/lualine.nvim",
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+      "linrongbin16/lsp-progress.nvim",
+    },
+    config = function()
+      require("lualine").setup {
+        options = {
+          icons_enabled = true,
+          theme = "auto",
+          component_separators = { left = "", right = "" },
+          section_separators = { left = "", right = "" },
+          disabled_filetypes = {
+            statusline = {},
+            winbar = {},
+          },
+          ignore_focus = {},
+          always_divide_middle = true,
+          always_show_tabline = true,
+          globalstatus = false,
+          refresh = {
+            statusline = 100,
+            tabline = 100,
+            winbar = 100,
+          },
+        },
+        sections = {
+          lualine_a = { "mode" },
+          lualine_b = { "branch", "diff", "diagnostics" },
+          lualine_c = { "filename" },
+          lualine_x = { "encoding", "fileformat", "filetype" },
+          lualine_y = {
+            -- Shows LSP progress (animated spinner + progress message)
+            function()
+              return require("lsp-progress").progress()
+            end,
+          },
+          lualine_z = { "location" },
+        },
+        inactive_sections = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = { "filename" },
+          lualine_x = { "location" },
+          lualine_y = {},
+          lualine_z = {},
+        },
+        tabline = {},
+        winbar = {},
+        inactive_winbar = {},
+        extensions = {},
+      }
+    end,
+  },
 
   ---------------- END OF PLUGINS SETTING -------------------------
 }
