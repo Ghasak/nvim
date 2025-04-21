@@ -1,5 +1,5 @@
 local init_modules = {
-    'settings.options', 
+    'settings.options',
     'settings.special_color_highlight',
     'settings.myQuickTerminal'
 }

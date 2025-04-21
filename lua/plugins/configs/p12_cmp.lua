@@ -1,8 +1,24 @@
-
+----------------------------------------------------------------------------------------------------------------------
 -- [Notice] The CMP only requests a lua-file to be associated with the lsp kind icons,  which is lspkind_icons.lua
 -- Check for more details:  https://github.com/LunarVim/Neovim-from-scratch/blob/05-completion/lua/user/cmp.lua
 ----------------------------------------------------------------------------------------------------------------------
 local M = {}
+
+--------------------------------------------------------------------
+local iconsx = require "plugins.configs.icons"
+
+local function get_icon(name)
+  return iconsx.kind[name]
+    -- or iconsx.type[name]
+    -- or iconsx.ui[name]
+    -- or iconsx.git[name]
+    -- or iconsx.documents[name]
+    -- or iconsx.diagnostics[name]
+    or iconsx.misc[name]
+    or "?"
+end
+
+--------------------------------------------------------------------
 
 function M.setup()
   ---@diagnostic disable-next-line: unused-local
@@ -37,22 +53,6 @@ function M.setup()
   vim.api.nvim_set_hl(0, "CmpItemKindEmoji", { fg = "#2d333b", bg = "#FDE030" })
   vim.api.nvim_set_hl(0, "CmpItemKindCrate", { fg = "#2d333b", bg = "#F64D00" })
   vim.api.nvim_set_hl(0, "CmpItemKindTabnine", { fg = "#2d333b", bg = "#F0D2D1" })
-
-  -- contorl over the main frame of auto-complete and documentation
-  -- vim.api.nvim_set_hl(0, "MyNormal", { bg = "#2d333b", fg = "#aaafff" })
-  -- vim.api.nvim_set_hl(0, "MyFloatBoarder", { bg = "#2d333b", fg = "#B2C9AB" })
-  -- vim.api.nvim_set_hl(0, "MyCursorLine", { bg = "#B2C9AB", fg = "#2d333b", bold = true })
-
-  -- control over the auto-complete components
-  -- vim.api.nvim_set_hl(0, "CmpItemAbbr", { fg = "#aaafff", bg = "NONE" })
-  -- vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { fg = "#EEEDBF", bg = "NONE" })
-  -- vim.api.nvim_set_hl(0, "CmpItemAbbrMatchFuzzy", { fg = "#ec5300", bg = "NONE" })
-  --
-  -- Contorl over the icons
-  -- complete list can be found here:
-  -- https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance
-  -- or here,
-  -- "$HOME/.local/share/nvim/site/pack/packer/opt/lspkind-nvim"
   vim.api.nvim_set_hl(0, "CmpItemKindClass", { fg = "#2d333b", bg = "#B2C9AB" })
   vim.api.nvim_set_hl(0, "CmpItemKindField", { fg = "#2d333b", bg = "#F4D35E" })
   vim.api.nvim_set_hl(0, "CmpItemKindKeyword", { fg = "#2d333b", bg = "#9EA3B0" })
@@ -82,7 +82,23 @@ function M.setup()
 
   -- TabNine
   local tabnine = require "cmp_tabnine.config"
-  tabnine:setup { max_lines = 1000, max_num_results = 20, sort = true }
+
+  -- tabnine:setup { max_lines = 1000, max_num_results = 20, sort = true }
+
+  tabnine:setup {
+    max_lines = 1000,
+    max_num_results = 20,
+    sort = true,
+    run_on_every_keystroke = true,
+    snippet_placeholder = "..",
+    ignored_file_types = {
+      -- default is not to ignore
+      -- uncomment to ignore in lua:
+      -- lua = true
+    },
+    show_prediction_strength = true,
+    min_percent = 0,
+  }
 
   -- nvim-cmp setup
   cmp.setup {
@@ -94,10 +110,10 @@ function M.setup()
       { name = "nvim_lua" },
       { name = "ultisnips" },
       { name = "vsnip" },
+      { name = "cmp_tabnine" },
       { name = "look" },
       { name = "neorg" },
       { name = "path" },
-      { name = "cmp_tabnine" },
       { name = "treesitter" },
       { name = "calc" },
       { name = "neosnippet" },
@@ -116,7 +132,11 @@ function M.setup()
 
     snippet = {
       expand = function(args)
-        require("luasnip").lsp_expand(args.body)
+        vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+        require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
+        require("snippy").expand_snippet(args.body) -- For `snippy` users.
+        vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+        vim.snippet.expand(args.body) -- For native neovim snippets (Neovim v0.10+)
       end,
     },
 
@@ -134,36 +154,19 @@ function M.setup()
 
     formatting = {
       fields = { "kind", "abbr", "menu" },
+
+      -- ------------------------------------------------------------------------------------
+
       format = function(entry, vim_item)
-        -- Kind icons
-        -- vim_item.kind = kind_icons[vim_item.kind]
-
-        -- load lspkind icons
-        -- https://github.com/onsails/lspkind.nvim
-        -- Icons for the language server, should be loaded here
-        -- vim_item.kind = string.format("%s %s", require(
-        --   "plugins.configs.lspkind_icons").icons[vim_item.kind],
-        --   vim_item.kind)
-
-        -- vim_item.kind = string.format("%s %s", vim_item.kind,
-        --   require("plugins.configs.lspkind_icons").icons[vim_item.kind])
-
-        -- If you use this , the retun should be vim_item.kind, a text next to the icon will appear.
-        -- vim_item.kind = string.format("%s %s", require("plugins.configs.lspkind_icons").icons[vim_item.kind],
-        --   vim_item.kind)
-
-        -- This is the core of getting the icons for our current buffer
-        -- local kind = require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
-        -- local strings = vim.split(kind.kind, "%s", { trimempty = true })
-        -- kind.kind = " " .. strings[1] .. " "
-        -- kind.menu = "    (" .. strings[2] .. ")"
-
         -- Trimming the abbrivation for the functions (text) that will appear.
         vim_item.abbr = vim_item.abbr:match "[^(]+"
-
         -- Removing the duplicates
         --local kind = vim_item.kind
-        vim_item.kind = " " .. (require("plugins.configs.lspkind_icons").icons[vim_item.kind] or "?") .. " "
+        --vim_item.kind = " " .. (require("plugins.configs.lspkind_icons").icons[vim_item.kind] or "?") .. " "
+        -- vim_item.kind = " " .. (require("plugins.configs.lspkind_icons").icons[vim_item.kind] or "?") .. " "
+
+        vim_item.kind = " " .. get_icon(vim_item.kind) .. " "
+
         local source = entry.source.name
         vim_item.menu = "(" .. source .. ")"
 
@@ -192,12 +195,13 @@ function M.setup()
           -- nvim_lsp = "[LSP]",
           nvim_lsp = "[󰒍 LSP]",
           nvim_lua = "[  Lua]",
+          cmp_tabnine = "[  TabNine]",
           buffer = "[﬘  BUF]",
           ultisnips = "[   UltiSnips]",
+          name = "[   vsnip]", -- For vsnip users.
           luasnip = "[  LuaSnip]",
           latex_symbols = "[  Latex]",
           neorg = "[  Neorg]",
-          cmp_tabnine = "[  TabNine]",
           look = "[ Look]",
           path = "[  Path]",
           spell = "[󰓆 Spell]", -- This will be trigger once you allow spell-checking using F6, dont use vim.opt.spell = true, as it will be triggered everytime cmp loaded
@@ -208,6 +212,7 @@ function M.setup()
         return vim_item
         -- return kind
       end,
+      -- ------------------------------------------------------------------------------------
     },
     mapping = {
       ["<C-p>"] = cmp.mapping.select_prev_item(),
@@ -263,7 +268,6 @@ function M.setup()
           fallback()
         end
       end, { "i", "s" }),
-
     },
 
     confirm_opts = { behavior = cmp.ConfirmBehavior.Replace, select = false },

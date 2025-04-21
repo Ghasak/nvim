@@ -1,15 +1,15 @@
 return {
-  --   {
-  --   'projekt0n/github-nvim-theme',
-  --   name = 'github-theme',
+  -- {
+  --   "projekt0n/github-nvim-theme",
+  --   name = "github-theme",
   --   lazy = false, -- make sure we load this during startup if it is your main colorscheme
   --   priority = 1000, -- make sure to load this before all the other start plugins
   --   config = function()
-  --     require('github-theme').setup({
+  --     require("github-theme").setup {
   --       -- ...
-  --     })
+  --     }
   --
-  --     vim.cmd('colorscheme github_dark')    -- github_light
+  --     vim.cmd "colorscheme github_dark" -- github_light
   --   end,
   -- },
   --
@@ -211,9 +211,16 @@ return {
       "hrsh7th/cmp-calc",
       "f3fora/cmp-spell",
       "hrsh7th/cmp-emoji",
+      "tzachar/cmp-tabnine",
       {
         "L3MON4D3/LuaSnip",
-        dependencies = { "friendly-snippets", "vim-snippets" },
+        dependencies = {
+          "friendly-snippets",
+          "vim-snippets",
+          "hrsh7th/vim-vsnip",
+          "hrsh7th/vim-vsnip-integ",
+          "dcampos/nvim-snippy",
+        },
         --    config = function()
         --      require("config.snip").setup()
         --    end,
@@ -228,19 +235,28 @@ return {
   }, -- TabNine auto-compleletions
   {
     "tzachar/cmp-tabnine",
-    lazy = true,
+    -- lazy = true,
     event = "InsertEnter",
     build = "./install.sh",
     dependencies = { "hrsh7th/nvim-cmp", "cmp-buffer" },
-  }, -- Indent
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    lazy = true,
-    event = "InsertEnter",
-    config = function()
-      require("plugins.configs.p13_indent_line").setup()
-    end,
   },
+  -- -- Indent
+  -- {
+  --   "lukas-reineke/indent-blankline.nvim",
+  --   lazy = true,
+  --   event = "InsertEnter",
+  --   config = function()
+  --     require("plugins.configs.p13_indent_line").setup()
+  --   end,
+  -- },
+  -- -- better navigations with lsp
+  -- {
+  --   event = "VeryLazy",
+  --   "dnlhc/glance.nvim",
+  --   config = function()
+  --     require("plugins.configs.myGlance").settings()
+  --   end,
+  -- }, -- Use gD, gR , gY, gM - Nvim v. 0.11.0 gD is not working
 
   --[[
   🔌 Plugin: mason.nvim for language server
@@ -284,7 +300,8 @@ return {
       { "williamboman/mason-lspconfig.nvim" },
       { "WhoIsSethDaniel/mason-tool-installer.nvim" },
       { "saghen/blink.cmp" },
-      -- { "dnlhc/glance.nvim" },
+      -- { "dnlhc/glance.nvim" }, -- better jump to definition similar to vscode.
+      { "folke/snacks.nvim" },
     },
     -- This will be initailized at first
     init = function()
@@ -394,7 +411,8 @@ return {
   Also confirms when a language server successfully attaches to a buffer.
 
   🧠 Note:
-  Automatically hooks into the LSP client — no extra setup required per server.
+  1. Automatically hooks into the LSP client — no extra setup required per server.
+  2. To stop for a given lsp buffer use: :Fidget suppress
 ]]
 
   {
@@ -402,6 +420,16 @@ return {
     event = "LspAttach",
     config = function()
       require("fidget").setup {
+        progress = {
+          ignore = {
+            -- suppress only the proc‑macro path you circled
+            function(msg)
+              return msg.lsp_client.name == "rust_analyzer"
+                and msg.title:match "^/" -- absolute file path
+                and msg.message:match "Loading proc‑macros…" -- “Loading proc‑macros…”
+            end,
+          },
+        },
         text = {
           spinner = "dots",
           done = "✔",
@@ -431,6 +459,18 @@ return {
       require("plugins.configs.p14_myConform").config()
     end,
   },
+
+  -- Context.vim: A vim plugin that shows the context of the currently visible buffer context.
+  -- It's supposed to work on a wide range of file types, but is probably most suseful when looking at source code files.
+  -- https://github.com/wellle/context.vim  {nvim already implemented this plugin in the lsp directly}
+  {
+    "rcarriga/nvim-notify",
+    event = "VeryLazy",
+    config = function()
+      require "plugins.configs.myNotify"
+    end,
+  },
+  -- Navic for winbar, not needed anymore
 
   -- Adding notification for nvim
   {
@@ -545,61 +585,774 @@ return {
     end,
   },
 
+  -- Status line
   {
     "nvim-lualine/lualine.nvim",
     dependencies = {
-      "nvim-tree/nvim-web-devicons",
-      "linrongbin16/lsp-progress.nvim",
+      -- { "nvim-treesitter" },
+      { "nvim-web-devicons" },
+      "linrongbin16/lsp-progress.nvim", -- LSP loading progress
     },
+    --event = "VimEnter",
+    event = "VeryLazy",
     config = function()
-      require("lualine").setup {
-        options = {
-          icons_enabled = true,
-          theme = "auto",
-          component_separators = { left = "", right = "" },
-          section_separators = { left = "", right = "" },
-          disabled_filetypes = {
-            statusline = {},
-            winbar = {},
-          },
-          ignore_focus = {},
-          always_divide_middle = true,
-          always_show_tabline = true,
-          globalstatus = false,
-          refresh = {
-            statusline = 100,
-            tabline = 100,
-            winbar = 100,
-          },
-        },
-        sections = {
-          lualine_a = { "mode" },
-          lualine_b = { "branch", "diff", "diagnostics" },
-          lualine_c = { "filename" },
-          lualine_x = { "encoding", "fileformat", "filetype" },
-          lualine_y = {
-            -- Shows LSP progress (animated spinner + progress message)
-            function()
-              return require("lsp-progress").progress()
-            end,
-          },
-          lualine_z = { "location" },
-        },
-        inactive_sections = {
-          lualine_a = {},
-          lualine_b = {},
-          lualine_c = { "filename" },
-          lualine_x = { "location" },
-          lualine_y = {},
-          lualine_z = {},
-        },
-        tabline = {},
-        winbar = {},
-        inactive_winbar = {},
-        extensions = {},
-      }
+      require("plugins.configs.p15_myLuaLine").setup()
     end,
   },
+
+  -- Buffer line
+  {
+    "akinsho/nvim-bufferline.lua",
+    lazy = true,
+    -- event = "BufWritePre",  -- Only will be trigger when you save your buffer.
+    --event = "CursorMoved",
+    event = "VeryLazy",
+    dependencies = "nvim-web-devicons",
+    config = function()
+      require("plugins.configs.p16_myBufferConfig").config()
+    end,
+  },
+
+  -- This will  highlight the colors as #558817
+  {
+    "norcalli/nvim-colorizer.lua",
+    event = "InsertEnter",
+    lazy = true,
+    cmd = { "ColorizerToggle" },
+    config = function()
+      require("plugins.configs.others").colorizer()
+    end,
+  },
+  -- smooth scroll
+  -- {
+  --   "karb94/neoscroll.nvim",
+  --   event = "InsertEnter",
+  --   lazy = true,
+  --   config = function()
+  --     require("plugins.configs.others").neoscroll()
+  --   end,
+  -- },
+  -- Markdown, Markup-language better view (two plugins)
+
+  -- Markdown, Markup-language better view (two plugins)
+  -- {
+  --   -- "npxbr/glow.nvim",
+  --   "ellisonleao/glow.nvim",
+  --   event = "InsertEnter",
+  --   ft = { "markdown" },
+  --   config = function()
+  --     require("plugins.configs.myGlowMark").setup()
+  --   end,
+  -- },
+
+  {
+    "MeanderingProgrammer/markdown.nvim",
+    event = "InsertEnter",
+    ft = { "markdown" },
+    cmd = { "RenderMarkdown" },
+    main = "render-markdown",
+    opts = {},
+    name = "render-markdown", -- Only needed if you have another plugin named markdown.nvim
+    --dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" }, -- if you use the mini.nvim suite
+    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
+    dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
+
+    config = function()
+      require("plugins.configs.myMarkdown").config()
+    end,
+  },
+
+  -- vim-eftt (highlight the f/t/F/T mappings)
+  -- Source, https://github.com/hrsh7th/vim-eft
+  {
+    "hrsh7th/vim-eft",
+    -- event = "CursorMoved",
+    event = "InsertEnter",
+    config = function()
+      require("plugins.configs.myVim_eft").setup()
+    end,
+  }, -- lsp loader status display
+  { "ggandor/lightspeed.nvim", lazy = true, event = "InsertEnter" },
+
+  {
+    "VonHeikemen/fine-cmdline.nvim",
+    event = "CmdwinEnter",
+    cmd = "FineTerm",
+    config = function()
+      require("plugins.configs.myFineCmdLineFloating").config()
+    end,
+    dependencies = {
+      { "MunifTanjim/nui.nvim" },
+    },
+  },
+
+  -- ===========================================================================
+  --           PRODUCTIVITIES AND PERFORMANCE
+  -- ===========================================================================
+
+  -- Clear highlight when you search for a word automatically
+  {
+    "romainl/vim-cool",
+    lazy = true,
+    event = "CmdwinEnter", -- Only will be loaded when we enter the CMD in vim
+    config = function()
+      vim.g.CoolTotalMatches = 1
+    end,
+  }, -- Adding acceleration to the mouse for faster/smooth motion
+  -- { "rhysd/accelerated-jk", lazy = true, event = "VeryLazy" },
+  -- Deleting a given buffer without affecting
+
+  --{ "famiu/bufdelete.nvim", lazy = true, cmd = { "Bdelete" } },
+  { "ojroques/nvim-bufdel", lazy = true, cmd = { "BufDel", "BufDelAll", "BufDelOthers" } },
+
+  { "vim-scripts/ReplaceWithRegister", lazy = true, event = "InsertEnter" },
+  -- Better repeat (.) with nvim (from tpope)
+  --  use({ "tpope/vim-repeat" })
+
+  -- Better surrounding
+  { "tpope/vim-surround", lazy = true, event = "InsertEnter" },
+  --  -- Development
+  --  use({ "tpope/vim-dispatch" })
+  --  use({ "tpope/vim-commentary" })
+  --  use({ "tpope/vim-rhubarb", event = "VimEnter" })
+  { "tpope/vim-unimpaired", event = "InsertEnter" },
+  --  use({ "tpope/vim-vinegar" })
+  --  use({ "tpope/vim-sleuth" })
+  -- Replace word with register
+  { "gennaro-tedesco/nvim-peekup", event = "InsertEnter" },
+
+  {
+    "rainbowhxch/beacon.nvim",
+    lazy = true,
+    event = "InsertEnter",
+    -- :Beacon: highlight current position (even if plugin is disabled)
+    -- :BeaconToggle: toggle beacon enable/disable
+
+    config = function()
+      -- To highlight your becacon indicator
+      -- vim.cmd([[highlight Beacon guibg=#007CBE ctermbg=15]])
+      require("beacon").setup {}
+    end,
+  },
+
+  -- ===========================================================================
+  --                        DEBUGGER TOOLS
+  -- ===========================================================================
+  -- Debugging
+  -- use({ "puremourning/vimspector", event = "BufWinEnter" })
+  -- Debugging
+  -- This plugin adds virtual text support to nvim-dap. nvim-treesitter is used to find variable definitions.
+  -- It will add variable text value in the debugging session.
+  {
+    "theHamsta/nvim-dap-virtual-text",
+    lazy = true,
+    event = "InsertEnter",
+    config = function()
+      require("nvim-dap-virtual-text").setup {
+        display_callback = function(variable, _, _, _)
+          return variable.name .. "  󰞮 󱚟   " .. variable.value
+        end,
+      }
+      vim.g.dap_virtual_text = true
+    end,
+  },
+  {
+    "mfussenegger/nvim-dap",
+    cond = true,
+    lazy = true,
+    event = "InsertEnter",
+    dependencies = {
+      { "nvim-dap-virtual-text", event = "InsertEnter" },
+      { "nvim-dap-python", event = "InsertEnter" },
+      -- Added dependencies for the dap-ui
+      {
+        "rcarriga/nvim-dap-ui",
+        dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
+        event = "InsertEnter",
+      },
+      { "mfussenegger/nvim-dap-python", event = "InsertEnter" },
+      { "nvim-telescope/telescope-dap.nvim", event = "InsertEnter" },
+    },
+    config = function()
+      require "plugins.configs.dap"
+    end,
+  },
+
+  -----------------------------------------------------------------
+
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    ---@type snacks.Config
+    opts = {
+      bigfile = { enabled = true },
+      dashboard = { enabled = true },
+      explorer = { enabled = true,
+              replace_netrw = true,
+          width = 30, -- 40% of the Neovim screen
+          height = 0.8,
+          border = "rounded",
+
+
+      },
+      indent = { enabled = true },
+      input = { enabled = true },
+      notifier = {
+        enabled = true,
+        timeout = 3000,
+      },
+      picker = { enabled = true },
+      quickfile = { enabled = true },
+      scope = { enabled = true },
+      scroll = { enabled = true },
+      statuscolumn = { enabled = true },
+      words = { enabled = true },
+      styles = {
+        notification = {
+          -- wo = { wrap = true } -- Wrap notifications
+        },
+      },
+    },
+    keys = {
+      -- Top Pickers & Explorer
+      {
+        "<leader><space>",
+        function()
+          Snacks.picker.smart()
+        end,
+        desc = "Smart Find Files",
+      },
+      {
+        "<leader>,",
+        function()
+          Snacks.picker.buffers()
+        end,
+        desc = "Buffers",
+      },
+      {
+        "<leader>/",
+        function()
+          Snacks.picker.grep()
+        end,
+        desc = "Grep",
+      },
+      {
+        "<leader>:",
+        function()
+          Snacks.picker.command_history()
+        end,
+        desc = "Command History",
+      },
+      {
+        "<leader>n",
+        function()
+          Snacks.picker.notifications()
+        end,
+        desc = "Notification History",
+      },
+      {
+        "<leader>ftt",
+        function()
+          Snacks.explorer(
+
+          )
+        end,
+        desc = "File Explorer",
+      },
+      -- find
+      {
+        "<leader>fb",
+        function()
+          Snacks.picker.buffers()
+        end,
+        desc = "Buffers",
+      },
+      {
+        "<leader>fc",
+        function()
+          Snacks.picker.files { cwd = vim.fn.stdpath "config" }
+        end,
+        desc = "Find Config File",
+      },
+      {
+        "<leader>ff",
+        function()
+          Snacks.picker.files()
+        end,
+        desc = "Find Files",
+      },
+      {
+        "<leader>fg",
+        function()
+          Snacks.picker.git_files()
+        end,
+        desc = "Find Git Files",
+      },
+      {
+        "<leader>fp",
+        function()
+          Snacks.picker.projects()
+        end,
+        desc = "Projects",
+      },
+      {
+        "<leader>fr",
+        function()
+          Snacks.picker.recent()
+        end,
+        desc = "Recent",
+      },
+      -- git
+      {
+        "<leader>gb",
+        function()
+          Snacks.picker.git_branches()
+        end,
+        desc = "Git Branches",
+      },
+      {
+        "<leader>gl",
+        function()
+          Snacks.picker.git_log()
+        end,
+        desc = "Git Log",
+      },
+      {
+        "<leader>gL",
+        function()
+          Snacks.picker.git_log_line()
+        end,
+        desc = "Git Log Line",
+      },
+      {
+        "<leader>gs",
+        function()
+          Snacks.picker.git_status()
+        end,
+        desc = "Git Status",
+      },
+      {
+        "<leader>gS",
+        function()
+          Snacks.picker.git_stash()
+        end,
+        desc = "Git Stash",
+      },
+      {
+        "<leader>gd",
+        function()
+          Snacks.picker.git_diff()
+        end,
+        desc = "Git Diff (Hunks)",
+      },
+      {
+        "<leader>gf",
+        function()
+          Snacks.picker.git_log_file()
+        end,
+        desc = "Git Log File",
+      },
+      -- Grep
+      {
+        "<leader>sb",
+        function()
+          Snacks.picker.lines()
+        end,
+        desc = "Buffer Lines",
+      },
+      {
+        "<leader>sB",
+        function()
+          Snacks.picker.grep_buffers()
+        end,
+        desc = "Grep Open Buffers",
+      },
+      {
+        "<leader>sg",
+        function()
+          Snacks.picker.grep()
+        end,
+        desc = "Grep",
+      },
+      {
+        "<leader>sw",
+        function()
+          Snacks.picker.grep_word()
+        end,
+        desc = "Visual selection or word",
+        mode = { "n", "x" },
+      },
+      -- search
+      {
+        '<leader>s"',
+        function()
+          Snacks.picker.registers()
+        end,
+        desc = "Registers",
+      },
+      {
+        "<leader>s/",
+        function()
+          Snacks.picker.search_history()
+        end,
+        desc = "Search History",
+      },
+      {
+        "<leader>sa",
+        function()
+          Snacks.picker.autocmds()
+        end,
+        desc = "Autocmds",
+      },
+      {
+        "<leader>sb",
+        function()
+          Snacks.picker.lines()
+        end,
+        desc = "Buffer Lines",
+      },
+      {
+        "<leader>sc",
+        function()
+          Snacks.picker.command_history()
+        end,
+        desc = "Command History",
+      },
+      {
+        "<leader>sC",
+        function()
+          Snacks.picker.commands()
+        end,
+        desc = "Commands",
+      },
+      {
+        "<leader>sd",
+        function()
+          Snacks.picker.diagnostics()
+        end,
+        desc = "Diagnostics",
+      },
+      {
+        "<leader>sD",
+        function()
+          Snacks.picker.diagnostics_buffer()
+        end,
+        desc = "Buffer Diagnostics",
+      },
+      {
+        "<leader>sh",
+        function()
+          Snacks.picker.help()
+        end,
+        desc = "Help Pages",
+      },
+      {
+        "<leader>sH",
+        function()
+          Snacks.picker.highlights()
+        end,
+        desc = "Highlights",
+      },
+      {
+        "<leader>si",
+        function()
+          Snacks.picker.icons()
+        end,
+        desc = "Icons",
+      },
+      {
+        "<leader>sj",
+        function()
+          Snacks.picker.jumps()
+        end,
+        desc = "Jumps",
+      },
+      {
+        "<leader>sk",
+        function()
+          Snacks.picker.keymaps()
+        end,
+        desc = "Keymaps",
+      },
+      {
+        "<leader>sl",
+        function()
+          Snacks.picker.loclist()
+        end,
+        desc = "Location List",
+      },
+      {
+        "<leader>sm",
+        function()
+          Snacks.picker.marks()
+        end,
+        desc = "Marks",
+      },
+      {
+        "<leader>sM",
+        function()
+          Snacks.picker.man()
+        end,
+        desc = "Man Pages",
+      },
+      {
+        "<leader>sp",
+        function()
+          Snacks.picker.lazy()
+        end,
+        desc = "Search for Plugin Spec",
+      },
+      {
+        "<leader>sq",
+        function()
+          Snacks.picker.qflist()
+        end,
+        desc = "Quickfix List",
+      },
+      {
+        "<leader>sR",
+        function()
+          Snacks.picker.resume()
+        end,
+        desc = "Resume",
+      },
+      {
+        "<leader>su",
+        function()
+          Snacks.picker.undo()
+        end,
+        desc = "Undo History",
+      },
+      {
+        "<leader>uC",
+        function()
+          Snacks.picker.colorschemes()
+        end,
+        desc = "Colorschemes",
+      },
+      -- LSP
+      {
+        "gd",
+        function()
+          Snacks.picker.lsp_definitions()
+        end,
+        desc = "Goto Definition",
+      },
+      {
+        "gD",
+        function()
+          Snacks.picker.lsp_declarations()
+        end,
+        desc = "Goto Declaration",
+      },
+      {
+        "gr",
+        function()
+          Snacks.picker.lsp_references()
+        end,
+        nowait = true,
+        desc = "References",
+      },
+      {
+        "gI",
+        function()
+          Snacks.picker.lsp_implementations()
+        end,
+        desc = "Goto Implementation",
+      },
+      {
+        "gy",
+        function()
+          Snacks.picker.lsp_type_definitions()
+        end,
+        desc = "Goto T[y]pe Definition",
+      },
+      {
+        "<leader>ss",
+        function()
+          Snacks.picker.lsp_symbols()
+        end,
+        desc = "LSP Symbols",
+      },
+      {
+        "<leader>sS",
+        function()
+          Snacks.picker.lsp_workspace_symbols()
+        end,
+        desc = "LSP Workspace Symbols",
+      },
+      -- Other
+      {
+        "<leader>z",
+        function()
+          Snacks.zen()
+        end,
+        desc = "Toggle Zen Mode",
+      },
+      {
+        "<leader>Z",
+        function()
+          Snacks.zen.zoom()
+        end,
+        desc = "Toggle Zoom",
+      },
+      {
+        "<leader>.",
+        function()
+          Snacks.scratch()
+        end,
+        desc = "Toggle Scratch Buffer",
+      },
+      {
+        "<leader>S",
+        function()
+          Snacks.scratch.select()
+        end,
+        desc = "Select Scratch Buffer",
+      },
+      {
+        "<leader>n",
+        function()
+          Snacks.notifier.show_history()
+        end,
+        desc = "Notification History",
+      },
+      {
+        "<leader>bd",
+        function()
+          Snacks.bufdelete()
+        end,
+        desc = "Delete Buffer",
+      },
+      {
+        "<leader>cR",
+        function()
+          Snacks.rename.rename_file()
+        end,
+        desc = "Rename File",
+      },
+      {
+        "<leader>gB",
+        function()
+          Snacks.gitbrowse()
+        end,
+        desc = "Git Browse",
+        mode = { "n", "v" },
+      },
+      {
+        "<leader>gg",
+        function()
+          Snacks.lazygit()
+        end,
+        desc = "Lazygit",
+      },
+      {
+        "<leader>un",
+        function()
+          Snacks.notifier.hide()
+        end,
+        desc = "Dismiss All Notifications",
+      },
+      {
+        "<c-/>",
+        function()
+          Snacks.terminal()
+        end,
+        desc = "Toggle Terminal",
+      },
+      {
+        "<c-_>",
+        function()
+          Snacks.terminal()
+        end,
+        desc = "which_key_ignore",
+      },
+      {
+        "]]",
+        function()
+          Snacks.words.jump(vim.v.count1)
+        end,
+        desc = "Next Reference",
+        mode = { "n", "t" },
+      },
+      {
+        "[[",
+        function()
+          Snacks.words.jump(-vim.v.count1)
+        end,
+        desc = "Prev Reference",
+        mode = { "n", "t" },
+      },
+      {
+        "<leader>N",
+        desc = "Neovim News",
+        function()
+          Snacks.win {
+            file = vim.api.nvim_get_runtime_file("doc/news.txt", false)[1],
+            width = 0.6,
+            height = 0.6,
+            border = "double",
+            wo = {
+              spell = false,
+              wrap = false,
+              signcolumn = "yes",
+              statuscolumn = " ",
+              conceallevel = 3,
+            },
+          }
+        end,
+      },
+    },
+    init = function()
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "VeryLazy",
+        callback = function()
+          -- Setup some globals for debugging (lazy-loaded)
+          _G.dd = function(...)
+            Snacks.debug.inspect(...)
+          end
+          _G.bt = function()
+            Snacks.debug.backtrace()
+          end
+          vim.print = _G.dd -- Override print to use snacks for `:=` command
+
+          -- Create some toggle mappings
+          Snacks.toggle.option("spell", { name = "Spelling" }):map "<leader>us"
+          Snacks.toggle.option("wrap", { name = "Wrap" }):map "<leader>uw"
+          Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map "<leader>uL"
+          Snacks.toggle.diagnostics():map "<leader>ud"
+          Snacks.toggle.line_number():map "<leader>ul"
+          Snacks.toggle
+            .option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 })
+            :map "<leader>uc"
+          Snacks.toggle.treesitter():map "<leader>uT"
+          Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map "<leader>ub"
+          Snacks.toggle.inlay_hints():map "<leader>uh"
+          Snacks.toggle.indent():map "<leader>ug"
+          Snacks.toggle.dim():map "<leader>uD"
+        end,
+      })
+    end,
+  },
+
+
+
+  -- ==========================================================================
+  -- 	                    Aesthetic and UI Design
+  -- ==========================================================================
+
+  -- Provide a TODO, PERF, HACK, NOTE, NOTE, FIX, WARNING Highlighting
+  {
+    "folke/todo-comments.nvim",
+    event = "BufEnter",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {
+    },
+  },
+
+
+
 
   ---------------- END OF PLUGINS SETTING -------------------------
 }
