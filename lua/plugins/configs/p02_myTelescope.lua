@@ -86,9 +86,9 @@ M.setup = function()
     telescope.extensions.undo.undo {}
   end)
 
-  vim.g.nmap("<leader>th", function()
-    builtin.colorscheme(ivy)
-  end)
+  -- vim.g.nmap("<leader>th", function()
+  --   builtin.colorscheme(ivy)
+  -- end)
 
   vim.keymap.set("n", ";e", function()
     builtin.diagnostics()
@@ -267,6 +267,7 @@ M.config = function()
           prompt_position = "bottom",
           width = 0.87,
         },
+        fidget = {},
         mappings = {
           i = {
             ["<cr>"] = require("telescope-undo.actions").yank_additions,
@@ -296,6 +297,8 @@ M.config = function()
   telescope.load_extension "heading"
   -- Undo Telescope
   telescope.load_extension "undo"
+  -- for spinning wheel when lsp attached.
+  telescope.load_extension "fidget"
 end
 
 M.setup()

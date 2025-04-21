@@ -9,7 +9,33 @@ local lazyManagerConfig = {
   },
   lockfile = vim.fn.stdpath "data" .. "/lazy/lazy-lock.json", -- lockfile generated after running update.
   checker = { enabled = false },
-  ui = { border = { "╔", "═", "╗", "║", "╝", "═", "╚", "║" } },
+  ui = {
+    border = { "╔", "═", "╗", "║", "╝", "═", "╚", "║" },
+    -- size = { width = 0.5, height = 0.8 },
+    -- wrap = true, -- wrap the lines in the ui
+    -- icons = {
+    --   cmd = "",
+    --   config = "",
+    --   event = "⚡",
+    --   ft = "",
+    --   init = "",
+    --   import = "",
+    --   keys = "",
+    --   lazy = "󰒲",
+    --   loaded = "✓",
+    --   not_loaded = "",
+    --   plugin = "",
+    --   runtime = "",
+    --   source = "",
+    --   start = "",
+    --   task = "✔",
+    --   list = {
+    --     "●", -- for top-level entries
+    --     "◆", -- for nested items
+    --     "▶", -- collapsed
+    --     "▼", -- expanded
+    --   },
+  },
   performance = {
     cache = { enabled = true },
     reset_packpath = true, -- reset the package path to improve startup time

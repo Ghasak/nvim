@@ -3,8 +3,8 @@ local M = {}
 local function lsp_keymaps(bufnr)
   local opts = { noremap = true, silent = true }
   local keymap = vim.api.nvim_buf_set_keymap
-  keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration({border='double',})<CR>", opts)
-  keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition({border='double',})<CR>", opts)
+  -- keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration({border='double',})<CR>", opts)
+  -- keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition({border='double',})<CR>", opts)
   keymap(bufnr, "n", "gh", "<cmd>lua vim.lsp.buf.hover({border='double', })<CR>", opts) --{border = 'double',}
   keymap(bufnr, "n", "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
   keymap(bufnr, "n", "<leader>gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)

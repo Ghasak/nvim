@@ -45,4 +45,4 @@ You need to provide the following:
 The content of `x86_64-apple-darwin` is exactly the same `aarch64-apple-darwin`
 just that the `virtualenv` needs this directory to run the `TabNine` binary.
 
-- [Image 01](./assets/IMAGE01.png)
+![Image 01](./assets/IMAGE01.png)

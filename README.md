@@ -55,6 +55,7 @@
 
 ### V.0.11 Release
 - [x] Fixed using `:checkhealth vim.deprecated` many API such as:
+    - [x]  Major break changes
     - [x]  `set terencoding=utf-8`
     - [x]  `vim.lsp.get_active_clients` become `vim.lsp.get_clients`.
 

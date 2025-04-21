@@ -138,8 +138,9 @@ This section will be dedicated to show new feature for my new `nvim` IDE.
 
 The `Github Copilot` is built on top of `openAi` `DaVinci` model, I am already
 in the technical preview, and my `Github` account is already connected with the
-`copilot`. Steps that I followed are mainly from the repository of `GitHub copilot`. I remapped the `TAB` to `leader TAB` to not affect any other
-plugins' workflow.
+`copilot`. Steps that I followed are mainly from the repository of `GitHub
+copilot`. I remapped the `TAB` to `leader TAB` to not affect any other plugins'
+workflow.
 
 ### Implementation of Remote Server IDE
 

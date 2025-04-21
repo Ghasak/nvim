@@ -1,4 +1,3 @@
----@diagnostic disable: 2
 -- ====================================================================================================
 ---
 --         ██╗░░██╗███████╗██╗░░░██╗  ███╗░░░███╗░█████╗░██████╗░██████╗░██╗███╗░░██╗░██████╗░░██████╗
@@ -125,20 +124,48 @@ vim.api.nvim_set_keymap("i", "<C-S-BS>", "<C-w>", { noremap = true, silent = tru
 
 -- map the leader in nvim to space
 vim.g.mapleader = " "
--- Explorer with Nvim-tree( ensure first the undotree is not toggled )
-vim.api.nvim_set_keymap(
-  "n",
-  "<Leader>ft",
-  ":<cmd>UndotreeHide<CR>:NvimTreeToggle<CR>",
-  { noremap = true, silent = true }
-)
--- this will be source with setting directory which shoould be put at the end of the loaded dictionaries
-vim.api.nvim_set_keymap(
-  "n",
-  "<leader>u",
-  ":<cmd>NvimTreeClose<CR> :UndotreeToggle<CR>",
-  { noremap = true, silent = true }
-)
+-----------------------------------------------------------------------------------------
+--                     NvimTree Plugin Keymapping
+-----------------------------------------------------------------------------------------
+-- -- Explorer with Nvim-tree( ensure first the undotree is not toggled )
+
+--
+-- vim.api.nvim_set_keymap(
+--   "n",
+--   "<Leader>ft",
+--   ":<cmd>UndotreeHide<CR>:NvimTreeToggle<CR>",
+--   { noremap = true, silent = true }
+-- )
+-- -- this will be source with setting directory which shoould be put at the end of the loaded dictionaries
+-- vim.api.nvim_set_keymap(
+--   "n",
+--   "<leader>u",
+--   ":<cmd>NvimTreeClose<CR> :UndotreeToggle<CR>",
+--   { noremap = true, silent = true }
+-- )
+--
+
+-----------------------------------------------------------------------------------------
+--                     Snacks Explorer KeyMapping
+-----------------------------------------------------------------------------------------
+
+vim.keymap.set("n", "<leader>ft", function()
+  vim.cmd("UndotreeHide")
+  require("snacks").explorer.open( {})
+end, { noremap = true, silent = true, desc = "📂 Snacks: Open Explorer" })
+
+vim.keymap.set("n", "<leader>u", function()
+  local explorer = require("snacks.picker").get({ source = "explorer" })[1]
+  if explorer and not explorer.closed then
+    explorer:close()
+  else
+    vim.notify("Snacks Explorer is not open.", vim.log.levels.INFO, { title = "Snacks" })
+  end
+  vim.cmd("UndotreeToggle")
+end, { noremap = true, silent = true, desc = "📁 Snacks: Close Explorer + Undotree" })
+
+--------------------------------------------------------------------------------------
+
 -- Ctrl + P to open the the navigator faster
 vim.api.nvim_set_keymap("n", "<leader>p", "<cmd>lua require('fzf-lua').files()<CR>", { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('n', '<leader>p',"<cmd>lua require('fzf-lua').files({ fzf_opts = {['--layout'] = 'reverse-list'} })<CR>",{ noremap = true, silent = true })
@@ -510,3 +537,22 @@ vim.keymap.set("n", "<Leader><Tab>", "<C-^>", {
   noremap = true,
   silent = true,
 })
+
+-- see the notes from fidget extension
+vim.keymap.set("n", "<leader>tf", function()
+  require("telescope").extensions.fidget.fidget()
+end, { desc = "Telescope Fidget history" })
+
+
+
+---- *****************************************************************************************
+--           Using Glance instead of the built-in lspconfig in lsp_attach.lua file
+--                              replaced with snacks.nvim
+---- *****************************************************************************************
+-- vim.keymap.set("n", "gd", "<cmd>Glance definitions<CR>", { noremap = false, silent = true })
+-- vim.keymap.set("n", "gD", "<cmd>Glance type_definitions<CR>", { noremap = false, silent = true })
+-- vim.keymap.set("n", "gR", "<CMD>Glance references<CR>", { noremap = false, silent = true })
+-- vim.keymap.set("n", "gY", "<CMD>Glance type_definitions<CR>", { noremap = false, silent = true })
+-- vim.keymap.set("n", "gM", "<CMD>Glance implementations<CR>", { noremap = false, silent = true })
+
+
