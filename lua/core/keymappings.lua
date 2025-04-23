@@ -149,20 +149,39 @@ vim.g.mapleader = " "
 --                     Snacks Explorer KeyMapping
 -----------------------------------------------------------------------------------------
 
+-- Open Snacks Explorer (after hiding Undotree)
 vim.keymap.set("n", "<leader>ft", function()
-  vim.cmd("UndotreeHide")
-  require("snacks").explorer.open( {})
+  vim.cmd "UndotreeHide"
+  require("snacks").explorer.open {}
 end, { noremap = true, silent = true, desc = "📂 Snacks: Open Explorer" })
 
+-- Match width of Snacks Explorer for Undotree
+local function match_undotree_to_explorer()
+  local explorer = require("snacks.picker").get({ source = "explorer" })[1]
+  if not explorer or not explorer.win or not explorer.win.win then
+    vim.notify("Snacks Explorer window is not available.", vim.log.levels.WARN)
+    return
+  end
+
+  local win = explorer.win.win
+  local width = vim.api.nvim_win_get_width(win)
+  vim.g.undotree_SplitWidth = width
+  vim.notify("Matched Undotree width to Snacks Explorer: " .. width, vim.log.levels.DEBUG)
+end
+
+-- Close Snacks Explorer and open Undotree with matched width
 vim.keymap.set("n", "<leader>u", function()
+  vim.g.undotree_SplitWidth = vim.g.shared_sidebar_width or 30
   local explorer = require("snacks.picker").get({ source = "explorer" })[1]
   if explorer and not explorer.closed then
+    match_undotree_to_explorer()
     explorer:close()
   else
     vim.notify("Snacks Explorer is not open.", vim.log.levels.INFO, { title = "Snacks" })
   end
-  vim.cmd("UndotreeToggle")
-end, { noremap = true, silent = true, desc = "📁 Snacks: Close Explorer + Undotree" })
+
+  vim.defer_fn(function() vim.cmd "UndotreeToggle" end, 10)
+end, { noremap = true, silent = true, desc = "📁 Close Explorer + Open Undotree with matched width" })
 
 --------------------------------------------------------------------------------------
 
@@ -291,28 +310,18 @@ vim.api.nvim_set_keymap("n", "<leader>s", ":ASToggle<CR>", {})
 -- For Rust, if it is faild you can run (:!cargo fmt)
 -- Or using (:!rustfmt --edition=2021 src/main.rs)
 -- Key binding for normal mode
-vim.api.nvim_set_keymap(
-  "n",
-  "<leader>fr",
-  ':lua require("conform").format({ lsp_fallback = true, async = true, timeout_ms = 500 })<CR>',
-  {
-    noremap = true,
-    silent = true,
-    desc = "Format file or range (using conform.nvim)",
-  }
-)
+vim.api.nvim_set_keymap("n", "<leader>fr", ':lua require("conform").format({ lsp_fallback = true, async = true, timeout_ms = 500 })<CR>', {
+  noremap = true,
+  silent = true,
+  desc = "Format file or range (using conform.nvim)",
+})
 
 -- Key binding for visual mode
-vim.api.nvim_set_keymap(
-  "v",
-  "<leader>fr",
-  ':lua require("conform").format({ lsp_fallback = false, async = true, timeout_ms = 500 })<CR>',
-  {
-    noremap = true,
-    silent = true,
-    desc = "Format file or range (using conform.nvim)",
-  }
-)
+vim.api.nvim_set_keymap("v", "<leader>fr", ':lua require("conform").format({ lsp_fallback = false, async = true, timeout_ms = 500 })<CR>', {
+  noremap = true,
+  silent = true,
+  desc = "Format file or range (using conform.nvim)",
+})
 -- vim.api.nvim_set_keymap("n", "<leader>fr", ":Format<CR>", { noremap = true, silent = true })
 -- In visual mode, you can use v the :<,>:Format to format only the given range.
 ---- *****************************************************************************************
@@ -361,16 +370,26 @@ vim.keymap.set("n", "<leader>cd", "<cmd>Lspsaga show_cursor_diagnostics<CR>", { 
 vim.keymap.set("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { silent = true })
 vim.keymap.set("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>", { silent = true })
 -- Only jump to error
-vim.keymap.set("n", "[E", function()
-  require("lspsaga.diagnostic").goto_prev {
-    severity = vim.diagnostic.severity.ERROR,
-  }
-end, { silent = true })
-vim.keymap.set("n", "]E", function()
-  require("lspsaga.diagnostic").goto_next {
-    severity = vim.diagnostic.severity.ERROR,
-  }
-end, { silent = true })
+vim.keymap.set(
+  "n",
+  "[E",
+  function()
+    require("lspsaga.diagnostic").goto_prev {
+      severity = vim.diagnostic.severity.ERROR,
+    }
+  end,
+  { silent = true }
+)
+vim.keymap.set(
+  "n",
+  "]E",
+  function()
+    require("lspsaga.diagnostic").goto_next {
+      severity = vim.diagnostic.severity.ERROR,
+    }
+  end,
+  { silent = true }
+)
 
 -- Outline
 vim.keymap.set("n", "<leader>o", "<cmd>Lspsaga outline<CR>", { silent = true })
@@ -539,11 +558,7 @@ vim.keymap.set("n", "<Leader><Tab>", "<C-^>", {
 })
 
 -- see the notes from fidget extension
-vim.keymap.set("n", "<leader>tf", function()
-  require("telescope").extensions.fidget.fidget()
-end, { desc = "Telescope Fidget history" })
-
-
+vim.keymap.set("n", "<leader>tf", function() require("telescope").extensions.fidget.fidget() end, { desc = "Telescope Fidget history" })
 
 ---- *****************************************************************************************
 --           Using Glance instead of the built-in lspconfig in lsp_attach.lua file
@@ -555,4 +570,373 @@ end, { desc = "Telescope Fidget history" })
 -- vim.keymap.set("n", "gY", "<CMD>Glance type_definitions<CR>", { noremap = false, silent = true })
 -- vim.keymap.set("n", "gM", "<CMD>Glance implementations<CR>", { noremap = false, silent = true })
 
+-- ~/.config/nvim/lua/config/snacks/keymaps.lua
 
+local M = {}
+
+M.keys = {
+  { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
+  { "<leader>,", function() Snacks.picker.buffers() end, desc = "Buffers" },
+  { "<leader>/", function() Snacks.picker.grep() end, desc = "Grep" },
+  { "<leader>ftt", function() Snacks.explorer() end, desc = "File Explorer" },
+  -- Add other keymaps similarly...
+
+  -- Top Pickers & Explorer
+  {
+    "<leader><space>",
+    function() Snacks.picker.smart() end,
+    desc = "Smart Find Files",
+  },
+  {
+    "<leader>,",
+    function() Snacks.picker.buffers() end,
+    desc = "Buffers",
+  },
+  {
+    "<leader>/",
+    function() Snacks.picker.grep() end,
+    desc = "Grep",
+  },
+  {
+    "<leader>:",
+    function() Snacks.picker.command_history() end,
+    desc = "Command History",
+  },
+  {
+    "<leader>n",
+    function() Snacks.picker.notifications() end,
+    desc = "Notification History",
+  },
+  {
+    "<leader>ftt",
+    function() Snacks.explorer() end,
+    desc = "File Explorer",
+  },
+  -- find
+  {
+    "<leader>fb",
+    function() Snacks.picker.buffers() end,
+    desc = "Buffers",
+  },
+  {
+    "<leader>fc",
+    function() Snacks.picker.files { cwd = vim.fn.stdpath "config" } end,
+    desc = "Find Config File",
+  },
+  {
+    "<leader>ff",
+    function() Snacks.picker.files() end,
+    desc = "Find Files",
+  },
+  {
+    "<leader>fg",
+    function() Snacks.picker.git_files() end,
+    desc = "Find Git Files",
+  },
+  {
+    "<leader>fp",
+    function() Snacks.picker.projects() end,
+    desc = "Projects",
+  },
+  {
+    "<leader>fr",
+    function() Snacks.picker.recent() end,
+    desc = "Recent",
+  },
+  -- git
+  {
+    "<leader>gb",
+    function() Snacks.picker.git_branches() end,
+    desc = "Git Branches",
+  },
+  {
+    "<leader>gl",
+    function() Snacks.picker.git_log() end,
+    desc = "Git Log",
+  },
+  {
+    "<leader>gL",
+    function() Snacks.picker.git_log_line() end,
+    desc = "Git Log Line",
+  },
+  {
+    "<leader>gs",
+    function() Snacks.picker.git_status() end,
+    desc = "Git Status",
+  },
+  {
+    "<leader>gS",
+    function() Snacks.picker.git_stash() end,
+    desc = "Git Stash",
+  },
+  {
+    "<leader>gd",
+    function() Snacks.picker.git_diff() end,
+    desc = "Git Diff (Hunks)",
+  },
+  {
+    "<leader>gf",
+    function() Snacks.picker.git_log_file() end,
+    desc = "Git Log File",
+  },
+  -- Grep
+  {
+    "<leader>sb",
+    function() Snacks.picker.lines() end,
+    desc = "Buffer Lines",
+  },
+  {
+    "<leader>sB",
+    function() Snacks.picker.grep_buffers() end,
+    desc = "Grep Open Buffers",
+  },
+  {
+    "<leader>sg",
+    function() Snacks.picker.grep() end,
+    desc = "Grep",
+  },
+  {
+    "<leader>sw",
+    function() Snacks.picker.grep_word() end,
+    desc = "Visual selection or word",
+    mode = { "n", "x" },
+  },
+  -- search
+  {
+    '<leader>s"',
+    function() Snacks.picker.registers() end,
+    desc = "Registers",
+  },
+  {
+    "<leader>s/",
+    function() Snacks.picker.search_history() end,
+    desc = "Search History",
+  },
+  {
+    "<leader>sa",
+    function() Snacks.picker.autocmds() end,
+    desc = "Autocmds",
+  },
+  {
+    "<leader>sb",
+    function() Snacks.picker.lines() end,
+    desc = "Buffer Lines",
+  },
+  {
+    "<leader>sc",
+    function() Snacks.picker.command_history() end,
+    desc = "Command History",
+  },
+  {
+    "<leader>sC",
+    function() Snacks.picker.commands() end,
+    desc = "Commands",
+  },
+  {
+    "<leader>sd",
+    function() Snacks.picker.diagnostics() end,
+    desc = "Diagnostics",
+  },
+  {
+    "<leader>sD",
+    function() Snacks.picker.diagnostics_buffer() end,
+    desc = "Buffer Diagnostics",
+  },
+  {
+    "<leader>sh",
+    function() Snacks.picker.help() end,
+    desc = "Help Pages",
+  },
+  {
+    "<leader>sH",
+    function() Snacks.picker.highlights() end,
+    desc = "Highlights",
+  },
+  {
+    "<leader>si",
+    function() Snacks.picker.icons() end,
+    desc = "Icons",
+  },
+  {
+    "<leader>sj",
+    function() Snacks.picker.jumps() end,
+    desc = "Jumps",
+  },
+  {
+    "<leader>sk",
+    function() Snacks.picker.keymaps() end,
+    desc = "Keymaps",
+  },
+  {
+    "<leader>sl",
+    function() Snacks.picker.loclist() end,
+    desc = "Location List",
+  },
+  {
+    "<leader>sm",
+    function() Snacks.picker.marks() end,
+    desc = "Marks",
+  },
+  {
+    "<leader>sM",
+    function() Snacks.picker.man() end,
+    desc = "Man Pages",
+  },
+  {
+    "<leader>sp",
+    function() Snacks.picker.lazy() end,
+    desc = "Search for Plugin Spec",
+  },
+  {
+    "<leader>sq",
+    function() Snacks.picker.qflist() end,
+    desc = "Quickfix List",
+  },
+  {
+    "<leader>sR",
+    function() Snacks.picker.resume() end,
+    desc = "Resume",
+  },
+  {
+    "<leader>su",
+    function() Snacks.picker.undo() end,
+    desc = "Undo History",
+  },
+  {
+    "<leader>uC",
+    function() Snacks.picker.colorschemes() end,
+    desc = "Colorschemes",
+  },
+  -- LSP
+  {
+    "gd",
+    function() Snacks.picker.lsp_definitions() end,
+    desc = "Goto Definition",
+  },
+  {
+    "gD",
+    function() Snacks.picker.lsp_declarations() end,
+    desc = "Goto Declaration",
+  },
+  {
+    "gr",
+    function() Snacks.picker.lsp_references() end,
+    nowait = true,
+    desc = "References",
+  },
+  {
+    "gI",
+    function() Snacks.picker.lsp_implementations() end,
+    desc = "Goto Implementation",
+  },
+  {
+    "gy",
+    function() Snacks.picker.lsp_type_definitions() end,
+    desc = "Goto T[y]pe Definition",
+  },
+  {
+    "<leader>ss",
+    function() Snacks.picker.lsp_symbols() end,
+    desc = "LSP Symbols",
+  },
+  {
+    "<leader>sS",
+    function() Snacks.picker.lsp_workspace_symbols() end,
+    desc = "LSP Workspace Symbols",
+  },
+  -- Other
+  {
+    "<leader>z",
+    function() Snacks.zen() end,
+    desc = "Toggle Zen Mode",
+  },
+  {
+    "<leader>Z",
+    function() Snacks.zen.zoom() end,
+    desc = "Toggle Zoom",
+  },
+  {
+    "<leader>.",
+    function() Snacks.scratch() end,
+    desc = "Toggle Scratch Buffer",
+  },
+  {
+    "<leader>S",
+    function() Snacks.scratch.select() end,
+    desc = "Select Scratch Buffer",
+  },
+  {
+    "<leader>n",
+    function() Snacks.notifier.show_history() end,
+    desc = "Notification History",
+  },
+  {
+    "<leader>bd",
+    function() Snacks.bufdelete() end,
+    desc = "Delete Buffer",
+  },
+  {
+    "<leader>cR",
+    function() Snacks.rename.rename_file() end,
+    desc = "Rename File",
+  },
+  {
+    "<leader>gB",
+    function() Snacks.gitbrowse() end,
+    desc = "Git Browse",
+    mode = { "n", "v" },
+  },
+  {
+    "<leader>gg",
+    function() Snacks.lazygit() end,
+    desc = "Lazygit",
+  },
+  {
+    "<leader>un",
+    function() Snacks.notifier.hide() end,
+    desc = "Dismiss All Notifications",
+  },
+  {
+    "<c-/>",
+    function() Snacks.terminal() end,
+    desc = "Toggle Terminal",
+  },
+  {
+    "<c-_>",
+    function() Snacks.terminal() end,
+    desc = "which_key_ignore",
+  },
+  {
+    "]]",
+    function() Snacks.words.jump(vim.v.count1) end,
+    desc = "Next Reference",
+    mode = { "n", "t" },
+  },
+  {
+    "[[",
+    function() Snacks.words.jump(-vim.v.count1) end,
+    desc = "Prev Reference",
+    mode = { "n", "t" },
+  },
+  {
+    "<leader>N",
+    desc = "Neovim News",
+    function()
+      Snacks.win {
+        file = vim.api.nvim_get_runtime_file("doc/news.txt", false)[1],
+        width = 0.6,
+        height = 0.6,
+        border = "double",
+        wo = {
+          spell = false,
+          wrap = false,
+          signcolumn = "yes",
+          statuscolumn = " ",
+          conceallevel = 3,
+        },
+      }
+    end,
+  },
+}
+
+return M

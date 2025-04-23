@@ -30,6 +30,7 @@ some trigger key.
   BufWrite are common). First an overview by function with a short explanation.
   Then the list alphabetically with full explanations autocmd-events-abc.
 
+
 ## Reading
 
 | Event          | Description                                            |
