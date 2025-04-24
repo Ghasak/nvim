@@ -1,6 +1,5 @@
 # How to patch Nerd Font
 
-
 <!-- vim-markdown-toc GitLab -->
 
 * [Font selector](#font-selector)
@@ -27,13 +26,13 @@ means it will add all the `nerdfont` four selected font. Here is how I did it
 
 1. Install
 
-```shell
+```sh
 wget https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FontPatcher.zip
 ```
 
 2. Install fontforge
 
-```shell
+```sh
 brew install fontforge
 ```
 
@@ -42,7 +41,7 @@ brew install fontforge
 
 4. Apply the command,
 
-```shell
+```sh
 fontforge --script ./font-patcher --complete VictorMono-Regular.otf
 ```
 

@@ -9,7 +9,8 @@ M.setup = function()
   -- ------------------------------------------------
   -- Configurations for the lsp, offers varities of settings for the diagnostics
   -- messages and Icons on the gutters. (custom the erro icons mainly)
-  require("plugins.configs.lsp.lsp_settings").setup()
+  -- require("plugins.configs.lsp.lsp_settings").setup()
+
   -- ------------------------------------------------
   -- Lua additional support from lua-dev
   -- IMPORTANT: make sure to setup lua-dev BEFORE lspconfig
@@ -140,7 +141,6 @@ M.setup = function()
   -- on attachment
   local diagnostics = require "plugins.configs.lsp.lsp_settings"
   diagnostics.setup() -- Call sign definitions globally
-
   local base_on_attach = require("plugins.configs.lsp.lsp_attach").custom_attach
 
   local opts = {
@@ -204,9 +204,6 @@ M.setup = function()
 
       -- Register config with new v0.11+ API
       vim.lsp.config("lua_ls", merged_opts)
-
-      -- Optional: enable it explicitly
-      vim.lsp.enable "lua_ls"
     end,
 
     --------------------------- Python Language Server -----------------------------
@@ -231,9 +228,6 @@ M.setup = function()
 
       -- Register config using new API
       vim.lsp.config("pyright", pyright_opts)
-
-      -- Enable the server
-      vim.lsp.enable "pyright"
     end,
 
     --------------------------- Rust Language Server -----------------------------
@@ -242,13 +236,12 @@ M.setup = function()
       local rust_opts = {
         on_attach = opts.on_attach,
         capabilities = opts.capabilities,
-        handlers = opts.handlers,
+        -- handlers = opts.handlers,
         flags = { debounce_text_changes = 500 },
         settings = rust_tools_settings, -- your custom settings
       }
 
       vim.lsp.config("rust_analyzer", rust_opts)
-      vim.lsp.enable "rust_analyzer"
 
       -- Defer rust-tools setup until entering Rust filetype
       vim.api.nvim_create_autocmd("FileType", {
@@ -354,7 +347,7 @@ M.setup = function()
       local texlab_opts = {
         on_attach = opts.custom_attach,
         capabilities = opts.capabilities,
-        handlers = opts.handlers,
+        -- handlers = opts.handlers,
         flags = { debounce_text_changes = 500 },
         settings = {
           latex = {
@@ -380,9 +373,6 @@ M.setup = function()
 
       -- Register config with Neovim's LSP client
       vim.lsp.config("texlab", texlab_opts)
-
-      -- Enable the server
-      vim.lsp.enable "texlab"
     end,
 
     --------------------------- TypeScript / JavaScript -----------------------------
@@ -390,7 +380,7 @@ M.setup = function()
       local ts_opts = {
         on_attach = opts.on_attach,
         capabilities = opts.capabilities,
-        handlers = opts.handlers,
+        -- handlers = opts.handlers,
         cmd = { "typescript-language-server", "--stdio" },
         filetypes = {
           "typescript",
@@ -402,7 +392,6 @@ M.setup = function()
 
       -- Register with Neovim v0.11+ API
       vim.lsp.config("ts_ls", ts_opts)
-      vim.lsp.enable "ts_ls"
     end,
 
     --------------------------- R Language Server -----------------------------
@@ -410,13 +399,12 @@ M.setup = function()
       local r_opts = {
         on_attach = opts.on_attach,
         capabilities = opts.capabilities,
-        handlers = opts.handlers,
+        -- handlers = opts.handlers,
         filetypes = { "r", "rmd" },
         cmd = { "R", "--slave", "-e", "languageserver::run()" },
       }
 
       vim.lsp.config("r_language_server", r_opts)
-      vim.lsp.enable "r_language_server"
     end,
 
     --------------------------- SQL Language Server -----------------------------
@@ -424,7 +412,7 @@ M.setup = function()
       local sql_opts = {
         on_attach = opts.on_attach,
         capabilities = opts.capabilities,
-        handlers = opts.handlers,
+        -- handlers = opts.handlers,
         filetypes = { "sql" },
         cmd = { "sql-language-server", "up", "--method", "stdio" },
         root_dir = function(fname)
@@ -436,7 +424,6 @@ M.setup = function()
       }
 
       vim.lsp.config("sqlls", sql_opts)
-      vim.lsp.enable "sqlls"
     end,
 
     --------------------------- C / C++ Language Server -----------------------------
@@ -444,7 +431,7 @@ M.setup = function()
       local clangd_opts = {
         on_attach = opts.on_attach,
         capabilities = opts.capabilities,
-        handlers = opts.handlers,
+        -- handlers = opts.handlers,
         filetypes = { "cpp", "c" },
         on_new_config = function(new_config, new_cwd)
           local ok, cmake = pcall(require, "cmake-tools")
@@ -453,7 +440,6 @@ M.setup = function()
       }
 
       vim.lsp.config("clangd", clangd_opts)
-      vim.lsp.enable "clangd"
     end,
     --------------------------- Java (JDTLS) -----------------------------
     ["jdtls"] = function()
@@ -462,6 +448,17 @@ M.setup = function()
       -- See official setup: https://github.com/mfussenegger/nvim-jdtls
     end,
   }
+
+  -- Enable the server
+  -- Optional: enable it explicitly
+  vim.lsp.enable "lua_ls"
+  vim.lsp.enable "pyright"
+  vim.lsp.enable "texlab"
+  vim.lsp.enable "rust_analyzer"
+  vim.lsp.enable "ts_ls"
+  vim.lsp.enable "r_language_server"
+  vim.lsp.enable "sqlls"
+  vim.lsp.enable "clangd"
 end
 
 return M
