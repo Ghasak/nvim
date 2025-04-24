@@ -27,71 +27,57 @@ local full_path = function()
   return "%<%F%m %#__accent_red#%#__restore__#"
 end
 -- =================  LSP language server client =======================
-local function env_cleanup(venv)
-  if string.find(venv, "/") then
-    local final_venv = venv
-    for w in venv:gmatch "([^/]+)" do
-      final_venv = w
-    end
-    venv = final_venv
-  end
-  return venv
-end
+-- 📦 Simplified environment cleaner: Extract last segment of VIRTUAL_ENV path
+local function env_cleanup(venv) return venv and vim.fn.fnamemodify(venv, ":t") or "" end
 
+-- 🛠️ LSP Status Function (for statusline)
 local lsp_func = function()
-  -- Function that return the client language server corresponding to the
   local server_icon = "󰒍"
-  local server_icon_not_not_known = "󰒍"
-  local servers = {}
-  local path = vim.fn.stdpath "data"
-  path = string.format("%s", path)
+  local server_icon_unknown = "󰒍"
+  local buff_ft = vim.bo.filetype or ""
   local clients = vim.lsp.get_clients()
-  local buff_ft = vim.bo.filetype
-  local next = next
-  if next(clients) == nil then
-    return string.format("%s : %s-lsp*: %s", server_icon_not_not_known, buff_ft)
+  -- 🌀 Get LSP spinner from lsp-progress
+  local spinner = ""
+  local status = require("lsp-progress").progress()
+  if status and status ~= "" then
+    spinner = status:match "LSP%s+([%z\1-\127\194-\244][\128-\191]*)" or ""
+    spinner = vim.trim(spinner)
   end
-  for _, client in pairs(clients) do
-    table.insert(servers, client)
-  end
-  for _, server in ipairs(servers) do
-    if buff_ft == "lua" and server.name == "lua_ls" then -- [lua] For nvim 0.51 server.nam for lua is  lua, while for 0.6 it is sumneko_lua
-      return string.format("%s : lua-lsp", server_icon)
-    elseif buff_ft == "python" and (server.name == "pyright" or server.name == "pylsp") then --  [python] For nvim 0.51 serer.name is python , while for 0.6 it is now pyright)
-      -- regular virtualenv stored in variable VIRTUAL_ENV
-      local venv = os.getenv "VIRTUAL_ENV"
-      if venv ~= nil then
-        return string.format("%s-%s: pyright-lsp", server_icon, env_cleanup(venv))
+
+  -- 🔴 No LSP clients attached
+  if vim.tbl_isempty(clients) then return string.format("%s : %s-lsp*", server_icon_unknown, buff_ft ~= "" and buff_ft or "unknown") end
+
+  -- 📋 Define known LSP mappings (for clarity)
+  local lsp_map = {
+    lua = { "lua_ls", "lua" },
+    python = { "pyright", "pylsp" },
+    r = { "r_language_server" },
+    markdown = { "ltex" },
+    typescript = { "tsserver" },
+    javascript = { "tsserver" },
+    julia = { "julials" },
+    cpp = { "clangd" },
+    rust = { "rust_analyzer" },
+    tex = { "texlab", "ltex" },
+  }
+
+  -- 🔍 Iterate over active clients
+  for _, client in ipairs(clients) do
+    local valid_names = lsp_map[buff_ft]
+    if valid_names and vim.tbl_contains(valid_names, client.name) then
+      if buff_ft == "python" then
+        local venv = os.getenv "VIRTUAL_ENV"
+        return venv and string.format("%s %s-%s: pyright-lsp", spinner, server_icon, vim.fn.fnamemodify(venv, ":t"))
+          or string.format("%s %s: pyright-lsp", spinner, server_icon)
       else
-        return string.format("%s: pyright-lsp", server_icon)
-      end
-    elseif buff_ft == "r" and server.name == "r_language_server" then
-      return string.format("%s : R-lsp", server_icon)
-    elseif buff_ft == "markdown" or server.name == "ltex" then -- [Markdown] For nvim 0.51, server.name is html, while for 0.6 it is latex
-      return string.format("%s : markdown-lsp", server_icon)
-    elseif buff_ft == "typescript" and server.name == "tsserver" then
-      return string.format("%s : typescript-lsp", server_icon)
-    elseif buff_ft == "javascript" and server.name == "tsserver" then
-      return string.format("%s : javascript-lsp", server_icon)
-    elseif buff_ft == "julia" and server.name == "julials" then
-      return string.format("%s : Julia-lsp", server_icon)
-      -- Define  C++ language server
-    elseif buff_ft == "cpp" and server.name == "clangd" then
-      return string.format("%s : cpp-lsp", server_icon)
-    elseif buff_ft == "rust" and server.name == "rust_analyzer" then
-      return string.format("%s : rust_analyzer", server_icon)
-    elseif buff_ft == "tex" and server.name == "texlab" or server.name == "ltex" then
-      return string.format("%s :latex ", server_icon)
-    else
-      if server.name == "" or server.name == nil or buff_ft == "" or buff_ft == nil then
-        return string.format("%s : %-lsp*:", server_icon_not_not_known)
-      else
-        return string.format("%s : %s-lsp*: %s", server_icon_not_not_known, buff_ft, server.name)
+        return string.format("%s %s : %s-lsp", spinner, server_icon, buff_ft)
       end
     end
   end
-end
 
+  -- 🟡 Fallback for unknown clients
+  return string.format("%s %s : %s-lsp*: %s", spinner, server_icon_unknown, buff_ft, clients[1].name or "unknown")
+end
 -- --------------------------------------------------------------------
 --              CMAKE TOOLS FORM cmake-tools
 --       https://github.com/Civitasv/cmake-tools.nvim
@@ -129,9 +115,7 @@ local space = " "
 
 local function file_size(file)
   local size = vim.fn.getfsize(file)
-  if size == 0 or size == -1 or size == -2 then
-    return ""
-  end
+  if size == 0 or size == -1 or size == -2 then return "" end
   if size < 1024 then
     ---@diagnostic disable-next-line: cast-local-type
     size = tostring(size)
@@ -153,10 +137,8 @@ end
 
 local function get_file_size()
   local file = vim.fn.expand "%:p"
-  if string.len(file) == 0 then
-    return ""
-  end
-  return file_size(file)
+  if string.len(file) == 0 then return "" end
+  return vim.trim(file_size(file))
 end
 
 -- --------------------------------------------------------------------
@@ -184,18 +166,14 @@ local function format_messages(messages)
       i = i + 1
     end
   end
-  if #result == 0 then
-    return spinners[frame + 1] .. " LSP Working"
-  end
+  if #result == 0 then return spinners[frame + 1] .. " LSP Working" end
   return table.concat(result, " ") .. " " .. spinners[frame + 1]
 end
 
 local function hsp_progress()
   local messages = vim.lsp.status()
   local clients = vim.lsp.get_clients { bufnr = vim.api.nvim_get_current_buf() }
-  if #clients == 0 then
-    return "LSP: Off"
-  end
+  if #clients == 0 then return "LSP: Off" end
   if #messages == 0 then
     -- Show spinner if any LSP client is initializing
     for _, client in ipairs(clients) do
@@ -359,6 +337,14 @@ local scrollbar = function()
   return chars[index]
 end
 
+-- Windsurf AI generating status
+local function windsurf_ai_status()
+  -- Directly call the Vimscript function from Windsurf.vim
+  local ok, status = pcall(vim.api.nvim_call_function, "codeium#GetStatusString", {})
+  if not ok then return string.format("%s: 󱜝", "") end
+  return string.format("%s: 󱜝", status)
+end
+
 -- #####################################################################
 -- #                                                                   #
 -- #                                                                   #
@@ -374,7 +360,7 @@ end
 -- Check .local/share/nvim/site/pack/packer/opt/lualine.nvim/lua/lualine/themes/onedark.lua
 local custom_onedark = require "lualine.themes.onedark"
 -- Change the background of lualine_c section for normal mode
--- custom_onedark.normal.c.bg = '$black'
+-- custom_onedark.normal.c.bg = "#2c373e"
 -- When we open/switch to another buffer (such as vsplit, nvimtree), it will be inactive
 -- In orginal common style for stausline without the (lualine) it has a name called NC
 -- (StatusLineNC = { fg = '$beautiful_black' ,bg = '$beautiful_black' } which can be added to the config of Onedark
@@ -473,11 +459,16 @@ function M.setup()
       lualine_y = {
         { get_file_size },
 
-        { -- Shows LSP progress (animated spinner + progress message)
-          function()
-            return require("lsp-progress").progress()
-          end,
-        },
+        -- { -- Shows LSP progress (animated spinner + progress message)
+        --   -- function() return require("lsp-progress").progress() end,
+        --   function()
+        --     local status = require("lsp-progress").progress()
+        --     if not status or status == "" then return "" end
+        --     -- Extract spinner (after 'LSP ')
+        --     local spinner = status:match "LSP%s+([%z\1-\127\194-\244][\128-\191]*)"
+        --     return vim.trim(spinner or "")
+        --   end,
+        -- },
 
         { copilot_status },
         separator = nil,
@@ -485,6 +476,8 @@ function M.setup()
 
       -- lualine_z = {'location'}
       lualine_z = {
+
+        { windsurf_ai_status },
         -- {"%m%5([%l/%L%)(%c)%p%%]"}, -- compatible with nvim 0.7
         -- {"%m%2([ﭨ ʟ%l/%L%)(c%c)%p%%]"}, -- compatible with nvim 0.7
         { "location" },

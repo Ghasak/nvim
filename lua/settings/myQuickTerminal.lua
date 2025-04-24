@@ -1,4 +1,4 @@
-local exec = vim.api.nvim_exec -- execute Vimscript
+local exec = vim.api.nvim_exec2 -- execute Vimscript
 
 vim.cmd([[
 "==============================================================================
@@ -47,4 +47,4 @@ nnoremap <space>tt :call OpenTerminal()<CR>
 " Exit any terminal opened using leader + Esc
 "tnoremap <leader><Esc> <C-\><C-n>:q!<CR>
 tnoremap <Esc><Esc> <C-\><C-n>:q!<CR>
-]])
+]], {})

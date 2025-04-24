@@ -1,14 +1,12 @@
 local status_ok, fzf_lua = pcall(require, "fzf-lua")
-if not status_ok then
-  return
-end
+if not status_ok then return end
 
 local status_ok, fzf_lua_actions = pcall(require, "fzf-lua.actions")
-if not status_ok then
-  return
-end
+if not status_ok then return end
 
 local actions = fzf_lua_actions
+
+vim.api.nvim_set_hl(0, "FzfLuaSel", { bg = "#4ba9ec", fg = "#2c373e" }) -- custom highlight
 
 fzf_lua.setup {
 
@@ -34,7 +32,8 @@ fzf_lua.setup {
     -- to manually draw the border characters around the preview
     -- window, can be set to 'false' to remove all borders or to
     -- 'none', 'single', 'double', 'thicc' or 'rounded' (default)
-    border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+    -- border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+    border = "double",
     fullscreen = false, -- start fullscreen?
     -- highlights should optimally be set by the colorscheme using
     -- FzfLuaXXX highlights. If your colorscheme doesn't set these
@@ -172,6 +171,15 @@ fzf_lua.setup {
     ["--layout"] = "reverse",
     ["--border"] = "none",
   },
+
+  -- Reference it in fzf_colors
+  fzf_colors = {
+    ["bg+"] = { "bg", "FzfLuaSel" }, -- apply your custom highlight
+    ["fg+"] = { "fg", "FzfLuaSel" },
+    ["gutter"] = { "bg", "Normal" },
+    ["header"] = { "fg", "Comment" },
+    -- keep other colors as they are
+  },
   -- fzf '--color=' options (optional)
   --[[ fzf_colors = {
      ["fg"]          = { "fg", "CursorLine" },
@@ -254,9 +262,7 @@ fzf_lua.setup {
       -- or set bind to 'false' to disable a default action
       ["default"] = actions.file_edit,
       -- custom actions are available too
-      ["ctrl-y"] = function(selected)
-        print(selected[1])
-      end,
+      ["ctrl-y"] = function(selected) print(selected[1]) end,
     },
   },
   git = {
@@ -525,9 +531,7 @@ fzf_lua.setup {
       -- or 'false' to disable highlighting
       symbol_hl_prefix = "CmpItemKind",
       -- additional symbol formatting, works with or without style
-      symbol_fmt = function(s)
-        return "[" .. s .. "]"
-      end,
+      symbol_fmt = function(s) return "[" .. s .. "]" end,
     },
   },
   diagnostics = {

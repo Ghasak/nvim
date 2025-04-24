@@ -35,13 +35,66 @@ local java_home = home .. "/.sdkman/candidates/java/21.0.2-zulu"
 
 local workspace_dir = home .. "/.cache/jdtls-workspaces/" .. vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
 
--- Needed for debugging
-local bundles = {
-  vim.fn.glob(home .. "/.local/share/nvim/mason/share/java-debug-adapter/com.microsoft.java.debug.plugin.jar"),
-}
+-- ╭──────────────────────────────────────────────────────────────────────────────╮
+-- │ 🌟 Java Debug & Test Adapters Configuration (DAP Bundles)                    │
+-- │                                                                              │
+-- │ 📅 As of Thu Apr. 24, Mason is unable to install:                            │
+-- │   ❌ java-debug-adapter                                                      │
+-- │   ❌ java-test                                                               │
+-- │                                                                              │
+-- │ 🛠️ Manual Setup (via VSIX Downloads):                                        │
+-- │   1️⃣ Java Debug Adapter:  https://www.vsixhub.com/vsix/1954/                  │
+-- │   2️⃣ Java Test Adapter:   https://www.vsixhub.com/vsix/2032/                  │
+-- │                                                                              │
+-- │ 📂 Placement Instructions:                                                   │
+-- │   - Extract `vscode-java-debug` to:   ~/.local/share/nvim/java-debug/        │
+-- │   - Extract `vscode-java-test` to:    ~/.local/share/nvim/java-test/         │
+-- │                                                                              │
+-- │ 🧩 Purpose:                                                                  │
+-- │ This logic loads the Java Debug and Test adapters into Neovim's jdtls setup. │
+-- │   - ✅ Prioritizes Mason-installed adapters                                  │
+-- │   - 🔄 Falls back to manual setup if Mason adapters are unavailable          │
+-- ╰──────────────────────────────────────────────────────────────────────────────╯
 
--- Needed for running/debugging unit tests
-vim.list_extend(bundles, vim.split(vim.fn.glob(home .. "/.local/share/nvim/mason/share/java-test/*.jar", 1), "\n"))
+-- 🛠️ Debug Adapter: Check Mason first, fallback to manual
+local mason_debug_jar = vim.fn.glob(home .. "/.local/share/nvim/mason/share/java-debug-adapter/com.microsoft.java.debug.plugin.jar")
+local manual_debug_jar = vim.fn.glob(home .. "/.local/share/nvim/java-debug/extension/server/com.microsoft.java.debug.plugin-*.jar", 1)
+
+-- 📦 Aggregate Debug Adapter
+local bundles = {}
+if mason_debug_jar ~= "" then
+  table.insert(bundles, mason_debug_jar) -- ✅ Mason's debug adapter found
+else
+  if not vim.g.java_debug_adapter_loaded then
+    table.insert(bundles, manual_debug_jar) -- 🔄 Fallback to manual debug adapter
+    vim.notify("loaded java-debug-adapter manually!", vim.log.levels.INFO, { title = "java-debug-adapter Setup" })
+
+    -- Mark as loaded
+    vim.g.java_debug_adapter_loaded = true
+  end
+end
+
+-- 🧪 Test Adapter: Check Mason first, fallback to manual
+local mason_test_jars = vim.split(vim.fn.glob(home .. "/.local/share/nvim/mason/share/java-test/*.jar", 1), "\n")
+local manual_test_jars = vim.split(vim.fn.glob(home .. "/.local/share/nvim/java-test/extension/server/*.jar", 1), "\n")
+
+-- 📦 Aggregate Test Adapter
+if #mason_test_jars > 0 and mason_test_jars[1] ~= "" then
+  vim.list_extend(bundles, mason_test_jars) -- ✅ Mason test jars found
+else
+  if not vim.g.java_test_loaded then
+    -- your debug + test adapter setup (bundles logic)
+
+    -- Example notification (only once)
+    vim.notify("loaded java-test manually!", vim.log.levels.INFO, { title = "Java DAP Setup" })
+    vim.list_extend(bundles, manual_test_jars) -- 🔄 Fallback to manual test jars
+
+    -- Mark as loaded
+    vim.g.java_test_loaded = true
+  end
+end
+
+-- ✅ 'bundles' is now ready to be injected into the jdtls configuration
 
 -- Get JDTLS install path robustly
 local jdtls_install_path
@@ -72,9 +125,7 @@ local launcher_glob_ok, launcher_glob_result_str = pcall(vim.fn.glob, launcher_g
 
 if not launcher_glob_ok or launcher_glob_result_str == nil or launcher_glob_result_str == "" then
   vim.notify(
-    "ERROR(fn.glob): Could not find jdtls launcher JAR using pattern: "
-      .. launcher_glob_pattern
-      .. " (Check Mason jdtls installation?)",
+    "ERROR(fn.glob): Could not find jdtls launcher JAR using pattern: " .. launcher_glob_pattern .. " (Check Mason jdtls installation?)",
     vim.log.levels.ERROR
   )
   return -- Stop config execution if launcher not found
@@ -85,10 +136,7 @@ local launcher_glob_list = vim.split(launcher_glob_result_str, "\n")
 -- print("DEBUG(fn.glob): Split launcher results: " .. vim.inspect(launcher_glob_list))
 
 if #launcher_glob_list == 0 then
-  vim.notify(
-    "ERROR(fn.glob): Split glob result was empty for launcher pattern: " .. launcher_glob_pattern,
-    vim.log.levels.ERROR
-  )
+  vim.notify("ERROR(fn.glob): Split glob result was empty for launcher pattern: " .. launcher_glob_pattern, vim.log.levels.ERROR)
   return
 end
 
@@ -282,25 +330,33 @@ vim.api.nvim_create_autocmd("LspAttach", {
     if client and client.name == "jdtls" then
       vim.keymap.set("n", "<leader>co", jdtls.organize_imports, { buffer = args.buf, desc = "JDTLS Organize Imports" })
       vim.keymap.set("n", "<leader>cv", jdtls.extract_variable, { buffer = args.buf, desc = "JDTLS Extract Variable" })
-      vim.keymap.set("v", "<leader>cv", function()
-        jdtls.extract_variable(true)
-      end, { buffer = args.buf, desc = "JDTLS Extract Variable (Visual)" })
+      vim.keymap.set(
+        "v",
+        "<leader>cv",
+        function() jdtls.extract_variable(true) end,
+        { buffer = args.buf, desc = "JDTLS Extract Variable (Visual)" }
+      )
       vim.keymap.set("n", "<leader>cc", jdtls.extract_constant, { buffer = args.buf, desc = "JDTLS Extract Constant" })
-      vim.keymap.set("v", "<leader>cc", function()
-        jdtls.extract_constant(true)
-      end, { buffer = args.buf, desc = "JDTLS Extract Constant (Visual)" })
-      vim.keymap.set("v", "<leader>cm", function()
-        jdtls.extract_method(true)
-      end, { buffer = args.buf, desc = "JDTLS Extract Method (Visual)" })
-      vim.keymap.set("n", "<leader>djc", function()
-        jdtls.compile()
-      end, { buffer = args.buf, desc = "JDTLS Compile" })
-      vim.keymap.set("n", "<leader>djt", function()
-        jdtls.test_class()
-      end, { buffer = args.buf, desc = "JDTLS Debug Test Class" })
-      vim.keymap.set("n", "<leader>djm", function()
-        jdtls.test_nearest_method()
-      end, { buffer = args.buf, desc = "JDTLS Debug Test Method" })
+      vim.keymap.set(
+        "v",
+        "<leader>cc",
+        function() jdtls.extract_constant(true) end,
+        { buffer = args.buf, desc = "JDTLS Extract Constant (Visual)" }
+      )
+      vim.keymap.set(
+        "v",
+        "<leader>cm",
+        function() jdtls.extract_method(true) end,
+        { buffer = args.buf, desc = "JDTLS Extract Method (Visual)" }
+      )
+      vim.keymap.set("n", "<leader>djc", function() jdtls.compile() end, { buffer = args.buf, desc = "JDTLS Compile" })
+      vim.keymap.set("n", "<leader>djt", function() jdtls.test_class() end, { buffer = args.buf, desc = "JDTLS Debug Test Class" })
+      vim.keymap.set(
+        "n",
+        "<leader>djm",
+        function() jdtls.test_nearest_method() end,
+        { buffer = args.buf, desc = "JDTLS Debug Test Method" }
+      )
       require("jdtls.dap").setup_dap_main_class_configs()
     end
   end,

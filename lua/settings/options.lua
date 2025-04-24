@@ -21,7 +21,7 @@ local vim = vim
 -- General
 -----------------------------------------------------------
 opt.mouse = "a" -- enable mouse support, clicking and scrolling,
-opt.mousemodel = extend -- since v.10
+opt.mousemodel = "popup" -- since v.10
 -- Now I use, option from my mac If you use iTerm,
 -- <<defaults write com.googlecode.iterm2 AlternateMouseScroll -bool true>>
 opt.clipboard = "unnamedplus" -- copy/paste to system clipboard
@@ -38,11 +38,11 @@ set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 set encoding=utf-8
 ]]
 
-vim.cmd [[
-set encoding=utf-8
-set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
-set fileformats=unix,dos,mac
-]]
+-- vim.cmd [[
+-- set encoding=utf-8
+-- set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
+-- set fileformats=unix,dos,mac
+-- ]]
 
 opt.swapfile = false -- don't use swapfile
 
@@ -86,7 +86,8 @@ set write
 -----------------------------------------------------------
 -- Configurations form my old vim script
 -----------------------------------------------------------
-opt.cmdheight = 1 -- vim.cmd('set cmdheight=0') -- Control the height of cmdline
+-- opt.cmdheight = 1 -- vim.cmd('set cmdheight=0') -- Control the height of cmdline
+opt.cmdheight = 2
 opt.wrap = false
 vim.o.wrapscan = false -- Disable search wrapping to stop at EOF instead of cycling to the top.
 opt.relativenumber = true

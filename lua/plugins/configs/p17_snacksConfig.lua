@@ -29,6 +29,13 @@ M.opts = {
           },
           preview = false,
         },
+
+        notifications = {
+          wo = { wrap = false }, -- Enable wrap for notifications picker
+        },
+        show_history = {
+          wo = { wrap = false }, -- Enable wrap for history picker (if this source exists)
+        },
       },
     },
   },
@@ -39,7 +46,7 @@ M.opts = {
   words = { enabled = true },
   styles = {
     notification = {
-      wo = { wrap = true },
+      wo = { wrap = false },
     },
   },
 }
