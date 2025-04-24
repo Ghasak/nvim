@@ -25,14 +25,10 @@ function M.setup()
   local types = require "cmp.types"
   local present, cmp = pcall(require, "cmp")
 
-  if not present then
-    return
-  end
+  if not present then return end
 
   local snip_status_ok, luasnip = pcall(require, "luasnip")
-  if not snip_status_ok then
-    return
-  end
+  if not snip_status_ok then return end
 
   require("luasnip/loaders/from_vscode").lazy_load()
 
@@ -108,9 +104,10 @@ function M.setup()
       { name = "luasnip", option = { use_show_condition = false } },
       { name = "buffer" },
       { name = "nvim_lua" },
+      { name = "cmp_tabnine",  group_index = 2},
+      { name = "codeium",  group_index = 2 },
       -- { name = "ultisnips" },
       -- { name = "vsnip" },
-      { name = "cmp_tabnine" },
       { name = "look" },
       { name = "neorg" },
       { name = "path" },
@@ -121,9 +118,7 @@ function M.setup()
         name = "spell",
         option = {
           keep_all_entries = false,
-          enable_in_context = function()
-            return true
-          end,
+          enable_in_context = function() return true end,
         },
       },
       { name = "emoji" },

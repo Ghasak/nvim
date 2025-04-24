@@ -14,9 +14,7 @@ M.setup = function()
   -- Lua additional support from lua-dev
   -- IMPORTANT: make sure to setup lua-dev BEFORE lspconfig
   local neodev_status, neodev = pcall(require, "neodev")
-  if neodev_status then
-    neodev.setup {}
-  end
+  if neodev_status then neodev.setup {} end
 
   ---- *****************************************************************************************
   ----                     Mason Loader (similar to nvim-lsp-installer)
@@ -62,6 +60,7 @@ M.setup = function()
   }
 
   -- Mason-tool-installer: installing specific linters, formatters, debug adapters, and other tools
+  -- You can use ::MasonToolsUpdate
   require("mason-tool-installer").setup {
     ensure_installed = {
       -- Formatters
@@ -77,11 +76,12 @@ M.setup = function()
       -- Debug Adapters
       "codelldb", -- C/C++/Rust debug adapter
       "debugpy", -- Python debug adapter
-      "java-debug-adapter", -- Java debug adapter
+      -- Java debug adapter not availale from: https://open-vsx.org/api/vscjava/vscode-java-debug/0.58.1/file/vscjava.vscode-java-debug-0.58.1.vsix
+      -- "java-debug-adapter",
       "bash-debug-adapter", -- Bash debug adapter
 
       -- Java-specific tools
-      "java-test", -- Java test runner for JUnit
+      -- "java-test", -- Java test runner for JUnit not avaialable from: https://open-vsx.org/api/vscjava/vscode-java-test/0.43.0/file/vscjava.vscode-java-test-0.43.0.vsix
       "vscode-java-decompiler", -- Java decompiler
 
       -- Other tools
@@ -137,7 +137,7 @@ M.setup = function()
   -- │   • Cleaner and more maintainable LSP code                                   │
   -- ╰──────────────────────────────────────────────────────────────────────────────╯
 
-  -- Base shared options
+  -- on attachment
   local diagnostics = require "plugins.configs.lsp.lsp_settings"
   diagnostics.setup() -- Call sign definitions globally
 
@@ -238,65 +238,117 @@ M.setup = function()
 
     --------------------------- Rust Language Server -----------------------------
     ["rust_analyzer"] = function()
-      local install_root_dir = vim.fn.stdpath "data" .. "/mason"
-      local extension_path = install_root_dir .. "/packages/codelldb/extension/"
-      local codelldb_path = extension_path .. "adapter/codelldb"
-      local liblldb_path = extension_path .. "lldb/lib/liblldb.dylib"
-
-      -- Load rust-tools plugin safely
-      local rust_tools_status_ok, rust_tools = pcall(require, "rust-tools")
-      if not rust_tools_status_ok then
-        return
-      end
-
-      -- Define Rust LSP settings
+      -- Set up the LSP client as usual (without rust-tools yet)
       local rust_opts = {
         on_attach = opts.on_attach,
         capabilities = opts.capabilities,
         handlers = opts.handlers,
         flags = { debounce_text_changes = 500 },
-        settings = rust_tools_settings, -- assuming you define this elsewhere
+        settings = rust_tools_settings, -- your custom settings
       }
 
-      -- Register the config with Neovim 0.11+
       vim.lsp.config("rust_analyzer", rust_opts)
       vim.lsp.enable "rust_analyzer"
 
-      -- Optional: use rust-tools to extend functionality
-      rust_tools.setup {
-        tools = {
-          executor = require("rust-tools/executors").termopen,
-          reload_workspace_from_cargo_toml = true,
-          runnables = { use_telescope = true },
-          hover_actions = { border = "double", auto_focus = true },
-          inlay_hints = {
-            auto = true,
-            only_current_line = false,
-            show_parameter_hints = true,
-            parameter_hints_prefix = "  ",
-            other_hints_prefix = "  ",
-            max_len_align = false,
-            max_len_align_padding = 1,
-            right_align = false,
-            right_align_padding = 7,
-            highlight = "Comment",
-          },
-          on_initialized = function()
-            vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "CursorHold", "InsertLeave" }, {
-              pattern = { "*.rs" },
-              callback = function()
-                pcall(vim.lsp.codelens.refresh)
+      -- Defer rust-tools setup until entering Rust filetype
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "rust",
+        once = true, -- Only trigger once per session
+        callback = function()
+          local rust_tools_status_ok, rust_tools = pcall(require, "rust-tools")
+          if not rust_tools_status_ok then return end
+
+          local install_root_dir = vim.fn.stdpath "data" .. "/mason"
+          local extension_path = install_root_dir .. "/packages/codelldb/extension/"
+          local codelldb_path = extension_path .. "adapter/codelldb"
+          local liblldb_path = extension_path .. "lldb/lib/liblldb.dylib"
+
+          rust_tools.setup {
+            tools = {
+              executor = require("rust-tools/executors").termopen,
+              reload_workspace_from_cargo_toml = true,
+              runnables = { use_telescope = true },
+              hover_actions = { border = "double", auto_focus = true },
+              inlay_hints = {
+                auto = true,
+                show_parameter_hints = true,
+                parameter_hints_prefix = "  ",
+                other_hints_prefix = "  ",
+                highlight = "Comment",
+              },
+              on_initialized = function()
+                vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "CursorHold", "InsertLeave" }, {
+                  pattern = { "*.rs" },
+                  callback = function() pcall(vim.lsp.codelens.refresh) end,
+                })
               end,
-            })
-          end,
-        },
-        server = rust_opts, -- pass the same config as registered above
-        dap = {
-          adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
-        },
-      }
+            },
+            server = rust_opts,
+            dap = {
+              adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
+            },
+          }
+        end,
+      })
     end,
 
+    -- ["rust_analyzer"] = function()
+    --   if vim.bo.filetype ~= "rust" then return end
+    --   local install_root_dir = vim.fn.stdpath "data" .. "/mason"
+    --   local extension_path = install_root_dir .. "/packages/codelldb/extension/"
+    --   local codelldb_path = extension_path .. "adapter/codelldb"
+    --   local liblldb_path = extension_path .. "lldb/lib/liblldb.dylib"
+    --
+    --   -- Load rust-tools plugin safely
+    --   local rust_tools_status_ok, rust_tools = pcall(require, "rust-tools")
+    --   if not rust_tools_status_ok then return end
+    --
+    --   -- Define Rust LSP settings
+    --   local rust_opts = {
+    --     on_attach = opts.on_attach,
+    --     capabilities = opts.capabilities,
+    --     handlers = opts.handlers,
+    --     flags = { debounce_text_changes = 500 },
+    --     settings = rust_tools_settings, -- assuming you define this elsewhere
+    --   }
+    --
+    --   -- Register the config with Neovim 0.11+
+    --   vim.lsp.config("rust_analyzer", rust_opts)
+    --   vim.lsp.enable "rust_analyzer"
+    --
+    --   -- Optional: use rust-tools to extend functionality
+    --   rust_tools.setup {
+    --     tools = {
+    --       executor = require("rust-tools/executors").termopen,
+    --       reload_workspace_from_cargo_toml = true,
+    --       runnables = { use_telescope = true },
+    --       hover_actions = { border = "double", auto_focus = true },
+    --       inlay_hints = {
+    --         auto = true,
+    --         only_current_line = false,
+    --         show_parameter_hints = true,
+    --         parameter_hints_prefix = "  ",
+    --         other_hints_prefix = "  ",
+    --         max_len_align = false,
+    --         max_len_align_padding = 1,
+    --         right_align = false,
+    --         right_align_padding = 7,
+    --         highlight = "Comment",
+    --       },
+    --       on_initialized = function()
+    --         vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "CursorHold", "InsertLeave" }, {
+    --           pattern = { "*.rs" },
+    --           callback = function() pcall(vim.lsp.codelens.refresh) end,
+    --         })
+    --       end,
+    --     },
+    --     server = rust_opts, -- pass the same config as registered above
+    --     dap = {
+    --       adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
+    --     },
+    --   }
+    -- end,
+    --
     --------------------------- LaTeX Language Server -----------------------------
     ["texlab"] = function()
       local texlab_opts = {
@@ -396,9 +448,7 @@ M.setup = function()
         filetypes = { "cpp", "c" },
         on_new_config = function(new_config, new_cwd)
           local ok, cmake = pcall(require, "cmake-tools")
-          if ok then
-            cmake.clangd_on_new_config(new_config)
-          end
+          if ok then cmake.clangd_on_new_config(new_config) end
         end,
       }
 

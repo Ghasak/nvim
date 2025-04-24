@@ -47,7 +47,7 @@ end
 -- this function will be trigger only when TextYankPost event happens.
 _G.highlight_while_yank = function()
   ---@diagnostic disable-next-line: unused-local, undefined-field
-  local exec = vim.api.nvim_exec -- execute Vimscript
+  -- local exec = vim.api.nvim_exec -- execute Vimscript
   -- highlight on yank
   vim.highlight.create("YANK_HIGHLIGHT_COLOR_GROUP", { ctermbg = 0, guibg = "#FFC49B", guifg = "#EEEDBF" }, true)
   -- Having source % can cause problems for certain files

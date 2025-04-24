@@ -22,9 +22,7 @@ local function lsp_keymaps(bufnr)
 end
 
 M.custom_attach = function(client, bufnr)
-  local function buf_set_option(...)
-    vim.api.nvim_buf_set_option(bufnr, ...)
-  end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
   lsp_keymaps(bufnr)
   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
@@ -120,9 +118,7 @@ M.custom_attach = function(client, bufnr)
     client.server_capabilities.document_formatting = true
   end
 
-  if client.name == "lua_ls" then
-    client.server_capabilities.document_formatting = true
-  end
+  if client.name == "lua_ls" then client.server_capabilities.document_formatting = true end
 
   --   local status_ok, illuminate = pcall(require, "illuminate")
   --   if not status_ok then

@@ -1,4 +1,3 @@
-
 local M = {}
 -- ===========================================================================
 --     4.                Capabilities for the language server
@@ -8,9 +7,7 @@ local M = {}
 -- You must specifiy first the defualt server capabilities
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
 local status_cmp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-if not status_cmp_ok then
-  return M
-end
+if not status_cmp_ok then return M end
 
 -- Add folding capabilities required by ufo.nvim
 M.capabilities.textDocument.foldingRange = {

@@ -99,6 +99,7 @@ return {
         "debugloop/telescope-undo.nvim",
         event = "InsertEnter",
       },
+
       { "nvim-telescope/telescope-dap.nvim", event = "InsertEnter" },
     },
   },
@@ -126,15 +127,6 @@ return {
     config = function() require "plugins.configs.p04_myFzf" end,
   },
 
-  -- -- undotree
-  -- {
-  --   "mbbill/undotree",
-  --   event = "VimEnter",
-  --   config = function()
-  --     require "plugins.configs.p05_myUndoTreeConfig"
-  --   end,
-  --   cmd = { "UndotreeToggle", "UndotreeHide" },
-  -- },
   -- Floating Terminal
   {
     "akinsho/toggleterm.nvim",
@@ -269,6 +261,10 @@ return {
       "MasonUninstallAll",
       "MasonLog",
     },
+    registries = {
+      "github:mason-org/mason-registry",
+    },
+
     init = function() require("mason").setup() end,
   },
   {
@@ -280,6 +276,7 @@ return {
       { "williamboman/mason.nvim" },
       { "williamboman/mason-lspconfig.nvim" },
       { "WhoIsSethDaniel/mason-tool-installer.nvim" },
+      { "simrat39/rust-tools.nvim", event = "LspAttach" },
       -- { "saghen/blink.cmp" },
       -- { "dnlhc/glance.nvim" }, -- better jump to definition similar to vscode.
       { "folke/snacks.nvim" },
@@ -351,8 +348,8 @@ return {
     lazy = true,
     ft = { "rust", "toml" },
     tag = "v0.3.0",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    config = function() require("crates").setup { popup = { border = "rounded" } } end,
+    dependencies = { { "nvim-lua/plenary.nvim" }, { "neovim/nvim-lspconfig" } },
+    config = function() require("crates").setup { popup = { border = "double" } } end,
   },
 
   -- Java Enhancements (Highly Recommended)
@@ -388,6 +385,7 @@ return {
 
   {
     "j-hui/fidget.nvim",
+    cond = true,
     event = "LspAttach",
     config = function()
       require("fidget").setup {
@@ -415,7 +413,18 @@ return {
         },
       }
     end,
+
+    keys = {
+      {
+        "<leader>sf",
+        function()
+          vim.cmd "Fidget suppress" -- Wrap vim.cmd in a function properly
+        end,
+        desc = "Start Fidget",
+      },
+    },
   },
+  -- },
 
   -- Using formatter (instead of null-lsp)
   --{"sbdchd/neoformat", event = "VeryLazy", lazy = true, cmd = "Neoformat"},
@@ -524,62 +533,6 @@ return {
 ]]
   { "RishabhRD/nvim-cheat.sh", event = "InsertEnter" },
 
-  {
-    "linrongbin16/lsp-progress.nvim",
-    event = "LspAttach",
-    config = function()
-      require("lsp-progress").setup {
-        client_format = function(client_name, spinner, series_messages)
-          for _, series in ipairs(series_messages) do
-            if not series.done then return spinner end
-          end
-          return "✓" -- Optional: return checkmark when all tasks are done
-        end,
-        series_format = function(title, message, percentage, done)
-          return { msg = "", done = done } -- Suppress message text
-        end,
-      }
-
-      -- 👇 Add this *here*, after setup()
-      vim.api.nvim_create_autocmd("User", {
-        pattern = "LspProgressStatusUpdated",
-        callback = require("lualine").refresh,
-      })
-    end,
-  },
-
-  -- Status line
-  {
-    "nvim-lualine/lualine.nvim",
-    dependencies = {
-      -- { "nvim-treesitter" },
-      { "nvim-web-devicons" },
-      "linrongbin16/lsp-progress.nvim", -- LSP loading progress
-    },
-    --event = "VimEnter",
-    event = "VeryLazy",
-    config = function() require("plugins.configs.p15_myLuaLine").setup() end,
-  },
-
-  -- Buffer line
-  {
-    "akinsho/nvim-bufferline.lua",
-    lazy = true,
-    -- event = "BufWritePre",  -- Only will be trigger when you save your buffer.
-    --event = "CursorMoved",
-    event = "VeryLazy",
-    dependencies = "nvim-web-devicons",
-    config = function() require("plugins.configs.p16_myBufferConfig").config() end,
-  },
-
-  -- This will  highlight the colors as #558817
-  {
-    "norcalli/nvim-colorizer.lua",
-    event = "InsertEnter",
-    lazy = true,
-    cmd = { "ColorizerToggle" },
-    config = function() require("plugins.configs.others").colorizer() end,
-  },
   -- smooth scroll
   -- {
   --   "karb94/neoscroll.nvim",
@@ -637,6 +590,179 @@ return {
     },
   },
 
+  -- Adding symbols outline (similar to vista)
+  {
+    "simrat39/symbols-outline.nvim",
+    lazy = true,
+    event = { "CmdwinEnter" },
+    cmd = { "SymbolsOutline", "SymbolsOutlineOpen", "SymbolsOutlineClose" },
+    config = function() require("plugins.configs.mySymbolsOutline").init() end,
+  },
+  -- Auto pairs
+  {
+    "windwp/nvim-autopairs",
+    lazy = true,
+    event = "InsertEnter",
+    dependencies = { "nvim-treesitter" },
+    config = function() require("plugins.configs.autopairs").setup() end,
+  }, -- Code documentation
+  {
+    "danymat/neogen",
+    lazy = true,
+    event = "InsertEnter",
+    config = function() require("plugins.configs.neogen").setup() end,
+    cmd = { "Neogen" },
+  },
+
+  -- ===========================================================================
+  --                        DEBUGGER TOOLS
+  -- ===========================================================================
+  -- Debugging
+  --use({ "puremourning/vimspector", event = "BufWinEnter" })
+  --Debugging
+  -- This plugin adds virtual text support to nvim-dap. nvim-treesitter is used to find variable definitions.
+  --It will add variable text value in the debugging session.
+  {
+    "theHamsta/nvim-dap-virtual-text",
+    -- cond = false,
+    lazy = true,
+    event = "InsertEnter",
+    config = function()
+      require("nvim-dap-virtual-text").setup {
+        display_callback = function(variable, _, _, _) return variable.name .. "  󰞮 󱚟   " .. variable.value end,
+      }
+      vim.g.dap_virtual_text = true
+    end,
+  },
+  {
+    "mfussenegger/nvim-dap",
+    -- cond = false,
+    lazy = true,
+    event = "InsertEnter",
+    dependencies = {
+      { "nvim-dap-virtual-text", event = "InsertEnter" },
+      { "nvim-dap-python", event = "InsertEnter" },
+      -- Added dependencies for the dap-ui
+      {
+        "rcarriga/nvim-dap-ui",
+        dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
+        event = "InsertEnter",
+      },
+      { "mfussenegger/nvim-dap-python", event = "InsertEnter" },
+      { "nvim-telescope/telescope-dap.nvim", event = "InsertEnter" },
+    },
+    config = function() require "plugins.configs.dap" end,
+  },
+
+  -------------------------------------------------------------
+  -----------------------------------------------------------------
+
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    ---@type snacks.Config
+    opts = function() return require("plugins.configs.p17_snacksConfig").opts end,
+    keys = function() return require("core.keymappings").keys end,
+    init = function() return require("services.snacks_mini_services").snacks_services() end,
+  },
+
+  -- undotree
+  {
+    "mbbill/undotree",
+    event = "VimEnter",
+    config = function() require "plugins.configs.p05_myUndoTreeConfig" end,
+    cmd = { "UndotreeToggle", "UndotreeHide" },
+  },
+
+  -- ==========================================================================
+  -- 	                    Aesthetic and UI Design
+  -- ==========================================================================
+
+  -- Provide a TODO, PERF, HACK, NOTE, NOTE, FIX, WARNING Highlighting
+  {
+    "folke/todo-comments.nvim",
+    event = "BufEnter",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {},
+  },
+
+  {
+    "stevearc/dressing.nvim",
+    cond = false,
+    event = { "InsertEnter" },
+    config = function()
+      require("dressing").setup {
+        border = "rounded",
+      }
+    end,
+  },
+  {
+    "glepnir/dashboard-nvim",
+    cond = false,
+    event = "VimEnter",
+    cond = false, -- Don't load this plugin as I will use the default [netrwPlugin]
+    config = function() require("dashboard").setup(require "plugins.configs.legacy.myDashboard") end,
+    requires = { "nvim-tree/nvim-web-devicons" },
+  }, -- Status line
+
+  {
+    "linrongbin16/lsp-progress.nvim",
+    event = "LspAttach",
+    config = function()
+      require("lsp-progress").setup {
+        client_format = function(client_name, spinner, series_messages)
+          for _, series in ipairs(series_messages) do
+            if not series.done then return spinner end
+          end
+          return "✓" -- Optional: return checkmark when all tasks are done
+        end,
+        series_format = function(title, message, percentage, done)
+          return { msg = "", done = done } -- Suppress message text
+        end,
+      }
+
+      -- 👇 Add this *here*, after setup()
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "LspProgressStatusUpdated",
+        callback = require("lualine").refresh,
+      })
+    end,
+  },
+
+  -- Status line
+  {
+    "nvim-lualine/lualine.nvim",
+    dependencies = {
+      -- { "nvim-treesitter" },
+      { "nvim-web-devicons" },
+      "linrongbin16/lsp-progress.nvim", -- LSP loading progress
+    },
+    --event = "VimEnter",
+    event = "VeryLazy",
+    config = function() require("plugins.configs.p15_myLuaLine").setup() end,
+  },
+
+  -- Buffer line
+  {
+    "akinsho/nvim-bufferline.lua",
+    lazy = true,
+    -- event = "BufWritePre",  -- Only will be trigger when you save your buffer.
+    --event = "CursorMoved",
+    event = "VeryLazy",
+    dependencies = "nvim-web-devicons",
+    config = function() require("plugins.configs.p16_myBufferConfig").config() end,
+  },
+
+  -- This will  highlight the colors as #558817
+  {
+    "norcalli/nvim-colorizer.lua",
+    event = "InsertEnter",
+    lazy = true,
+    cmd = { "ColorizerToggle" },
+    config = function() require("plugins.configs.others").colorizer() end,
+  },
+
   -- ===========================================================================
   --           PRODUCTIVITIES AND PERFORMANCE
   -- ===========================================================================
@@ -685,75 +811,276 @@ return {
   },
 
   -- ===========================================================================
-  --                        DEBUGGER TOOLS
+  --                         FOR EDITOR
   -- ===========================================================================
-  -- Debugging
-  -- use({ "puremourning/vimspector", event = "BufWinEnter" })
-  -- Debugging
-  -- This plugin adds virtual text support to nvim-dap. nvim-treesitter is used to find variable definitions.
-  -- It will add variable text value in the debugging session.
+
+  -- Allow making tables in Markup-language (*.md) files.
+  { "dhruvasagar/vim-table-mode", lazy = true, event = "InsertEnter" },
+  -- For latex to preview lively the pdf while editing
+  -- use("xuhdev/vim-latex-live-preview")
   {
-    "theHamsta/nvim-dap-virtual-text",
+    "frabjous/knap",
+    cond = false,
     lazy = true,
-    event = "InsertEnter",
-    config = function()
-      require("nvim-dap-virtual-text").setup {
-        display_callback = function(variable, _, _, _) return variable.name .. "  󰞮 󱚟   " .. variable.value end,
-      }
-      vim.g.dap_virtual_text = true
-    end,
+    ft = { "tex" },
+    config = function() require "plugins.configs.legacy.myknap" end,
   },
+  -- Align easily in nvim
   {
-    "mfussenegger/nvim-dap",
-    cond = true,
+    "Vonr/align.nvim",
+    branch = "v2",
     lazy = true,
-    event = "InsertEnter",
-    dependencies = {
-      { "nvim-dap-virtual-text", event = "InsertEnter" },
-      { "nvim-dap-python", event = "InsertEnter" },
-      -- Added dependencies for the dap-ui
-      {
-        "rcarriga/nvim-dap-ui",
-        dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
-        event = "InsertEnter",
-      },
-      { "mfussenegger/nvim-dap-python", event = "InsertEnter" },
-      { "nvim-telescope/telescope-dap.nvim", event = "InsertEnter" },
+    event = { "InsertEnter" },
+    init = function() require("plugins.configs.p18_myAlign").config() end,
+  },
+
+  -- Auto-save for nvim, which will save your work triggered on events: "InsertLeave", "TextChanged"
+  -- We don't need the auto-saver anymore it seem, that is correct maybe,try this
+  -- use({
+  --   "Pocco81/auto-save.nvim",
+  --   --opt = true,
+  --   event = "InsertEnter",
+  --   config = function()
+  --     require("auto-save").setup {
+  --       enabled = false, -- Start auto-save when the plugin is loaded.(default is true)
+  --       trigger_events = {"BufLeave"},
+  --     }
+  --   end,
+  -- })
+  --{ "mg979/vim-visual-multi", lazy = true, event = "InsertEnter", branch = "master" },
+
+  --FOLDING THE CODE
+  -- Here, the dependencies, statuscol, will remove the numbers 2, 3, 4 ..etc. for the folding level.
+  -- The configuration is customized and can be seen at my_ufo.lua
+
+  {
+    "kevinhwang91/nvim-ufo",
+    --event = "VimEnter",
+    cmd = {
+      "Command",
+      "UfoEnable",
+      "UfoDisable",
+      "UfoInspect",
+      "UfoAttach", -- This will allow to trigger the folding
+      "UfoDetach",
+      "UfoEnableFold",
+      "UfoDisableFold",
     },
-    config = function() require "plugins.configs.dap" end,
+
+    dependencies = {
+      "kevinhwang91/promise-async",
+      {
+        "luukvbaal/statuscol.nvim",
+        config = function()
+          local builtin = require "statuscol.builtin"
+          require("statuscol").setup {
+            -- foldfunc = "builtin",
+            -- setopt = true,
+            relculright = true,
+            segments = {
+              { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+              { text = { "%s" }, click = "v:lua.ScSa" },
+              { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
+            },
+          }
+        end,
+      },
+    },
+    config = function() require("plugins.configs.p19_my_ufo").config() end,
   },
 
-  -----------------------------------------------------------------
-
+  -- A Neovim (lua) plugin for working with a text-based,
+  -- markdown zettelkasten / wiki and mixing it with a journal, based on telescope.nvim.
   {
-    "folke/snacks.nvim",
-    priority = 1000,
-    lazy = false,
-    ---@type snacks.Config
-    opts = function() return require("plugins.configs.p17_snacksConfig").opts end,
-    keys = function() return require("core.keymappings").keys end,
-    init = function() return require("services.snacks_mini_services").snacks_services() end,
+    "renerocksai/telekasten.nvim",
+    event = "InsertEnter",
+    cmd = { "Telekasten" },
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+      {
+        "renerocksai/calendar-vim",
+        cmd = { "Calendar" },
+      },
+    },
+    config = function() require("plugins.configs.p20_myTelekasten").config() end,
   },
 
-  -- undotree
   {
-    "mbbill/undotree",
+    "junegunn/vim-peekaboo",
+    event = "InsertEnter",
+  },
+
+  -- ===========================================================================
+  --                        NVIM KEYMAPPING MANAGER
+  -- ===========================================================================
+  {
+    "folke/which-key.nvim",
+    event = "InsertEnter",
+    keys = {
+      {
+        "<leader>?",
+        function() require("which-key").show { global = false } end,
+        desc = "Buffer Local Keymaps (which-key)",
+      },
+    },
+    config = function() require("plugins.configs.p21_whichkeyConfig").config() end,
+  }, --
+
+  -- ===========================================================================
+  --                            GIT AND DIFF
+  -- ===========================================================================
+  {
+    "APZelos/blamer.nvim",
+    event = "InsertEnter",
+    config = function() require("plugins.configs.p23_myGitBlamer").BlamerSetting() end,
+  },
+  -- adding (+/-) for diff, in the Gutter      -- Not compatable with the nvim-diagnostics  in nvim 0.6
+  -- use({"mhinz/vim-signify"})
+
+  -- Git
+  {
+    "lewis6991/gitsigns.nvim",
+    event = "InsertEnter",
+    config = function() require "plugins.configs.p22_myGit" end,
+  }, -- Git Diff
+  {
+    "sindrets/diffview.nvim",
+    dependencies = "nvim-lua/plenary.nvim",
+    config = function() require "plugins.configs.p24_myGitDiff" end,
+    cmd = {
+      "DiffviewOpen",
+      "DiffviewClose",
+      "DiffviewToggleFiles",
+      "DiffviewFocusFiles",
+    },
+  },
+  -- replaced with snacks
+  -- {
+  --   "kdheepak/lazygit.nvim",
+  --   event = "InsertEnter",
+  --   cmd = { "LazyGit" },
+  --   -- optional for floating window border decoration
+  --   dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
+  --   -- config = function()
+  --   --   require("telescope").load_extension "lazygit"
+  --   -- end,
+  -- },
+
+  -- ===========================================================================
+  --                          OTHER PLUGINS
+  -- ===========================================================================
+  -- No longer needed since v.10
+  -- {
+  --   "terrortylor/nvim-comment",
+  --   event = "CursorMoved",
+  --   config = function()
+  --     require("nvim_comment").setup()
+  --   end,
+  -- },
+
+  -- NVIM
+  -- plugin for draw ascii digrams intractively.
+  -- Ref: https://github.com/jbyuki/venn.nvim?tab=readme-ov-file
+  {
+    "jbyuki/venn.nvim",
+    --"ghasak/venn.nvim",
+    event = "InsertEnter",
+    lazy = true,
+    cmd = { "VBox" },
+    config = function() require("plugins.configs.p25_myVennDiagram").config() end,
+  },
+  --   AI DEVELOPEMENT
+  -- Models: https://ollama.ai/library
+  -- Run in terminal: ollama serve
+  -- Currently I'am using zephyr model
+  {
+    "David-Kunz/gen.nvim",
+    event = { "InsertEnter" },
+    lazy = true,
+    cmd = { "Gen" },
+    config = function() require("plugins.configs.p26_myGenAI").config() end,
+  },
+
+  -- TMUX [NOT USED FOR NOW]
+  {
+    "christoomey/vim-tmux-navigator",
+    cond = false, -- Loading the dap, if false it will not be loaded,
+    -- It will delete the keymapping (C-\), which affect my floating terminal,
+    -- I removed it already
+    event = "InsertEnter",
+  },
+
+  -- Powerfule AI used for generating code
+  -- :Codeium Auth  will Ask for API_Key
+  -- API_Key will be stored at: ~/.codeium/config.json
+
+  -- {
+  --   "Exafunction/codeium.nvim",
+  --   event = "InsertEnter",
+  --   config = function() require("codeium").setup {} end,
+  -- },
+
+  {
+    "Exafunction/windsurf.vim",
+    event = { "InsertEnter" },
+    cmd = {
+      "Codeium",
+      "CodeiumEnable",
+      "CodeiumDisable",
+      "CodeiumToggle",
+      "CodeiumManual",
+      "CodeiumChat",
+      "CodeiumAuto",
+
+      dependencies = {
+        "nvim-lua/plenary.nvim",
+        "hrsh7th/nvim-cmp",
+      },
+      config = function() require("codeium").setup {} end,
+    },
+    keys = require("core.keymappings").codeium_keys, -- Access the keys table
+  },
+
+  -- {
+  --   "nomnivore/ollama.nvim",
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --   },
+  --
+  --   -- All the user commands added by the plugin
+  --   cmd = { "Ollama", "OllamaModel", "OllamaServe", "OllamaServeStop" },
+  --
+  --   keys = {
+  --     -- Sample keybind for prompt menu. Note that the <c-u> is important for selections to work properly.
+  --     {
+  --       "<leader>oo",
+  --       ":<c-u>lua require('ollama').prompt()<cr>",
+  --       desc = "ollama prompt",
+  --       mode = { "n", "v" },
+  --     },
+  --
+  --     -- Sample keybind for direct prompting. Note that the <c-u> is important for selections to work properly.
+  --     {
+  --       "<leader>oG",
+  --       ":<c-u>lua require('ollama').prompt('Generate_Code')<cr>",
+  --       desc = "ollama Generate Code",
+  --       mode = { "n", "v" },
+  --     },
+  --   },
+  --
+  --   ---@type Ollama.Config
+  --   opts = {
+  --     -- your configuration overrides
+  --   }
+  -- }
+  --
+
+  {
+    "stevearc/oil.nvim",
+    cond = false,
     event = "VimEnter",
-    config = function() require "plugins.configs.p05_myUndoTreeConfig" end,
-    cmd = { "UndotreeToggle", "UndotreeHide" },
+    dependencies = { { "echasnovski/mini.icons", opts = {} } },
+    config = function() require("plugins.configs.p27_myOilConfig").config() end,
   },
-
-  -- ==========================================================================
-  -- 	                    Aesthetic and UI Design
-  -- ==========================================================================
-
-  -- Provide a TODO, PERF, HACK, NOTE, NOTE, FIX, WARNING Highlighting
-  {
-    "folke/todo-comments.nvim",
-    event = "BufEnter",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    opts = {},
-  },
-
   ---------------- END OF PLUGINS SETTING -------------------------
 }

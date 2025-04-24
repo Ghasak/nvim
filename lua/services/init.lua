@@ -1,5 +1,6 @@
 local init_modules = {
   "services.diagnostic_toggle",
+  "services.customized_autocmd"
 }
 
 for _, module in ipairs(init_modules) do

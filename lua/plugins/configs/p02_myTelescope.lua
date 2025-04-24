@@ -4,9 +4,7 @@ local M = {}
 local map = function(op, outer)
   outer = outer or { silent = true, noremap = true }
   return function(lhs, rhs, opts)
-    if type(lhs) ~= "table" then
-      lhs = { lhs }
-    end
+    if type(lhs) ~= "table" then lhs = { lhs } end
 
     opts = vim.tbl_extend("force", outer, opts or {})
 
@@ -44,13 +42,12 @@ M.setup = function()
     builtin.find_files { sorter = require("telescope.sorters").get_generic_fuzzy_sorter {} }
   end)
 
-  vim.g.nmap("<leader>fv", function()
-    telescope.extensions.frecency.frecency { sorter = require("telescope.sorters").get_generic_fuzzy_sorter {} }
-  end)
+  vim.g.nmap(
+    "<leader>fv",
+    function() telescope.extensions.frecency.frecency { sorter = require("telescope.sorters").get_generic_fuzzy_sorter {} } end
+  )
 
-  vim.g.nmap("<leader>fg", function()
-    builtin.live_grep()
-  end)
+  vim.g.nmap("<leader>fg", function() builtin.live_grep() end)
 
   vim.g.nmap("<leader>fb", function()
     builtin.buffers(themes.get_dropdown {
@@ -65,34 +62,24 @@ M.setup = function()
   end)
 
   -- The functions telescope_live_grep_in_path is created.
-  vim.keymap.set("n", "<leader>fD", function()
-    telescope_live_grep_in_path()
-  end)
+  vim.keymap.set("n", "<leader>fD", function() telescope_live_grep_in_path() end)
   -- vim.keymap.set('n', '<leader><space>',
   --                function() telescope_files_or_git_files() end)
-  vim.keymap.set("n", "<leader>fd", function()
-    telescope_find_files_in_path()
-  end)
+  vim.keymap.set("n", "<leader>fd", function() telescope_find_files_in_path() end)
 
   vim.g.nmap("<leader>fy", function()
     -- builtin.help_tags(ivy)
     --builtin.help_tags({ sorter = require('telescope.sorters').get_generic_fuzzy_sorter({}) })
     telescope.extensions.yank_history.yank_history {}
   end)
-  vim.g.nmap("<leader>fp", function()
-    telescope.extensions.project.project {}
-  end)
-  vim.g.nmap("<leader>U", function()
-    telescope.extensions.undo.undo {}
-  end)
+  vim.g.nmap("<leader>fp", function() telescope.extensions.project.project {} end)
+  vim.g.nmap("<leader>U", function() telescope.extensions.undo.undo {} end)
 
   -- vim.g.nmap("<leader>th", function()
   --   builtin.colorscheme(ivy)
   -- end)
 
-  vim.keymap.set("n", ";e", function()
-    builtin.diagnostics()
-  end)
+  vim.keymap.set("n", ";e", function() builtin.diagnostics() end)
 end
 
 M.config = function()
@@ -207,7 +194,6 @@ M.config = function()
         case_mode = "smart_case",
       },
       project = {
-        hidden_files = true,
       },
       frecency = {
         --db_root = "/home/my_username/path/to/db_root",
@@ -279,26 +265,40 @@ M.config = function()
     },
   }
 
-  --telescope.load_extension('project')
-  telescope.load_extension "fzf"
-  -- This is the best option to open window for selection instead the regular selection in cmdline
-  telescope.load_extension "ui-select"
-  -- Jump to most common places
-  --telescope.load_extension "frecency"
-  -- See more feature about lazygit
-  --telescope.load_extension "lazygit"
-  -- Allow us to jump to dap point and other features
-  telescope.load_extension "dap"
-  -- Allow us to see the register nicely for our current selection (<leader>fy)
-  --telescope.load_extension "yank_history"
-  -- This will allow us to jump to any go to definition using the lspconfig
-  -- telescope.load_extension "lsp_handlers" deprecatted since v11
-  -- Jump on markdown heading easily within the given document (:Telescope heading), markdown files only.
-  telescope.load_extension "heading"
-  -- Undo Telescope
-  telescope.load_extension "undo"
-  -- for spinning wheel when lsp attached.
-  telescope.load_extension "fidget"
+  local function safe_load_extension(ext, plugin)
+    local ok = true
+    if plugin then ok = pcall(require, plugin) end
+    if ok then pcall(function() telescope.load_extension(ext) end) end
+  end
+
+  -- Assuming telescope is already required
+  -- local telescope = require('telescope')
+
+  safe_load_extension "fzf" -- Always load fzf
+  safe_load_extension "ui-select" -- Always load ui-select
+  safe_load_extension("dap", "dap") -- Load dap extension if dap plugin exists
+  safe_load_extension("heading", "telescope-heading") -- Load heading if telescope-heading is present
+  safe_load_extension("undo", "telescope-undo") -- Load undo if telescope-undo is present
+  safe_load_extension("fidget", "fidget") -- Load fidget if fidget is present
+  -- --telescope.load_extension('project')
+  -- telescope.load_extension "fzf"
+  -- -- This is the best option to open window for selection instead the regular selection in cmdline
+  -- telescope.load_extension "ui-select"
+  -- -- Jump to most common places
+  -- --telescope.load_extension "frecency"
+  -- -- See more feature about lazygit
+  -- --telescope.load_extension "lazygit"
+  -- -- Allow us to jump to dap point and other features
+  -- telescope.load_extension "dap"
+  -- -- Allow us to see the register nicely for our current selection (<leader>fy)
+  -- --telescope.load_extension "yank_history"
+  -- -- This will allow us to jump to any go to definition using the lspconfig
+  -- -- telescope.load_extension "lsp_handlers" deprecatted since v11
+  -- -- Jump on markdown heading easily within the given document (:Telescope heading), markdown files only.
+  -- telescope.load_extension "heading"
+  -- -- Undo Telescope
+  -- telescope.load_extension "undo"
+  -- -- for spinning wheel when lsp attached.
 end
 
 M.setup()

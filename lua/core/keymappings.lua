@@ -21,6 +21,8 @@
 -- 1. Load the plugins which means (load the lspconfig custom_attach key-mapping at first).
 -- 2. Load the settings which will load the current configurations,
 -- 3. Load the lsp-saga, at the end of this file
+
+local M = {}
 vim.bo.expandtab = true
 vim.bo.shiftwidth = 2
 vim.bo.softtabstop = 2
@@ -456,7 +458,6 @@ vim.keymap.set("n", "<leader>cd", "<Plug>(VM-Add-Cursor-Down)", { desc = "vim vi
 ---- *****************************************************************************************
 ----                  SUPPORT FOR TELEKASTEN NOTES (OBSIDIAN)
 ---- *****************************************************************************************
--- Launch panel if nothing is typed after <leader>z
 vim.keymap.set("n", "<leader>tk", "<cmd>Telekasten panel<CR>")
 
 ---- *****************************************************************************************
@@ -572,23 +573,21 @@ vim.keymap.set("n", "<leader>tf", function() require("telescope").extensions.fid
 
 -- ~/.config/nvim/lua/config/snacks/keymaps.lua
 
-local M = {}
-
 M.keys = {
-  { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
+  { "<leader>bb", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
   { "<leader>,", function() Snacks.picker.buffers() end, desc = "Buffers" },
   { "<leader>/", function() Snacks.picker.grep() end, desc = "Grep" },
-  { "<leader>ftt", function() Snacks.explorer() end, desc = "File Explorer" },
+  -- { "<leader>ftt", function() Snacks.explorer() end, desc = "File Explorer" },
   -- Add other keymaps similarly...
 
   -- Top Pickers & Explorer
   {
-    "<leader><space>",
+    "<leader>bs",
     function() Snacks.picker.smart() end,
     desc = "Smart Find Files",
   },
   {
-    "<leader>,",
+    "<leader>b,",
     function() Snacks.picker.buffers() end,
     desc = "Buffers",
   },
@@ -639,7 +638,7 @@ M.keys = {
     desc = "Projects",
   },
   {
-    "<leader>fr",
+    "<leader>br",
     function() Snacks.picker.recent() end,
     desc = "Recent",
   },
@@ -846,7 +845,7 @@ M.keys = {
   },
   -- Other
   {
-    "<leader>z",
+    "<leader>zz",
     function() Snacks.zen() end,
     desc = "Toggle Zen Mode",
   },
@@ -939,4 +938,38 @@ M.keys = {
   },
 }
 
+M.codeium_keys = {
+  {
+    "<C-g>",
+    function() return vim.fn["codeium#Accept"]() end,
+    mode = "i",
+    expr = true,
+    silent = true,
+    desc = "Codeium Accept",
+  },
+  {
+    "<C-;>",
+    function() return vim.fn end, -- Your function here
+    mode = "i",
+    expr = true,
+    silent = true,
+    desc = "Codeium Next Completion",
+  },
+  {
+    "<C-,>",
+    function() return vim.fn["codeium#CycleCompletions"](-1) end,
+    mode = "i",
+    expr = true,
+    silent = true,
+    desc = "Codeium Previous Completion",
+  },
+  {
+    "<C-x>",
+    function() return vim.fn["codeium#Clear"]() end,
+    mode = "i",
+    expr = true,
+    silent = true,
+    desc = "Codeium Clear",
+  },
+}
 return M
