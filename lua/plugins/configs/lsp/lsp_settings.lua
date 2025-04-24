@@ -14,12 +14,12 @@ M.setup = function()
         [vim.diagnostic.severity.INFO] = "",
       },
       -- (optional) highlight group to use for the *line‑number*
-      -- numhl = {
-      --   [vim.diagnostic.severity.ERROR] = "DiagnosticLineNrError",
-      --   [vim.diagnostic.severity.WARN] = "DiagnosticLineNrWarn",
-      --   [vim.diagnostic.severity.HINT] = "DiagnosticLineNrHint",
-      --   [vim.diagnostic.severity.INFO] = "DiagnosticLineNrInfo",
-      -- },
+      numhl = {
+        [vim.diagnostic.severity.ERROR] = "DiagnosticLineNrError",
+        [vim.diagnostic.severity.WARN] = "DiagnosticLineNrWarn",
+        [vim.diagnostic.severity.HINT] = "DiagnosticLineNrHint",
+        [vim.diagnostic.severity.INFO] = "DiagnosticLineNrInfo",
+      },
     },
 
     -- ⬇️  Everything else you already had ─────────────────────

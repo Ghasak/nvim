@@ -80,8 +80,6 @@ if vim.g.transparent_enabled then
   -- transparent.clear_prefix("lualine")
 end
 
--- for many years this could be the same for our
---
 ------------------------------------------------------------------
 -- configurations placeholder to be removed later - to be added to the githubG
 -- vim.api.nvim_set_hl(0, "@punctuation.bracket", { fg = "#d0d8df" })
@@ -102,13 +100,8 @@ end
 --   background_colour = "#1e222a", -- Replace with your desired color
 -- }
 ------------------------------------------------------------------
--- lua/after/plugin/diag_virtual_lines.lua  (or wherever you like)
 --
 
--- local function sync_undotree_width_to_snacks(fraction)
---   local total_columns = vim.o.columns
---   local width = math.floor(total_columns * (fraction or 0.2))
---   vim.g.undotree_SplitWidth = width
 --
 -- end
 

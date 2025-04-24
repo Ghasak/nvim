@@ -226,8 +226,8 @@ local config = {
   },
   root_dir = require("jdtls.setup").find_root { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" },
 
-  on_attach = require("plugins.configs.lsp.lsp_attach").custom_attach,
-  capabilities = require("plugins.configs.lsp.lsp_capabilities").capabilities,
+  -- on_attach = require("plugins.configs.lsp.lsp_attach").custom_attach,
+  -- capabilities = require("plugins.configs.lsp.lsp_capabilities").capabilities,
   -- handlers = require("plugins.configs.lsp.lsp_handlers").handlers,
 
   settings = {
@@ -311,15 +311,47 @@ local config = {
   },
 }
 
--- Needed for debugging
-config["on_attach"] = function(client, bufnr)
-  -- Your existing dap setup
-  jdtls.setup_dap { hotcodereplace = "auto" }
-  require("jdtls.dap").setup_dap_main_class_configs()
-  -- Include the original on_attach from your lsp config
-  require("plugins.configs.lsp.lsp_attach").custom_attach(client, bufnr)
-  -- print("Hover supported: ", client.server_capabilities.hoverProvider)
-end
+-- -- Needed for debugging
+-- config["on_attach"] = function(client, bufnr)
+--   -- Your existing dap setup
+--   jdtls.setup_dap { hotcodereplace = "auto" }
+--   require("jdtls.dap").setup_dap_main_class_configs()
+--   -- Include the original on_attach from your lsp config
+--   require("plugins.configs.lsp.lsp_attach").custom_attach(client, bufnr)
+--   -- print("Hover supported: ", client.server_capabilities.hoverProvider)
+-- end
+
+---------------------------------------------------------------------
+-- Load your diagnostics and custom on_attach
+local diagnostics = require "plugins.configs.lsp.lsp_settings"
+diagnostics.setup()
+
+local base_on_attach = require("plugins.configs.lsp.lsp_attach").custom_attach
+
+local opts = {
+  on_attach = function(client, bufnr)
+    diagnostics.on_attach(client, bufnr) -- Your diagnostics setup
+    base_on_attach(client, bufnr) -- Your existing lsp_attach logic
+
+    -- Add JDTLS-specific setup (DAP, etc.)
+    jdtls.setup_dap { hotcodereplace = "auto" }
+    require("jdtls.dap").setup_dap_main_class_configs()
+  end,
+  capabilities = require("plugins.configs.lsp.lsp_capabilities").capabilities,
+  special_attach = require("plugins.configs.lsp.lsp_special_attach").custom_attach,
+}
+
+-- Assign opts.on_attach and capabilities to your jdtls config
+config.on_attach = opts.on_attach
+config.capabilities = opts.capabilities
+
+---------------------------------------------------------------------
+
+
+
+
+
+
 
 --Add keymaps specific to Java/jdtls after attach (optional, but useful)
 vim.api.nvim_create_autocmd("LspAttach", {
