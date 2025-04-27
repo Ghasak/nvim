@@ -1,19 +1,21 @@
 return {
   {
-    "projekt0n/github-nvim-theme",
+    -- "ghasak/neo-github-nvim-theme",
+    dir = "/Users/gmbp/Desktop/devCode/luaHub/neo-github-nvim-theme",
     name = "github-theme",
     cond = false,
     lazy = false, -- make sure we load this during startup if it is your main colorscheme
     priority = 1000, -- make sure to load this before all the other start plugins
     config = function()
+      local c = require "colors.custom_github_theme"
       require("github-theme").setup {
-        -- ...
+        palettes = c.palettes,
+        specs = c.specs,
+        groups = c.groups,
       }
-
       vim.cmd "colorscheme github_dark" -- github_light -- github_dark_dimmed
     end,
   },
-  --
 
   ---@diagnostic disable, 2: 2
   {
@@ -50,6 +52,67 @@ return {
     --   { "p00f/nvim-ts-rainbow", event = "InsertEnter" },
     -- },
   },
+
+  ----------------------------------------------------------------
+  --                  treesitter tools
+  --  {all were in the dependencies of nvim-treesitter}
+  ----------------------------------------------------------------
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    event = "InsertEnter",
+  },
+  { "windwp/nvim-ts-autotag", event = "InsertEnter" },
+  {
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    event = "InsertEnter",
+  },
+  { "RRethy/nvim-treesitter-textsubjects", event = "InsertEnter" },
+  {
+    -- This plugin is alternative to nvim.context
+    "nvim-treesitter/nvim-treesitter-context",
+    cond = true, -- Loading the context, if false it will not be loaded,
+    cmd = { "TSContextDisable", "TSContextEnable", "TSContextToggle" },
+    event = "InsertEnter",
+    config = function()
+      require("treesitter-context").setup {
+        enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+        multiwindow = false, -- Enable multiwindow support.
+        max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+        min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+        line_numbers = true,
+        multiline_threshold = 20, -- Maximum number of lines to show for a single context
+        trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+        mode = "cursor", -- Line used to calculate context. Choices: 'cursor', 'topline'
+        -- Separator between context and content. Should be a single character string, like '-'.
+        -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
+        separator = nil,
+        zindex = 20, -- The Z-index of the context window
+        on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
+      }
+    end,
+  },
+  ----------------------------------------------------------------
+
+  { "nvim-treesitter/playground", event = "InsertEnter" }, -- Better icons
+  {
+    "kyazdani42/nvim-web-devicons",
+    event = "VimEnter",
+    config = function()
+      require("nvim-web-devicons").setup {
+        default = true,
+        -- takes effect when `strict` is true
+        override_by_filename = {
+          [".gitignore"] = {
+            icon = "",
+            color = "#f1502f",
+            name = "Gitignore",
+          },
+          ["tex"] = { icon = "󰙩", color = "#70B77E", name = "tex" },
+        },
+      }
+    end,
+  },
+
   --
   -- ==========================================================================
   -- 	                     Navigation and Explorer
@@ -198,9 +261,6 @@ return {
           "hrsh7th/vim-vsnip-integ",
           "dcampos/nvim-snippy",
         },
-        --    config = function()
-        --      require("config.snip").setup()
-        --    end,
       },
       "rafamadriz/friendly-snippets",
       "honza/vim-snippets",
@@ -213,7 +273,23 @@ return {
     -- lazy = true,
     event = "InsertEnter",
     build = "./install.sh",
-    dependencies = { "hrsh7th/nvim-cmp", "cmp-buffer" },
+
+    config = function()
+      local tabnine = require "cmp_tabnine.config"
+
+      tabnine:setup {
+        max_lines = 1000,
+        max_num_results = 20,
+        sort = true,
+        run_on_every_keystroke = true,
+        snippet_placeholder = "..",
+        ignored_file_types = {
+        },
+        show_prediction_strength = false,
+        min_percent = 0,
+      }
+    end,
+    -- dependencies = { "hrsh7th/nvim-cmp", "cmp-buffer" },
   },
   -- -- Indent
   -- {
@@ -261,9 +337,9 @@ return {
       "MasonUninstallAll",
       "MasonLog",
     },
-    registries = {
-      "github:mason-org/mason-registry",
-    },
+    -- registries = {
+    --   "github:mason-org/mason-registry",
+    -- },
 
     init = function() require("mason").setup() end,
   },
@@ -733,6 +809,7 @@ return {
   -- Status line
   {
     "nvim-lualine/lualine.nvim",
+    cond = true,
     dependencies = {
       -- { "nvim-treesitter" },
       { "nvim-web-devicons" },
@@ -915,6 +992,7 @@ return {
   -- ===========================================================================
   {
     "folke/which-key.nvim",
+    cond = true,
     event = "InsertEnter",
     keys = {
       {
@@ -940,6 +1018,7 @@ return {
   -- Git
   {
     "lewis6991/gitsigns.nvim",
+    cond = true,
     event = "InsertEnter",
     config = function() require "plugins.configs.p22_myGit" end,
   }, -- Git Diff
@@ -1082,5 +1161,49 @@ return {
     dependencies = { { "echasnovski/mini.icons", opts = {} } },
     config = function() require("plugins.configs.p27_myOilConfig").config() end,
   },
+
+
+  -- ==========================================================================
+  -- 	                  DATA BASES AND SQL SERVER CONTORLLER
+  -- =========================================================================
+
+  {
+    "kristijanhusak/vim-dadbod-ui",
+    dependencies = {
+      { "tpope/vim-dadbod", lazy = true },
+      { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true }, -- Optional
+    },
+    cmd = {
+      "DBUI",
+      "DBUIToggle",
+      "DBUIAddConnection",
+      "DBUIFindBuffer",
+    },
+    init = function()
+      -- Your DBUI configuration
+      require("plugins.configs.mydadbod").config()
+    end,
+  },
+
+  -- https://www.youtube.com/watch?v=MDlYsGbKJyQ&ab_channel=CheesedUp
+  --   {
+  --     "kndndrj/nvim-dbee",
+  --     ft = { "sql", "mysql", "plsql" },
+  --     dependencies = {
+  --       "MunifTanjim/nui.nvim",
+  --     },
+  --     build = function()
+  --       -- Install tries to automatically detect the install method.
+  --       -- if it fails, try calling it with one of these parameters:
+  --       --    "curl", "wget", "bitsadmin", "go"
+  --       require("dbee").install()
+  --     end,
+  --     config = function()
+  --       require("dbee").setup(--[[optional config]])
+  --     end,
+  --   },
+
+  -- in your lazy.nvim spec:
+
   ---------------- END OF PLUGINS SETTING -------------------------
 }

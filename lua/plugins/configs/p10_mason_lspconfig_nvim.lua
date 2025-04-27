@@ -78,11 +78,11 @@ M.setup = function()
       "codelldb", -- C/C++/Rust debug adapter
       "debugpy", -- Python debug adapter
       -- Java debug adapter not availale from: https://open-vsx.org/api/vscjava/vscode-java-debug/0.58.1/file/vscjava.vscode-java-debug-0.58.1.vsix
-      -- "java-debug-adapter",
+      "java-debug-adapter",
       "bash-debug-adapter", -- Bash debug adapter
 
       -- Java-specific tools
-      -- "java-test", -- Java test runner for JUnit not avaialable from: https://open-vsx.org/api/vscjava/vscode-java-test/0.43.0/file/vscjava.vscode-java-test-0.43.0.vsix
+      "java-test", -- Java test runner for JUnit not avaialable from: https://open-vsx.org/api/vscjava/vscode-java-test/0.43.0/file/vscjava.vscode-java-test-0.43.0.vsix
       "vscode-java-decompiler", -- Java decompiler
 
       -- Other tools

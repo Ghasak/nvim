@@ -4,7 +4,7 @@
 -- #                                                .a@@@@@#########@@@@a.                                    #
 -- #                                            .a@@######@@@mm@@mm######@@@a.                                #
 -- #                                       .a####@@@@@@@@@@@@@@@@@@@mm@@##@@v;%%,.                            #
--- #                                    .a###v@@@@@@@@vvvvvvvvvvvvvv@@@@#@v;%%%vv%%,                          #
+-- #                                    .a###v@@@@@@@@vvvvvvVVvvvvvv@@@@#@v;%%%vv%%,                          #
 -- #                                 .a##vv@@@@@@@@vv%%%%;S,  .S;%%vv@@#v;%%'/%vvvv%;                         #
 -- #                               .a##@v@@@@@vv%%vvvvvv%%;SssS;%%vvvv@v;%%./%vvvvvv%;                        #
 -- #                             ,a##vv@@@vv%%%@@@@@@@@@@@@mmmmmmmmmvv;%%%%vvvvvvvvv%;                        #
@@ -79,4 +79,5 @@ if vim.g.transparent_enabled then
   -- Uncomment the line below to clear prefix for lualine if needed
   -- transparent.clear_prefix("lualine")
 end
+
 

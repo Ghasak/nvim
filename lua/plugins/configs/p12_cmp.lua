@@ -21,6 +21,7 @@ end
 --------------------------------------------------------------------
 
 function M.setup()
+
   ---@diagnostic disable-next-line: unused-local
   local types = require "cmp.types"
   local present, cmp = pcall(require, "cmp")
@@ -96,6 +97,8 @@ function M.setup()
     min_percent = 0,
   }
 
+
+
   -- nvim-cmp setup
   cmp.setup {
     sources = {
@@ -104,10 +107,10 @@ function M.setup()
       { name = "luasnip", option = { use_show_condition = false } },
       { name = "buffer" },
       { name = "nvim_lua" },
-      { name = "cmp_tabnine",  group_index = 2},
-      { name = "codeium",  group_index = 2 },
+      { name = "codeium" },
       -- { name = "ultisnips" },
       -- { name = "vsnip" },
+      { name = "cmp_tabnine" , group_index = 2},
       { name = "look" },
       { name = "neorg" },
       { name = "path" },

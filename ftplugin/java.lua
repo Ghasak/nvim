@@ -347,12 +347,6 @@ config.capabilities = opts.capabilities
 
 ---------------------------------------------------------------------
 
-
-
-
-
-
-
 --Add keymaps specific to Java/jdtls after attach (optional, but useful)
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("UserLspJavaSettings", { clear = true }),

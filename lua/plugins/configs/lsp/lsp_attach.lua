@@ -1,5 +1,38 @@
 local M = {}
+------------------------------------------------------------------------------------------
+-- helper to set the LSP “reference” highlights
+------------------------------------------------------------------------------------------
+local function apply_lsp_reference_hl()
+  local scheme = vim.g.colors_name
+  local bg
 
+  if scheme == "github_dark" then
+    bg = "#4a535f"
+  elseif scheme == "github_light" then
+    bg = "#79c0ff"
+  else
+    return
+  end
+
+  for _, group in ipairs { "LspReferenceRead", "LspReferenceText", "LspReferenceWrite" } do
+    vim.api.nvim_set_hl(0, group, {
+      bg = bg,
+      bold = true,
+    })
+  end
+end
+
+-- run it now (for your startup colorscheme)
+apply_lsp_reference_hl()
+
+-- re-apply on theme change
+vim.api.nvim_create_autocmd("ColorScheme", {
+  pattern = { "github_dark", "github_light" },
+  callback = apply_lsp_reference_hl,
+})
+------------------------------------------------------------------------------
+--       keymap on attaches for lsp  server_capabilities
+------------------------------------------------------------------------------
 local function lsp_keymaps(bufnr)
   local opts = { noremap = true, silent = true }
   local keymap = vim.api.nvim_buf_set_keymap
@@ -61,11 +94,21 @@ M.custom_attach = function(client, bufnr)
     end,
   })
   if client.server_capabilities.documentHighlightProvider then -- Since Nvim v.0.8
-    vim.cmd [[
-          hi LspReferenceRead  cterm=bold ctermbg=NONE guibg=#4a535f  "guifg=black
-          hi LspReferenceText  cterm=bold ctermbg=NONE guibg=#4a535f  "guifg=black
-          hi LspReferenceWrite cterm=bold ctermbg=NONE guibg=#4a535f  "guifg=black
-         ]]
+    -- your existing CursorHold → vim.lsp.buf.document_highlight() setup
+    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+      buffer = bufnr,
+      callback = vim.lsp.buf.document_highlight,
+    })
+    vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+      buffer = bufnr,
+      callback = vim.lsp.buf.clear_references,
+    })
+    -- previous config before the helper function above
+    -- vim.cmd [[
+    --       hi LspReferenceRead  cterm=bold ctermbg=NONE guibg=#4a535f  "guifg=black
+    --       hi LspReferenceText  cterm=bold ctermbg=NONE guibg=#4a535f  "guifg=black
+    --       hi LspReferenceWrite cterm=bold ctermbg=NONE guibg=#4a535f  "guifg=black
+    --      ]]
     vim.api.nvim_create_augroup("lsp_document_highlight", { clear = false })
     vim.api.nvim_clear_autocmds {
       buffer = bufnr,
