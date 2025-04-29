@@ -26,7 +26,7 @@
 -- #                     %%%;vv;%;vv;%%%v;%%%%;vvv;%%%v;%%%;vvv;%;vv;%%%%%;vv;%%%;vvv;.%%%,                   #
 -- #                                                                                                          #
 -- #                    You are about to experience a potent dosage of Neovim Watch your steps.               #
--- #                                               Version 0.11.0                                             #
+-- #                                               Version 0.11.1                                             #
 -- #                                                                                                          #
 -- #                                  ░█▀█░█▀▀░█▀█░█░█░▀█▀░█▄█░░░▀█░░▀█░                                      #
 -- #                                  ░█░█░█▀▀░█░█░▀▄▀░░█░░█░█░░░░█░░░█░                                      #

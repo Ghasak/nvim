@@ -33,7 +33,7 @@ return {
   -- 	                      Utilities for NVIM IDE Env
   -- ==========================================================================
   { "nvim-lua/popup.nvim", lazy = true }, -- An implementation of the Popup API from vim in Neovim
-  { "nvim-lua/plenary.nvim", lazy = true },
+  { "nvim-lua/plenary.nvim", branch = "master", lazy = true },
   -- ==========================================================================
 
   -- ==========================================================================
@@ -206,14 +206,26 @@ return {
     config = function() require("plugins.configs.p07_myDired").config() end,
   },
 
-  -- Using Rnvim  <Ranger>
-  {
-    "kevinhwang91/rnvimr",
-    lazy = true,
-    cmd = { "RnvimrToggle" },
-    config = function() require("plugins.configs.p08_myRanger").Style() end,
-  }, -- will allow to copy and paste in Nvim
+  -- Using Rnvim  <Ranger> replaced with Yazi
+  -- {
+  --   "kevinhwang91/rnvimr",
+  --   lazy = true,
+  --   cmd = { "RnvimrToggle" },
+  --   config = function() require("plugins.configs.p08_myRanger").Style() end,
+  -- }, -- will allow to copy and paste in Nvim
   { "christoomey/vim-system-copy", lazy = true, event = "InsertEnter" },
+  {
+    "mikavilpas/yazi.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      -- check the installation instructions at
+      -- https://github.com/folke/snacks.nvim
+      "folke/snacks.nvim",
+    },
+    keys = require("plugins.configs.p28_myYazi").keys,
+    opts = require("plugins.configs.p28_myYazi").opts,
+    init = require("plugins.configs.p28_myYazi").init,
+  },
 
   -- =========================================================================
   -- 	                  Programming Language Servers
@@ -283,8 +295,7 @@ return {
         sort = true,
         run_on_every_keystroke = true,
         snippet_placeholder = "..",
-        ignored_file_types = {
-        },
+        ignored_file_types = {},
         show_prediction_strength = false,
         min_percent = 0,
       }
@@ -1045,6 +1056,47 @@ return {
   --   -- end,
   -- },
 
+  -- ==========================================================================
+  -- 	                  DATA BASES AND SQL SERVER CONTORLLER
+  -- =========================================================================
+
+  {
+    "kristijanhusak/vim-dadbod-ui",
+    dependencies = {
+      { "tpope/vim-dadbod", lazy = true },
+      { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true }, -- Optional
+    },
+    cmd = {
+      "DBUI",
+      "DBUIToggle",
+      "DBUIAddConnection",
+      "DBUIFindBuffer",
+    },
+    init = function()
+      -- Your DBUI configuration
+      require("plugins.configs.mydadbod").config()
+    end,
+  },
+
+  -- https://www.youtube.com/watch?v=MDlYsGbKJyQ&ab_channel=CheesedUp
+  --   {
+  --     "kndndrj/nvim-dbee",
+  --     ft = { "sql", "mysql", "plsql" },
+  --     dependencies = {
+  --       "MunifTanjim/nui.nvim",
+  --     },
+  --     build = function()
+  --       -- Install tries to automatically detect the install method.
+  --       -- if it fails, try calling it with one of these parameters:
+  --       --    "curl", "wget", "bitsadmin", "go"
+  --       require("dbee").install()
+  --     end,
+  --     config = function()
+  --       require("dbee").setup(--[[optional config]])
+  --     end,
+  --   },
+
+  -- in your lazy.nvim spec:
   -- ===========================================================================
   --                          OTHER PLUGINS
   -- ===========================================================================
@@ -1120,39 +1172,7 @@ return {
     keys = require("core.keymappings").codeium_keys, -- Access the keys table
   },
 
-  {
-    "nomnivore/ollama.nvim",
-    cond = false,
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-
-    -- All the user commands added by the plugin
-    cmd = { "Ollama", "OllamaModel", "OllamaServe", "OllamaServeStop" },
-
-    keys = {
-      -- Sample keybind for prompt menu. Note that the <c-u> is important for selections to work properly.
-      {
-        "<leader>oo",
-        ":<c-u>lua require('ollama').prompt()<cr>",
-        desc = "ollama prompt",
-        mode = { "n", "v" },
-      },
-
-      -- Sample keybind for direct prompting. Note that the <c-u> is important for selections to work properly.
-      {
-        "<leader>oG",
-        ":<c-u>lua require('ollama').prompt('Generate_Code')<cr>",
-        desc = "ollama Generate Code",
-        mode = { "n", "v" },
-      },
-    },
-
-    ---@type Ollama.Config
-    opts = {
-      -- your configuration overrides
-    },
-  },
+  -- Custom configuration (defaults shown)
 
   {
     "stevearc/oil.nvim",
@@ -1162,48 +1182,45 @@ return {
     config = function() require("plugins.configs.p27_myOilConfig").config() end,
   },
 
-
-  -- ==========================================================================
-  -- 	                  DATA BASES AND SQL SERVER CONTORLLER
-  -- =========================================================================
-
   {
-    "kristijanhusak/vim-dadbod-ui",
+    "olimorris/codecompanion.nvim",
+    event = "InsertEnter",
     dependencies = {
-      { "tpope/vim-dadbod", lazy = true },
-      { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true }, -- Optional
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
     },
-    cmd = {
-      "DBUI",
-      "DBUIToggle",
-      "DBUIAddConnection",
-      "DBUIFindBuffer",
+    opts = {
+      -- Make Ollama the global default
+      default_adapter = "ollama",
+
+      -- Only register the Ollama adapter
+      adapters = {
+        ollama = function()
+          return require("codecompanion.adapters").extend("ollama", {
+            -- point at your local Ollama HTTP API (adjust port if needed)
+            url = "http://localhost:11434/v1/chat/completions",
+            -- tune your model & context window here
+            schema = {
+              model = { default = "gemma3:27b" },
+              num_ctx = { default = 20000 },
+            },
+          })
+        end,
+      },
+
+      -- Force every built-in strategy to use Ollama
+      strategies = {
+        chat = { adapter = "ollama" },
+        inline = {
+          adapter = "ollama",
+          stream = true, -- token-by-token ghost-text
+          chunk_size = 512, -- bytes per read
+        },
+        code = { adapter = "ollama" },
+        -- add more if you later use "workflow", "cmd", etc.
+      },
     },
-    init = function()
-      -- Your DBUI configuration
-      require("plugins.configs.mydadbod").config()
-    end,
   },
-
-  -- https://www.youtube.com/watch?v=MDlYsGbKJyQ&ab_channel=CheesedUp
-  --   {
-  --     "kndndrj/nvim-dbee",
-  --     ft = { "sql", "mysql", "plsql" },
-  --     dependencies = {
-  --       "MunifTanjim/nui.nvim",
-  --     },
-  --     build = function()
-  --       -- Install tries to automatically detect the install method.
-  --       -- if it fails, try calling it with one of these parameters:
-  --       --    "curl", "wget", "bitsadmin", "go"
-  --       require("dbee").install()
-  --     end,
-  --     config = function()
-  --       require("dbee").setup(--[[optional config]])
-  --     end,
-  --   },
-
-  -- in your lazy.nvim spec:
 
   ---------------- END OF PLUGINS SETTING -------------------------
 }

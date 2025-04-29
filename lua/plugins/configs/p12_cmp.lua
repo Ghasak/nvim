@@ -21,7 +21,6 @@ end
 --------------------------------------------------------------------
 
 function M.setup()
-
   ---@diagnostic disable-next-line: unused-local
   local types = require "cmp.types"
   local present, cmp = pcall(require, "cmp")
@@ -97,20 +96,19 @@ function M.setup()
     min_percent = 0,
   }
 
-
-
   -- nvim-cmp setup
   cmp.setup {
     sources = {
       { name = "nvim_lsp" },
       { name = "vim-dadbod-completion" }, -- Enables Dadbod-based SQL completions
-      { name = "luasnip", option = { use_show_condition = false } },
+      { name = "codecompanion" }, -- codecompanion AI
+      { name = "luasnip" },
       { name = "buffer" },
       { name = "nvim_lua" },
       { name = "codeium" },
       -- { name = "ultisnips" },
       -- { name = "vsnip" },
-      { name = "cmp_tabnine" , group_index = 2},
+      { name = "cmp_tabnine", group_index = 2 },
       { name = "look" },
       { name = "neorg" },
       { name = "path" },

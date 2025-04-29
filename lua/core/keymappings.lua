@@ -227,8 +227,8 @@ vim.api.nvim_set_keymap("n", "<leader>w", "<cmd>BufDel<cr>", { noremap = true, s
 vim.api.nvim_set_keymap("n", "<leader>h", "<ESC>^", { noremap = true, silent = false })
 vim.api.nvim_set_keymap("n", "<leader>l", "<ESC>$", { noremap = true, silent = false })
 
--- Rnvim (Ranger) for Nvim
-vim.api.nvim_set_keymap("n", "<Leader>r", ":RnvimrToggle<CR>", { noremap = true, silent = false })
+-- Rnvim (Ranger) for Nvim -replaced with Yazi
+-- vim.api.nvim_set_keymap("n", "<Leader>r", ":RnvimrToggle<CR>", { noremap = true, silent = false })
 
 -- Floating terminal for nvim
 vim.api.nvim_set_keymap("n", "<Leader>t", ":Lspsaga term_toggle<CR>", { noremap = true, silent = false })
@@ -972,4 +972,57 @@ M.codeium_keys = {
     desc = "Codeium Clear",
   },
 }
+
+-- ╭──────────────────────────────────────────────────────────────╮
+-- │  <leader><leader>pa  →  create a session with Snacks.input   │
+-- ╰──────────────────────────────────────────────────────────────╯
+vim.keymap.set("n", "<leader><leader>pa", function()
+  local Snacks = require "snacks" -- Snacks.* is global, but explicit is nicer
+  Snacks.input({ prompt = "Session name: " }, function(name) -- Snacks-UI prompt :contentReference[oaicite:0]{index=0}
+    if not name or name == "" then
+      vim.notify("Session creation cancelled", vim.log.levels.WARN)
+      return
+    end
+
+    -- normalise: no slashes/spaces, add .vim extension
+    name = name:gsub("[/\\%s]", "_")
+
+    local dir = vim.fn.expand "~/.cache/nvim/sessions/"
+    if vim.fn.isdirectory(dir) == 0 then
+      vim.fn.mkdir(dir, "p") -- ensure target dir exists
+    end
+    local file = dir .. name
+
+    -- create / overwrite the session file
+    vim.cmd("mksession! " .. vim.fn.fnameescape(file))
+
+    vim.notify("💾 Session saved → " .. file, vim.log.levels.INFO, { title = "Session Manager" })
+  end)
+end, { desc = "Save project session (Snacks.input)", noremap = true, silent = true })
+
+-- ╭──────────────────────────────────────────────────────────────╮
+-- │      Yazi Keymapping - used instead of Ranger                │
+-- ╰──────────────────────────────────────────────────────────────╯
+
+-- 👇 in this section, choose your own keymappings!
+M.yazi_keys = {
+  {
+    "<leader>r",
+    mode = { "n", "v" },
+    "<cmd>Yazi<cr>",
+    desc = "Open yazi at the current file",
+  },
+  {
+    -- Open in the current working directory
+    "<leader>cw",
+    "<cmd>Yazi cwd<cr>",
+    desc = "Open the file manager in nvim's working directory",
+  },
+  {
+    "<leader>rr",
+    "<cmd>Yazi toggle<cr>",
+    desc = "Resume the last yazi session",
+  },
+}
+
 return M

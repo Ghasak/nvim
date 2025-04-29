@@ -33,7 +33,7 @@ local function env_cleanup(venv) return venv and vim.fn.fnamemodify(venv, ":t") 
 -- 🛠️ LSP Status Function (for statusline)
 local lsp_func = function()
   local server_icon = "󰒍"
-  local server_icon_unknown = "󰒍"
+  local server_icon_unknown = "󰒎"
   local buff_ft = vim.bo.filetype or ""
   local clients = vim.lsp.get_clients()
   -- 🌀 Get LSP spinner from lsp-progress

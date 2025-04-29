@@ -224,7 +224,7 @@ local config = {
     "-data",
     workspace_dir,
   },
-  root_dir = require("jdtls.setup").find_root { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" },
+  root_dir = require("jdtls.setup").find_root { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle", "settings.gradle" },
 
   -- on_attach = require("plugins.configs.lsp.lsp_attach").custom_attach,
   -- capabilities = require("plugins.configs.lsp.lsp_capabilities").capabilities,
@@ -242,12 +242,13 @@ local config = {
       },
       eclipse = { downloadSources = true },
       configuration = {
-        updateBuildConfiguration = "interactive",
+        -- updateBuildConfiguration = "interactive",
+        updateBuildConfiguration = "automatic",
         runtimes = {
           { name = "JavaSE-21", path = home .. "/.sdkman/candidates/java/21.0.2-zulu", default = true },
+          { name = "JavaSE-18", path = home .. "/.sdkman/candidates/java/18.0.1-zulu" },
           { name = "JavaSE-17", path = home .. "/.sdkman/candidates/java/17.0.10-tem" },
           { name = "JavaSE-17", path = home .. "/.sdkman/candidates/java/17.0.10-zulu" },
-          { name = "JavaSE-18", path = home .. "/.sdkman/candidates/java/18.0.1-zulu" },
           { name = "JavaSE-1.8", path = home .. "/.sdkman/candidates/java/8.0.332-zulu" },
         },
       },
@@ -385,6 +386,18 @@ vim.api.nvim_create_autocmd("LspAttach", {
       )
       require("jdtls.dap").setup_dap_main_class_configs()
     end
+  end,
+})
+
+-- 2. (Optional) Fire a “didChangeWatchedFiles” on save
+-- If you still see a delay, add this after your jdtls.start_or_attach(config) call:
+vim.api.nvim_create_autocmd("BufWritePost", {
+  pattern = "*.java",
+  callback = function()
+    local uri = vim.uri_from_fname(vim.fn.expand "%:p")
+    vim.lsp.buf_notify(0, "workspace/didChangeWatchedFiles", {
+      changes = { { uri = uri, type = 2 } }, -- 2 = Created/Changed
+    })
   end,
 })
 

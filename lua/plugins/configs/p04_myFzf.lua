@@ -6,7 +6,7 @@ if not status_ok then return end
 
 local actions = fzf_lua_actions
 
-vim.api.nvim_set_hl(0, "FzfLuaSel", { bg = "#4ba9ec", fg = "#2c373e" }) -- custom highlight
+vim.api.nvim_set_hl(0, "FzfLuaSel", { bg = "#3e7ba8", fg = "#2c373e" }) -- custom highlight
 
 fzf_lua.setup {
 
