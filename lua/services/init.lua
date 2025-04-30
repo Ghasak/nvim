@@ -2,6 +2,7 @@ local init_modules = {
   "services.diagnostic_toggle",
   "services.customized_autocmd",
   "services.project_manager",
+  "services.lazy_snapshots_creator",
 }
 
 for _, module in ipairs(init_modules) do
