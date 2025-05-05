@@ -190,21 +190,32 @@ local function hsp_progress()
 end -- --------------------------------------------------------------------
 --                    Copilot status
 -- --------------------------------------------------------------------
-local function copilot_status()
-  local copilot_icon_loaded = "  󰚩 "
-  local copilot_icon_not_loaded = "  󰚩 "
+-- local function copilot_status()
+--   local copilot_icon_loaded = "  󰚩 "
+--   local copilot_icon_not_loaded = "  󰚩 "
+--
+--   if vim.fn.exists "g:copilot_enabled" == 1 then
+--     if vim.inspect(vim.api.nvim_get_var "copilot_enabled") == "true" then
+--       -- return true if copilot is installed and set to be enabled
+--       return string.format("%s", copilot_icon_loaded)
+--     else
+--       return string.format("%s", copilot_icon_not_loaded)
+--     end
+--   else
+--     return string.format("%s", copilot_icon_not_loaded)
+--   end
+-- end
 
-  if vim.fn.exists "g:copilot_enabled" == 1 then
-    if vim.inspect(vim.api.nvim_get_var "copilot_enabled") == "true" then
-      -- return true if copilot is installed and set to be enabled
-      return string.format("%s", copilot_icon_loaded)
-    else
-      return string.format("%s", copilot_icon_not_loaded)
-    end
-  else
-    return string.format("%s", copilot_icon_not_loaded)
-  end
+
+
+-- 3) your statusline function reads that flag
+local function copilot_status()
+  local icon_on  = "  󰚩"
+  local icon_off = "  󰚩"
+  return vim.g.copilot_enabled and icon_on or icon_off
 end
+
+
 
 -- --------------------------------------------------------------------
 --                   LSP Progress Icon

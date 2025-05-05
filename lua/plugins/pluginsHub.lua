@@ -1229,6 +1229,7 @@ return {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
     event = "InsertEnter",
+    keys = require("core.keymappings").copilot_keys,
     config = function()
       -- 1) Your normal setup
       require("copilot").setup {
@@ -1245,41 +1246,7 @@ return {
           },
         },
       }
-
-      -- 2) Grab Copilot’s internals
-      local ok_sug, suggestion = pcall(require, "copilot.suggestion")
-      local ok_conf, cfg_mod = pcall(require, "copilot.config")
-      if not (ok_sug and ok_conf) then return end
-
-      -- Determine where the user opts live
-      local live_opts = cfg_mod.config or cfg_mod.opts
-      if not (live_opts and live_opts.suggestion) then return end
-
-      -- 3) Monkey-patch toggle_auto_trigger
-      local orig_toggle = suggestion.toggle_auto_trigger
-      suggestion.toggle_auto_trigger = function(...)
-        -- call the real toggle
-        orig_toggle(...)
-
-        -- read the new state
-        local state = live_opts.suggestion.auto_trigger
-
-        -- notify via snacks.nvim (or vim.notify)
-        local msg = state and "🟢 Copilot auto-trigger Enabled" or "🔴 Copilot auto-trigger Disabled"
-
-        if pcall(require, "snacks") then
-          require("snacks").notify {
-            title = "Copilot",
-            message = msg,
-            level = "info",
-          }
-        else
-          vim.notify(msg)
-        end
-      end
     end,
-    keys = require("core.keymappings").copilot_keys,
   },
-
   ---------------- END OF PLUGINS SETTING -------------------------
 }

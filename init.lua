@@ -80,8 +80,3 @@ if vim.g.transparent_enabled then
   -- transparent.clear_prefix("lualine")
 end
 
-
-
-
-
-

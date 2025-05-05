@@ -1024,50 +1024,28 @@ M.yazi_keys = {
     desc = "Resume the last yazi session",
   },
 }
+-- ╭──────────────────────────────────────────────────────────────╮
+-- │                  Copilot Keymapping -                         │
+-- ╰──────────────────────────────────────────────────────────────╯
 
+-- 👇 in this section, copilot_keys affecting the statusline icon of robot
 M.copilot_keys = {
   {
-    "<leader>ac",
+    "<C-A>",
     function()
-      -- vim.notify "copilot suggestion enabled"
-      -- require("copilot.suggestion").is_visible()
-      -- only run after you’ve done: require("copilot").setup{ … }
-      -- somewhere after you call require("copilot").setup{…}
-      vim.api.nvim_create_autocmd("InsertEnter", {
-        callback = function()
-          -- 1) load the Copilot config module
-          local ok_conf, conf_mod = pcall(require, "copilot.config")
-          if not ok_conf then return end
-
-          -- 2) support both old (.opts) and new (.config) layouts
-          local conf = conf_mod.config or conf_mod.opts
-          if not (conf and conf.suggestion and conf.suggestion.enabled) then
-            return -- Copilot inline suggestions are disabled
-          end
-
-          -- 3) safely require the suggestion API
-          local ok_sug, sug = pcall(require, "copilot.suggestion")
-          if not ok_sug or not sug.is_visible() then
-            return -- no ghost-text right now
-          end
-
-          -- 4) fire a snacks.nvim notice (or vim.notify fallback)
-          if pcall(require, "snacks") then
-            require("snacks").notify {
-              title = "Copilot Suggestion",
-              message = "Your ghost-text is ready 🎉",
-              level = "info",
-            }
-          else
-            vim.notify "Copilot suggestion available 🚀"
-          end
-        end,
-      })
+      -- Trigger the suggestion
+      vim.cmd "Copilot suggestion"
+      -- flip our “enabled” flag
+      vim.g.copilot_enabled = not vim.g.copilot_enabled
+      -- notify
+      vim.notify("Copilot " .. (vim.g.copilot_enabled and "Enabled" or "Disabled"), vim.log.levels.INFO)
+      -- refresh lualine so the status component reruns
+      require("lualine").refresh { place = { "statusline" } }
     end,
-    mode = "n",
-    expr = true,
+    mode = "i",
+    noremap = true,
     silent = true,
-    desc = "Copilot Suggestion allowed",
+    desc = "Copilot Suggestion Activated",
   },
 }
 return M
