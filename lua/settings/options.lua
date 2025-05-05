@@ -109,8 +109,7 @@ opt.showmode = false -- This will show the ModeMsg when the mode is changed I tu
 opt.conceallevel = 0
 opt.tabstop = 2
 opt.shiftwidth = 2
-opt.wildignore =
-  ".git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**"
+opt.wildignore = ".git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**"
 opt.fillchars = {
   vert = "▕", -- alternatives │
   fold = " ",
@@ -201,11 +200,15 @@ if global.is_mac then
     paste = { ["+"] = "pbpaste", ["*"] = "pbpaste" },
     cache_enabled = 0,
   }
-
-  -- vim.g.python_host_prog = "/usr/bin/python2"
-  vim.g.python_host_prog = "$HOME/anaconda3/bin/python2" -- '/usr/local/bin/python3'
-  vim.g.python3_host_prog = "$HOME/anaconda3/bin/python3" -- '/usr/local/bin/python3'
 end
+
+-- vim.g.python_host_prog = "/usr/bin/python2"
+-- vim.g.python_host_prog = "$HOME/anaconda3/bin/python2" -- '/usr/local/bin/python3'
+vim.g.python2_host_prog = vim.fn.expand "~" .. "/anaconda3/bin/python2"
+-- vim.g.python3_host_prog = "$HOME/anaconda3/bin/python3" -- '/usr/local/bin/python3'
+vim.g.python3_host_prog = vim.fn.expand "~" .. "/anaconda3/bin/python3"
+vim.g.python_host_prog = vim.fn.expand "~" .. "/anaconda3/bin/python3"
+
 -----------------------------------------------------------
 --          Glow for Markdown
 -----------------------------------------------------------
@@ -318,9 +321,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   -- group = vim.api.nvim_create_augroup('highlight_yank'),
   desc = "Hightlight selection on yank",
   pattern = "*",
-  callback = function()
-    vim.highlight.on_yank { higroup = "TextYankPost_style", timeout = 700 }
-  end,
+  callback = function() vim.highlight.on_yank { higroup = "TextYankPost_style", timeout = 700 } end,
 })
 -- ===========================================================================
 --            This will highlight the Cursor Line Number ()
@@ -412,9 +413,7 @@ local createdir = function()
   for key, dirx in pairs(data_dir) do
     -- if vim.fn.empty(vim.fn.glob(dirx)) > 0 then
     vim.api.nvim_command(
-      ([[echohl WarningMsg | echomsg "[-] The directory:%s is not existed, will be created ." | echohl None]]):format(
-        dirx
-      )
+      ([[echohl WarningMsg | echomsg "[-] The directory:%s is not existed, will be created ." | echohl None]]):format(dirx)
     )
     os.execute("mkdir -p " .. dirx)
   end
@@ -444,9 +443,7 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
       for _, buf in ipairs(buf_list) do
         -- We will obtain from the table only the filetype
         local buf_ft = vim.api.nvim_buf_get_option(buf, "filetype")
-        if buf_ft == "lazy" then
-          lazy_popup_buf_exists = true
-        end
+        if buf_ft == "lazy" then lazy_popup_buf_exists = true end
       end -- Check if vim-floaterm is loaded
       local has_floaterm, _ = pcall(require, "floaterm")
       if not lazy_popup_buf_exists and not has_floaterm then

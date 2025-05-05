@@ -209,6 +209,7 @@ M.setup = function()
     --------------------------- Python Language Server -----------------------------
 
     ["pyright"] = function()
+      local site_package_path = vim.fn.systemlist("python3 -c 'import site; print(site.getsitepackages()[0])'")[1]
       local pyright_opts = {
         on_attach = opts.on_attach,
         capabilities = opts.capabilities,
@@ -217,10 +218,13 @@ M.setup = function()
         settings = {
           python = {
             analysis = {
-              typeCheckingMode = "off", -- Disable strict type checking
+              -- pythonPath = vim.fn.expand "~" .. "/anaconda3/bin/python3",
+              -- typeCheckingMode = "off", -- Disable strict type checking
+              typeCheckingMode = "basic",
               autoSearchPaths = true,
               useLibraryCodeForTypes = true,
-              extraPaths = { "./src" }, -- Add custom paths for analysis
+              -- extraPaths = { "./src" }, -- Add custom paths for analysis
+              extraPaths = { "./src", site_package_path },
             },
           },
         },
