@@ -1,23 +1,42 @@
 return {
-  {
-    -- "ghasak/neo-github-nvim-theme",
-    dir = "/Users/gmbp/Desktop/devCode/luaHub/neo-github-nvim-theme",
-    name = "github-theme",
-    cond = false,
-    lazy = false, -- make sure we load this during startup if it is your main colorscheme
-    priority = 1000, -- make sure to load this before all the other start plugins
-    config = function()
-      local c = require "colors.custom_github_theme"
-      require("github-theme").setup {
-        palettes = c.palettes,
-        specs = c.specs,
-        groups = c.groups,
-      }
-      vim.cmd "colorscheme github_dark" -- github_light -- github_dark_dimmed
-    end,
-  },
-
-  ---@diagnostic disable, 2: 2
+  -- {
+  --   -- "ghasak/neo-github-nvim-theme",
+  --   dir = "/Users/gmbp/Desktop/devCode/luaHub/neo-github-nvim-theme",
+  --   name = "github-theme",
+  --   cond = false,
+  --   lazy = false, -- make sure we load this during startup if it is your main colorscheme
+  --   priority = 1000, -- make sure to load this before all the other start plugins
+  --   config = function()
+  --     local c = require "colors.custom_github_theme"
+  --     require("github-theme").setup {
+  --       palettes = c.palettes,
+  --       specs = c.specs,
+  --       groups = c.groups,
+  --     }
+  --     vim.cmd "colorscheme github_dark" -- github_light -- github_dark_dimmed
+  --   end,
+  -- },
+  --
+  -- For development - theme plugin
+  -- {
+  --   -- 1) local path to your plugin
+  --   dir = "/Users/gmbp/Desktop/devCode/luaHub/githubG.nvim",
+  --   -- 2) force an eager load at startup
+  --   lazy = false,
+  --   cond = false,
+  --   -- 3) load before everything else
+  --   priority = 1000,
+  --
+  --   -- 4) run this *after* the plugin is on runtimepath
+  --   config = function()
+  --     -- enable true color
+  --     vim.opt.termguicolors = true
+  --
+  --     -- configure & activate your onedark colorscheme
+  --     require("onedark").setup { style = "gdark" }
+  --     vim.cmd "colorscheme onedark"
+  --   end,
+  -- },
   {
     "ghasak/githubG.nvim",
     cond = true, -- load this plugin
@@ -48,24 +67,26 @@ return {
     -- event = { "BufRead", "BufNewFile" },
     -- build = ":TSUpdate",
     config = function() require("plugins.configs.p01_treesitter").setup() end,
-    -- dependencies = {
-    --   { "p00f/nvim-ts-rainbow", event = "InsertEnter" },
-    -- },
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter-textobjects", -- vaf, vif, vac,
+      event = "InsertEnter",
+    },
   },
 
   ----------------------------------------------------------------
   --                  treesitter tools
   --  {all were in the dependencies of nvim-treesitter}
   ----------------------------------------------------------------
-  {
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    event = "InsertEnter",
-  },
   { "windwp/nvim-ts-autotag", event = "InsertEnter" },
   {
     "JoosepAlviste/nvim-ts-context-commentstring",
     event = "InsertEnter",
   },
+
+  -- ; will select a syntactical container (class, function, etc.) depending on your location in the syntax tree.
+  -- i; will select the body of a syntactical container depending on your location in the syntax tree.
+  -- . will select the most relevant part of the syntax tree depending on your location in it.
+  -- It will also setup a mapping for , to repeat the last selection.
   { "RRethy/nvim-treesitter-textsubjects", event = "InsertEnter" },
   {
     -- This plugin is alternative to nvim.context
@@ -201,6 +222,7 @@ return {
   -- Dired.nvim is simialr to Emacs dired for file managment
   {
     "X3eRo0/dired.nvim",
+    cond = false,
     event = "InsertEnter",
     dependencies = "MunifTanjim/nui.nvim",
     config = function() require("plugins.configs.p07_myDired").config() end,
@@ -477,6 +499,7 @@ return {
     config = function()
       require("fidget").setup {
         progress = {
+          suppress_on_insert = false, -- Suppress new messages while in insert mode
           ignore = {
             -- suppress only the proc‑macro path you circled
             function(msg)
@@ -873,7 +896,7 @@ return {
   --  use({ "tpope/vim-repeat" })
 
   -- Better surrounding
-  { "tpope/vim-surround", lazy = true, event = "InsertEnter" },
+  -- { "tpope/vim-surround", lazy = true, event = "InsertEnter" },
   --  -- Development
   --  use({ "tpope/vim-dispatch" })
   --  use({ "tpope/vim-commentary" })
@@ -1151,7 +1174,9 @@ return {
   --   config = function() require("codeium").setup {} end,
   -- },
 
+  -- Accepting suggestion `Ctrl +x`
   {
+
     "Exafunction/windsurf.vim",
     -- event = { "InsertEnter" },
     cmd = {
@@ -1176,12 +1201,15 @@ return {
 
   {
     "stevearc/oil.nvim",
-    cond = false,
-    event = "VimEnter",
-    dependencies = { { "echasnovski/mini.icons", opts = {} } },
+    event = "InsertEnter",
     config = function() require("plugins.configs.p27_myOilConfig").config() end,
+    -- Optional dependencies
+    dependencies = { { "echasnovski/mini.icons", opts = {} } },
+    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
+    -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
   },
 
+  -- CODECOMPANION Activiated and sending queries `Ctrl+s`
   {
     "olimorris/codecompanion.nvim",
     event = "InsertEnter",
@@ -1224,7 +1252,9 @@ return {
 
   ---------------- EXPERIMENTING WITH MODERN NEOVIMM PLUGINS -------------------------
 
-  { "echasnovski/mini.nvim", version = "*", config = function() require("mini.ai").setup() end },
+  -- Most advanced setup for copilot
+  -- (modern lua support similar to tpop plugin which is not used anymore)
+  -- Activate: <Ctr+a> in Insert mode
   {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
@@ -1248,5 +1278,40 @@ return {
       }
     end,
   },
+
+  -- Copilot nvim open chat prompt
+  {
+
+    "CopilotC-Nvim/CopilotChat.nvim",
+    event = "InsertEnter",
+    dependencies = {
+      { "zbirenbaum/copilot.lua" }, -- or zbirenbaum/copilot.lua, "github/copilot.vim"
+      { "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
+    },
+    build = "make tiktoken", -- Only on MacOS or Linux
+    opts = {
+      -- See Configuration section for options
+    },
+    -- See Commands section for default commands if you want to lazy load on them
+    -- 0/64000 tokens used
+    --You refer to the opened buffer using ->  #buffers:visible
+    --| Insert|	Normal |
+    --+-------+--------+
+    --| <C-s>	| <CR>   |
+  },
+
+  {
+    "echasnovski/mini.nvim",
+    event = "InsertEnter",
+    version = "*",
+    config = function()
+      -- sa: Add surroding with sa
+      -- sd: Replace surrodunding with sr
+      -- Find surrounding with sf or SF (move cursor right or left)
+      -- Highlight surroding with sh
+      require("mini.surround").setup()
+    end,
+  },
+
   ---------------- END OF PLUGINS SETTING -------------------------
 }

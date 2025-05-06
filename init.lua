@@ -72,11 +72,12 @@ vim.g.transparent_enabled = false
 
 if vim.g.transparent_enabled then
   local transparent = require "transparent"
-
   -- Clear prefixes for specific plugins
   transparent.clear_prefix "BufferLine"
   transparent.clear_prefix "NeoTree"
   -- Uncomment the line below to clear prefix for lualine if needed
   -- transparent.clear_prefix("lualine")
 end
+
+
 
