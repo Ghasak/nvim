@@ -771,7 +771,6 @@ return {
     "folke/snacks.nvim",
     priority = 1000,
     lazy = false,
-    ---@type snacks.Config
     opts = function() return require("plugins.configs.p17_snacksConfig").opts end,
     keys = function() return require("core.keymappings").keys end,
     init = function() return require("services.snacks_mini_services").snacks_services() end,

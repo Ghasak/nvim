@@ -2,7 +2,7 @@ local M = {}
 -- Only return setup options (no plugin declaration here)
 
 M.config = function()
-
+  local detail = false
   require("oil").setup {
     -- Oil will take over directory buffers (e.g. `vim .` or `:e src/`)
     -- Set to false if you want some other plugin (e.g. netrw) to open when you edit directories.
@@ -25,6 +25,7 @@ M.config = function()
     },
     -- Window-local options to use for oil buffers
     win_options = {
+      winbar = "%!v:lua.get_oil_winbar()",
       wrap = false,
       signcolumn = "no",
       cursorcolumn = false,
@@ -83,6 +84,24 @@ M.config = function()
       ["gx"] = "actions.open_external",
       ["g."] = { "actions.toggle_hidden", mode = "n" },
       ["g\\"] = { "actions.toggle_trash", mode = "n" },
+      ["gd"] = {
+        desc = "Toggle file detail view",
+        callback = function()
+          detail = not detail
+          if detail then
+            require("oil").set_columns {
+              "birthtime",
+              "permissions",
+              "size",
+              "mtime",
+              "type",
+              "icon",
+            }
+          else
+            require("oil").set_columns { "icon" }
+          end
+        end,
+      },
     },
     -- Set to false to disable all of the above keymaps
     use_default_keymaps = false,
@@ -202,6 +221,18 @@ M.config = function()
   vim.api.nvim_set_keymap("n", "<Leader>fj", "<CMD>Oil<CR>", { noremap = true, silent = false })
   -- Open parent directory in floating window
   vim.keymap.set("n", "<space>-", require("oil").toggle_float)
+
+  -- Declare a global function to retrieve the current directory
+  function _G.get_oil_winbar()
+    local bufnr = vim.api.nvim_win_get_buf(vim.g.statusline_winid)
+    local dir = require("oil").get_current_dir(bufnr)
+    if dir then
+      return vim.fn.fnamemodify(dir, ":~")
+    else
+      -- If there is no current directory (e.g. over ssh), just show the buffer name
+      return vim.api.nvim_buf_get_name(0)
+    end
+  end
 end
 
 return M

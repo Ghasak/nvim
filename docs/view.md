@@ -23,14 +23,14 @@ views for the purpose of refactoring code and load the `ufo.nvim` plugin using
 First to make a view, we need loading the `ufo.nvim` using `UfoAttach`. and
 then we create a view using:
 
-```
+```sh
 :mkview
 ```
 
 - The `mkview` without given a directory will store all views at the following
   directory `/.local/state/nvim/view`. but we can also pass a directory, for example
 
-```
+```sh
 :mkview Users/user_name/.cache/nvim/my_view_1
 ```
 
