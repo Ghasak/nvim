@@ -178,291 +178,189 @@ M.setup = function()
   -- │   • 🔍 Precise per-language behavior with complete LSP fidelity            │
   -- ╰────────────────────────────────────────────────────────────────────────────╯
 
-  -- Setup handlers for all installed servers
-  mason_lspconfig.setup_handlers {
+  -- Pre-sever overrrides (vim.lsp.config)
+  -- Mason will call `vim.lsp.enable(<name>)` for everything it installs,
+  -- so you `don't` need the explicit `vim.lsp.enable <server>` lines
 
-    -- Default handler
-    function(server_name)
-      lspconfig[server_name].setup {
-        on_attach = opts.on_attach,
-        capabilities = vim.deepcopy(opts.capabilities),
-      }
-    end,
+  -- ── Lua ─────────────────────────────────────────────────────────────
+  local lua_lsp_config = require "plugins.configs.lsp.custom_servers.sumneko_lua_server"
+  vim.lsp.config(
+    "lua_ls",
+    vim.tbl_deep_extend("force", {
+      on_attach = opts.on_attach,
+      capabilities = opts.capabilities,
+      flags = { debounce_text_changes = 500 },
+    }, lua_lsp_config)
+  )
 
-    --------------------------- Lua Language Server -----------------------------
-    -- Custom handler for lua_ls using Neovim v0.11+ APIs
-    ["lua_ls"] = function()
-      local lua_opts = require "plugins.configs.lsp.custom_servers.sumneko_lua_server"
-      local base_opts = {
-        on_attach = opts.on_attach,
-        capabilities = opts.capabilities,
-        flags = { debounce_text_changes = 500 },
-      }
+  -- ── Python ─────────────────────────────────────────────────────────────
 
-      -- Deep-merge base config and custom lua settings
-      local merged_opts = vim.tbl_deep_extend("force", base_opts, lua_opts)
+  local site_package_path = vim.fn.systemlist("python3 -c 'import site; print(site.getsitepackages()[0])'")[1]
 
-      -- Register config with new v0.11+ API
-      vim.lsp.config("lua_ls", merged_opts)
-    end,
+  vim.lsp.config("pyright", {
+    on_attach = opts.on_attach,
+    capabilities = opts.capabilities,
+    -- handlers = opts.handlers,
+    flags = { debounce_text_changes = 500 },
+    settings = {
+      python = {
+        analysis = {
+          -- pythonPath = vim.fn.expand "~" .. "/anaconda3/bin/python3",
+          -- typeCheckingMode = "off", -- Disable strict type checking
+          typeCheckingMode = "basic",
+          autoSearchPaths = true,
+          useLibraryCodeForTypes = true,
+          -- extraPaths = { "./src" }, -- Add custom paths for analysis
+          extraPaths = { "./src", site_package_path },
+        },
+      },
+    },
+  })
 
-    --------------------------- Python Language Server -----------------------------
+  -- ── Rust ─────────────────────────────────────────────────────────────
+  local rust_tools_settings = require "plugins.configs.lsp.custom_servers.rust_analyzer_server"
+  local rust_opts = {
+    on_attach = opts.on_attach,
+    capabilities = opts.capabilities,
+    handlers = opts.handlers,
+    flags = { debounce_text_changes = 500 },
+    settings = rust_tools_settings, -- assuming you define this elsewhere
+  }
+  vim.lsp.config("rust_analyzer", rust_opts)
 
-    ["pyright"] = function()
-      local site_package_path = vim.fn.systemlist("python3 -c 'import site; print(site.getsitepackages()[0])'")[1]
-      local pyright_opts = {
-        on_attach = opts.on_attach,
-        capabilities = opts.capabilities,
-        -- handlers = opts.handlers,
-        flags = { debounce_text_changes = 500 },
-        settings = {
-          python = {
-            analysis = {
-              -- pythonPath = vim.fn.expand "~" .. "/anaconda3/bin/python3",
-              -- typeCheckingMode = "off", -- Disable strict type checking
-              typeCheckingMode = "basic",
-              autoSearchPaths = true,
-              useLibraryCodeForTypes = true,
-              -- extraPaths = { "./src" }, -- Add custom paths for analysis
-              extraPaths = { "./src", site_package_path },
-            },
+  --     -- Defer rust-tools setup until entering Rust filetype
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = "rust",
+    once = true,
+    callback = function()
+      local ok, rust_tools = pcall(require, "rust_tools")
+      if not ok then return end
+      local install_root_dir = vim.fn.stdpath "data" .. "/mason"
+      local extension_path = install_root_dir .. "/packages/codelldb/extension/"
+      local codelldb_path = extension_path .. "adapter/codelldb"
+      local liblldb_path = extension_path .. "lldb/lib/liblldb.dylib"
+      rust_tools.setup {
+        tools = {
+          executor = require("rust-tools/executors").termopen,
+          reload_workspace_from_cargo_toml = true,
+          runnables = { use_telescope = true },
+          hover_actions = { border = "double", auto_focus = true },
+          inlay_hints = {
+            auto = true,
+            show_parameter_hints = true,
+            parameter_hints_prefix = "  ",
+            other_hints_prefix = "  ",
+            highlight = "Comment",
           },
+
+          on_initialized = function()
+            vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "CursorHold", "InsertLeave" }, {
+              pattern = { "*.rs" },
+              callback = function() pcall(vim.lsp.codelens.refresh) end,
+            })
+          end,
+        },
+        server = rust_opts,
+        dap = {
+          adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
         },
       }
-
-      -- Register config using new API
-      vim.lsp.config("pyright", pyright_opts)
     end,
+  })
 
-    --------------------------- Rust Language Server -----------------------------
-    ["rust_analyzer"] = function()
-      -- Set up the LSP client as usual (without rust-tools yet)
-      local rust_opts = {
-        on_attach = opts.on_attach,
-        capabilities = opts.capabilities,
-        -- handlers = opts.handlers,
-        flags = { debounce_text_changes = 500 },
-        settings = rust_tools_settings, -- your custom settings
-      }
-
-      vim.lsp.config("rust_analyzer", rust_opts)
-
-      -- Defer rust-tools setup until entering Rust filetype
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = "rust",
-        once = true, -- Only trigger once per session
-        callback = function()
-          local rust_tools_status_ok, rust_tools = pcall(require, "rust-tools")
-          if not rust_tools_status_ok then return end
-
-          local install_root_dir = vim.fn.stdpath "data" .. "/mason"
-          local extension_path = install_root_dir .. "/packages/codelldb/extension/"
-          local codelldb_path = extension_path .. "adapter/codelldb"
-          local liblldb_path = extension_path .. "lldb/lib/liblldb.dylib"
-
-          rust_tools.setup {
-            tools = {
-              executor = require("rust-tools/executors").termopen,
-              reload_workspace_from_cargo_toml = true,
-              runnables = { use_telescope = true },
-              hover_actions = { border = "double", auto_focus = true },
-              inlay_hints = {
-                auto = true,
-                show_parameter_hints = true,
-                parameter_hints_prefix = "  ",
-                other_hints_prefix = "  ",
-                highlight = "Comment",
-              },
-              on_initialized = function()
-                vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "CursorHold", "InsertLeave" }, {
-                  pattern = { "*.rs" },
-                  callback = function() pcall(vim.lsp.codelens.refresh) end,
-                })
-              end,
-            },
-            server = rust_opts,
-            dap = {
-              adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
-            },
-          }
-        end,
-      })
-    end,
-
-    -- ["rust_analyzer"] = function()
-    --   if vim.bo.filetype ~= "rust" then return end
-    --   local install_root_dir = vim.fn.stdpath "data" .. "/mason"
-    --   local extension_path = install_root_dir .. "/packages/codelldb/extension/"
-    --   local codelldb_path = extension_path .. "adapter/codelldb"
-    --   local liblldb_path = extension_path .. "lldb/lib/liblldb.dylib"
-    --
-    --   -- Load rust-tools plugin safely
-    --   local rust_tools_status_ok, rust_tools = pcall(require, "rust-tools")
-    --   if not rust_tools_status_ok then return end
-    --
-    --   -- Define Rust LSP settings
-    --   local rust_opts = {
-    --     on_attach = opts.on_attach,
-    --     capabilities = opts.capabilities,
-    --     handlers = opts.handlers,
-    --     flags = { debounce_text_changes = 500 },
-    --     settings = rust_tools_settings, -- assuming you define this elsewhere
-    --   }
-    --
-    --   -- Register the config with Neovim 0.11+
-    --   vim.lsp.config("rust_analyzer", rust_opts)
-    --   vim.lsp.enable "rust_analyzer"
-    --
-    --   -- Optional: use rust-tools to extend functionality
-    --   rust_tools.setup {
-    --     tools = {
-    --       executor = require("rust-tools/executors").termopen,
-    --       reload_workspace_from_cargo_toml = true,
-    --       runnables = { use_telescope = true },
-    --       hover_actions = { border = "double", auto_focus = true },
-    --       inlay_hints = {
-    --         auto = true,
-    --         only_current_line = false,
-    --         show_parameter_hints = true,
-    --         parameter_hints_prefix = "  ",
-    --         other_hints_prefix = "  ",
-    --         max_len_align = false,
-    --         max_len_align_padding = 1,
-    --         right_align = false,
-    --         right_align_padding = 7,
-    --         highlight = "Comment",
-    --       },
-    --       on_initialized = function()
-    --         vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "CursorHold", "InsertLeave" }, {
-    --           pattern = { "*.rs" },
-    --           callback = function() pcall(vim.lsp.codelens.refresh) end,
-    --         })
-    --       end,
-    --     },
-    --     server = rust_opts, -- pass the same config as registered above
-    --     dap = {
-    --       adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
-    --     },
-    --   }
-    -- end,
-    --
-    --------------------------- LaTeX Language Server -----------------------------
-    ["texlab"] = function()
-      local texlab_opts = {
-        on_attach = opts.custom_attach,
-        capabilities = opts.capabilities,
-        -- handlers = opts.handlers,
-        flags = { debounce_text_changes = 500 },
-        settings = {
-          latex = {
-            rootDirectory = ".", -- Set root directory for LaTeX project
-            build = {
-              args = {
-                "-pdf",
-                "-interaction=nonstopmode",
-                "-synctex=1",
-                "-pvc", -- continuous preview on change
-              },
-              forwardSearchAfter = true,
-              onSave = true,
-            },
-            forwardSearch = {
-              executable = "zathura",
-              args = { "--synctex-forward", "%l:1:%f", "%p" },
-              onSave = true,
-            },
+  -- ── Latex ─────────────────────────────────────────────────────────────
+  local texlab_opts = {
+    on_attach = opts.on_attach,
+    capabilities = opts.capabilities,
+    -- handlers = opts.handlers,
+    flags = { debounce_text_changes = 500 },
+    settings = {
+      latex = {
+        rootDirectory = ".", -- Set root directory for LaTeX project
+        build = {
+          args = {
+            "-pdf",
+            "-interaction=nonstopmode",
+            "-synctex=1",
+            "-pvc", -- continuous preview on change
           },
+          forwardSearchAfter = true,
+          onSave = true,
         },
-      }
-
-      -- Register config with Neovim's LSP client
-      vim.lsp.config("texlab", texlab_opts)
-    end,
-
-    --------------------------- TypeScript / JavaScript -----------------------------
-    ["ts_ls"] = function()
-      local ts_opts = {
-        on_attach = opts.on_attach,
-        capabilities = opts.capabilities,
-        -- handlers = opts.handlers,
-        cmd = { "typescript-language-server", "--stdio" },
-        filetypes = {
-          "typescript",
-          "typescriptreact",
-          "typescript.tsx",
-          "javascript",
+        forwardSearch = {
+          executable = "zathura",
+          args = { "--synctex-forward", "%l:1:%f", "%p" },
+          onSave = true,
         },
-      }
+      },
+    },
+  }
 
-      -- Register with Neovim v0.11+ API
-      vim.lsp.config("ts_ls", ts_opts)
-    end,
+  -- Register config with Neovim's LSP client
+  vim.lsp.config("texlab", texlab_opts)
 
-    --------------------------- R Language Server -----------------------------
-    ["r_language_server"] = function()
-      local r_opts = {
-        on_attach = opts.on_attach,
-        capabilities = opts.capabilities,
-        -- handlers = opts.handlers,
-        filetypes = { "r", "rmd" },
-        cmd = { "R", "--slave", "-e", "languageserver::run()" },
-      }
+  --   --------------------------- TypeScript / JavaScript -----------------------------
+  local ts_opts = {
+    on_attach = opts.on_attach,
+    capabilities = opts.capabilities,
+    -- handlers = opts.handlers,
+    cmd = { "typescript-language-server", "--stdio" },
+    filetypes = {
+      "typescript",
+      "typescriptreact",
+      "typescript.tsx",
+      "javascript",
+    },
+  }
 
-      vim.lsp.config("r_language_server", r_opts)
-    end,
+  -- Register with Neovim v0.11+ API
+  vim.lsp.config("ts_ls", ts_opts)
 
-    --------------------------- SQL Language Server -----------------------------
-    ["sqlls"] = function()
-      local sql_opts = {
-        on_attach = opts.on_attach,
-        capabilities = opts.capabilities,
-        -- handlers = opts.handlers,
-        filetypes = { "sql" },
-        cmd = { "sql-language-server", "up", "--method", "stdio" },
-        root_dir = function(fname)
-          return require("lspconfig.util").root_pattern ".git"(fname)
-            or vim.fs.dirname(fname)
-            or require("lspconfig.util").root_pattern "config.yml"(fname)
-            or vim.fn.getcwd()
-        end,
-      }
+  --   --------------------------- R Language Server -----------------------------
+  local r_opts = {
+    on_attach = opts.on_attach,
+    capabilities = opts.capabilities,
+    -- handlers = opts.handlers,
+    filetypes = { "r", "rmd" },
+    cmd = { "R", "--slave", "-e", "languageserver::run()" },
+  }
 
-      vim.lsp.config("sqlls", sql_opts)
-    end,
+  vim.lsp.config("r_language_server", r_opts)
 
-    --------------------------- C / C++ Language Server -----------------------------
-    ["clangd"] = function()
-      local clangd_opts = {
-        on_attach = opts.on_attach,
-        capabilities = opts.capabilities,
-        -- handlers = opts.handlers,
-        filetypes = { "cpp", "c" },
-        on_new_config = function(new_config, new_cwd)
-          local ok, cmake = pcall(require, "cmake-tools")
-          if ok then cmake.clangd_on_new_config(new_config) end
-        end,
-      }
-
-      vim.lsp.config("clangd", clangd_opts)
-    end,
-    --------------------------- Java (JDTLS) -----------------------------
-    ["jdtls"] = function()
-      -- Skipped: `jdtls` is handled by `ftplugin/java.lua` or `nvim-jdtls`
-      -- If not using `nvim-jdtls`, configure your JDT Language Server here.
-      -- See official setup: https://github.com/mfussenegger/nvim-jdtls
+  --   --------------------------- SQL Language Server -----------------------------
+  local sql_opts = {
+    on_attach = opts.on_attach,
+    capabilities = opts.capabilities,
+    -- handlers = opts.handlers,
+    filetypes = { "sql" },
+    cmd = { "sql-language-server", "up", "--method", "stdio" },
+    root_dir = function(fname)
+      return require("lspconfig.util").root_pattern ".git"(fname)
+        or vim.fs.dirname(fname)
+        or require("lspconfig.util").root_pattern "config.yml"(fname)
+        or vim.fn.getcwd()
     end,
   }
 
-  -- Enable the server
-  -- Optional: enable it explicitly
-  vim.lsp.enable "lua_ls"
-  vim.lsp.enable "pyright"
-  vim.lsp.enable "texlab"
-  vim.lsp.enable "rust_analyzer"
-  vim.lsp.enable "ts_ls"
-  vim.lsp.enable "r_language_server"
-  vim.lsp.enable "sqlls"
-  vim.lsp.enable "clangd"
+  vim.lsp.config("sqlls", sql_opts)
+
+  --   --------------------------- C / C++ Language Server -----------------------------
+  local clangd_opts = {
+    on_attach = opts.on_attach,
+    capabilities = opts.capabilities,
+    -- handlers = opts.handlers,
+    filetypes = { "cpp", "c" },
+    on_new_config = function(new_config, new_cwd)
+      local ok, cmake = pcall(require, "cmake-tools")
+      if ok then cmake.clangd_on_new_config(new_config) end
+    end,
+  }
+
+  vim.lsp.config("clangd", clangd_opts)
+  --   --------------------------- Java (JDTLS) -----------------------------
+  -- Skipped: `jdtls` is handled by `ftplugin/java.lua` or `nvim-jdtls`
+  -- If not using `nvim-jdtls`, configure your JDT Language Server here.
+  -- See official setup: https://github.com/mfussenegger/nvim-jdtls
 end
 
 return M

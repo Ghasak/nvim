@@ -24,6 +24,21 @@
 -- ○ nvim-java-test
 -- ○ spring-boot.nvim
 
+-- +----------------------------------------------------------------------+
+-- +  ┌────────────┐           ┌────────────────┐                         +
+-- +  │ nvim-jdtls │           │ nvim-lspconfig │                         +
+-- +  └────────────┘           └────────────────┘                         +
+-- +       |                         |                                    +
+-- +      start_or_attach           nvim_lsp.jdtls.setup                  +
+-- +       │                              |                               +
+-- +       │                             setup java filetype hook         +
+-- +       │    ┌─────────┐                  │                            +
+-- +       └───►│ vim.lsp │◄─────────────────┘                            +
+-- +            └─────────┘                                               +
+-- +                .start_client                                         +
+-- +                .buf_attach_client                                    +
+-- +                                                                      +
+-- +----------------------------------------------------------------------+
 local jdtls = require "jdtls"
 local home = vim.env.HOME -- Get the home directory
 
@@ -56,64 +71,21 @@ local workspace_dir = home .. "/.cache/jdtls-workspaces/" .. vim.fn.fnamemodify(
 -- │   - 🔄 Falls back to manual setup if Mason adapters are unavailable          │
 -- ╰──────────────────────────────────────────────────────────────────────────────╯
 
--- 🛠️ Debug Adapter: Check Mason first, fallback to manual
-local mason_debug_jar = vim.fn.glob(home .. "/.local/share/nvim/mason/share/java-debug-adapter/com.microsoft.java.debug.plugin.jar")
-local manual_debug_jar = vim.fn.glob(home .. "/.local/share/nvim/java-debug/extension/server/com.microsoft.java.debug.plugin-*.jar", 1)
+-- ================= Mason 2-compatible path discovery =================
+-- Mason keeps everything under:  <stdpath("data")>/mason
+local mason_root = vim.fn.stdpath "data" .. "/mason"
+local jdtls_install_path = mason_root .. "/packages/jdtls"
+local jdtls_launcher = vim.fn.globpath(
+  jdtls_install_path .. "/plugins",
+  "org.eclipse.equinox.launcher_*.jar",
+  false, -- non-recursive
+  true -- return list
+)[1]
 
--- 📦 Aggregate Debug Adapter
-local bundles = {}
-if mason_debug_jar ~= "" then
-  table.insert(bundles, mason_debug_jar) -- ✅ Mason's debug adapter found
-else
-  if not vim.g.java_debug_adapter_loaded then
-    table.insert(bundles, manual_debug_jar) -- 🔄 Fallback to manual debug adapter
-    vim.notify("loaded java-debug-adapter manually!", vim.log.levels.INFO, { title = "java-debug-adapter Setup" })
-
-    -- Mark as loaded
-    vim.g.java_debug_adapter_loaded = true
-  end
-end
-
--- 🧪 Test Adapter: Check Mason first, fallback to manual
-local mason_test_jars = vim.split(vim.fn.glob(home .. "/.local/share/nvim/mason/share/java-test/*.jar", 1), "\n")
-local manual_test_jars = vim.split(vim.fn.glob(home .. "/.local/share/nvim/java-test/extension/server/*.jar", 1), "\n")
-
--- 📦 Aggregate Test Adapter
-if #mason_test_jars > 0 and mason_test_jars[1] ~= "" then
-  vim.list_extend(bundles, mason_test_jars) -- ✅ Mason test jars found
-else
-  if not vim.g.java_test_loaded then
-    -- your debug + test adapter setup (bundles logic)
-
-    -- Example notification (only once)
-    vim.notify("loaded java-test manually!", vim.log.levels.INFO, { title = "Java DAP Setup" })
-    vim.list_extend(bundles, manual_test_jars) -- 🔄 Fallback to manual test jars
-
-    -- Mark as loaded
-    vim.g.java_test_loaded = true
-  end
-end
-
--- ✅ 'bundles' is now ready to be injected into the jdtls configuration
-
--- Get JDTLS install path robustly
-local jdtls_install_path
-local mason_registry_ok, mason_registry = pcall(require, "mason-registry")
-if not mason_registry_ok then
-  vim.notify("ERROR: nvim-jdtls config: Failed to load mason-registry.", vim.log.levels.ERROR)
+if not jdtls_launcher or jdtls_launcher == "" then
+  vim.notify("JDTLS launcher not found under " .. jdtls_install_path, vim.log.levels.ERROR)
   return
 end
-local jdtls_package = mason_registry.get_package "jdtls"
-if not jdtls_package then
-  vim.notify("ERROR: nvim-jdtls config: jdtls package not found in mason-registry.", vim.log.levels.ERROR)
-  return
-end
-jdtls_install_path = jdtls_package:get_install_path()
-if not jdtls_install_path then
-  vim.notify("ERROR: nvim-jdtls config: Could not get jdtls install path from Mason.", vim.log.levels.ERROR)
-  return
-end
--- print("DEBUG: jdtls_install_path: " .. vim.inspect(jdtls_install_path))
 
 -- ================= WORKAROUND: Find Launcher using vim.fn.glob ==================
 local jdtls_launcher
@@ -141,60 +113,23 @@ if #launcher_glob_list == 0 then
 end
 
 jdtls_launcher = launcher_glob_list[1] -- Get the first match
--- print("DEBUG(fn.glob): Found jdtls_launcher: " .. vim.inspect(jdtls_launcher))
 -- ================= END WORKAROUND =============================================
+--
 
--- Get paths for debug/test tools (robustly)
-local dap_pkg = mason_registry.get_package "java-debug-adapter"
-local dap_install_path = dap_pkg and dap_pkg:get_install_path()
-if dap_install_path then
-  dap_install_path = dap_install_path .. "/extension/server/"
-else
-  dap_install_path = ""
-end
+local dap_install_path = mason_root .. "/packages/java-debug-adapter/extension/server"
+local test_install_path = mason_root .. "/packages/java-test/extension/server"
 
-local test_pkg = mason_registry.get_package "java-test"
-local test_install_path = test_pkg and test_pkg:get_install_path()
-if test_install_path then
-  test_install_path = test_install_path .. "/extension/server/"
-else
-  test_install_path = ""
-end
+-- Gather *.jar bundles from the two adapter directories
+local bundles = {}
 
--- Find bundles using vim.fn.glob
--- local bundles = {} -- Initialize empty table for bundles
-
--- Find Debug bundles
-if dap_install_path ~= "" then
-  local debug_bundle_pattern = dap_install_path .. "com.microsoft.java.debug.plugin-*.jar" -- Adjust if needed
-  -- print("DEBUG(fn.glob): Debug bundle pattern: " .. vim.inspect(debug_bundle_pattern))
-  local glob_ok, debug_str = pcall(vim.fn.glob, debug_bundle_pattern)
-  if glob_ok and debug_str and debug_str ~= "" then
-    local debug_list = vim.split(debug_str, "\n")
-    if #debug_list > 0 then
-      vim.list_extend(bundles, debug_list)
-      -- print("DEBUG(fn.glob): Added debug bundles: " .. vim.inspect(debug_list))
-    end
-  else
-    -- print("DEBUG(fn.glob): No debug bundles found: " .. debug_bundle_pattern)
+local function add_jars(dir, pattern) -- ✅ list already returned
+  for _, jar in ipairs(vim.fn.globpath(dir, pattern, false, true)) do
+    if jar ~= "" then table.insert(bundles, jar) end
   end
 end
 
--- Find Test bundles
-if test_install_path ~= "" then
-  local test_bundle_pattern = test_install_path .. "com.microsoft.java.test.runner-*.jar" -- Adjust if needed
-  -- print("DEBUG(fn.glob): Test bundle pattern: " .. vim.inspect(test_bundle_pattern))
-  local glob_ok, test_str = pcall(vim.fn.glob, test_bundle_pattern)
-  if glob_ok and test_str and test_str ~= "" then
-    local test_list = vim.split(test_str, "\n")
-    if #test_list > 0 then
-      vim.list_extend(bundles, test_list)
-      -- print("DEBUG(fn.glob): Added test bundles: " .. vim.inspect(test_list))
-    end
-  else
-    -- print("DEBUG(fn.glob): No test bundles found: " .. test_bundle_pattern)
-  end
-end
+add_jars(dap_install_path, "com.microsoft.java.debug.plugin-*.jar")
+add_jars(test_install_path, "*.jar") -- picks up runner + server jars
 
 -- The actual jdtls configuration
 local config = {
@@ -225,10 +160,6 @@ local config = {
     workspace_dir,
   },
   root_dir = require("jdtls.setup").find_root { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle", "settings.gradle" },
-
-  -- on_attach = require("plugins.configs.lsp.lsp_attach").custom_attach,
-  -- capabilities = require("plugins.configs.lsp.lsp_capabilities").capabilities,
-  -- handlers = require("plugins.configs.lsp.lsp_handlers").handlers,
 
   settings = {
     java = {
@@ -276,10 +207,6 @@ local config = {
     signatureHelp = { enabled = true },
     format = {
       enabled = true,
-      -- Formatting works by default, but you can refer to a specific file/URL if you choose
-      -- settings = {
-      --   url = "https://github.com/google/styleguide/blob/gh-pages/intellij-java-google-style.xml",
-      --   profile = "GoogleStyle",
     },
     completion = {
       favoriteStaticMembers = {
@@ -311,16 +238,6 @@ local config = {
     extendedClientCapabilities = jdtls.extendedClientCapabilities,
   },
 }
-
--- -- Needed for debugging
--- config["on_attach"] = function(client, bufnr)
---   -- Your existing dap setup
---   jdtls.setup_dap { hotcodereplace = "auto" }
---   require("jdtls.dap").setup_dap_main_class_configs()
---   -- Include the original on_attach from your lsp config
---   require("plugins.configs.lsp.lsp_attach").custom_attach(client, bufnr)
---   -- print("Hover supported: ", client.server_capabilities.hoverProvider)
--- end
 
 ---------------------------------------------------------------------
 -- Load your diagnostics and custom on_attach
