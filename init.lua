@@ -76,5 +76,9 @@ if vim.g.transparent_enabled then
   transparent.clear_prefix "BufferLine"
   transparent.clear_prefix "NeoTree"
   -- Uncomment the line below to clear prefix for lualine if needed
-  -- transparent.clear_prefix("lualine")
+  -- transparent.clear_prefix("luali
+
 end
+
+
+

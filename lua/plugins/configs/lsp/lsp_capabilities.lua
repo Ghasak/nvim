@@ -1,38 +1,43 @@
-local M = {}
 -- ===========================================================================
 --     4.                Capabilities for the language server
 -- ===========================================================================
 --
---
--- You must specifiy first the defualt server capabilities
-M.capabilities = vim.lsp.protocol.make_client_capabilities()
-local status_cmp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-if not status_cmp_ok then return M end
+local M = {}
 
--- Add folding capabilities required by ufo.nvim
+-- 1) start from the default client caps
+M.capabilities = vim.lsp.protocol.make_client_capabilities()
+
+-- 2) add whatever extra bits you always want (e.g. ufo, folding, snippets…)
 M.capabilities.textDocument.foldingRange = {
   dynamicRegistration = false,
   lineFoldingOnly = true,
 }
--- Otherwise, add more capabilities to the language server
-M.capabilities.textDocument.completion.completionItem.documentationFormat = {
-  "markdown",
-  "plaintext",
+M.capabilities.textDocument.completion.completionItem = {
+  documentationFormat = { "markdown", "plaintext" },
+  snippetSupport = true,
+  preselectSupport = true,
+  insertReplaceSupport = true,
+  labelDetailsSupport = true,
+  deprecatedSupport = true,
+  commitCharactersSupport = true,
+  tagSupport = { valueSet = { 1 } },
+  resolveSupport = { properties = { "documentation", "detail", "additionalTextEdits" } },
 }
-M.capabilities.textDocument.completion.completionItem.snippetSupport = true
-M.capabilities.textDocument.completion.completionItem.preselectSupport = true
-M.capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
-M.capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
-M.capabilities.textDocument.completion.completionItem.deprecatedSupport = true
-M.capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
-M.capabilities.textDocument.completion.completionItem.tagSupport = {
-  valueSet = { 1 },
-}
-M.capabilities.textDocument.completion.completionItem.resolveSupport = {
-  properties = { "documentatin", "detail", "additionalTextEdits" },
-}
--- capabilities.offsetEncoding = {'utf-8', 'utf-16'}
-M.capabilities.offsetEncoding = "utf-8"
-M.capabilities = cmp_nvim_lsp.default_capabilities(M.capabilities)
+
+M.capabilities.offsetEncoding = { "utf-8" }
+
+-- 3) now pick either blink.cmp or cmp_nvim_lsp, whichever loaded
+local blink_ok, blink_cmp = pcall(require, "blink.cmp")
+local cmp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+
+if blink_ok then
+  -- blink.nvim’s own wrapper
+  M.capabilities = blink_cmp.get_lsp_capabilities(M.capabilities)
+elseif cmp_ok then
+  -- the vanilla cmp_nvim_lsp helper
+  M.capabilities = cmp_nvim_lsp.default_capabilities(M.capabilities)
+  -- else: leave the barecapabilities alone
+end
 
 return M
+--

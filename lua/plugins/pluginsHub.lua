@@ -238,7 +238,7 @@ return {
   { "christoomey/vim-system-copy", lazy = true, event = "InsertEnter" },
   {
     "mikavilpas/yazi.nvim",
-    event = "VeryLazy",
+    event = "InsertEnter",
     dependencies = {
       -- check the installation instructions at
       -- https://github.com/folke/snacks.nvim
@@ -252,6 +252,40 @@ return {
   -- =========================================================================
   -- 	                  Programming Language Servers
   -- =========================================================================
+
+  {
+    "saghen/blink.cmp", -- the blink completion plugin
+    version = "*", -- track latest release
+    -- build = "cargo build --release", -- for optional Rust speedups
+    build = function()
+      if vim.fn.empty(vim.fn.glob(vim.fn.stdpath "data" .. "/lazy/blink.cmp/target/release/libblink_cmp.dylib")) == 1 then
+        vim.fn.system "cargo build --release"
+      end
+    end,
+    event = "InsertCharPre",
+    dependencies = {
+      "L3MON4D3/LuaSnip", -- snippet engine
+      "rafamadriz/friendly-snippets", -- snippet definitions
+      -- compatibility layer for nvim-cmp sources (including cmp-emoji)
+      {
+        "saghen/blink.compat",
+        version = "*",
+        lazy = true,
+        opts = {}, -- no special opts needed
+      },
+      -- this is the actual cmp-emoji plugin
+      "hrsh7th/cmp-emoji",
+      "hrsh7th/cmp-calc",
+      "f3fora/cmp-spell",
+      -- Add these:
+      "giuxtaposition/blink-cmp-copilot",
+      "onsails/lspkind-nvim",
+      { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
+      -- any other sources you need, e.g. cmp-tabnine, cmp-path, etc.
+    },
+    config = function() require("plugins.configs.my_blink_cmp").setup() end,
+  },
+
   --[[
   🔌 Plugin: nvim-cmp for autocompletion
   📦 Repo: https://github.com/hrsh7th/nvim-cmp
@@ -268,6 +302,7 @@ return {
   {
     "hrsh7th/nvim-cmp",
     event = "InsertEnter",
+    cond = false,
     lazy = true,
     dependencies = {
       { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
@@ -304,6 +339,7 @@ return {
   }, -- TabNine auto-compleletions
   {
     "tzachar/cmp-tabnine",
+    cond = false,
     -- lazy = true,
     event = "InsertEnter",
     build = "./install.sh",
@@ -386,7 +422,7 @@ return {
       { "williamboman/mason-lspconfig.nvim" },
       { "WhoIsSethDaniel/mason-tool-installer.nvim" },
       { "simrat39/rust-tools.nvim", event = "LspAttach" },
-      -- { "saghen/blink.cmp" },
+      { "saghen/blink.cmp" },
       -- { "dnlhc/glance.nvim" }, -- better jump to definition similar to vscode.
       { "folke/snacks.nvim" },
     },
@@ -1088,12 +1124,16 @@ return {
       { "tpope/vim-dadbod", lazy = true },
       { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true }, -- Optional
     },
+    -- :DBCompletionClearCache This plugin caches the
+    -- database tables and columns to leverage maximum performance.
+    -- If you want to clear the cache at any point just ru
     cmd = {
       "DBUI",
       "DBUIToggle",
       "DBUIAddConnection",
       "DBUIFindBuffer",
     },
+
     init = function()
       -- Your DBUI configuration
       require("plugins.configs.mydadbod").config()
@@ -1189,7 +1229,8 @@ return {
 
       dependencies = {
         "nvim-lua/plenary.nvim",
-        "hrsh7th/nvim-cmp",
+        -- "hrsh7th/nvim-cmp",
+        "saghen/blink.nvim",
       },
       config = function() require("codeium").setup {} end,
     },
@@ -1200,12 +1241,11 @@ return {
 
   {
     "stevearc/oil.nvim",
+    cond = true,
     event = "InsertEnter",
     config = function() require("plugins.configs.p27_myOilConfig").config() end,
     -- Optional dependencies
     dependencies = { { "echasnovski/mini.icons", opts = {} } },
-    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
-    -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
   },
 
   -- CODECOMPANION Activiated and sending queries `Ctrl+s`
@@ -1267,10 +1307,10 @@ return {
           auto_trigger = false,
           keymap = {
             accept = "<Space><Tab>",
-            accept_word = "<C-j>",
-            accept_line = "<C-k>",
-            next = "<C-n>",
-            prev = "<C-p>",
+            -- accept_word = "<C-j>",
+            -- accept_line = "<C-k>",
+            -- next = "<C-n>",
+            -- prev = "<C-p>",
             dismiss = "<C-e>",
           },
         },
@@ -1312,6 +1352,6 @@ return {
     end,
   },
 
-
+  -- Working with blink.nvim instead of cmp
   ---------------- END OF PLUGINS SETTING -------------------------
 }
