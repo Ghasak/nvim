@@ -26,7 +26,8 @@
 -- #                     %%%;vv;%;vv;%%%v;%%%%;vvv;%%%v;%%%;vvv;%;vv;%%%%%;vv;%%%;vvv;.%%%,                   #
 -- #                                                                                                          #
 -- #                    You are about to experience a potent dosage of Neovim Watch your steps.               #
--- #                                               Version 0.11.1                                             #
+-- #                                             Version 0.11.1                                                #
+-- #                             Copyright (c) 2025 Author. All Rights Reserved.                              #
 -- #                                                                                                          #
 -- #                                  ░█▀█░█▀▀░█▀█░█░█░▀█▀░█▄█░░░▀█░░▀█░                                      #
 -- #                                  ░█░█░█▀▀░█░█░▀▄▀░░█░░█░█░░░░█░░░█░                                      #
@@ -77,8 +78,5 @@ if vim.g.transparent_enabled then
   transparent.clear_prefix "NeoTree"
   -- Uncomment the line below to clear prefix for lualine if needed
   -- transparent.clear_prefix("luali
-
 end
-
-
 
