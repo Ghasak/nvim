@@ -91,7 +91,9 @@ Thought for 5 seconds
 
 6. **Fix the helper that caused “expected string, got table”**
 
-   _Reason_ – `globpath(..., true)` already returns a list; passing that list to `vim.split()` crashed. The `vim.split()` call was removed (see code in step 5).
+   _Reason_ – `globpath(..., true)` already returns a list; passing that list
+   to `vim.split()` crashed. The `vim.split()` call was removed (see code in
+   step 5).
 
 ---
 

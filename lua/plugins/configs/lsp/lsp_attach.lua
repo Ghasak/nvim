@@ -6,7 +6,7 @@ local function apply_lsp_reference_hl()
   local scheme = vim.g.colors_name
   local bg
 
-  if scheme == "github_dark" then
+  if scheme == "github_dark" or scheme == "onedark" then
     bg = "#4a535f"
   elseif scheme == "github_light" then
     bg = "#79c0ff"
