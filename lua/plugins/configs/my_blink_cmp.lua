@@ -49,15 +49,17 @@ function M.setup()
               ellipsis = false,
               -- text = function(ctx) return ctx.kind_icon .. ctx.icon_gap .. " " end,
               text = function(ctx)
+                -- debug: pop up what kind we actually got
+                -- vim.schedule(function() vim.notify("cmp kind: " .. vim.inspect(ctx.kind), vim.log.levels.INFO) end)
                 if ctx.kind == "Copilot" then
-                  -- use your Copilot glyph
                   return "󰚩" .. ctx.icon_gap
-                else
-                  if ctx.kind == "Dict" then return "󰓆 " .. ctx.icon_gap end
+                elseif ctx.kind == "Dict" then
+                  return "󰓆 " .. ctx.icon_gap
+                elseif ctx.kind == "Emoji" then -- it is Text not Emoji (not working for now)
+                  return "󰞅 " .. ctx.icon_gap
                 end
 
-                -- otherwise fall back to mini.icons
-                local icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
+                local icon = select(1, require("mini.icons").get("lsp", ctx.kind))
                 return icon .. ctx.icon_gap
               end,
               highlight = function(ctx) return "BlinkCmpKind" .. ctx.kind end,
@@ -276,11 +278,6 @@ function M.setup()
         },
 
         -- tell Blink how to load the emoji source via blink.compat
-        emoji = {
-          name = "emoji", -- must match the nvim-cmp source name
-          module = "blink.compat.source", -- the compat “bridge”
-          -- opts = { … }               -- any cmp-emoji–specific opts go here
-        },
         copilot = {
           name = "copilot", -- must match the nvim-cmp source
           module = "blink-cmp-copilot", -- <-- tell Blink where to load it from
@@ -296,6 +293,26 @@ function M.setup()
             return items
           end,
         },
+
+        -- emoji = {
+        --   name = "emoji", -- must match the nvim-cmp source name
+        --   module = "blink.compat.source", -- the compat “bridge”
+        --   -- opts = { … }               -- any cmp-emoji–specific opts go here
+        -- },
+
+        emoji = {
+          name = "emoji",
+          module = "blink.compat.source",
+          -- overwrite kind of suggestion
+          transform_items = function(ctx, items)
+            local kind = require("blink.cmp.types").CompletionItemKind.Text
+            for i = 1, #items do
+              items[i].kind = kind
+            end
+            return items
+          end,
+        },
+
         dictionary = {
           module = "blink-cmp-dictionary",
           name = "Dict",

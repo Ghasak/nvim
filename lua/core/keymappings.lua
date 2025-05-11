@@ -303,7 +303,7 @@ vim.api.nvim_set_keymap("n", "<F6>", ":set spell! spelllang=en<CR>", { noremap =
 ----                   Auto-save plugin to save file every changes happen
 ---- *****************************************************************************************
 -- To trigger auto-save for the given file
-vim.api.nvim_set_keymap("n", "<leader>s", ":ASToggle<CR>", {})
+-- vim.api.nvim_set_keymap("n", "<leader>s", ":ASToggle<CR>", {})
 
 ---- *****************************************************************************************
 ----                   Auto-save plugin to save file every changes happen
@@ -561,10 +561,13 @@ vim.keymap.set("n", "<Leader><Tab>", "<C-^>", {
 -- see the notes from fidget extension
 vim.keymap.set("n", "<leader>tf", function() require("telescope").extensions.fidget.fidget() end, { desc = "Telescope Fidget history" })
 
----- *****************************************************************************************
---           Using Glance instead of the built-in lspconfig in lsp_attach.lua file
---                              replaced with snacks.nvim
----- *****************************************************************************************
+
+-- ╭──────────────────────────────────────────────────────────────╮
+-- │                  Copilot Keymapping                          │
+-- │     Using Glance instead of the built-in lspconfig           │
+-- │     in lsp_attach.lua file replaced with snacks.nvim         │
+-- ╰──────────────────────────────────────────────────────────────╯
+
 -- vim.keymap.set("n", "gd", "<cmd>Glance definitions<CR>", { noremap = false, silent = true })
 -- vim.keymap.set("n", "gD", "<cmd>Glance type_definitions<CR>", { noremap = false, silent = true })
 -- vim.keymap.set("n", "gR", "<CMD>Glance references<CR>", { noremap = false, silent = true })
@@ -1025,7 +1028,7 @@ M.yazi_keys = {
   },
 }
 -- ╭──────────────────────────────────────────────────────────────╮
--- │                  Copilot Keymapping -                         │
+-- │                  Copilot Keymapping                          │
 -- ╰──────────────────────────────────────────────────────────────╯
 
 -- 👇 in this section, copilot_keys affecting the statusline icon of robot

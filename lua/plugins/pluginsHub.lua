@@ -279,7 +279,8 @@ return {
         opts = {}, -- no special opts needed
       },
       -- this is the actual cmp-emoji plugin
-      "hrsh7th/cmp-emoji",
+      { "allaman/emoji.nvim", dependencies = { "nvim-lua/plenary.nvim", "hrsh7th/cmp-emoji" } },
+
       "hrsh7th/cmp-calc",
       "f3fora/cmp-spell",
       -- Add these:
@@ -1311,7 +1312,7 @@ return {
           enabled = true,
           auto_trigger = false,
           keymap = {
-            accept = "<Space><Tab>",
+            accept = "<C-CR>",
             -- accept_word = "<C-j>",
             -- accept_line = "<C-k>",
             -- next = "<C-n>",
@@ -1357,6 +1358,5 @@ return {
     end,
   },
 
-  -- Working with blink.nvim instead of cmp
   ---------------- END OF PLUGINS SETTING -------------------------
 }
