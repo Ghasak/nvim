@@ -1,4 +1,6 @@
 -- lua/plugins/configs/blink_cmp.lua
+-- https://github.com/linkarzu/dotfiles-latest/blob/main/neovim/neobean/lua/plugins/blink-cmp.lua
+
 local M = {}
 
 function M.setup()
@@ -50,7 +52,10 @@ function M.setup()
                 if ctx.kind == "Copilot" then
                   -- use your Copilot glyph
                   return "󰚩" .. ctx.icon_gap
+                else
+                  if ctx.kind == "Dict" then return "󰓆 " .. ctx.icon_gap end
                 end
+
                 -- otherwise fall back to mini.icons
                 local icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
                 return icon .. ctx.icon_gap
@@ -118,6 +123,7 @@ function M.setup()
                   calc = "[  Calc]",
                   emoji = "[󰞅 Emoji]",
                   copilot = "[󰚩  Copilot]",
+                  dictionary = "[  Dict]",
                 }
                 -- ctx.source_id is the key from `sources.providers`
                 return icons[ctx.source_id] or ctx.source_name
@@ -240,10 +246,10 @@ function M.setup()
     },
     -- per-source overrides live here at top level
     sources = {
-      default = { "lsp", "snippets", "copilot", "path", "buffer", "emoji" },
+      default = { "lsp", "dictionary", "snippets", "copilot", "path", "buffer", "emoji" },
       -- for SQL files only, replace defaults with dadbod
       per_filetype = {
-        sql = { "lsp", "snippets", "copilot", "dadbod", "buffer", "emoji" },
+        sql = { "lsp", "dictionary", "snippets", "copilot", "dadbod", "buffer", "emoji" },
       },
       providers = {
         path = {
@@ -261,7 +267,14 @@ function M.setup()
         -- (other providers…)
         -- ← add this clause for dadbod support
         -- you can also pass any `opts = { … }` here if needed
-        dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
+
+        dadbod = {
+          name = "Dadbod",
+          module = "vim_dadbod_completion.blink",
+          min_keyword_length = 2,
+          score_offset = 85, -- the higher the number, the higher the priority
+        },
+
         -- tell Blink how to load the emoji source via blink.compat
         emoji = {
           name = "emoji", -- must match the nvim-cmp source name
@@ -282,6 +295,34 @@ function M.setup()
             end
             return items
           end,
+        },
+        dictionary = {
+          module = "blink-cmp-dictionary",
+          name = "Dict",
+          score_offset = 20, -- the higher the number, the higher the priority
+          -- enabled = true,
+          enabled = function() return vim.bo.filetype == "markdown" end,
+
+          max_items = 200,
+          min_keyword_length = 5,
+          opts = {
+            -- The dictionary by default now uses fzf, make sure to have it
+            -- installed
+            -- https://github.com/Kaiser-Yang/blink-cmp-dictionary/issues/2
+
+            dictionary_directories = {
+              vim.fn.expand "~/.config/nvim/.spelling/english-words",
+              -- vim.fn.expand "~/.config/nvim/.spelling/united-dictionary/public/languages/japanese",
+              -- vim.fn.expand "~/.config/nvim/.spelling/Edict2",
+              vim.fn.expand "~/.config/nvim/.spelling/google_Japanese_IMEdict",
+              -- vim.fn.expand "~/.config/nvim/.spelling/Edict3",
+              -- vim.fn.expand "~/.config/nvim/.spelling/Edict4",
+              -- vim.fn.expand("~/.config/nvim/.spelling/edictreader/edictreader/database")
+            },
+            -- documentation = {
+            --   enable = false, -- enable documentation to show the definition of the word
+            -- },
+          },
         },
       },
     },
@@ -319,10 +360,12 @@ function M.setup()
     Event = "#DB9065",
     Operator = "#A4031F",
     TypeParameter = "#9DC0BC",
+    BlinkCmpKindDict = "#F0D2D1",
   }
 
   for kind, bg in pairs(kind_colors) do
     vim.api.nvim_set_hl(0, "BlinkCmpKind" .. kind, { fg = "#2d333b", bg = bg })
   end
+  vim.api.nvim_set_hl(0, "BlinkCmpKindDict", { default = false, fg = "#a6e3a1" })
 end
 return M

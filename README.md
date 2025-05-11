@@ -54,10 +54,11 @@
 ## ChangingLog
 
 ### V.0.11 Release
+
 - [x] Fixed using `:checkhealth vim.deprecated` many API such as:
-    - [x]  Major break changes
-    - [x]  `set terencoding=utf-8`
-    - [x]  `vim.lsp.get_active_clients` become `vim.lsp.get_clients`.
+  - [x] Major break changes
+  - [x] `set terencoding=utf-8`
+  - [x] `vim.lsp.get_active_clients` become `vim.lsp.get_clients`.
 
 ### V.0.10 Release
 
@@ -637,6 +638,5 @@ want to alter the color.
 ## Reference
 
 - [Markdown Badges](https://ileriayo.github.io/markdown-badges/)
-
 
 

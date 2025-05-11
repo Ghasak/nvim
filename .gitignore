@@ -5,6 +5,7 @@ __pycache__/
 *.DS_Store
 .luarc.json
 .stylua.toml
+.spelling/
 # C extensions
 *.so
 plugin/*

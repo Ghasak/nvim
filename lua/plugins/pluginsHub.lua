@@ -266,6 +266,11 @@ return {
     dependencies = {
       "L3MON4D3/LuaSnip", -- snippet engine
       "rafamadriz/friendly-snippets", -- snippet definitions
+      {
+        "Kaiser-Yang/blink-cmp-dictionary",
+        dependencies = { "nvim-lua/plenary.nvim" },
+      },
+
       -- compatibility layer for nvim-cmp sources (including cmp-emoji)
       {
         "saghen/blink.compat",
