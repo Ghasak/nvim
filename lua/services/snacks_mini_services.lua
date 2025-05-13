@@ -39,6 +39,9 @@ M.snacks_services = function()
       Snacks.toggle.dim():map "<leader>uD"
     end,
   })
+
+  -- set the indent guide to a soft green, no bg
+  vim.api.nvim_set_hl(0, "SnacksIndentScope", { fg = "#eef6fb", bg = "NONE" })
 end
 
 return M

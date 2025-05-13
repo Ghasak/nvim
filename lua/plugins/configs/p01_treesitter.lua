@@ -1,10 +1,10 @@
 local M = {}
 
 function M.setup()
-  local status_ok, configs = pcall(require, "nvim-treesitter.configs")
+  local status_ok, ntconfigs = pcall(require, "nvim-treesitter.configs")
   if not status_ok then return end
 
-  configs.setup {
+  ntconfigs.setup {
     -- make sure you have treesitter for the languages you care about
     textobjects = {
       lsp_interop = {
@@ -112,6 +112,7 @@ function M.setup()
       "json",
       "json5",
       "jsdoc",
+      "java",
       "cmake",
       "make",
       "bash",

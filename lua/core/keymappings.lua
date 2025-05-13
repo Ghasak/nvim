@@ -1,27 +1,22 @@
--- ====================================================================================================
 ---
---         ██╗░░██╗███████╗██╗░░░██╗  ███╗░░░███╗░█████╗░██████╗░██████╗░██╗███╗░░██╗░██████╗░░██████╗
---         ██║░██╔╝██╔════╝╚██╗░██╔╝  ████╗░████║██╔══██╗██╔══██╗██╔══██╗██║████╗░██║██╔════╝░██╔════╝
---         █████═╝░█████╗░░░╚████╔╝░  ██╔████╔██║███████║██████╔╝██████╔╝██║██╔██╗██║██║░░██╗░╚█████╗░
---         ██╔═██╗░██╔══╝░░░░╚██╔╝░░  ██║╚██╔╝██║██╔══██║██╔═══╝░██╔═══╝░██║██║╚████║██║░░╚██╗░╚═══██╗
---         ██║░╚██╗███████╗░░░██║░░░  ██║░╚═╝░██║██║░░██║██║░░░░░██║░░░░░██║██║░╚███║╚██████╔╝██████╔╝
---         ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░  ╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝░░░░░╚═╝░░░░░╚═╝╚═╝░░╚══╝░╚═════╝░╚═════╝░
---
--- ====================================================================================================
--- Basics Configurations
--- Following: https://youtu.be/ppMX4LHIuy4
--- There are three types of configuration options
--- 1.) Global optoins (vim.o)
--- 2.) Local to window (vim.wo)
--- 3.) Local to buffer (vim.bo)
--- Adding some configurations
--- How to know to which configuration use :h expandtab
--- My Leader key
--- KeyMapping Order:
--- 1. Load the plugins which means (load the lspconfig custom_attach key-mapping at first).
--- 2. Load the settings which will load the current configurations,
--- 3. Load the lsp-saga, at the end of this file
-
+-- ╭───────────────────────────────────────────────────────────────────────────────────────────────────╮
+-- │                |  /  __| \ \  /         \  |    \    _ \  _ \ _ _|   \ |   __|                    │
+-- │                . <   _|   \  /  ____|  |\/ |   _ \   __/  __/   |   .  |  (_ | (_-<               │
+-- │               _|\_\ ___|   _|         _|  _| _/  _\ _|   _|   ___| _|\_| \___| ___/               │
+-- │   Basics Configurations                                                                           │
+-- │   Following: https://youtu.be/ppMX4LHIuy4                                                         │
+-- │   There are three types of configuration options                                                  │
+-- │   1.) Global optoins (vim.o)                                                                      │
+-- │   2.) Local to window (vim.wo)                                                                    │
+-- │   3.) Local to buffer (vim.bo)                                                                    │
+-- │   Adding some configurations                                                                      │
+-- │   How to know to which configuration use :h expandtab                                             │
+-- │   My Leader key                                                                                   │
+-- │   KeyMapping Order:                                                                               │
+-- │   1. Load the plugins which means (load the lspconfig custom_attach key-mapping at first).        │
+-- │   2. Load the settings which will load the current configurations,                                │
+-- │   3. Load the lsp-saga, at the end of this file                                                   │
+-- ╰───────────────────────────────────────────────────────────────────────────────────────────────────╯
 local M = {}
 vim.bo.expandtab = true
 vim.bo.shiftwidth = 2
@@ -560,7 +555,6 @@ vim.keymap.set("n", "<Leader><Tab>", "<C-^>", {
 
 -- see the notes from fidget extension
 vim.keymap.set("n", "<leader>tf", function() require("telescope").extensions.fidget.fidget() end, { desc = "Telescope Fidget history" })
-
 
 -- ╭──────────────────────────────────────────────────────────────╮
 -- │                  Copilot Keymapping                          │

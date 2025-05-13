@@ -222,38 +222,55 @@ function M.setup()
       end,
     },
 
-    term = {
-      enabled = false,
-      keymap = { preset = "default" }, -- Inherits from top level `keymap` config when not set
-      sources = {},
-      completion = {
-        trigger = {
-          show_on_blocked_trigger_characters = {},
-          show_on_x_blocked_trigger_characters = nil, -- Inherits from top level `completion.trigger.show_on_blocked_trigger_characters` config when not set
-        },
-        -- Inherits from top level config options when not set
-        list = {
-          selection = {
-            -- When `true`, will automatically select the first item in the completion list
-            preselect = nil,
-            -- When `true`, inserts the completion item automatically when selecting it
-            auto_insert = nil,
-          },
-        },
-        -- Whether to automatically show the window when new completion items are available
-        menu = { auto_show = nil },
-        -- Displays a preview of the selected item on the current line
-        ghost_text = { enabled = nil },
-      },
-    },
+    -- term = {
+    --   enabled = false,
+    --   keymap = { preset = "default" }, -- Inherits from top level `keymap` config when not set
+    --   sources = {},
+    --   completion = {
+    --     trigger = {
+    --       show_on_blocked_trigger_characters = {},
+    --       show_on_x_blocked_trigger_characters = nil, -- Inherits from top level `completion.trigger.show_on_blocked_trigger_characters` config when not set
+    --     },
+    --     -- Inherits from top level config options when not set
+    --     list = {
+    --       selection = {
+    --         -- When `true`, will automatically select the first item in the completion list
+    --         preselect = nil,
+    --         -- When `true`, inserts the completion item automatically when selecting it
+    --         auto_insert = nil,
+    --       },
+    --     },
+    --     -- Whether to automatically show the window when new completion items are available
+    --     menu = { auto_show = nil },
+    --     -- Displays a preview of the selected item on the current line
+    --     ghost_text = { enabled = nil },
+    --   },
+    -- },
     -- per-source overrides live here at top level
     sources = {
+
       default = { "lsp", "dictionary", "snippets", "copilot", "path", "buffer", "emoji" },
       -- for SQL files only, replace defaults with dadbod
       per_filetype = {
         sql = { "lsp", "dictionary", "snippets", "copilot", "dadbod", "buffer", "emoji" },
       },
       providers = {
+        ------------------------------------------------------------------------------------------------
+        -- for each provider you actually use, merge in that rule:
+        ------------------------------------------------------------------------------------------------
+        -- lsp = vim.tbl_extend("force", {
+        --   name = "LSP",
+        --   module = "blink.cmp.sources.lsp",
+        -- }, {
+        --   min_keyword_length = function(ctx) return vim.bo[ctx.bufnr].filetype == "dap-repl" and 3 or 0 end,
+        -- }),
+        buffer = vim.tbl_extend("force", {
+          name = "Buffer",
+          module = "blink.cmp.sources.buffer",
+        }, {
+          min_keyword_length = function(ctx) return vim.bo[ctx.bufnr].filetype == "dap-repl" and 3 or 0 end,
+        }),
+
         path = {
           opts = {
             get_cwd = function(_) return vim.fn.getcwd() end,
@@ -348,7 +365,7 @@ function M.setup()
   -- after your `blink.setup{…}` call, add:
 
   local kind_colors = {
-    Copilot = "#F49FBC",
+    Copilot = "#8cd9e4",
     Emoji = "#EEEDBF",
     Crate = "#F64D00",
     Tabnine = "#F0D2D1",
