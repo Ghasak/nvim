@@ -202,13 +202,18 @@ if global.is_mac then
   }
 end
 
--- vim.g.python_host_prog = "/usr/bin/python2"
--- vim.g.python_host_prog = "$HOME/anaconda3/bin/python2" -- '/usr/local/bin/python3'
-vim.g.python2_host_prog = vim.fn.expand "~" .. "/anaconda3/bin/python2"
--- vim.g.python3_host_prog = "$HOME/anaconda3/bin/python3" -- '/usr/local/bin/python3'
-vim.g.python3_host_prog = vim.fn.expand "~" .. "/anaconda3/bin/python3"
-vim.g.python_host_prog = vim.fn.expand "~" .. "/anaconda3/bin/python3"
+-- Check if Python 3 interpreter exists in /opt/anaconda3/bin/, fallback to system Python
+if vim.fn.executable('/opt/anaconda3/bin/python3') == 1 then
+    vim.g.python3_host_prog = '/opt/anaconda3/bin/python3'
+else
+    vim.g.python3_host_prog = '/usr/bin/python3'  -- Fallback to system Python
+end
 
+-- Disable Python 2 provider (no longer supported in Neovim 0.5+)
+vim.g.loaded_python_provider = 0
+
+-- Optionally set python_host_prog to match python3_host_prog for backward compatibility
+vim.g.python_host_prog = vim.g.python3_host_prog
 -----------------------------------------------------------
 --          Glow for Markdown
 -----------------------------------------------------------

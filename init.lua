@@ -79,3 +79,5 @@ if vim.g.transparent_enabled then
   -- Uncomment the line below to clear prefix for lualine if needed
   -- transparent.clear_prefix("luali
 end
+
+
