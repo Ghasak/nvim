@@ -21,7 +21,7 @@ Here’s a table summarizing the commands and functionality for using marks in V
 | **Jump to Last Change Position**            | `'.`                          | Jumps to the position of the last change in the file.                              |
 | **Jump to Last Insert Position**            | `'^`                          | Jumps to the position of the last insert in the file.                              |
 | **Set Mark in Visual Mode**                 | `m{letter}` in visual mode    | Sets a mark at the beginning of a selected area in visual mode.                    |
-| **Jump Back to Previous File Position**     | ` \``  `                      | Jumps to the exact position before the last jump across files.                     |
+| **Jump Back to Previous File Position**     | `\`` `                        | Jumps to the exact position before the last jump across files.                     |
 
 This table should serve as a quick reference to all mark-related commands in Vim and Neovim!
 

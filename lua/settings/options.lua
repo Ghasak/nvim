@@ -203,11 +203,19 @@ if global.is_mac then
 end
 
 -- Check if Python 3 interpreter exists in /opt/anaconda3/bin/, fallback to system Python
-if vim.fn.executable('/opt/anaconda3/bin/python3') == 1 then
-    vim.g.python3_host_prog = '/opt/anaconda3/bin/python3'
+if vim.fn.executable "/opt/anaconda3/bin/python3" == 1 then
+  vim.g.python3_host_prog = "/opt/anaconda3/bin/python3"
 else
-    vim.g.python3_host_prog = '/usr/bin/python3'  -- Fallback to system Python
+  vim.g.python3_host_prog = "/usr/bin/python3" -- Fallback to system Python
 end
+-- ||||||| Stash base
+-- -- vim.g.python_host_prog = "/usr/bin/python2"
+-- -- vim.g.python_host_prog = "$HOME/anaconda3/bin/python2" -- '/usr/local/bin/python3'
+-- vim.g.python2_host_prog = vim.fn.expand "~" .. "/anaconda3/bin/python2"
+-- -- vim.g.python3_host_prog = "$HOME/anaconda3/bin/python3" -- '/usr/local/bin/python3'
+-- vim.g.python3_host_prog = vim.fn.expand "~" .. "/anaconda3/bin/python3"
+-- vim.g.python_host_prog = vim.fn.expand "~" .. "/anaconda3/bin/python3"
+-- =======
 
 -- Disable Python 2 provider (no longer supported in Neovim 0.5+)
 vim.g.loaded_python_provider = 0
