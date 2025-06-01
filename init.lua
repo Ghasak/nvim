@@ -79,4 +79,4 @@ if vim.g.transparent_enabled then
   -- transparent.clear_prefix("luali
 end
 
-vim.opt.conceallevel = 1
+

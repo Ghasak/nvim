@@ -195,6 +195,7 @@ M.setup = function()
 
   -- ── Python ─────────────────────────────────────────────────────────────
 
+  -- Using pyright-lsp
   local site_package_path = vim.fn.systemlist("python3 -c 'import site; print(site.getsitepackages()[0])'")[1]
 
   vim.lsp.config("pyright", {
@@ -215,6 +216,18 @@ M.setup = function()
         },
       },
     },
+  })
+
+  -- Using pyrefly-lsp from meta
+
+  vim.lsp.config("pyrefly", {
+    on_attach = opts.on_attach,
+    capabilities = opts.capabilities,
+    cmd = { "uv", "run", "pyrefly", "lsp" },
+    filetypes = { "python" },
+    flags = { debounce_text_changes = 500 },
+    settings = {},
+    on_exit = function(code, _, _) vim.notify("Closing Pyrefly LSP exited with code: " .. code, vim.log.levels.INFO) end,
   })
 
   -- ── Rust ─────────────────────────────────────────────────────────────
