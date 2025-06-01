@@ -122,3 +122,8 @@ Thought for 5 seconds
 After these changes Neovim starts JDT LS without errors, the debug/test jars
 are detected, and your variable names remain unchanged so the rest of your
 configuration keeps working.
+
+
+
+
+After these changes, Neovim starts JDT LS without errors, the debug/test JARs are detected, and your variable names remain unchanged, so the rest of your configuration continues to work.
