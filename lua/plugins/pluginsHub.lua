@@ -1402,20 +1402,22 @@ return {
       -- add any opts here
       -- for example
       provider = "ollama",
-      ollama = {
-        model = "llama3.3:latest",
-        mode = "agentic", -- use the tool-based planner
-        -- you can tweak timeouts, debounce, sidebar position, etc. here
+      providers = {
+        ollama = {
+          model = "llama3.3:latest",
+          mode = "agentic", -- use the tool-based planner
+          -- you can tweak timeouts, debounce, sidebar position, etc. here
+        },
+        -- provider = "openai",
+        -- openai = {
+        --   endpoint = "https://api.openai.com/v1",
+        --   model = "gpt-4o", -- your desired model (or use gpt-4o, etc.)
+        --   timeout = 30000, -- Timeout in milliseconds, increase this for reasoning models
+        --   temperature = 0,
+        --   max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
+        --   --reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
+        -- },
       },
-      -- provider = "openai",
-      -- openai = {
-      --   endpoint = "https://api.openai.com/v1",
-      --   model = "gpt-4o", -- your desired model (or use gpt-4o, etc.)
-      --   timeout = 30000, -- Timeout in milliseconds, increase this for reasoning models
-      --   temperature = 0,
-      --   max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
-      --   --reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
-      -- },
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
     build = "make",

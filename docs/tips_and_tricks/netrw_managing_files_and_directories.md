@@ -196,3 +196,6 @@ creating, you can recreate a **familiar buffer-editing workflow**.
 These techniques make Netrw a powerful file manager without requiring any
 plugins, giving you fast and efficient ways to manage your files within Neovim.
 Let me know if this helps or if you have further questions!
+
+
+
