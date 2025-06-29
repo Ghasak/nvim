@@ -198,4 +198,3 @@ plugins, giving you fast and efficient ways to manage your files within Neovim.
 Let me know if this helps or if you have further questions!
 
 
-

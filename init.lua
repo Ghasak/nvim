@@ -76,9 +76,11 @@ if vim.g.transparent_enabled then
   transparent.clear_prefix "BufferLine"
   transparent.clear_prefix "NeoTree"
   -- Uncomment the line below to clear prefix for lualine if needed
-  -- transparent.clear_prefix("luali
+  -- transparent.clear_prefix("lualine")
 end
 
+-- set the indent guide to a soft green, no bg
+vim.api.nvim_set_hl(0, "SnacksIndentScope", { fg = "#eef6fb", bg = "NONE" })
 
 
 
