@@ -13,8 +13,7 @@ Markdown code fenced blocks
 
 Markdown has support for code fence blocks as part of the native build.
 
-Code block always starts with three backticks `code type in a new line end
-with three backticks in a new line`.
+Code block always starts with three backticks `code type in a new line end with three backticks in a new line`.
 
 | codetype                           | Language                        |
 | ---------------------------------- | ------------------------------- |
@@ -47,7 +46,4 @@ with three backticks in a new line`.
 ## References
 
 - [Markdown code fence blocks](https://www.w3schools.io/file/markdown-code-fence-blocks/)
-
-
-
 
