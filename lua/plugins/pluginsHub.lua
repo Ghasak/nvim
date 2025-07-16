@@ -541,43 +541,38 @@ return {
     config = function()
       require("fidget").setup {
         progress = {
-          suppress_on_insert = false, -- Suppress new messages while in insert mode
+          suppress_on_insert = false,
           ignore = {
-            -- suppress only the proc‑macro path you circled
             function(msg)
-              return msg.lsp_client.name == "rust_analyzer"
-                and msg.title:match "^/" -- absolute file path
-                and msg.message:match "Loading proc‑macros…" -- “Loading proc‑macros…”
+              return msg.lsp_client.name == "rust_analyzer" and msg.title:match "^/" and msg.message:match "Loading proc%-macros…"
             end,
           },
+          display = {
+            progress_icon = { "dots" },
+            done_icon = "✔",
+            -- Removed invalid align option
+            -- Alignment is now controlled by notification.window.align
+          },
         },
-        text = {
-          spinner = "dots",
-          done = "✔",
-        },
-        align = {
-          bottom = true,
-          right = true,
-        },
-        window = {
-          relative = "editor",
-          blend = 10,
+        notification = {
+          window = {
+            relative = "editor",
+            winblend = 10,
+            align = "bottom", -- This controls the alignment (bottom, top)
+            x_padding = 1, -- Padding from right edge (for right alignment)
+            y_padding = 0, -- Padding from bottom edge
+          },
         },
       }
     end,
-
     keys = {
       {
         "<leader>sf",
-        function()
-          vim.cmd "Fidget suppress" -- Wrap vim.cmd in a function properly
-        end,
+        function() vim.cmd "Fidget suppress" end,
         desc = "Start Fidget",
       },
     },
   },
-  -- },
-
   -- Using formatter (instead of null-lsp)
   --{"sbdchd/neoformat", event = "VeryLazy", lazy = true, cmd = "Neoformat"},
   -- none-ls is also not working good, instead
@@ -1405,7 +1400,7 @@ return {
       provider = "ollama",
       providers = {
         ollama = {
-          model ="gemma3:27b", -- "llama3.3:latest",
+          model = "gemma3:27b", -- "llama3.3:latest",
           mode = "agentic", -- use the tool-based planner
           -- you can tweak timeouts, debounce, sidebar position, etc. here
         },
