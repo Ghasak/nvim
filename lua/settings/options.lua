@@ -87,7 +87,7 @@ set write
 -- Configurations form my old vim script
 -----------------------------------------------------------
 -- opt.cmdheight = 1 -- vim.cmd('set cmdheight=0') -- Control the height of cmdline
-opt.cmdheight = 2
+opt.cmdheight = 1
 opt.wrap = false
 vim.o.wrapscan = false -- Disable search wrapping to stop at EOF instead of cycling to the top.
 opt.relativenumber = true

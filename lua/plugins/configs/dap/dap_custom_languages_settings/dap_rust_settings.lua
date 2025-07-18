@@ -39,52 +39,55 @@ function M.setup(dap)
       program = function()
         local build_dir = vim.fn.getcwd() .. "/target/debug/"
         local default_binary = build_dir .. "main"
-        local basename = nil
         local binary_selected = nil
-        -- Check if /build/debug/ directory exists
+
+        -- Check if target/debug/ directory exists
         if vim.fn.isdirectory(build_dir) == 1 then
-          -- If "main" binary exists in /build/debug/, use it as default
+          -- If "main" binary exists, use it as default
           if vim.fn.filereadable(default_binary) == 1 then
             vim.notify("Loaded binary: main", vim.log.INFO)
             return "${workspaceFolder}/target/debug/main"
-          else
-            ------------------------------------------------------------
-            -- Ask user to input the binary name within /build/debug/
-            -- Fancy coloring in the cmdline
-            ------------------------------------------------------------
+          end
 
-            local files = vim.fn.split(vim.fn.globpath(build_dir, "*"), "\n")
-            local exclude_names = { "build", "deps", "examples", "incremental" }
-            for idx, item in ipairs(files) do
-              basename = vim.fn.fnamemodify(item, ":t") -- Extract the base name from the path
+          -- List files in build_dir, excluding certain names
+          local files = vim.fn.split(vim.fn.globpath(build_dir, "*"), "\n")
+          local exclude_names = { "build", "deps", "examples", "incremental" }
+          local valid_binaries = {}
 
-              -- Check if basename is in exclude_names
-              local should_exclude = false
-              for _, name in ipairs(exclude_names) do
-                if basename == name then
-                  should_exclude = true
-                  break
-                end
-              end
+          for _, item in ipairs(files) do
+            local basename = vim.fn.fnamemodify(item, ":t")
+            local should_exclude = false
 
-              if not should_exclude and basename:match "%.d$" then
+            -- Exclude specific directories and .d files
+            for _, name in ipairs(exclude_names) do
+              if basename == name then
                 should_exclude = true
-              end
-              if not should_exclude then
-                binary_selected = basename
-                local message = string.format(
-                  "echohl WarningMsg | echon '[%s]'| echohl CursorLineNr | echon ' Running Binary: ' | echohl ErrorMsg | echon ' -> '| echohl Debug '%s' | echohl  CursorLineNr | echon '%s' | echohl None",
-                  idx,
-                  "Running binary",
-                  basename
-                )
-                vim.cmd(message)
-                vim.cmd "echo ''" -- Adds a newline after each message
+                break
               end
             end
-            return build_dir .. binary_selected
+            if not should_exclude and basename:match "%.d$" then should_exclude = true end
+
+            -- If not excluded and executable, add to valid binaries
+            if not should_exclude and vim.fn.filereadable(item) == 1 and vim.fn.executable(item) == 1 then
+              table.insert(valid_binaries, basename)
+            end
           end
-          return vim.fn.input("Selected binary: [default_binary:main]: ", build_dir)
+
+          -- If valid binaries are found, select one
+          if #valid_binaries > 0 then
+            -- Optionally, use vim.ui.select for user selection
+            binary_selected = valid_binaries[1] -- Default to first valid binary
+            vim.notify("Selected binary: " .. binary_selected, vim.log.INFO)
+            return build_dir .. binary_selected
+          else
+            -- No valid binaries found, prompt user
+            vim.notify("No valid binaries found in " .. build_dir, vim.log.WARN)
+            return vim.fn.input("Selected binary [default:main]: ", build_dir, "file")
+          end
+        else
+          -- Directory does not exist, prompt user
+          vim.notify("Debug directory not found: " .. build_dir, vim.log.ERROR)
+          return vim.fn.input("Selected binary [default:main]: ", build_dir, "file")
         end
       end,
       cwd = "${workspaceFolder}",
