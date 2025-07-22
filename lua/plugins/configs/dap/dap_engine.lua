@@ -25,8 +25,8 @@ M.python_debuger_setup = function(dap)
 end
 
 -- ---------------------------------------------------------------------------------
---                          Adapter request settings - Rust
--- ---------------------------------------------------------------------------------
+--                          Adapter request settings - ust
+-- --------------------------------------------------------------------------------
 
 M.rust_debuger_setup = function(dap)
   -- For rust we will use the configurations for alpha2phi
