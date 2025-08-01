@@ -209,6 +209,11 @@ function M.setup()
     "sqlls",
     "clangd",
   }
+
+  -- loading lsp tools
+  -- this will give us the necessary langauge servers pre-loaded
+  -- include mason-lspconfig and mason-tool-installer
+  require("plugins.configs.lsp.lsp_mason_tools").tool_setup()
 end
 
 return M

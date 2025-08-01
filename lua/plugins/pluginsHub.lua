@@ -98,7 +98,8 @@ return {
   -- Telescope
   {
     "nvim-telescope/telescope.nvim",
-    tag = "0.1.8", -- working with nvim v.0.11.0
+    -- tag = "0.1.8", -- working with nvim v.0.11.0
+    branch = "master",
     lazy = true,
     event = "VimEnter",
     cmd = "Telescope",
@@ -178,6 +179,17 @@ return {
     init = require("plugins.configs.gi_yazi").init,
   },
 
+  -- Custom configuration (defaults shown)
+
+  {
+    "stevearc/oil.nvim",
+    cond = true,
+    event = "InsertEnter",
+    config = function() require("plugins.configs.gi_oil_nvim").config() end,
+    -- Optional dependencies
+    dependencies = { { "echasnovski/mini.icons", opts = {} } },
+  },
+
   -- =========================================================================
   -- 	                  Programming Language Servers
   -- =========================================================================
@@ -223,6 +235,15 @@ return {
     config = function() require("plugins.configs.gi_blink_cmp").setup() end,
   },
 
+  -- better navigations with lsp
+  {
+    event = "VeryLazy",
+    cond = false,
+    branch = "master",
+    "dnlhc/glance.nvim",
+    config = function() require("plugins.configs.gi_glance").settings() end,
+  }, -- Use gD, gR , gY, gM - Nvim v. 0.11.0 gD is not working
+
   --[[
   🔌 Plugin: mason.nvim for language server
   📦 Repo: https://github.com/williamboman/mason.nvim
@@ -255,7 +276,15 @@ return {
     --   "github:mason-org/mason-registry",
     -- },
 
-    init = function() require("mason").setup() end,
+    init = function()
+      require("mason").setup {
+
+        ui = {
+          check_outdated_packages_on_open = true,
+          border = { "╔", "═", "╗", "║", "╝", "═", "╚", "║" },
+        },
+      }
+    end,
   },
   {
     "neovim/nvim-lspconfig",
@@ -268,7 +297,7 @@ return {
       { "WhoIsSethDaniel/mason-tool-installer.nvim" },
       { "simrat39/rust-tools.nvim", event = "LspAttach" },
       { "saghen/blink.cmp" },
-      -- { "dnlhc/glance.nvim" }, -- better jump to definition similar to vscode.
+      { "dnlhc/glance.nvim" }, -- better jump to definition similar to vscode.
       { "folke/snacks.nvim" },
     },
     -- This will be initailized at first
@@ -277,7 +306,7 @@ return {
     config = function()
       require("plugins.configs.gi_mason_lspconfig_nvim").setup()
       -- Adding the requiremetns - this will support for java requiremetns.
-      -- require("lspsaga").setup(require "plugins.configs.p09_mySaga")
+      require("lspsaga").setup(require "plugins.configs.gi_lspsaga")
     end,
   },
 
@@ -546,10 +575,11 @@ return {
   -- Adding symbols outline (similar to vista)
   {
     "simrat39/symbols-outline.nvim",
+    cond = false,
     lazy = true,
     event = { "CmdwinEnter" },
     cmd = { "SymbolsOutline", "SymbolsOutlineOpen", "SymbolsOutlineClose" },
-    config = function() require("plugins.configs.symbols_outline").init() end,
+    config = function() require("plugins.configs.gi_symbols_outline").init() end,
   },
 
   -- Auto pairs
@@ -617,6 +647,19 @@ return {
     opts = function() return require("plugins.configs.gi_snacks_nvim").opts end,
     keys = function() return require("core.keymappings").keys end,
     init = function() return require("services.snacks_mini_services").snacks_services() end,
+  },
+
+  {
+    "echasnovski/mini.nvim",
+    event = "InsertEnter",
+    version = "*",
+    config = function()
+      -- sa: Add surroding with sa
+      -- sd: Replace surrodunding with sr
+      -- Find surrounding with sf or SF (move cursor right or left)
+      -- Highlight surroding with sh
+      require("mini.surround").setup()
+    end,
   },
 
   -- undotree
@@ -783,8 +826,6 @@ return {
     init = function() require("plugins.configs.gi_align_nvim").config() end,
   },
 
-
-
   --FOLDING THE CODE
   -- Here, the dependencies, statuscol, will remove the numbers 2, 3, 4 ..etc. for the folding level.
   -- The configuration is customized and can be seen at my_ufo.lua
@@ -825,7 +866,332 @@ return {
     config = function() require("plugins.configs.gi_nvim_ufo").config() end,
   },
 
+  -- A Neovim (lua) plugin for working with a text-based,
+  -- markdown zettelkasten / wiki and mixing it with a journal, based on telescope.nvim.
+  {
+    "renerocksai/telekasten.nvim",
+    cond = false,
+    event = "InsertEnter",
+    cmd = { "Telekasten" },
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+      {
+        "renerocksai/calendar-vim",
+        cmd = { "Calendar" },
+      },
+    },
+    config = function() require("plugins.configs.gi_telekasten_nvim").config() end,
+  },
 
+  -- Obsidian.nvim for navigating obsidian notes - intead of telekasten.nvim
+
+  {
+    "epwalsh/obsidian.nvim",
+    version = "*", -- recommended, use latest release instead of latest commit
+    lazy = true,
+    ft = "markdown",
+
+    -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
+    -- event = {
+    --   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
+    --   -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/*.md"
+    --   -- refer to `:h file-pattern` for more examples
+    --   "BufReadPre path/to/my-vault/*.md",
+    --   "BufNewFile path/to/my-vault/*.md",
+    -- },
+    dependencies = {
+      -- Required.
+      "nvim-lua/plenary.nvim",
+
+      -- see below for full list of optional dependencies 👇
+    },
+    opts = {
+      workspaces = {
+        {
+          name = "personal",
+          path = "~/Documents/myObsidianDoc",
+        },
+      },
+
+      -- see below for full list of options 👇
+    },
+  },
+
+  {
+    "junegunn/vim-peekaboo",
+    event = "InsertEnter",
+  },
+
+  {
+    -- Quarto integration for Neovim
+    -- GitHub: https://github.com/quarto-dev/quarto-nvim
+    "quarto-dev/quarto-nvim",
+    ft = "quarto", -- Only load for .qmd files
+    dependencies = {
+      "jmbuhr/otter.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    config = function()
+      require("quarto").setup {
+        debug = false,
+        closePreviewOnExit = true,
+        lspFeatures = {
+          enabled = true,
+          chunks = "curly", -- recognize code blocks like ```{r}
+          languages = { "r", "python", "julia", "bash", "html" },
+          diagnostics = {
+            enabled = true,
+            triggers = { "BufWritePost" },
+          },
+          completion = {
+            enabled = true,
+          },
+        },
+        codeRunner = {
+          enabled = true,
+          default_method = "slime", -- use slime for code sending
+          ft_runners = {}, -- custom runner per language, if needed
+          never_run = { "yaml" }, -- don’t send these filetypes to runner
+        },
+      }
+    end,
+  },
+
+  -- ===========================================================================
+  --                        NVIM KEYMAPPING MANAGER
+  -- ===========================================================================
+  {
+    "folke/which-key.nvim",
+    cond = true,
+    event = "InsertEnter",
+    keys = {
+      {
+        "<leader>?",
+        function() require("which-key").show { global = false } end,
+        desc = "Buffer Local Keymaps (which-key)",
+      },
+    },
+    config = function() require("plugins.configs.gi_which_key_nvim").config() end,
+  }, --
+
+  -- ===========================================================================
+  --                            GIT AND DIFF
+  -- ===========================================================================
+  {
+    "APZelos/blamer.nvim",
+    event = "InsertEnter",
+    config = function() require("plugins.configs.gi_blamer_nvim").BlamerSetting() end,
+  },
+  -- Git
+  {
+    "lewis6991/gitsigns.nvim",
+    cond = true,
+    event = "InsertEnter",
+    config = function() require "plugins.configs.gi_gitsigns_nvim" end,
+  },
+  -- Git Diff
+  {
+    "sindrets/diffview.nvim",
+    dependencies = "nvim-lua/plenary.nvim",
+    config = function() require "plugins.configs.gi_diffview_nvim" end,
+    cmd = {
+      "DiffviewOpen",
+      "DiffviewClose",
+      "DiffviewToggleFiles",
+      "DiffviewFocusFiles",
+    },
+  },
+
+  -- ==========================================================================
+  -- 	                  DATA BASES AND SQL SERVER CONTORLLER
+  -- =========================================================================
+
+  {
+    "kristijanhusak/vim-dadbod-ui",
+    dependencies = {
+      { "tpope/vim-dadbod", lazy = true },
+      { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true }, -- Optional
+    },
+    -- :DBCompletionClearCache This plugin caches the
+    -- database tables and columns to leverage maximum performance.
+    -- If you want to clear the cache at any point just ru
+    cmd = {
+      "DBUI",
+      "DBUIToggle",
+      "DBUIAddConnection",
+      "DBUIFindBuffer",
+    },
+
+    init = function()
+      -- Your DBUI configuration
+      require("plugins.configs.gi_vim_dadbod_ui").config()
+    end,
+  },
+
+  -- ===========================================================================
+  --                          OTHER PLUGINS
+  -- ===========================================================================
+
+  -- NVIM
+  -- plugin for draw ascii digrams intractively.
+  -- Ref: https://github.com/jbyuki/venn.nvim?tab=readme-ov-file
+  {
+    "jbyuki/venn.nvim",
+    --"ghasak/venn.nvim",
+    event = "InsertEnter",
+    lazy = true,
+    cmd = { "VBox" },
+    config = function() require("plugins.configs.gi_venn_nvim").config() end,
+  },
+
+  -- ===========================================================================
+  --                         AI DEVELOPEMENT                                  --
+  -- ===========================================================================
+
+  -- Models: https://ollama.ai/library
+  -- Run in terminal: ollama serve
+  -- Currently I'am using zephyr model
+  {
+    "David-Kunz/gen.nvim",
+    event = { "InsertEnter" },
+    lazy = true,
+    cmd = { "Gen" },
+    config = function() require("plugins.configs.gi_gen_nvim").config() end,
+  },
+
+  -- Accepting suggestion `Ctrl +x`
+  {
+
+    "Exafunction/windsurf.vim",
+    -- event = { "InsertEnter" },
+    cmd = {
+      "Codeium",
+      "CodeiumEnable",
+      "CodeiumDisable",
+      "CodeiumToggle",
+      "CodeiumManual",
+      "CodeiumChat",
+      "CodeiumAuto",
+
+      dependencies = {
+        "nvim-lua/plenary.nvim",
+        -- "hrsh7th/nvim-cmp",
+        "saghen/blink.nvim",
+      },
+      config = function() require("codeium").setup {} end,
+    },
+    keys = require("core.keymappings").codeium_keys, -- Access the keys table
+  },
+
+  -- CODECOMPANION Activiated and sending queries `Ctrl+s`
+  {
+    "olimorris/codecompanion.nvim",
+    event = "InsertEnter",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    opts = {
+      -- Make Ollama the global default
+      default_adapter = "ollama",
+
+      -- Only register the Ollama adapter
+      adapters = {
+        ollama = function()
+          return require("codecompanion.adapters").extend("ollama", {
+            -- point at your local Ollama HTTP API (adjust port if needed)
+            url = "http://localhost:11434/v1/chat/completions",
+            -- tune your model & context window here
+            schema = {
+              model = { default = "gemma3:27b" },
+              num_ctx = { default = 20000 },
+            },
+          })
+        end,
+      },
+
+      -- Force every built-in strategy to use Ollama
+      strategies = {
+        chat = { adapter = "ollama" },
+        inline = {
+          adapter = "ollama",
+          stream = true, -- token-by-token ghost-text
+          chunk_size = 512, -- bytes per read
+        },
+        code = { adapter = "ollama" },
+        -- add more if you later use "workflow", "cmd", etc.
+      },
+    },
+  },
+
+  {
+    "yetone/avante.nvim",
+    -- event = "VeryLazy",
+    event = "InsertEnter",
+    version = false, -- Never set this value to "*"! Never!
+    opts = {
+      -- add any opts here
+      -- for example
+      provider = "ollama",
+      providers = {
+        ollama = {
+          model = "gemma3:27b", -- "llama3.3:latest",
+          mode = "agentic", -- use the tool-based planner
+          -- you can tweak timeouts, debounce, sidebar position, etc. here
+        },
+        -- provider = "openai",
+        -- openai = {
+        --   endpoint = "https://api.openai.com/v1",
+        --   model = "gpt-4o", -- your desired model (or use gpt-4o, etc.)
+        --   timeout = 30000, -- Timeout in milliseconds, increase this for reasoning models
+        --   temperature = 0,
+        --   max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
+        --   --reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
+        -- },
+      },
+    },
+    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+    build = "make",
+    -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "stevearc/dressing.nvim",
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      --- The below dependencies are optional,
+      "echasnovski/mini.pick", -- for file_selector provider mini.pick
+      "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
+      "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
+      "ibhagwan/fzf-lua", -- for file_selector provider fzf
+      "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+      "zbirenbaum/copilot.lua", -- for providers='copilot'
+      {
+        -- support for image pasting
+        "HakonHarnes/img-clip.nvim",
+        event = "VeryLazy",
+        opts = {
+          -- recommended settings
+          default = {
+            embed_image_as_base64 = false,
+            prompt_for_file_name = false,
+            drag_and_drop = {
+              insert_mode = true,
+            },
+            -- required for Windows users
+            use_absolute_path = true,
+          },
+        },
+      },
+      {
+        -- Make sure to set this up properly if you have lazy=true
+        "MeanderingProgrammer/render-markdown.nvim",
+        opts = {
+          file_types = { "markdown", "Avante" },
+        },
+        ft = { "markdown", "Avante" },
+      },
+    },
+  },
 
   ---------------- EXPERIMENTING WITH MODERN NEOVIMM PLUGINS -------------------------
 
@@ -876,6 +1242,23 @@ return {
     --+-------+--------+
     --| <C-s>	| <CR>   |
   },
+
+  -- ===========================================================================
+  --                        Graphical Tools
+  -- ===========================================================================
+  {
+    "Zeioth/markmap.nvim",
+    build = "npm install -g markmap-cli",
+    cmd = { "MarkmapOpen", "MarkmapSave", "MarkmapWatch", "MarkmapWatchStop" },
+    opts = {
+      html_output = "/tmp/markmap.html",
+      hide_toolbar = false,
+      grace_period = 3600000,
+    },
+    config = function(_, opts) require("markmap").setup(opts) end,
+  },
+
+
 
   ---------------- END OF PLUGINS SETTING -------------------------
 }

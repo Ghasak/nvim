@@ -43,6 +43,13 @@ return {
       workspace = {
         -- Populate with all Neovim runtime Lua files (safer and more complete than manual list)
         library = vim.api.nvim_get_runtime_file("", true),
+
+        -- library = {
+        --   vim.fn.expand "$VIMRUNTIME/lua",
+        --   vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy",
+        --   "${3rd}/luv/library",
+        -- },
+
         checkThirdParty = false, -- disable prompt about third-party library checking if undesired
 
         -- performance tuning (you can adjust if you hit scaling issues)
@@ -56,4 +63,3 @@ return {
     },
   },
 }
-

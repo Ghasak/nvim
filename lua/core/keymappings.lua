@@ -306,18 +306,28 @@ vim.api.nvim_set_keymap("n", "<F6>", ":set spell! spelllang=en<CR>", { noremap =
 -- For Rust, if it is faild you can run (:!cargo fmt)
 -- Or using (:!rustfmt --edition=2021 src/main.rs)
 -- Key binding for normal mode
-vim.api.nvim_set_keymap("n", "<leader>fr", ':lua require("conform").format({ lsp_fallback = true, async = true, timeout_ms = 500 })<CR>', {
-  noremap = true,
-  silent = true,
-  desc = "Format file or range (using conform.nvim)",
-})
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>fr",
+  ':lua require("conform").format({ lsp_fallback = true, async = true, timeout_ms = 500 })<CR>',
+  {
+    noremap = true,
+    silent = true,
+    desc = "Format file or range (using conform.nvim)",
+  }
+)
 
 -- Key binding for visual mode
-vim.api.nvim_set_keymap("v", "<leader>fr", ':lua require("conform").format({ lsp_fallback = false, async = true, timeout_ms = 500 })<CR>', {
-  noremap = true,
-  silent = true,
-  desc = "Format file or range (using conform.nvim)",
-})
+vim.api.nvim_set_keymap(
+  "v",
+  "<leader>fr",
+  ':lua require("conform").format({ lsp_fallback = false, async = true, timeout_ms = 500 })<CR>',
+  {
+    noremap = true,
+    silent = true,
+    desc = "Format file or range (using conform.nvim)",
+  }
+)
 -- vim.api.nvim_set_keymap("n", "<leader>fr", ":Format<CR>", { noremap = true, silent = true })
 -- In visual mode, you can use v the :<,>:Format to format only the given range.
 ---- *****************************************************************************************
@@ -553,19 +563,13 @@ vim.keymap.set("n", "<Leader><Tab>", "<C-^>", {
 })
 
 -- see the notes from fidget extension
-vim.keymap.set("n", "<leader>tf", function() require("telescope").extensions.fidget.fidget() end, { desc = "Telescope Fidget history" })
+vim.keymap.set(
+  "n",
+  "<leader>tf",
+  function() require("telescope").extensions.fidget.fidget() end,
+  { desc = "Telescope Fidget history" }
+)
 
--- ╭──────────────────────────────────────────────────────────────╮
--- │                  Copilot Keymapping                          │
--- │     Using Glance instead of the built-in lspconfig           │
--- │     in lsp_attach.lua file replaced with snacks.nvim         │
--- ╰──────────────────────────────────────────────────────────────╯
-
--- vim.keymap.set("n", "gd", "<cmd>Glance definitions<CR>", { noremap = false, silent = true })
--- vim.keymap.set("n", "gD", "<cmd>Glance type_definitions<CR>", { noremap = false, silent = true })
--- vim.keymap.set("n", "gR", "<CMD>Glance references<CR>", { noremap = false, silent = true })
--- vim.keymap.set("n", "gY", "<CMD>Glance type_definitions<CR>", { noremap = false, silent = true })
--- vim.keymap.set("n", "gM", "<CMD>Glance implementations<CR>", { noremap = false, silent = true })
 
 -- ~/.config/nvim/lua/config/snacks/keymaps.lua
 

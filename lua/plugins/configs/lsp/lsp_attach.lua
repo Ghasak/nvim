@@ -41,12 +41,41 @@ function M.on_attach_global(client, bufnr)
   local blink_ok, blink_cmp = pcall(require, "blink.cmp")
   local function opts(desc) return { buffer = bufnr, desc = "LSP " .. desc } end
 
-  map("n", "gD", vim.lsp.buf.declaration, opts "Go to declaration")
+  -- ╭──────────────────────────────────────────────────────────────╮
+  -- │                  Glance Keymapping                           │
+  -- │     Using Glance instead of the built-in lspconfig           │
+  -- │     in lsp_attach.lua file replaced with snacks.nvim         │
+  -- ╰──────────────────────────────────────────────────────────────╯
   map("n", "gh", function() vim.lsp.buf.hover { border = "double" } end, opts "Hover")
-  map("n", "gd", vim.lsp.buf.definition, opts "Go to definition")
+
+  local builtin = require "telescope.builtin"
+
+  vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
+  map("n", "gd", builtin.lsp_definitions, { buffer = 0 })
+  map("n", "gr", builtin.lsp_references, { buffer = 0 })
+  map("n", "gD", vim.lsp.buf.declaration, { buffer = 0 })
+  map("n", "gT", vim.lsp.buf.type_definition, { buffer = 0 })
+  map("n", "<space>cr", vim.lsp.buf.rename, { buffer = 0 })
+  map("n", "<space>ca", vim.lsp.buf.code_action, { buffer = 0 })
+  map("n", "<space>wd", builtin.lsp_document_symbols, { buffer = 0 })
+
+  -- map("n", "gd", vim.lsp.buf.definition, opts "Go to definition")
+  -- map("n", "gD", vim.lsp.buf.declaration, opts "Go to declaration")
+
+  -- map("n", "gd", "<cmd>Glance definitions<CR>", { noremap = false, silent = true })
+  -- map("n", "gD", "<cmd>Glance type_definitions<CR>", { noremap = false, silent = true })
+  -- map("n", "gR", "<CMD>Glance references<CR>", { noremap = false, silent = true })
+  -- map("n", "gY", "<CMD>Glance type_definitions<CR>", { noremap = false, silent = true })
+  -- map("n", "gM", "<CMD>Glance implementations<CR>", { noremap = false, silent = true })
+
   map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts "Add workspace folder")
   map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, opts "Remove workspace folder")
-  map("n", "<leader>wl", function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, opts "List workspace folders")
+  map(
+    "n",
+    "<leader>wl",
+    function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
+    opts "List workspace folders"
+  )
   map("n", "<leader>D", vim.lsp.buf.type_definition, opts "Go to type definition")
 
   -- blink.cmp signature help integration if available
@@ -125,7 +154,9 @@ function M.on_attach_global(client, bufnr)
   end
 
   -- Server-specific formatting capability enabling
-  if client.name == "tsserver" or client.name == "ts_ls" then client.server_capabilities.documentFormattingProvider = true end
+  if client.name == "tsserver" or client.name == "ts_ls" then
+    client.server_capabilities.documentFormattingProvider = true
+  end
   if client.name == "lua_ls" then client.server_capabilities.documentFormattingProvider = true end
 end
 
