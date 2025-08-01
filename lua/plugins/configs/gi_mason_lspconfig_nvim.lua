@@ -1,6 +1,11 @@
 -- lua/your_module_name/lsp_core.lua
 local M = {}
 
+-- Lua additional support from lua-dev
+-- IMPORTANT: make sure to setup lua-dev BEFORE lspconfig
+local neodev_status, neodev = pcall(require, "neodev")
+if neodev_status then neodev.setup {} end
+
 -- on_init: tweak client capabilities (disable semantic tokens if supported)
 function M.on_init(client, _)
   if client.supports_method and client.supports_method "textDocument/semanticTokens" then

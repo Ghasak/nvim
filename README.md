@@ -53,6 +53,10 @@
 
 ## ChangingLog
 
+
+  - print("🧪 hover handler invoked; result:", vim.inspect(result))
+
+
 ### V.0.11 Release
 
 - [x] Fixed using `:checkhealth vim.deprecated` many API such as:
@@ -638,7 +642,6 @@ want to alter the color.
 ## Reference
 
 - [Markdown Badges](https://ileriayo.github.io/markdown-badges/)
-
 
 
 
