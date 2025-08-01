@@ -25,16 +25,19 @@
 -- │           %%%;vv;%;vv;%%%v;%%%%;vvv;%%%v;%%%;vvv;%;vv;%%%%%;vv;%%%;vvv;.%%%,$l;a                   │
 -- │                                                                                                    │
 -- │          You are about to experience a potent dosage of Neovim Watch your steps.                   │
--- │                                    Version 0.11.1                                                  │
+-- │                                    Version 0.11.3                                                  │
 -- │                  Copyright (c) 2025 Author. All Rights Reserved.                                   │
 -- │                                                                                                    │
--- │                          \ |  __|   _ \  \ \   / _ _|   \  |                                       │
--- │                         .  |  _|   (   |  \ \ /    |   |\/ |                                       │
--- │                        _|\_| ___| \___/    \_/   ___| _|  _|                                       │
+-- │                              \ | __|  _ \\ \   /_ _|  \  |                                         │
+-- │                             .  | _|  (   |\ \ /   |  |\/ |                                         │
+-- │                            _|\_|___|\___/  \_/  ___|_|  _|                                         │
 -- │                    ╔══════════════════════════════════════════╗                                    │
 -- │                    ║           ⎋  HERE BE VIMPIRES ⎋          ║                                    │
 -- │                    ╚══════════════════════════════════════════╝                                    │
 -- ╰────────────────────────────────────────────────────────────────────────────────────────────────────╯
+--
+--
+--
 
 local load_module = function(mod_name)
   local ok, err = pcall(require, mod_name)
@@ -45,8 +48,8 @@ local load_module = function(mod_name)
 end
 
 local init_modules = {
-  "services",
-  "patches",
+  -- "services",
+  -- "patches",
   "plugins",
   "core",
   "settings",

@@ -61,8 +61,7 @@ vim.api.nvim_set_keymap("n", "<C-n>", "<C-n>zz", { noremap = true, silent = true
 vim.api.nvim_set_keymap("n", "<C-p>", "<C-p>zz", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<C-u>", "<C-u>zz", { noremap = true, silent = true })
 
--- How about {} jumping, which are working same,
-vim.api.nvim_set_keymap("n", "{", "{zz", { noremap = true, silent = true })
+-- How about {} jumping, which are working same, vim.api.nvim_set_keymap("n", "{", "{zz", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "}", "}zz", { noremap = true, silent = true })
 -- For better searching
 vim.keymap.set("n", "n", "nzzzv")

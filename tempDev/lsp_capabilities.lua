@@ -11,7 +11,8 @@ local extras = {
       dynamicRegistration = false,
       lineFoldingOnly = true,
     },
-    completion = { completionItem = {
+    completion = {
+      completionItem = {
         documentationFormat = { "markdown", "plaintext" },
         snippetSupport = true,
         preselectSupport = true,
