@@ -42,13 +42,5 @@ M.setup = function()
   }
 end
 
--- 2.  Optional per‑client override (call inside your LSP on_attach)
-M.on_attach = function(client, _)
-  -- example: for this client show only ERRORs as virtual text
-  vim.diagnostic.config(
-    { virtual_text = { severity = { max = vim.diagnostic.severity.ERROR } } },
-    client.id -- namespace = that client
-  )
-end
 
 return M

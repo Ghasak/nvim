@@ -15,6 +15,10 @@ end
 
 M.on_attach_global = require("plugins.configs.lsp.lsp_attach").on_attach_global
 
+-- Setup diagnostics globally
+local diagnostics = require "plugins.configs.lsp.lsp_settings"
+diagnostics.setup() -- Call sign definitions globally
+
 -- capabilities (can be replaced/extended later)
 M.capabilities = require("plugins.configs.lsp.lsp_capabilities").capabilities or {}
 
@@ -25,10 +29,6 @@ local color_scheme_lsp_selector = require("plugins.configs.lsp.lsp_attach").colo
 color_scheme_lsp_selector()
 -- setup: registry-style lua_ls with global attach
 function M.setup()
-  -- Setup diagnostics globally
-  local diagnostics = require "plugins.configs.lsp.lsp_settings"
-  diagnostics.setup() -- Call sign definitions globally
-
   -- ── Lua ─────────────────────────────────────────────────────────────
   local lua_lsp_settings = require("plugins.configs.lsp.custom_servers.sumneko_lua_server_settings").settings
   local lua_lsp_on_init = require("plugins.configs.lsp.custom_servers.sumneko_lua_server_on_init").lua_lsp_on_init
@@ -40,24 +40,24 @@ function M.setup()
   )
 
   -- ── Python ─────────────────────────────────────────────────────────────
-  -- Using pyright-lsp
+  local function ensure_single_client(name, root_dir)
+    for _, client in ipairs(vim.lsp.get_clients()) do
+      if client.name == name and client.config and client.config.root_dir == root_dir then
+        return true -- already running
+      end
+    end
+    return false
+  end
+  local root = require("lspconfig.util").root_pattern("pyproject.toml", ".git")(vim.fn.getcwd())
+  --
+  -- -- Using pyright-lsp
   local site_package_path = vim.fn.systemlist("python3 -c 'import site; print(site.getsitepackages()[0])'")[1]
-
   vim.lsp.config("pyright", {
     on_init = M.on_init,
     on_attach = M.on_attach_global,
     capabilities = M.capabilities,
     flags = { debounce_text_changes = 500 },
     cmd = { "pyright-langserver", "--stdio" },
-    root_markers = {
-      "pyproject.toml",
-      "setup.py",
-      "setup.cfg",
-      "requirements.txt",
-      "Pipfile",
-      "pyrightconfig.json",
-      ".git",
-    },
     settings = {
       python = {
         analysis = {
@@ -70,17 +70,35 @@ function M.setup()
     },
   })
   --
-  -- Using pyrefly-lsp from meta
-  vim.lsp.config("pyrefly", {
-    on_init = M.on_init,
-    on_attach = M.on_attach_global,
-    capabilities = M.capabilities,
-    cmd = { "uv", "run", "pyrefly", "lsp" },
-    filetypes = { "python" },
-    flags = { debounce_text_changes = 500 },
-    settings = {},
-    on_exit = function(code, _, _) vim.notify("Closing Pyrefly LSP exited with code: " .. code, vim.log.levels.INFO) end,
-  })
+
+  if not ensure_single_client("pyrefly", root) then
+    -- Using pyrefly-lsp from meta
+    vim.lsp.config("pyrefly", {
+      on_init = M.on_init,
+      on_attach = M.on_attach_global,
+      capabilities = M.capabilities,
+      -- cmd = { "uv", "run", "pyrefly", "lsp" },
+      -- cmd = { "sh", "-c", "uv run pyrefly lsp" },
+      flags = { debounce_text_changes = 500, exit_timeout = 5000 },
+      cmd = { "pyrefly", "lsp" },
+      -- cmd = { "uv", "run", "pyrefly", "lsp" },
+      filetypes = { "python" },
+      root_markers = {
+        "pyrefly.toml",
+        "pyproject.toml",
+        "setup.py",
+        "setup.cfg",
+        "requirements.txt",
+        "Pipfile",
+        ".git",
+      },
+
+      on_exit = function(code, _, _)
+        os.execute "pkill -f 'pyrefly lsp'"
+        vim.notify("Closing Pyrefly LSP exited with code: " .. code, vim.log.levels.INFO)
+      end,
+    })
+  end
 
   -- ── Rust ─────────────────────────────────────────────────────────────
 

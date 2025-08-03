@@ -163,6 +163,13 @@ function M.on_attach_global(client, bufnr)
     client.server_capabilities.documentFormattingProvider = true
   end
   if client.name == "lua_ls" then client.server_capabilities.documentFormattingProvider = true end
+
+  -- [Optional] per‑client override (call inside your LSP on_attach)
+  -- example: for this client show only ERRORs as virtual text
+  vim.diagnostic.config(
+    { virtual_text = { severity = { max = vim.diagnostic.severity.ERROR } } },
+    client.id -- namespace = that client
+  )
 end
 
 return M

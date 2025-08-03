@@ -3,7 +3,8 @@ local init_modules = {
   "services.customized_autocmd",
   "services.project_manager",
   "services.lazy_snapshots_creator",
-  "services.hide_copilot_on_suggestion"
+  "services.hide_copilot_on_suggestion",
+  "services.pyrefly_server_stop",
 }
 
 for _, module in ipairs(init_modules) do
