@@ -45,8 +45,8 @@ local load_module = function(mod_name)
 end
 
 local init_modules = {
-  -- "services",
-  -- "patches",
+  "services",
+  "patches",
   "plugins",
   "core",
   "settings",
@@ -81,7 +81,5 @@ end
 
 -- set the indent guide to a soft green, no bg
 vim.api.nvim_set_hl(0, "SnacksIndentScope", { fg = "#eef6fb", bg = "NONE" })
-
-
 
 

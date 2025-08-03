@@ -238,7 +238,7 @@ return {
   -- better navigations with lsp
   {
     event = "VeryLazy",
-    cond = false,
+    cond = true,
     branch = "master",
     "dnlhc/glance.nvim",
     config = function() require("plugins.configs.gi_glance").settings() end,

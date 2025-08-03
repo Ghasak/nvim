@@ -1,4 +1,3 @@
-
 local M = {}
 
 M.settings = function()
@@ -103,4 +102,3 @@ M.settings = function()
 end
 
 return M
-

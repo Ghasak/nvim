@@ -246,7 +246,7 @@ local config = {
 local diagnostics = require "plugins.configs.lsp.lsp_settings"
 diagnostics.setup()
 
-local base_on_attach = require("plugins.configs.lsp.lsp_attach").custom_attach
+local base_on_attach = require("plugins.configs.lsp.lsp_attach").on_attach_global
 
 local opts = {
   on_attach = function(client, bufnr)

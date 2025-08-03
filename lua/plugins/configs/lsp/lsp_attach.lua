@@ -42,32 +42,37 @@ function M.on_attach_global(client, bufnr)
   local function opts(desc) return { buffer = bufnr, desc = "LSP " .. desc } end
 
   -- ╭──────────────────────────────────────────────────────────────╮
-  -- │                  Glance Keymapping                           │
+  -- │             Glance vs telescope Keymapping                   │
   -- │     Using Glance instead of the built-in lspconfig           │
   -- │     in lsp_attach.lua file replaced with snacks.nvim         │
   -- ╰──────────────────────────────────────────────────────────────╯
-  map("n", "gh", function() vim.lsp.buf.hover { border = "double" } end, opts "Hover")
+  -- try to load glance
+  local has_glance, glance = pcall(require, "glance")
 
+  -- telescope builtin as fallback
   local builtin = require "telescope.builtin"
-
   vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
-  map("n", "gd", builtin.lsp_definitions, { buffer = 0 })
-  map("n", "gr", builtin.lsp_references, { buffer = 0 })
-  map("n", "gD", vim.lsp.buf.declaration, { buffer = 0 })
-  map("n", "gT", vim.lsp.buf.type_definition, { buffer = 0 })
+  -- Definition of the fallback vs glance mappings
+  if has_glance then
+    -- Glance is loaded: use its commands
+    map("n", "gd", "<cmd>Glance definitions<CR>", { noremap = false, silent = true, buffer = 0 })
+    map("n", "gD", "<cmd>Glance type_definitions<CR>", { noremap = false, silent = true, buffer = 0 })
+    map("n", "gR", "<cmd>Glance references<CR>", { noremap = false, silent = true, buffer = 0 })
+    map("n", "gY", "<cmd>Glance type_definitions<CR>", { noremap = false, silent = true, buffer = 0 })
+    map("n", "gM", "<cmd>Glance implementations<CR>", { noremap = false, silent = true, buffer = 0 })
+  else
+    -- Glance not available: fallback to Telescope
+    map("n", "gd", builtin.lsp_definitions, { buffer = 0 })
+    map("n", "gr", builtin.lsp_references, { buffer = 0 })
+    map("n", "gD", vim.lsp.buf.declaration, { buffer = 0 })
+    map("n", "gT", vim.lsp.buf.type_definition, { buffer = 0 })
+    map("n", "<space>wd", builtin.lsp_document_symbols, { buffer = 0 })
+  end
+
+  -- Common mappings (always)
+  map("n", "gh", function() vim.lsp.buf.hover { border = "double" } end, opts "Hover")
   map("n", "<space>cr", vim.lsp.buf.rename, { buffer = 0 })
   map("n", "<space>ca", vim.lsp.buf.code_action, { buffer = 0 })
-  map("n", "<space>wd", builtin.lsp_document_symbols, { buffer = 0 })
-
-  -- map("n", "gd", vim.lsp.buf.definition, opts "Go to definition")
-  -- map("n", "gD", vim.lsp.buf.declaration, opts "Go to declaration")
-
-  -- map("n", "gd", "<cmd>Glance definitions<CR>", { noremap = false, silent = true })
-  -- map("n", "gD", "<cmd>Glance type_definitions<CR>", { noremap = false, silent = true })
-  -- map("n", "gR", "<CMD>Glance references<CR>", { noremap = false, silent = true })
-  -- map("n", "gY", "<CMD>Glance type_definitions<CR>", { noremap = false, silent = true })
-  -- map("n", "gM", "<CMD>Glance implementations<CR>", { noremap = false, silent = true })
-
   map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts "Add workspace folder")
   map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, opts "Remove workspace folder")
   map(

@@ -53,9 +53,7 @@
 
 ## ChangingLog
 
-
-  - print("🧪 hover handler invoked; result:", vim.inspect(result))
-
+- print("🧪 hover handler invoked; result:", vim.inspect(result))
 
 ### V.0.11 Release
 
@@ -67,7 +65,6 @@
 ### V.0.10 Release
 
 - [x] Adding the following color highlights to the githubG.nvim our colorschme, which includes:
-
   - [x] LspInlayHint,
   - [x] WinSeparator,
   - [x] WinBar and WinBarNC
@@ -130,7 +127,6 @@ upgrades to my configuration file (to name few)
 - [x] All packages are supported for the new version of `nvim`
 - [x] Startup time up to maximum 18 milliseconds tested on my `MacBook Max M1`
 - [x] Support several programming languages, with their components such assets
-
   - LSP configured with `mason` plugin, (also support lsp-saga, lsp-signature)
   - Linting support, Auto-formatter, intelligence, auto-completions,
   - Go to definition, hover, references, troubles, actions.
@@ -642,6 +638,3 @@ want to alter the color.
 ## Reference
 
 - [Markdown Badges](https://ileriayo.github.io/markdown-badges/)
-
-
-
