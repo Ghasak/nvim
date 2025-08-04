@@ -314,9 +314,7 @@ function M.setup()
   -- │     (Ensures external binary dependencies are installed                        │
   -- │         and kept in sync with config expectations. )                           │
   -- ╰────────────────────────────────────────────────────────────────────────────────╯
-
   require("plugins.configs.lsp.lsp_mason_tools").tool_setup()
 end
 
 return M
-
