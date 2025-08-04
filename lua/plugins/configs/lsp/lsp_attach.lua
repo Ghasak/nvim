@@ -1,40 +1,6 @@
 local M = {}
 local map = vim.keymap.set
 
-M.color_scheme_lsp_selector = function()
-  ------------------------------------------------------------------------------------------
-  -- helper to set the LSP "reference" highlights
-  ------------------------------------------------------------------------------------------
-  local function apply_lsp_reference_hl()
-    local scheme = vim.g.colors_name
-    local bg
-
-    if scheme == "github_dark" or scheme == "onedark" then
-      bg = "#4a535f"
-    elseif scheme == "github_light" then
-      bg = "#79c0ff"
-    else
-      return
-    end
-
-    for _, group in ipairs { "LspReferenceRead", "LspReferenceText", "LspReferenceWrite" } do
-      vim.api.nvim_set_hl(0, group, {
-        bg = bg,
-        bold = true,
-      })
-    end
-  end
-
-  -- run it now (for your startup colorscheme)
-  apply_lsp_reference_hl()
-
-  -- re-apply on theme change
-  vim.api.nvim_create_autocmd("ColorScheme", {
-    pattern = { "github_dark", "github_light" },
-    callback = apply_lsp_reference_hl,
-  })
-end
-
 -- on_attach: buffer-local keymaps and UI
 function M.on_attach_global(client, bufnr)
   -- try to load blink.cmp once
@@ -42,8 +8,8 @@ function M.on_attach_global(client, bufnr)
   local function opts(desc) return { buffer = bufnr, desc = "LSP " .. desc } end
 
   -- ╭──────────────────────────────────────────────────────────────╮
-  -- │             Glance vs telescope Keymapping                   │
-  -- │     Using Glance instead of the built-in lspconfig           │
+  -- │  🧪 Glance vs telescope Keymapping                           │
+  -- │  •  Using Glance instead of the built-in lspconfig           │
   -- │     in lsp_attach.lua file replaced with snacks.nvim         │
   -- ╰──────────────────────────────────────────────────────────────╯
   -- try to load glance
@@ -62,17 +28,29 @@ function M.on_attach_global(client, bufnr)
     map("n", "gM", "<cmd>Glance implementations<CR>", { noremap = false, silent = true, buffer = 0 })
   else
     -- Glance not available: fallback to Telescope
-    map("n", "gd", builtin.lsp_definitions, { buffer = 0 })
-    map("n", "gr", builtin.lsp_references, { buffer = 0 })
-    map("n", "gD", vim.lsp.buf.declaration, { buffer = 0 })
-    map("n", "gT", vim.lsp.buf.type_definition, { buffer = 0 })
-    map("n", "<space>wd", builtin.lsp_document_symbols, { buffer = 0 })
+    -- definitions / references / declaration / type def
+    map("n", "gd", builtin.lsp_definitions, { buffer = 0, desc = "Goto Definition (Telescope fallback)" })
+    map("n", "gr", builtin.lsp_references, { buffer = 0, desc = "Goto References (Telescope fallback)" })
+    map("n", "gD", vim.lsp.buf.declaration, { buffer = 0, desc = "Goto Declaration" })
+    map("n", "gT", vim.lsp.buf.type_definition, { buffer = 0, desc = "Goto Type Definition" })
+    -- document symbols / workspace symbols
+    map("n", "<space>wd", builtin.lsp_document_symbols, { buffer = 0, desc = "Document Symbols" })
+    map("n", "gO", builtin.lsp_document_symbols, { buffer = 0, desc = "Open Document Symbols" })
+    map("n", "gW", builtin.lsp_dynamic_workspace_symbols, { buffer = 0, desc = "Open Workspace Symbols" })
+    -- rename & code action
+    map("n", "grn", vim.lsp.buf.rename, { buffer = 0, desc = "[R]e[n]ame" })
+    map({ "n", "x" }, "gra", vim.lsp.buf.code_action, { buffer = 0, desc = "[G]oto Code [A]ction" })
+    -- alternate references/implementations/definitions/type definitions via Telescope
+    map("n", "grr", builtin.lsp_references, { buffer = 0, desc = "[G]oto [R]eferences" })
+    map("n", "gri", builtin.lsp_implementations, { buffer = 0, desc = "[G]oto [I]mplementation" })
+    map("n", "grd", builtin.lsp_definitions, { buffer = 0, desc = "[G]oto [D]efinition" })
+    map("n", "grt", builtin.lsp_type_definitions, { buffer = 0, desc = "[G]oto [T]ype Definition" })
   end
 
   -- Common mappings (always)
   map("n", "gh", function() vim.lsp.buf.hover { border = "double" } end, opts "Hover")
-  map("n", "<space>cr", vim.lsp.buf.rename, { buffer = 0 })
-  map("n", "<space>ca", vim.lsp.buf.code_action, { buffer = 0 })
+  map("n", "<leader>cr", vim.lsp.buf.rename, { buffer = 0 })
+  map("n", "<leader>ca", vim.lsp.buf.code_action, { buffer = 0 })
   map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts "Add workspace folder")
   map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, opts "Remove workspace folder")
   map(
@@ -121,23 +99,50 @@ function M.on_attach_global(client, bufnr)
     end,
   })
 
-  -- Document highlighting if supported
-  vim.opt.updatetime = 300
-  if client.server_capabilities and client.server_capabilities.documentHighlightProvider then
-    local group = vim.api.nvim_create_augroup("lsp_document_highlight_" .. bufnr, { clear = true })
+  -- ╭──────────────────────────────────────────────────────────────────────────────╮
+  -- │ 🧪  LSP reference highlights                                                 │
+  -- │   •  here is the actual highlight refelcted in nvim                          │
+  -- │     It depends on the apply_lsp_reference_hl function in the .               │
+  -- │   ~/.config/nvim/after/plugin/features_loader.lua                            │
+  -- ╰──────────────────────────────────────────────────────────────────────────────╯
 
-    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-      group = group,
-      buffer = bufnr,
-      callback = function() vim.lsp.buf.document_highlight() end,
-    })
+  -- Document highlighting if supported is based on : vim.opt.updatetime = 300 find it in option.lua
+  -- unique augroup per buffer to isolate and auto-clear prior definitions
+  local group_name = "lsp_document_highlight_" .. bufnr
+  local group = vim.api.nvim_create_augroup(group_name, { clear = true })
 
-    vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-      group = group,
-      buffer = bufnr,
-      callback = function() vim.lsp.buf.clear_references() end,
-    })
-  end
+  -- highlight symbol under cursor after idle
+  -- must watch for the color for background located here:
+  -- ~/.config/nvim/after/plugin/features_loader.lua
+  vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+    group = group,
+    buffer = bufnr,
+    callback = function() vim.lsp.buf.document_highlight() end,
+  })
+
+  -- clear the highlights as soon as the cursor moves
+  vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+    group = group,
+    buffer = bufnr,
+    callback = function() vim.lsp.buf.clear_references() end,
+  })
+
+  -- cleanup on detach: clear references and remove this buffer's highlight autocmds
+  vim.api.nvim_create_autocmd("LspDetach", {
+    -- separate detach group so it doesn’t interfere with per-buffer highlight group
+    group = vim.api.nvim_create_augroup("kickstart-lsp-detach", { clear = false }),
+    buffer = bufnr,
+    callback = function(event)
+      vim.lsp.buf.clear_references()
+      -- explicitly clear the highlight autocmds for this buffer
+      vim.api.nvim_clear_autocmds { group = group_name, buffer = event.buf }
+    end,
+  })
+
+  -- ╭──────────────────────────────────────────────────────────────────────────────╮
+  -- │ 🧪  LSP line diagnostic highlight                                            │
+  -- │   • this will chang the colors of the icons on the side gutter               │
+  -- ╰──────────────────────────────────────────────────────────────────────────────╯
 
   -- Diagnostic line number highlights
   vim.api.nvim_set_hl(0, "DiagnosticLineNrError", { bg = "#51202A", fg = "#FF0000", bold = true })
@@ -145,6 +150,10 @@ function M.on_attach_global(client, bufnr)
   vim.api.nvim_set_hl(0, "DiagnosticLineNrInfo", { bg = "#1E535D", fg = "#00FFFF", bold = true })
   vim.api.nvim_set_hl(0, "DiagnosticLineNrHint", { bg = "#1E205D", fg = "#0000FF", bold = true })
 
+  -- ╭──────────────────────────────────────────────────────────────────────────────╮
+  -- │ 🧪  Integrate with lsp signature                                             │
+  -- │   • lsp signature loaded with the configs                                    │
+  -- ╰──────────────────────────────────────────────────────────────────────────────╯
   -- LSP signature setup (safe)
   local signature_ok, signature_cfg = pcall(require, "plugins.configs.gi_lsp_signature")
   if signature_ok then
@@ -157,6 +166,11 @@ function M.on_attach_global(client, bufnr)
   else
     vim.notify("Signature config gi_lsp_signature not found", vim.log.levels.WARN)
   end
+
+  -- ╭──────────────────────────────────────────────────────────────────────────────╮
+  -- │ ⚙️  Server specific features                                                 │
+  -- │   • For tsserver and lus_ls                                                  │
+  -- ╰──────────────────────────────────────────────────────────────────────────────╯
 
   -- Server-specific formatting capability enabling
   if client.name == "tsserver" or client.name == "ts_ls" then

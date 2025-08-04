@@ -53,6 +53,11 @@ vim.cmd [[
 --
 
 -----------------------------------------------------------
+--     Control the amout of time of lsp highlight
+-----------------------------------------------------------
+-- Document highlighting if supported
+vim.opt.updatetime = 300
+-----------------------------------------------------------
 --              For Neovide - Compatibility
 -----------------------------------------------------------
 vim.g.neovide_scale_factor = 1.0
@@ -109,7 +114,8 @@ opt.showmode = false -- This will show the ModeMsg when the mode is changed I tu
 opt.conceallevel = 0
 opt.tabstop = 2
 opt.shiftwidth = 2
-opt.wildignore = ".git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**"
+opt.wildignore =
+  ".git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**"
 opt.fillchars = {
   vert = "▕", -- alternatives │
   fold = " ",
@@ -426,7 +432,9 @@ local createdir = function()
   for key, dirx in pairs(data_dir) do
     -- if vim.fn.empty(vim.fn.glob(dirx)) > 0 then
     vim.api.nvim_command(
-      ([[echohl WarningMsg | echomsg "[-] The directory:%s is not existed, will be created ." | echohl None]]):format(dirx)
+      ([[echohl WarningMsg | echomsg "[-] The directory:%s is not existed, will be created ." | echohl None]]):format(
+        dirx
+      )
     )
     os.execute("mkdir -p " .. dirx)
   end
