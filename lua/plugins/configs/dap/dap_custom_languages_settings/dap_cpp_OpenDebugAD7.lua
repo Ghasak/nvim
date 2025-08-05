@@ -52,6 +52,7 @@ function M.setup(dap)
       end,
       -- -----------------------------------------------------------------
       cwd = "${workspaceFolder}",
+      targetArchitecture = "arm64", -- <<< tell the adapter it’s Apple Silicon
       setupCommands = {
         {
           text = "-enable-pretty-printing",

@@ -40,7 +40,7 @@ end
 M.cpp_debuger_setup = function(dap)
   local async = require "plenary.async"
   local notify = require("notify").async
-  vim.g.my_adpater_loader_selector = 4 -- [2] is the best option as it is similar to rust
+  vim.g.my_adpater_loader_selector = 1 -- [2] is the best option as it is similar to rust
 
   if vim.bo.filetype == "cpp" then
     -- ############################################################################################

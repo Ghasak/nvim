@@ -608,18 +608,39 @@ return {
   --Debugging
   -- This plugin adds virtual text support to nvim-dap. nvim-treesitter is used to find variable definitions.
   --It will add variable text value in the debugging session.
+
   {
     "theHamsta/nvim-dap-virtual-text",
-    -- cond = false,
     lazy = true,
     event = "InsertEnter",
     config = function()
       require("nvim-dap-virtual-text").setup {
+        enabled = true, -- Enable the plugin
+        enabled_commands = true, -- Enable commands like :DapVirtualTextEnable
+        highlight_changed_variables = true, -- Highlight changed variables
+        show_stop_reason = true, -- Show reason for stopping
+        commented = false, -- Prefix virtual text with comment symbol
         display_callback = function(variable, _, _, _) return variable.name .. "  󰞮 󱚟   " .. variable.value end,
+        virt_text_pos = "eol", -- Position of virtual text (end of line)
+        all_frames = true, -- Show virtual text for all stack frames
+        virt_lines = false, -- Use virtual lines instead of virtual text
+        virt_text_win_col = nil, -- Override window column for virtual text
       }
       vim.g.dap_virtual_text = true
+
+      -- Refresh virtual text on various DAP events
+      local dap = require "dap"
+      local nvim_dap_vt = require "nvim-dap-virtual-text"
+      dap.listeners.after.event_stopped["dap-virtual-text-refresh"] = function() nvim_dap_vt.refresh() end
+      dap.listeners.after.event_continued["dap-virtual-text-refresh"] = function() nvim_dap_vt.refresh() end
+      dap.listeners.after.event_terminated["dap-virtual-text-refresh"] = function() nvim_dap_vt.refresh() end
     end,
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "mfussenegger/nvim-dap",
+    },
   },
+
   {
     "mfussenegger/nvim-dap",
     -- cond = false,
@@ -1257,8 +1278,6 @@ return {
     },
     config = function(_, opts) require("markmap").setup(opts) end,
   },
-
-
 
   ---------------- END OF PLUGINS SETTING -------------------------
 }

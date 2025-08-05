@@ -39,14 +39,38 @@ M.dap_adapters_python_fn = function()
 end
 
 M.dap_configurations_python_fn = function()
+  -- upvalue to remember if we chose module mode
+  local run_as_module
   return {
 
     {
       -- The first three options are required by nvim-dap
       type = "python",
       request = "launch",
-      name = "Launch file",
-      program = "${file}", -- You can launch with arg as -m src.main (for entire project)
+      name = "Launch file or project",
+      -- program = "${file}", -- You can launch with arg as -m src.main (for entire project)
+      -- 1) Decide at launch time: file vs module
+      program = function()
+        -- default to current file
+        local file = vim.fn.expand "%"
+        -- prompt: “f” for file, “m” for module
+        local choice = vim.fn.input("Run as (f)ile or (m)odule [f]: [f/m]?", "")
+        if choice:lower():sub(1, 1) == "m" then
+          run_as_module = true
+          return nil -- no program path when we go module mode
+        end
+        run_as_module = false
+        return file -- run this single file
+      end,
+
+      -- 2) If module mode was picked, debugpy will see this key
+      module = function()
+        if run_as_module then
+          return "src.main" -- python -m src.main
+        end
+        return nil
+      end,
+
       pythonPath = function()
         -- You could adapt this - to for example use the `VIRTUAL_ENV` environment variable.
         local env_path = string.format("%s/bin/python3", os.getenv "VIRTUAL_ENV")
@@ -57,6 +81,11 @@ M.dap_configurations_python_fn = function()
         end
         return vim.g.python_custom_command_path
       end,
+
+      console = "integratedTerminal", -- or "externalTerminal"
+      justMyCode = true, -- Only stop on breakpoints in your code
+      -- ensure imports work even in file mode
+      env = {PYTHONPATH = "${workspaceFolder}"},
     },
   }
 end
