@@ -32,9 +32,7 @@ _G.START_OPEN_DEBUGAD7_SERVER = function()
   local args = { "--server=9999", "--trace=response", "--engineLogging" }
   local on_exit = function(_, return_val, event)
     vim.notify(event)
-    if return_val ~= 0 then
-      print "OpenDebugAD7 server exited with error!"
-    end
+    if return_val ~= 0 then print "OpenDebugAD7 server exited with error!" end
   end
 
   vim.fn.jobstart({ cmd_OpenDebugAD7, unpack(args) }, { on_exit = on_exit })
@@ -173,7 +171,30 @@ M.debugging_key_mapping = function()
   --########################################################################
   --                     KEY MAPPING FOR DEBUGGING
   --########################################################################
+  -- plugins/configs/dap.lua
+  local dap = require "dap"
+  local nvim_dap_vt = require "nvim-dap-virtual-text"
 
+  -- Keybindings for DAP stepping with virtual text refresh
+
+  vim.keymap.set("n", "<F1>", function()
+    dap.step_out()
+    nvim_dap_vt.refresh()
+  end, { desc = "Step Out" })
+  vim.keymap.set("n", "<F2>", function()
+    dap.step_into()
+    nvim_dap_vt.refresh()
+  end, { desc = "Step Into" })
+  vim.keymap.set("n", "<F3>", function()
+    dap.step_over()
+    nvim_dap_vt.refresh()
+  end, { desc = "Step Over (Next)" })
+  vim.keymap.set("n", "<F4>", function()
+    dap.continue()
+    nvim_dap_vt.refresh()
+  end, { desc = "Continue" })
+
+  --------------------------------------
   local map = require("core.utils").keymapping
   if vim.bo.filetype == "cpp" then
     map("n", "<leader>b", ":lua set_breakpoint_and_update_global(vim.g.adapter_type)<CR>")
@@ -186,10 +207,10 @@ M.debugging_key_mapping = function()
   end
   map("n", "<leader>B", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>")
   -- ------------------------- Navigation ------------------
-  map("n", "<leader><F1>", ':lua require"dap".step_out()<CR>')
-  map("n", "<leader><F2>", ':lua require"dap".step_into()<CR>')
-  map("n", "<leader><F3>", ':lua require"dap".step_over()<CR>')
-  map("n", "<leader><F4>", ':lua require"dap".continue()<CR>')
+  -- map("n", "<leader><F1>", ':lua require"dap".step_out()<CR>')
+  -- map("n", "<leader><F2>", ':lua require"dap".step_into()<CR>')
+  -- map("n", "<leader><F3>", ':lua require"dap".step_over()<CR>')
+  -- map("n", "<leader><F4>", ':lua require"dap".continue()<CR>')
 
   map("n", "<leader>dn", ':lua require"dap".run_to_cursor()<CR>')
   map("n", "<leader>dk", ':lua require"dap".up()<CR>')

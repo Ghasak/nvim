@@ -621,7 +621,6 @@ others. These layers include:
 - B. Tree-Sitter Color-Groups which used once you install the `nvim-treesitter`
 - C. Component of the `plugins` that alter the colors (e.g., statuline,
   bufferline, nvim-tree and lsp configurations)
-
 - D. The user custom individual colors defined.
 
 `Configurations` : to change the color, you need to consider to which level you
