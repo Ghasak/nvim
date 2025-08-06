@@ -149,14 +149,10 @@ function M.setup()
   if not ensure_single_client("pyrefly", root) then
     -- Using pyrefly-lsp from meta
     vim.lsp.config("pyrefly", {
-      on_init = M.on_init,
+      -- on_init = M.on_init, -- this will cause a problem
       on_attach = M.on_attach_global,
       capabilities = M.capabilities,
-      -- cmd = { "uv", "run", "pyrefly", "lsp" },
-      -- cmd = { "sh", "-c", "uv run pyrefly lsp" },
-      flags = { debounce_text_changes = 500, exit_timeout = 5000 },
-      cmd = { "pyrefly", "lsp" },
-      -- cmd = { "uv", "run", "pyrefly", "lsp" },
+      cmd = { "uv", "run", "pyrefly", "lsp" }, -- Use uv for consistent environment
       filetypes = { "python" },
       root_markers = {
         "pyrefly.toml",
@@ -169,9 +165,10 @@ function M.setup()
       },
 
       on_exit = function(code, _, _)
-        os.execute "pkill -f 'pyrefly lsp'"
+        -- os.execute "pkill -f 'pyrefly lsp'"
         vim.notify("Closing Pyrefly LSP exited with code: " .. code, vim.log.levels.INFO)
       end,
+      flags = { debounce_text_changes = 500, exit_timeout = 5000 },
     })
   end
 
