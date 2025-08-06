@@ -90,7 +90,7 @@ if not jdtls_launcher or jdtls_launcher == "" then
 end
 
 -- ================= WORKAROUND: Find Launcher using vim.fn.glob ==================
-local jdtls_launcher
+-- local jdtls_launcher
 local launcher_glob_pattern = jdtls_install_path .. "/plugins/org.eclipse.equinox.launcher_*.jar"
 -- print("DEBUG(fn.glob): Launcher pattern: " .. vim.inspect(launcher_glob_pattern))
 
