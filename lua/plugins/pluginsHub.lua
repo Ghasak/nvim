@@ -112,10 +112,9 @@ return {
         -- This native loading fzf written in C
         -- https://github.com/nvim-telescope/telescope-fzf-native.nvim
         "nvim-telescope/telescope-fzf-native.nvim",
-        build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+        build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 && cmake --build build --config Release && cmake --install build --prefix build",
         event = "InsertEnter",
-      },
-      -- This is ui for showing menu for io.popen
+      }, -- This is ui for showing menu for io.popen
       -- It will open most output to a selection including, dap, gen.nvim (AI)
       -- https://github.com/nvim-telescope/telescope-ui-select.nvim
       { "nvim-telescope/telescope-ui-select.nvim", event = "VimEnter" },
@@ -260,7 +259,8 @@ return {
   Commands like `:MasonInstall` and `:MasonUninstall` make it easy to manage tooling without leaving Neovim.
 ]]
   {
-    "williamboman/mason.nvim",
+    -- "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     lazy = true,
     event = { "VeryLazy" },
     -- event = {"VimEnter"},

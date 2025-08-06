@@ -17,12 +17,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
     ---@param method vim.lsp.protocol.Method
     ---@param bufnr? integer
     ---@return boolean
+    ---@diagnostic disable-next-line: inject-field
     function client:supports_method_compat(method, bufnr)
       if vim.fn.has "nvim-0.11" == 1 then
         -- Nvim 0.11+ new signature
         return self:supports_method(method, bufnr)
       else
         -- Nvim 0.10 and earlier
+        ---@diagnostic disable-next-line: param-type-mismatch
         return self.supports_method(self, method, { bufnr = bufnr })
       end
     end
