@@ -559,9 +559,18 @@ return {
     -- event = "CursorMoved",
     event = "InsertEnter",
     config = function() require("plugins.configs.gi_vim_eft").setup() end,
-  }, -- lsp loader status display
-  { "ggandor/lightspeed.nvim", lazy = true, event = "InsertEnter" },
-
+  }, -- lsp loader status display -- deprecated
+  -- { "ggandor/lightspeed.nvim", lazy = true, event = "InsertEnter" },
+  {
+    "ggandor/leap.nvim",
+    cond = true,
+    event = "VeryLazy",
+    -- lazy = true,
+    -- dot-repeat support
+    dependencies = { "tpope/vim-repeat" },
+    -- as soon as the plugin loads, set up all of Leap’s default keybindings:
+    config = function() require("plugins.configs.gi_leap_nvim").setup() end,
+  },
   {
     "VonHeikemen/fine-cmdline.nvim",
     event = "CmdwinEnter",

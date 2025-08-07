@@ -249,10 +249,11 @@ local disabled_built_ins = {
   "getscriptPlugin",
   "gzip",
   "logipat",
-  -- "netrw",
-  -- "netrwPlugin",
-  -- "netrwSettings",
-  -- "netrwFileHandlers",
+  --                        ┌────────────────────────────────--┐
+  -- "netrw",               │  vim.g.loaded_netrw = 1          │ notice these will not load the built-in nvim-tree
+  -- "netrwPlugin",         │  vim.g.loaded_netrwPlugin = 1    │ if we set them to (1), that's why didnt set them
+  -- "netrwSettings",       │  vim.g.loaded_netrwSettings = 1  │ as i need the nvimtree
+  -- "netrwFileHandlers",   └──────────────────────────────────┘
   "matchit",
   "matchparen",
   "tar",

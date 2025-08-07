@@ -574,7 +574,7 @@ vim.keymap.set(
 -- ~/.config/nvim/lua/config/snacks/keymaps.lua
 
 M.keys = {
-  { "<leader>bb", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
+  { "<leader>bb", function() Snacks.picker.recent() end, desc = "Smart Find Files" },
   { "<leader>,", function() Snacks.picker.buffers() end, desc = "Buffers" },
   { "<leader>/", function() Snacks.picker.grep() end, desc = "Grep" },
   -- { "<leader>ftt", function() Snacks.explorer() end, desc = "File Explorer" },

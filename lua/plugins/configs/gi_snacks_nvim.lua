@@ -7,6 +7,7 @@ M.opts = {
   dashboard = { enabled = false },
   explorer = {
     enabled = true,
+    replace_netrw = false, -- Replace netrw with the snacks explorer
     layout = {
       layout = {
         preset = "sidebar",
