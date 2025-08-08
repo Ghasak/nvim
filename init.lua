@@ -84,3 +84,8 @@ vim.api.nvim_set_hl(0, "SnacksIndentScope", { fg = "#eef6fb", bg = "NONE" })
 
 -- temp error with nvim.progress and nvim.lspsaga [to be updated ]
 vim.deprecate = function() end
+
+
+
+
+

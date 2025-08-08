@@ -197,8 +197,9 @@ function M.setup()
         preset = "cmdline",
         ["<Tab>"] = { "accept" },
         -- ["<CR>"] = { "accept_and_enter", "fallback" },
-        -- ["<CR>"] = { "accept", "fallback" },
-        ["<CR>"] = { "fallback" },
+        ["<CR>"] = { "accept", "fallback" },
+        -- ["<CR>"] = { "fallback" },
+        -- ["<CR>"] = { "accept_and_enter" },
 
         ["<C-n>"] = { "select_next", "fallback" },
         ["<C-p>"] = { "select_prev", "fallback" },

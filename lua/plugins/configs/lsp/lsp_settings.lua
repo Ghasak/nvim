@@ -35,7 +35,7 @@ M.setup = function()
     -- virtual_lines = {
     --   severity = { min = vim.diagnostic.severity.ERROR },
     -- },
-    underline = true,
+    underline =false, -- true,
     update_in_insert = false,
     severity_sort = true,
     float = { source = "if_many" },
