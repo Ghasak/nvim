@@ -58,7 +58,7 @@ for _, module in ipairs(init_modules) do
   load_module(module)
 end
 
--- Loading the neovide configurations, once it neovide is lunched.
+-- Loading the neovi
 if vim.g.neovide then
   local status, neovide_config = pcall(require("units.neovideConfig").neovide_config)
   if not status then
@@ -82,6 +82,5 @@ end
 -- set the indent guide to a soft green, no bg
 vim.api.nvim_set_hl(0, "SnacksIndentScope", { fg = "#eef6fb", bg = "NONE" })
 
-
-
-
+-- temp error with nvim.progress and nvim.lspsaga [to be updated ]
+vim.deprecate = function() end

@@ -11,7 +11,7 @@ M.config = function()
     prompt = "Transform the following text into the style of $input1: $text",
     replace = true,
   }
-  gen.model = "gemma3:27b"
+  gen.model = "gpt-oss:20b" -- "gemma3:27b"
   gen.init = function(options) pcall(io.popen, "ollama serve > /dev/null 2>&1 &") end
 end
 

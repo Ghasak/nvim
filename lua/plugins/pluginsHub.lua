@@ -22,6 +22,7 @@ return {
   -- Treesitter
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = 'master',
     -- lazy = true,
     -- event = "BufReadPre",
     -- event = "VimEnter",
@@ -1087,6 +1088,7 @@ return {
     lazy = true,
     cmd = { "Gen" },
     config = function() require("plugins.configs.gi_gen_nvim").config() end,
+
   },
 
   -- Accepting suggestion `Ctrl +x`

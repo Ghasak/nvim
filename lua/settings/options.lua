@@ -495,6 +495,25 @@ vim.o.foldenable = true
 -- ===========================================================================
 vim.opt.conceallevel = 1
 
+
+
+
+--- Sets the number of visual spaces that a <Tab> character will represent.
+--  For example, if tabstop=2, pressing <Tab> or viewing a real tab character will show as 2 spaces wide.
+vim.o.tabstop = 2
+
+--- Sets the number of spaces used for each step of (auto)indent.
+--  This controls how much indentation is added/removed when using << and >>, or when auto-indenting a line.
+vim.o.shiftwidth = 2
+
+--- Sets the number of spaces a <Tab> counts for while performing editing operations (like inserting a tab).
+--  If softtabstop is set to 2, pressing <Tab> in insert mode will insert 2 spaces (if expandtab is enabled).
+vim.o.softtabstop = 2
+
+
+
+
+
 -- ===========================================================================
 --                   OLD JUNKS FROM PERVIOUS CONFIGS
 -- ===========================================================================
