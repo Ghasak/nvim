@@ -22,7 +22,7 @@ return {
   -- Treesitter
   {
     "nvim-treesitter/nvim-treesitter",
-    branch = 'master',
+    branch = "master",
     -- lazy = true,
     -- event = "BufReadPre",
     -- event = "VimEnter",
@@ -1088,7 +1088,6 @@ return {
     lazy = true,
     cmd = { "Gen" },
     config = function() require("plugins.configs.gi_gen_nvim").config() end,
-
   },
 
   -- Accepting suggestion `Ctrl +x`
@@ -1167,8 +1166,9 @@ return {
       provider = "ollama",
       providers = {
         ollama = {
-          model = "gemma3:27b", -- "llama3.3:latest",
-          mode = "agentic", -- use the tool-based planner
+          endpoint = "http://127.0.0.1:11434", -- Note that there is no /v1 at the end.
+          model = "gpt-oss:20b", -- "llama3.3:latest",
+          -- mode = "agentic", -- use the tool-based planner
           -- you can tweak timeouts, debounce, sidebar position, etc. here
         },
         -- provider = "openai",
@@ -1197,6 +1197,9 @@ return {
       "ibhagwan/fzf-lua", -- for file_selector provider fzf
       "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
       "zbirenbaum/copilot.lua", -- for providers='copilot'
+      "stevearc/dressing.nvim", -- for input provider dressing
+      "folke/snacks.nvim", -- for input provider snacks
+
       {
         -- support for image pasting
         "HakonHarnes/img-clip.nvim",
@@ -1292,5 +1295,3 @@ return {
 
   ---------------- END OF PLUGINS SETTING -------------------------
 }
-
-

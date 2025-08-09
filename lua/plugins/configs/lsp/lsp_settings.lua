@@ -28,14 +28,14 @@ M.setup = function()
       source = "if_many",
       prefix = "■",
       severity = { max = vim.diagnostic.severity.WARN },
-    },
+    },                     --: this is the inline error text
     virtual_lines = false, --: triggered by  by diagnositc_toggle.lua commands
     --: DiagLinesOn and DiagLinesOff, better than later use
     --: <leader>ud from snacks, as it willshow a gutter and close only the virtual_lines.
     -- virtual_lines = {
     --   severity = { min = vim.diagnostic.severity.ERROR },
     -- },
-    underline =false, -- true,
+    underline =false, -- true, this will cause the wavy/squiggly underline super annoying
     update_in_insert = false,
     severity_sort = true,
     float = { source = "if_many" },
