@@ -1,5 +1,3 @@
-local M = {}
-
 --- Configure the Python command path for Neovim based on environment variables.
 --
 -- This function attempts to determine the Python command path to be used by Neovim.
@@ -9,27 +7,44 @@ local M = {}
 -- checking if the `VIRTUAL_ENV` environment variable is set and uses it as a backup option.
 -- If neither option is available, it defaults to the Anaconda Python path.
 --
--- @return None
+-- lua/plugins/configs/dap/dap_custom_languages_settings/dap_python_settings.lua
+local M = {}
+
+--------------------------------------------------------------------------------
+-- Discover a usable Python interpreter
+--------------------------------------------------------------------------------
+-- CHANGED: keep original function name for compatibility, but also provide a
+-- correctly-spelled alias below.
 M.checking_adpater_type = function()
-  -- Execute `which python` to obtain Python options
+  -- Try `which python` first
   local handle = io.popen "which python"
-  ---@diagnostic disable-next-line: need-check-nil
-  local result = handle:read "*a"
-  -- Remove trailing newline and whitespace characters from the directory path
-  local python_path = string.gsub(result, "%s+", "") -- Removes all whitespace characters
-  ---@diagnostic disable-next-line: need-check-nil
-  handle:close()
-  -- Set Neovim's Python command path to the one obtained from `which python`
+  local result = handle and handle:read "*a" or ""
+  if handle then handle:close() end
+  local python_path = result and result:gsub("%s+", "") or ""
+
+  -- Prefer VIRTUAL_ENV if present
   if os.getenv "VIRTUAL_ENV" ~= nil then
-    -- Fall back to using VIRTUAL_ENV if set
     vim.g.python_custom_command_path = string.format("%s/bin/python", os.getenv "VIRTUAL_ENV")
-  else
+  elseif vim.fn.executable ".venv/bin/python" == 1 then
+    -- CHANGED: also prefer project-local .venv if it exists
+    vim.g.python_custom_command_path = ".venv/bin/python"
+  elseif python_path ~= "" then
     vim.g.python_custom_command_path = python_path
+  else
+    -- Fallback (customize if you use conda or pyenv paths)
+    vim.g.python_custom_command_path = "python"
   end
 end
 
+-- CHANGED: correctly spelled alias; both names work
+M.checking_adapter_type = M.checking_adpater_type
+
+--------------------------------------------------------------------------------
+-- DAP adapter (debugpy)
+--------------------------------------------------------------------------------
 M.dap_adapters_python_fn = function()
-  require("plugins.configs.dap.dap_custom_languages_settings.dap_python_settings").checking_adpater_type()
+  -- CHANGED: call the corrected alias to ensure python_custom_command_path is set
+  M.checking_adapter_type()
 
   return {
     type = "executable",
@@ -38,63 +53,56 @@ M.dap_adapters_python_fn = function()
   }
 end
 
+--------------------------------------------------------------------------------
+-- DAP configurations
+--------------------------------------------------------------------------------
+-- CHANGED: Provide TWO explicit, robust configurations so that either "program"
+-- or "module" is ALWAYS set (fixes: “Invalid message: either 'program', 'module',
+-- or 'code' must be specified”).
 M.dap_configurations_python_fn = function()
-  -- upvalue to remember if we chose module mode
-  local run_as_module
-  return {
+  local function resolve_python()
+    local ve = os.getenv "VIRTUAL_ENV"
+    if ve and vim.fn.executable(ve .. "/bin/python") == 1 then return ve .. "/bin/python" end
+    if vim.fn.executable ".venv/bin/python" == 1 then return ".venv/bin/python" end
+    return vim.g.python_custom_command_path or "python"
+  end
 
+  return {
+    -- 1) Run the CURRENT FILE
     {
-      -- The first three options are required by nvim-dap
       type = "python",
       request = "launch",
-      name = "Launch file or project",
-      -- program = "${file}", -- You can launch with arg as -m src.main (for entire project)
-      -- 1) Decide at launch time: file vs module
-      program = function()
-        -- default to current file
-        local file = vim.fn.expand "%"
-        -- prompt: “f” for file, “m” for module
-        local choice = vim.fn.input("Run as (f)ile or (m)odule [f]: [f/m]?", "")
-        if choice:lower():sub(1, 1) == "m" then
-          run_as_module = true
-          return nil -- no program path when we go module mode
-        end
-        run_as_module = false
-        return file -- run this single file
-      end,
+      name = "Python: Current file",
+      program = "${file}", -- ✅ always present
+      cwd = "${workspaceFolder}", -- CHANGED: ensure project root
+      env = { PYTHONPATH = "${workspaceFolder}" }, -- CHANGED: make `src` importable
+      pythonPath = resolve_python, -- CHANGED: more robust resolver
+      console = "integratedTerminal",
+      justMyCode = true,
+    },
 
-      -- 2) If module mode was picked, debugpy will see this key
-      module = function()
-        if run_as_module then
-          return "src.main" -- python -m src.main
-        end
-        return nil
-      end,
-
-      pythonPath = function()
-        -- You could adapt this - to for example use the `VIRTUAL_ENV` environment variable.
-        local env_path = string.format("%s/bin/python3", os.getenv "VIRTUAL_ENV")
-        if vim.fn.executable(env_path) == 1 then
-          vim.print "We have selected virtualenv python ... "
-        else
-          vim.print "We have selected system default python ... "
-        end
-        return vim.g.python_custom_command_path
-      end,
-
-      console = "integratedTerminal", -- or "externalTerminal"
-      justMyCode = true, -- Only stop on breakpoints in your code
-      -- ensure imports work even in file mode
-      env = {PYTHONPATH = "${workspaceFolder}"},
+    -- 2) Run as MODULE: python -m src.main
+    {
+      type = "python",
+      request = "launch",
+      name = "Python: Module src.main",
+      module = "src.main", -- ✅ always present
+      cwd = "${workspaceFolder}", -- CHANGED
+      env = { PYTHONPATH = "${workspaceFolder}" }, -- CHANGED
+      pythonPath = resolve_python, -- CHANGED
+      console = "integratedTerminal",
+      justMyCode = true,
     },
   }
 end
 
--- dap ui
+--------------------------------------------------------------------------------
+-- dap-python helper (optional)
+--------------------------------------------------------------------------------
 M.python_dap_fn = function()
-  -- require("dap-python").setup("/Users/gmbp/opt/anaconda3/bin/python3")
+  -- CHANGED: ensure interpreter is resolved first
+  M.checking_adapter_type()
   require("dap-python").setup(vim.g.python_custom_command_path)
-  -- require("dap-python").setup()
 end
 
 return M

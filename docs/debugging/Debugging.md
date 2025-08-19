@@ -38,7 +38,7 @@ debugging.
 2. At the root directory of our `Crate`,  We run in terminal session the command `lldb`.
 3. Run the target inside the `lldb` using
 
-```shell
+```sh
 lldb> target create ./target/debug/rusthub
 -- Output
 Current executable set to '/host_name/devCode/rust_fundamentals/rusthub/target/debug/rusthub' (arm64).
@@ -65,7 +65,7 @@ Current executable set to '/host_name/devCode/rust_fundamentals/rusthub/target/d
      ```
    - The `lldb` will knows the directory as you specified in the `mod` and `use` keywords through `Rust`.
 
-     ```shell
+     ```sh
      # FORMULA
      (lldb) break set -f <file_name>.extension -l <line_number>
      (lldb) br s -f <file_name>.extension -l <line_numer>
@@ -81,7 +81,7 @@ Current executable set to '/host_name/devCode/rust_fundamentals/rusthub/target/d
 
 5. Now, you can run the command `run` and it will show you
 
-```shell
+```sh
 Process 95231 launched: '/Users/gmbp/Desktop/devCode/rust_fundamentals/rusthub/target/debug/rusthub' (arm64)
 0
 Process 95231 stopped
@@ -98,7 +98,7 @@ Target 0: (rusthub) stopped.
 
 6. Now you can investigate the rest of commands for the `lldb debugger server`
 
-```shell
+```sh
 (lldb) frame variable
 (lldb) n for next, c for continue, s for step in ..etc.
 ```
@@ -165,7 +165,7 @@ pub fn rust_structs_traits_and_implementation_fn() {
 lldb
 ```
 
-- Then, set the target inside the `lldb` shell
+- Then, set the target inside the `lldb` sh
 
 ```
 (lldb) target create ./target/debug/rusthub
@@ -184,14 +184,14 @@ lldb
   is `mem read &<variable_name>`. You will notice in the result (`7b 00`) at
   this memeory address.
 
-```shell
+```sh
 (lldb) mem read &var
 0x16fdfe29e: 7b 00 b0 e2 df 6f 01 00 00 00 44 21 00 00 01 00  {....o....D!....
 ```
 
 - You can see in another format also
 
-```shell
+```sh
 (lldb) mem read --size 4 --format x &var
 0x16fdfe29e: 0xe2b0007b 0x00016fdf 0x21440000 0x00010000
 0x16fdfe2ae: 0xe2d00000 0x00016fdf 0x20d00000 0x00010000
@@ -206,7 +206,7 @@ lldb
   you want to view and run. `framenumber` is taken from the `bt` command. `bt`
   is read from bottom to top, as a `stack`.
 
-```shell
+```sh
 (lldb) frame select <fram_number>
 ```
 
