@@ -49,3 +49,7 @@ if vim.fn.isdirectory(session_dir) == 0 then
 end
 
 return global
+
+
+
+

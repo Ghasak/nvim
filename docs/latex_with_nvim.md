@@ -5,7 +5,7 @@ directory, which are sharing same name. ## Steps
 
 ### 1. Run the latex file using
 
-```shell
+```sh
 vim <file_name.tex>
 # E.g.,
 # vim gh.tex
@@ -13,7 +13,7 @@ vim <file_name.tex>
 
 ### 2. Run tracker (mylatex)
 
-```shell
+```sh
 mylatex <file_name.tex>
 # E.g.,
 mylatex gh.tex
@@ -23,7 +23,7 @@ mylatex gh.tex
 
 Get into the compliled version of same name as your `.tex` file, which is compiled at first time.
 
-```shell
+```sh
 command zathura <file_name.pdf>
 # commmand zathura gh.pdf
 ```
