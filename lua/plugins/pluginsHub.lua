@@ -472,7 +472,7 @@ return {
 
   {
     "mzlogin/vim-markdown-toc",
-    ft = { "markdown" },
+    ft = { "markdown" , "quarto" },
     lazy = true,
     event = "InsertEnter",
     cmd = { "GenTocGitLab", "GenTocMarked" },
@@ -600,7 +600,6 @@ return {
     dependencies = { "nvim-treesitter" },
     config = function() require("plugins.configs.gi_nvim_autopairs").setup() end,
   },
-
   -- Code documentation
   {
     "danymat/neogen",

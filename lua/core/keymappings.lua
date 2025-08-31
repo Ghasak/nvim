@@ -61,7 +61,8 @@ vim.api.nvim_set_keymap("n", "<C-n>", "<C-n>zz", { noremap = true, silent = true
 vim.api.nvim_set_keymap("n", "<C-p>", "<C-p>zz", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<C-u>", "<C-u>zz", { noremap = true, silent = true })
 
--- How about {} jumping, which are working same, vim.api.nvim_set_keymap("n", "{", "{zz", { noremap = true, silent = true })
+-- How about {} jumping, which are working same,
+vim.api.nvim_set_keymap("n", "{", "{zz", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "}", "}zz", { noremap = true, silent = true })
 -- For better searching
 vim.keymap.set("n", "n", "nzzzv")
@@ -501,6 +502,7 @@ function _G.Toggle_venn()
   end
 
   -- Notify the user of the change
+  ---@diagnostic disable-next-line: redundant-parameter
   notify(message, "info", { title = title, timeout = 5000 })
 end
 
@@ -570,6 +572,23 @@ vim.keymap.set(
   { desc = "Telescope Fidget history" }
 )
 
+-- Toggle nvim-autopairs ON/OFF with one key and show a status notification
+vim.keymap.set("n", "<leader>oa", function()
+  local ap = require "nvim-autopairs"
+
+  -- prefer nvim-notify if present
+  local notify = vim.notify
+  local ok, n = pcall(require, "notify")
+  if ok then notify = n end
+
+  if ap.state.disable then
+    ap.toggle()
+    notify("autopairs: ON", vim.log.levels.INFO, { title = "nvim-autopairs" })
+  else
+    ap.toggle()
+    notify("autopairs: OFF", vim.log.levels.WARN, { title = "nvim-autopairs" })
+  end
+end, { desc = "Toggle autopairs (global)" })
 
 -- ~/.config/nvim/lua/config/snacks/keymaps.lua
 
@@ -1048,4 +1067,5 @@ M.copilot_keys = {
     desc = "Copilot Suggestion Activated",
   },
 }
+
 return M
