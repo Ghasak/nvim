@@ -4,9 +4,25 @@
 local M = {}
 
 function M.setup()
+  -- VSCode snippets (dates/datetimes, etc.)
+  pcall(function() require("luasnip.loaders.from_vscode").lazy_load() end)
+
   -- guard: do nothing if blink.cmp isn’t available
   local ok, blink = pcall(require, "blink.cmp")
   if not ok then return end
+
+  -- detect if copilot source is installed
+  local has_copilot_src = pcall(require, "blink-cmp-copilot")
+
+  -- make sure we only add the "Copilot" kind once
+  local function ensure_copilot_kind()
+    local K = require("blink.cmp.types").CompletionItemKind
+    for i = 1, #K do
+      if K[i] == "Copilot" then return i end
+    end
+    K[#K + 1] = "Copilot"
+    return #K
+  end
 
   -- always use these completeopt flags
   vim.opt.completeopt = "menuone,noinsert,noselect"
@@ -19,7 +35,6 @@ function M.setup()
       -- confirm when menu is visible, otherwise insert a newline
       -- ["<CR>"] = { "select_and_accept", "fallback_to_mappings" },
       ["<CR>"] = { "select_and_accept", "fallback" },
-
     },
     completion = {
       menu = {
@@ -89,7 +104,10 @@ function M.setup()
                   { 0, #ctx.label, group = ctx.deprecated and "BlinkCmpLabelDeprecated" or "BlinkCmpLabel" },
                 }
                 if ctx.label_detail then
-                  table.insert(highlights, { #ctx.label, #ctx.label + #ctx.label_detail, group = "BlinkCmpLabelDetail" })
+                  table.insert(
+                    highlights,
+                    { #ctx.label, #ctx.label + #ctx.label_detail, group = "BlinkCmpLabelDetail" }
+                  )
                 end
                 -- characters matched on the label by the fuzzy matcher
                 for _, idx in ipairs(ctx.label_matched_indices) do
@@ -161,6 +179,17 @@ function M.setup()
             menu_south = { "e", "w", "s", "n" },
           },
         },
+      },
+      ghost_text = {
+        enabled = false,
+        -- Show the ghost text when an item has been selected
+        show_with_selection = false,
+        -- Show the ghost text when no item has been selected, defaulting to the first item
+        show_without_selection = false,
+        -- Show the ghost text when the menu is open
+        show_with_menu = true,
+        -- Show the ghost text when the menu is closed
+        show_without_menu = false,
       },
       -- -- Displays a preview of the selected item on the current line
       -- ghost_text = {
@@ -255,10 +284,24 @@ function M.setup()
     -- per-source overrides live here at top level
     sources = {
 
-      default = { "lsp", "dictionary", "snippets", "copilot", "path", "buffer", "emoji" },
+      -- default = { "lsp", "dictionary", "snippets", "copilot", "path", "buffer", "emoji" },
+
+      default = (function()
+        local list = { "lsp", "dictionary", "snippets", "path", "buffer", "emoji" }
+        if has_copilot_src then table.insert(list, 4, "copilot") end
+        return list
+      end)(),
+
       -- for SQL files only, replace defaults with dadbod
       per_filetype = {
-        sql = { "lsp", "dictionary", "snippets", "copilot", "dadbod", "buffer", "emoji" },
+
+        sql = (function()
+          local list = { "lsp", "dictionary", "snippets", "dadbod", "buffer", "emoji" }
+          if has_copilot_src then table.insert(list, 4, "copilot") end
+          return list
+        end)(),
+
+        -- sql = { "lsp", "dictionary", "snippets", "copilot", "dadbod", "buffer", "emoji" },
       },
       providers = {
         ------------------------------------------------------------------------------------------------
@@ -301,21 +344,39 @@ function M.setup()
         },
 
         -- tell Blink how to load the emoji source via blink.compat
-        copilot = {
-          name = "copilot", -- must match the nvim-cmp source
-          module = "blink-cmp-copilot", -- <-- tell Blink where to load it from
-          score_offset = 100,
-          async = true,
-          transform_items = function(_, items)
-            local CompletionItemKind = require("blink.cmp.types").CompletionItemKind
-            local kind_idx = #CompletionItemKind + 1
-            CompletionItemKind[kind_idx] = "Copilot"
-            for _, item in ipairs(items) do
-              item.kind = kind_idx
-            end
-            return items
-          end,
-        },
+        -- copilot = {
+        --   name = "copilot", -- must match the nvim-cmp source
+        --   module = "blink-cmp-copilot", -- <-- tell Blink where to load it from
+        --   score_offset = 100,
+        --   async = true,
+        --   transform_items = function(_, items)
+        --     local CompletionItemKind = require("blink.cmp.types").CompletionItemKind
+        --     local kind_idx = #CompletionItemKind + 1
+        --     CompletionItemKind[kind_idx] = "Copilot"
+        --     for _, item in ipairs(items) do
+        --       item.kind = kind_idx
+        --     end
+        --     return items
+        --   end,
+        -- },
+
+        ---@diagnostic disable-next-line: assign-type-mismatch
+        copilot = (function()
+          if not has_copilot_src then return nil end
+          local kind_idx = ensure_copilot_kind()
+          return {
+            name = "copilot",
+            module = "blink-cmp-copilot",
+            score_offset = 100,
+            async = true,
+            transform_items = function(_, items)
+              for _, item in ipairs(items) do
+                item.kind = kind_idx
+              end
+              return items
+            end,
+          }
+        end)(),
 
         -- emoji = {
         --   name = "emoji", -- must match the nvim-cmp source name
@@ -371,7 +432,6 @@ function M.setup()
   -- after your `blink.setup{…}` call, add:
 
   local kind_colors = {
-    Copilot = "#8cd9e4",
     Emoji = "#EEEDBF",
     Crate = "#F64D00",
     Tabnine = "#F0D2D1",
@@ -402,6 +462,8 @@ function M.setup()
     TypeParameter = "#9DC0BC",
     BlinkCmpKindDict = "#F0D2D1",
   }
+
+  if has_copilot_src then kind_colors.Copilot = "#8cd9e4" end
 
   for kind, bg in pairs(kind_colors) do
     vim.api.nvim_set_hl(0, "BlinkCmpKind" .. kind, { fg = "#2d333b", bg = bg })

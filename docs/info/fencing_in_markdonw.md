@@ -46,4 +46,3 @@ Code block always starts with three backticks `code type in a new line end with 
 ## References
 
 - [Markdown code fence blocks](https://www.w3schools.io/file/markdown-code-fence-blocks/)
-

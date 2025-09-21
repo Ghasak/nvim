@@ -510,6 +510,10 @@ vim.o.shiftwidth = 2
 --  If softtabstop is set to 2, pressing <Tab> in insert mode will insert 2 spaces (if expandtab is enabled).
 vim.o.softtabstop = 2
 
+-- ui/floats
+vim.opt.pumblend = 0
+vim.opt.winblend = 0
+
 
 
 

@@ -16,6 +16,17 @@ return {
   { "nvim-lua/popup.nvim", lazy = true }, -- An implementation of the Popup API from vim in Neovim
   { "nvim-lua/plenary.nvim", branch = "master", lazy = true },
 
+  {
+    "folke/snacks.nvim",
+    version = "v2.23.0",
+    priority = 1000,
+    lazy = false,
+    opts = function() return require("plugins.configs.gi_snacks_nvim").opts end,
+    keys = function() return require("core.keymappings").keys end,
+    init = function() return require("services.snacks_mini_services").snacks_services() end,
+  },
+
+
   -- ==========================================================================
   -- 	                      Core Dependencies and Utilities
   -- ===========================================================================
@@ -670,14 +681,6 @@ return {
     config = function() require "plugins.configs.dap" end,
   },
 
-  {
-    "folke/snacks.nvim",
-    priority = 1000,
-    lazy = false,
-    opts = function() return require("plugins.configs.gi_snacks_nvim").opts end,
-    keys = function() return require("core.keymappings").keys end,
-    init = function() return require("services.snacks_mini_services").snacks_services() end,
-  },
 
   {
     "echasnovski/mini.nvim",
@@ -1234,11 +1237,13 @@ return {
   -- Activate: <Ctr+a> in Insert mode
   {
     "zbirenbaum/copilot.lua",
+    cond = false,
     cmd = "Copilot",
     event = "InsertEnter",
     keys = require("core.keymappings").copilot_keys,
     config = function()
       -- 1) Your normal setup
+      vim.g.copilot_nes_debounce = 500
       require("copilot").setup {
         suggestion = {
           enabled = true,

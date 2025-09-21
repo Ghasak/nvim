@@ -638,7 +638,3 @@ want to alter the color.
 
 - [Markdown Badges](https://ileriayo.github.io/markdown-badges/)
 
-
-
-
-
