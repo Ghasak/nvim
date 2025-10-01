@@ -168,6 +168,7 @@ function M.setup()
       on_exit = function(code, _, _)
         -- os.execute "pkill -f 'pyrefly lsp'"
         vim.notify("Closing Pyrefly LSP exited with code: " .. code, vim.log.levels.INFO)
+
       end,
       flags = { debounce_text_changes = 500, exit_timeout = 5000 },
     })

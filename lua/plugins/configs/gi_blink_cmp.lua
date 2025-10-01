@@ -388,6 +388,7 @@ function M.setup()
           name = "emoji",
           module = "blink.compat.source",
           -- overwrite kind of suggestion
+          ---@diagnostic disable-next-line: unused-local
           transform_items = function(ctx, items)
             local kind = require("blink.cmp.types").CompletionItemKind.Text
             for i = 1, #items do
