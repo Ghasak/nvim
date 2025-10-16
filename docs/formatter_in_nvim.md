@@ -237,3 +237,8 @@ DerivePointerAlignment: true
 - [lspvimbufformat_parameters_make_tab_indent_4](https://www.reddit.com/r/neovim/comments/12ndqo5/lspvimbufformat_parameters_make_tab_indent_4/)
 - [formatter.nvim](https://github.com/mhartington/formatter.nvim)
 - [does_vimlspbufformat_apply_clangd_formatting](https://www.reddit.com/r/neovim/comments/12otscq/does_vimlspbufformat_apply_clangd_formatting/)
+
+
+
+
+

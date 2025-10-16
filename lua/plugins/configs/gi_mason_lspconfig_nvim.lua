@@ -154,6 +154,7 @@ function M.setup()
       on_attach = M.on_attach_global,
       capabilities = M.capabilities,
       cmd = { "uv", "run", "pyrefly", "lsp" }, -- Use uv for consistent environment
+      -- cmd = { 'uvx', 'pyrefly', 'lsp' },
       filetypes = { "python" },
       root_markers = {
         "pyrefly.toml",

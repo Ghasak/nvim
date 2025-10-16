@@ -15,6 +15,11 @@ return {
   -- ==========================================================================
   { "nvim-lua/popup.nvim", lazy = true }, -- An implementation of the Popup API from vim in Neovim
   { "nvim-lua/plenary.nvim", branch = "master", lazy = true },
+  {
+    "vhyrro/luarocks.nvim",
+    priority = 1000,
+    config = true,
+  },
 
   {
     "folke/snacks.nvim",
@@ -22,11 +27,17 @@ return {
     priority = 1000,
     lazy = false,
     opts = function() return require("plugins.configs.gi_snacks_nvim").opts end,
-    keys = function() return require("core.keymappings").keys end,
+
+    -- ✅ CORRECT: Call setup in config, not in keys
+    config = function(_, opts)
+      require("snacks").setup(opts)
+
+      -- NOW setup the keymaps AFTER snacks is initialized
+      require("core.keymappings").setup_snacks_keymaps()
+    end,
+
     init = function() return require("services.snacks_mini_services").snacks_services() end,
   },
-
-
   -- ==========================================================================
   -- 	                      Core Dependencies and Utilities
   -- ===========================================================================
@@ -483,7 +494,7 @@ return {
 
   {
     "mzlogin/vim-markdown-toc",
-    ft = { "markdown" , "quarto" },
+    ft = { "markdown", "quarto" },
     lazy = true,
     event = "InsertEnter",
     cmd = { "GenTocGitLab", "GenTocMarked" },
@@ -680,7 +691,6 @@ return {
     },
     config = function() require "plugins.configs.dap" end,
   },
-
 
   {
     "echasnovski/mini.nvim",
