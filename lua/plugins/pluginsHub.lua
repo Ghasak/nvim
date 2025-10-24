@@ -9,6 +9,12 @@ return {
     end,
     config = function() vim.opt.termguicolors = true end,
   },
+  {
+    cond = false,
+    "tribela/transparent.nvim",
+    event = "VimEnter",
+    config = true,
+  },
 
   -- ==========================================================================
   -- 	                      Utilities for NVIM IDE Env
