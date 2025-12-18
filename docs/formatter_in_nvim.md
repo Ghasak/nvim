@@ -53,7 +53,6 @@ rustup component add rustfmt
    `2021` syntax will not be parsed correctly.
 
 - Working around solution, either
-
   - Using shell command in the `nvim` buffer
 
   ```sh
@@ -65,7 +64,6 @@ rustup component add rustfmt
 
 - If you want to fix the problem for in `Neoformat` without waiting for the
   `PR`, use:
-
   - Go to the location of `rust` in `Neoformat` plugin locally at:
     `~/.local/share/nvim/lazy/neoformat/autoload/neoformat/formatters/rust.vim`
 
@@ -237,8 +235,4 @@ DerivePointerAlignment: true
 - [lspvimbufformat_parameters_make_tab_indent_4](https://www.reddit.com/r/neovim/comments/12ndqo5/lspvimbufformat_parameters_make_tab_indent_4/)
 - [formatter.nvim](https://github.com/mhartington/formatter.nvim)
 - [does_vimlspbufformat_apply_clangd_formatting](https://www.reddit.com/r/neovim/comments/12otscq/does_vimlspbufformat_apply_clangd_formatting/)
-
-
-
-
 

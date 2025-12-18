@@ -116,6 +116,15 @@ function M.setup()
   )
 
   -- ── Python ─────────────────────────────────────────────────────────────
+  local function caps_no_watchfiles(base)
+    local cap = vim.deepcopy(base or {})
+    cap.workspace = cap.workspace or {}
+    cap.workspace.didChangeWatchedFiles = { dynamicRegistration = false }
+    return cap
+  end
+
+  local py_caps = caps_no_watchfiles(M.capabilities)
+
   local function ensure_single_client(name, root_dir)
     for _, client in ipairs(vim.lsp.get_clients()) do
       if client.name == name and client.config and client.config.root_dir == root_dir then
@@ -127,11 +136,27 @@ function M.setup()
   local root = require("lspconfig.util").root_pattern("pyproject.toml", ".git")(vim.fn.getcwd())
   --
   -- -- Using pyright-lsp
-  local site_package_path = vim.fn.systemlist("python3 -c 'import site; print(site.getsitepackages()[0])'")[1]
+
+  --local site_package_path = vim.fn.systemlist("python3 -c 'import site; print(site.getsitepackages()[0])'")[1]
+  local uv = vim.uv or vim.loop
+
+  local function is_dir(p)
+    local st = p and uv.fs_stat(p)
+    return st and st.type == "directory"
+  end
+
+  local root_dir = require("lspconfig.util").root_pattern("pyproject.toml", ".git")(vim.fn.getcwd()) or vim.fn.getcwd()
+  local src_path = root_dir .. "/src"
+
+  local extra = {}
+  if is_dir(src_path) then table.insert(extra, src_path) end
+  if is_dir(site_package_path) then table.insert(extra, site_package_path) end
+
   vim.lsp.config("pyright", {
     on_init = M.on_init,
     on_attach = M.on_attach_global,
-    capabilities = M.capabilities,
+    -- capabilities = M.capabilities,
+    capabilities = py_caps,
     flags = { debounce_text_changes = 500 },
     cmd = { "pyright-langserver", "--stdio" },
     settings = {
@@ -140,7 +165,8 @@ function M.setup()
           typeCheckingMode = "basic",
           autoSearchPaths = true,
           useLibraryCodeForTypes = true,
-          extraPaths = { "./src", site_package_path },
+          -- extraPaths = { "./src", site_package_path },
+          extraPaths = extra,
         },
       },
     },
@@ -152,7 +178,8 @@ function M.setup()
     vim.lsp.config("pyrefly", {
       -- on_init = M.on_init, -- this will cause a problem
       on_attach = M.on_attach_global,
-      capabilities = M.capabilities,
+      -- capabilities = M.capabilities,
+      capabilities = py_caps,
       cmd = { "uv", "run", "pyrefly", "lsp" }, -- Use uv for consistent environment
       -- cmd = { 'uvx', 'pyrefly', 'lsp' },
       filetypes = { "python" },
@@ -169,7 +196,6 @@ function M.setup()
       on_exit = function(code, _, _)
         -- os.execute "pkill -f 'pyrefly lsp'"
         vim.notify("Closing Pyrefly LSP exited with code: " .. code, vim.log.levels.INFO)
-
       end,
       flags = { debounce_text_changes = 500, exit_timeout = 5000 },
     })

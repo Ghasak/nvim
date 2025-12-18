@@ -1135,7 +1135,9 @@ return {
   -- CODECOMPANION Activiated and sending queries `Ctrl+s`
   {
     "olimorris/codecompanion.nvim",
+    cond = false,
     event = "InsertEnter",
+    versions = "17.33.0",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
