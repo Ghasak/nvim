@@ -591,7 +591,8 @@ return {
   }, -- lsp loader status display -- deprecated
   -- { "ggandor/lightspeed.nvim", lazy = true, event = "InsertEnter" },
   {
-    "ggandor/leap.nvim",
+    -- "ggandor/leap.nvim",
+    url = "https://codeberg.org/andyg/leap.nvim",
     cond = true,
     event = "VeryLazy",
     -- lazy = true,

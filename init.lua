@@ -87,3 +87,4 @@ vim.api.nvim_set_hl(0, "SnacksIndentScope", { fg = "#eef6fb", bg = "NONE" })
 vim.deprecate = function() end
 
 
+
