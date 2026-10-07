@@ -107,7 +107,6 @@ return {
   { "nvim-treesitter/playground", event = "InsertEnter" }, -- Better icons
   {
     "kyazdani42/nvim-web-devicons",
-    event = "VimEnter",
     config = function()
       require("nvim-web-devicons").setup {
         default = true,
@@ -133,7 +132,6 @@ return {
     -- tag = "0.1.8", -- working with nvim v.0.11.0
     branch = "master",
     lazy = true,
-    event = "VimEnter",
     cmd = "Telescope",
     init = function() require("core.utils").load_mappings "telescope" end,
     config = function() require("plugins.configs.gi_telescope").config() end,
@@ -149,7 +147,7 @@ return {
       }, -- This is ui for showing menu for io.popen
       -- It will open most output to a selection including, dap, gen.nvim (AI)
       -- https://github.com/nvim-telescope/telescope-ui-select.nvim
-      { "nvim-telescope/telescope-ui-select.nvim", event = "VimEnter" },
+      { "nvim-telescope/telescope-ui-select.nvim" },
       -- This will provide us with a nicer window for our telescope
       -- to jump to definitions using multiple jump points instead
       -- of always jumping horizontally from `vim.buf.lsp`, which
@@ -157,7 +155,6 @@ return {
       {
         "gbrlsnchs/telescope-lsp-handlers.nvim",
         --cond = false, -- Loading the dap, if false it will not be loaded,
-        event = "VimEnter",
       },
       {
         "crispgm/telescope-heading.nvim",
@@ -181,9 +178,9 @@ return {
   {
     "ibhagwan/fzf-lua",
     lazy = true,
+    cmd = { "FzfLua" },
     dependencies = { "kyazdani42/nvim-web-devicons" },
     -- event = "BufEnter",
-    event = "VimEnter",
     config = function() require "plugins.configs.gi_fzf" end,
   },
 
@@ -308,7 +305,7 @@ return {
     --   "github:mason-org/mason-registry",
     -- },
 
-    init = function()
+    config = function()
       require("mason").setup {
 
         ui = {
@@ -1126,6 +1123,7 @@ return {
       "CodeiumChat",
       "CodeiumAuto",
 
+      -- Malformed spec: dependencies/config nested inside `cmd`, so this config never runs. Left as-is pending an owner decision.
       dependencies = {
         "nvim-lua/plenary.nvim",
         -- "hrsh7th/nvim-cmp",

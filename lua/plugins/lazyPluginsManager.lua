@@ -40,7 +40,6 @@ local lazyManagerConfig = {
     cache = { enabled = true },
     reset_packpath = true, -- reset the package path to improve startup time
     rtp = {
-      rest = true,
       ---@type string[]
       -- paths = {}, -- add any custom paths here that you want to includes in the rtp
       disabled_plugins = {
@@ -52,25 +51,19 @@ local lazyManagerConfig = {
         "tutor",
         "zipPlugin",
         "2html_plugin",
-        "tohtml",
         "getscript",
         "getscriptPlugin",
-        "gzip",
         "logipat",
         "netrw",
         -- "netrwPlugin",
         -- "netrwSettings",
         -- "netrwFileHandlers",
-        "matchit",
         "tar",
-        "tarPlugin",
         "rrhelper",
         "spellfile_plugin",
         "vimball",
         "vimballPlugin",
         "zip",
-        "zipPlugin",
-        "tutor",
         "rplugin",
         "syntax",
         "synmenu",

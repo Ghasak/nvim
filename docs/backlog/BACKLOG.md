@@ -33,6 +33,7 @@ commit: <repo> <sha> on <branch>
 | ID | Date | Title | Scope | Status |
 |----|------|-------|-------|--------|
 | [2026-10-07-01](2026-10-07-light-style-repair.md) | 2026-10-07 | Light style repair and the theme/config split | theme, config | done |
+| [2026-10-07-02](2026-10-07-startup-speed.md) | 2026-10-07 | Startup speed - tools load on first use, dead code removed | config, docs | done |
 
 ## Open follow-ups
 
@@ -46,3 +47,8 @@ commit: <repo> <sha> on <branch>
 | 2026-10-07-01 | `scripts/check.lua` in the theme has no dark mode | later |
 | 2026-10-07-01 | `TEMP(T9)` path override in `pluginsHub.lua` stays until the theme branch is merged | owner |
 | 2026-10-07-01 | `feature/glight` in the theme repo is pushed but not merged into its `main` | owner |
+| 2026-10-07-02 | 8 more provably dead items and inert config found by the ponytail review (list in the entry) | later |
+| 2026-10-07-02 | Transparency branch, third-terminal config, parked copilot watcher, three pickers - usage calls | owner |
+| 2026-10-07-02 | windsurf spec is malformed; fix or strip is an owner decision | owner |
+| 2026-10-07-02 | Theme: default `dark` style crashes on load; root `onedark_config.lua` is unreferenced | later |
+| 2026-10-07-02 | Stale docs: `Fundamentals.md:440`, `tabnine.md`, `nvim_tree_cheat_sheet.md` | later |

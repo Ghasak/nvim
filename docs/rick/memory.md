@@ -41,6 +41,7 @@ One line per finished task, oldest first:
 - 2026-10-07 · Rick · added the `/rick` skill, the profile, the helper agent entry and this memory file · dead end: `model: inherit` in agent frontmatter could not be verified in a live session, so the key is left out, which is the documented way to inherit the session model
 - 2026-10-07 · memory rules · made the memory update mandatory after every finished task, with a one-line work record and dead ends that are never retried; an adversarial read, then Rick himself, confirmed a fresh reader can state every rule from source · dead end: granting the theme folder only inside the profile left the grant void, because the hard rules outrank the profile — the carve-out had to be written into `CLAUDE.md` itself
 - 2026-10-07 · memory routing · made `docs/rick/memory.md` the only memory for this repo, in `CLAUDE.md` § Hard rules § Memory; the harness memory at `~/.claude/projects/` was never used and does not exist · dead end: the first pass put the rule in § Rick, where it read as a description of Rick rather than a rule for every session — the repo's own lesson *a permission must be written into the law* sent it to § Hard rules
+- 2026-10-07 · startup speed · deferred telescope/fzf-lua/devicons to first use (killed the gi_telescope extension cascade), fixed mason's init-require, removed 8 dead files + duplicate BufWritePre + createdir, dropped the patches deferral · dead end: undotree's VimEnter cannot be removed — its config turns on undofile/undodir, so removal would silently disable persistent undo
 
 ## Lessons
 
@@ -129,3 +130,17 @@ working light style. Never "fix" it by reverting the palette.
 **Evidence:** `lua/onedark/colors.lua:5` calls `tbl_extend` with nil; the follow-ups table in
 `docs/backlog/BACKLOG.md`.
 **Applies when:** working on light styling.
+
+### Measure launch the way the editor is launched
+
+**Lesson:** Headless `nvim --headless ... +qa` never fires VimEnter or UIEnter, so it measures only the config load. Measure the real launch in a pty (`TERM=xterm-256color script -q /dev/null nvim ...`) and count which plugins are loaded at settle.
+**Why:** This pass read 39 ms headless against ~140-180 ms real; the whole startup burst was invisible to the short harness. Also: `+messages` replays verbose output and double-counts — count on the live stream.
+**Evidence:** `docs/backlog/2026-10-07-startup-speed.md` § Proof; a tester's `verbose=12` count read 2 where the live stream read 1.
+**Applies when:** any claim about startup time or load order.
+
+### A `require` in a spec `init` loads the plugin
+
+**Lesson:** lazy.nvim's require hook loads a plugin regardless of its declared event, and every spec `init` runs at startup. So `require(...)` inside `init`, and "checking" a plugin with `pcall(require, name)`, both force a startup load.
+**Why:** It hid in plain sight — the telescope extension loader pulled the whole DAP stack into VimEnter via `pcall(require, "dap")`, and mason's `init` loaded mason at startup, both defeating their declared triggers.
+**Evidence:** `gi_telescope.lua:269-282`; mason's spec `init` before commit 891db25; lazy `core/loader.lua:529-548`; tracer: 20 VimEnter-rooted requires before, 0 after.
+**Applies when:** reading or writing any plugin spec; any "is this plugin installed?" check.
