@@ -291,11 +291,6 @@ local disable_distribution_plugins = function()
 end
 
 -----------------------------------------------------------
---            Remove whitespace on save
------------------------------------------------------------
-vim.cmd [[au BufWritePre * :%s/\s\+$//e]]
-
------------------------------------------------------------
 -- This will auto load the nvim if the file got changed
 --        by other editor or buffer
 --  (if you change the file in vscode for example)
@@ -367,12 +362,9 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 -- https://vi.stackexchange.com/questions/18546/
 -- can-i-use-a-different-color-for-the-selected-match-than-for-other-matches/
 -- 18555#18555?newreg=22db9c3cafc846cc905fb0da27633f18
--- It will be triggered once, we enter the buffer.
+-- Defined once at config load (no longer re-run on every BufEnter).
 -- ===============================================================
-vim.api.nvim_create_autocmd("BufEnter", {
-  nested = true,
-  callback = function()
-    vim.cmd [[
+vim.cmd [[
 function! HighlightSearch(timer)
     if (g:firstCall)
         let g:originalStatusLineHLGroup = execute("hi StatusLine")
@@ -416,31 +408,6 @@ augroup betterSeachHighlighting
 
 augroup END
 ]]
-  end,
-})
-
--- ===========================================================================
---                 Create Directories for Caching files
--- ===========================================================================
-local createdir = function()
-  -- This function is used to create cache directories for our nvim sessionn
-  local data_dir = {
-    global.cache_dir .. "backup",
-    global.cache_dir .. "session",
-    global.cache_dir .. "swap",
-    global.cache_dir .. "tags",
-    global.cache_dir .. "undo",
-  }
-  for key, dirx in pairs(data_dir) do
-    -- if vim.fn.empty(vim.fn.glob(dirx)) > 0 then
-    vim.api.nvim_command(
-      ([[echohl WarningMsg | echomsg "[-] The directory:%s is not existed, will be created ." | echohl None]]):format(
-        dirx
-      )
-    )
-    os.execute("mkdir -p " .. dirx)
-  end
-end
 
 -- ===========================================================================
 --                 Auto Load netrwPlugin at startup
