@@ -40,6 +40,7 @@ One line per finished task, oldest first:
 - 2026-10-07 · backlog tracker · added `docs/backlog/` with an index and one dated entry per delivered change
 - 2026-10-07 · Rick · added the `/rick` skill, the profile, the helper agent entry and this memory file · dead end: `model: inherit` in agent frontmatter could not be verified in a live session, so the key is left out, which is the documented way to inherit the session model
 - 2026-10-07 · memory rules · made the memory update mandatory after every finished task, with a one-line work record and dead ends that are never retried; an adversarial read, then Rick himself, confirmed a fresh reader can state every rule from source · dead end: granting the theme folder only inside the profile left the grant void, because the hard rules outrank the profile — the carve-out had to be written into `CLAUDE.md` itself
+- 2026-10-07 · memory routing · made `docs/rick/memory.md` the only memory for this repo, in `CLAUDE.md` § Hard rules § Memory; the harness memory at `~/.claude/projects/` was never used and does not exist · dead end: the first pass put the rule in § Rick, where it read as a description of Rick rather than a rule for every session — the repo's own lesson *a permission must be written into the law* sent it to § Hard rules
 
 ## Lessons
 
