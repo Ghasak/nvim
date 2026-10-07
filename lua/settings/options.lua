@@ -321,7 +321,8 @@ vim.cmd [[au BufWritePre * :%s/\s\+$//e]]
 -----------------------------------------------------------
 --                 Ruler Color for Nvimm
 -----------------------------------------------------------
-vim.cmd [[highlight ColorColumn ctermbg=black guibg=#373d46]]
+-- ColorColumn: the light value now comes from the theme (githubG.nvim); the dark value stays in
+-- after/plugin/features_loader.lua (follows 'background')
 
 -----------------------------------------------------------
 --            ON YANKING HIGHLIGHT

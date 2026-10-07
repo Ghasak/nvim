@@ -145,10 +145,7 @@ function M.on_attach_global(client, bufnr)
   -- ╰──────────────────────────────────────────────────────────────────────────────╯
 
   -- Diagnostic line number highlights
-  vim.api.nvim_set_hl(0, "DiagnosticLineNrError", { bg = "#51202A", fg = "#FF0000", bold = true })
-  vim.api.nvim_set_hl(0, "DiagnosticLineNrWarn", { bg = "#51412A", fg = "#FFA500", bold = true })
-  vim.api.nvim_set_hl(0, "DiagnosticLineNrInfo", { bg = "#1E535D", fg = "#00FFFF", bold = true })
-  vim.api.nvim_set_hl(0, "DiagnosticLineNrHint", { bg = "#1E205D", fg = "#0000FF", bold = true })
+  -- DiagnosticLineNr* moved to after/plugin/features_loader.lua (follows 'background')
 
   -- ╭──────────────────────────────────────────────────────────────────────────────╮
   -- │ 🧪  Integrate with lsp signature                                             │

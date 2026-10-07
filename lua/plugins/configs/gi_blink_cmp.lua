@@ -465,10 +465,21 @@ function M.setup()
   }
 
   if has_copilot_src then kind_colors.Copilot = "#8cd9e4" end
+  -- light only: these three are too dark for #2d333b text (Primer red/green/orange tints)
+  local light_bg = { Operator = "#ffcecb", Unit = "#aceebb", Crate = "#ffd8b5" }
 
-  for kind, bg in pairs(kind_colors) do
-    vim.api.nvim_set_hl(0, "BlinkCmpKind" .. kind, { fg = "#2d333b", bg = bg })
+  local function apply_kind_colors()
+    local light = vim.o.background == "light"
+    for kind, bg in pairs(kind_colors) do
+      vim.api.nvim_set_hl(0, "BlinkCmpKind" .. kind, { fg = "#2d333b", bg = light and light_bg[kind] or bg })
+    end
+    vim.api.nvim_set_hl(0, "BlinkCmpKindDict", { default = false, fg = light and "#116329" or "#a6e3a1" })
   end
-  vim.api.nvim_set_hl(0, "BlinkCmpKindDict", { default = false, fg = "#a6e3a1" })
+  apply_kind_colors()
+  -- `colorscheme` (and `set background`) clears these; re-apply so <leader>ub switches live
+  vim.api.nvim_create_autocmd("ColorScheme", {
+    group = vim.api.nvim_create_augroup("GiBlinkCmpKindColors", { clear = true }),
+    callback = apply_kind_colors,
+  })
 end
 return M

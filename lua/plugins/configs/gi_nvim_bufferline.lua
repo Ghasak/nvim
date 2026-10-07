@@ -39,6 +39,17 @@ local colors = {
   beautiful_black = "#2d333b",
 }
 
+-- light: GitHub Primer, same keys as used below (text >= 4.8:1 on #f6f8fa)
+local light = {
+  white = "#1f2328",
+  grey = "#59636e",
+  grey_e = "#59636e",
+  red = "#cf222e",
+  blue_e = "#0969da",
+  beautiful_black = "#f6f8fa",
+}
+local dark = colors
+
 --- @module "bufferline.colors"
 
 M.config = function()
@@ -89,112 +100,117 @@ M.config = function()
       end,
     },
 
-    highlights = {
-      background = { fg = colors.grey_e, bg = colors.beautiful_black },
+    -- a function: bufferline re-calls it on every ColorScheme (bufferline.lua:108-114, config.lua:714),
+    -- so the tabline follows 'background' live
+    highlights = function()
+      local colors = vim.o.background == "light" and light or dark
+      return {
+        background = { fg = colors.grey_e, bg = colors.beautiful_black },
 
-      -- buffers
-      buffer_selected = {
-        fg = colors.white,
-        bg = colors.beautiful_black,
-        fmt = "bold",
-      },
-      buffer_visible = {
-        fg = colors.white,
-        bg = colors.beautiful_black,
-      },
-      -- close buttons
-      close_button = {
-        fg = colors.red,
-        bg = colors.beautiful_black,
-      },
-      close_button_visible = {
-        fg = colors.red,
-        bg = colors.beautiful_black,
-      },
-      close_button_selected = {
-        fg = colors.red,
-        bg = colors.beautiful_black,
-      },
-      fill = {
-        fg = colors.beautiful_black,
-        bg = colors.beautiful_black, -- This is the color that will fill the entire tab bar
-      },
-      indicator_selected = {
-        fg = colors.blue_e,
-        bg = colors.beautiful_black,
-      },
+        -- buffers
+        buffer_selected = {
+          fg = colors.white,
+          bg = colors.beautiful_black,
+          fmt = "bold",
+        },
+        buffer_visible = {
+          fg = colors.white,
+          bg = colors.beautiful_black,
+        },
+        -- close buttons
+        close_button = {
+          fg = colors.red,
+          bg = colors.beautiful_black,
+        },
+        close_button_visible = {
+          fg = colors.red,
+          bg = colors.beautiful_black,
+        },
+        close_button_selected = {
+          fg = colors.red,
+          bg = colors.beautiful_black,
+        },
+        fill = {
+          fg = colors.beautiful_black,
+          bg = colors.beautiful_black, -- This is the color that will fill the entire tab bar
+        },
+        indicator_selected = {
+          fg = colors.blue_e,
+          bg = colors.beautiful_black,
+        },
 
-      -- modified
-      modified = { fg = colors.red, bg = colors.beautiful_black },
-      modified_visible = { fg = colors.red, bg = colors.beautiful_black },
-      modified_selected = { fg = colors.red, bg = colors.beautiful_black },
+        -- modified
+        modified = { fg = colors.red, bg = colors.beautiful_black },
+        modified_visible = { fg = colors.red, bg = colors.beautiful_black },
+        modified_selected = { fg = colors.red, bg = colors.beautiful_black },
 
-      -- separators
-      separator = {
-        fg = colors.beautiful_black,
-        bg = colors.beautiful_black,
-      },
-      separator_visible = {
-        fg = colors.beautiful_black,
-        bg = colors.beautiful_black,
-      },
-      separator_selected = {
-        -- fg = colors.black2,
-        fg = colors.beautiful_black,
-        bg = colors.beautiful_black,
-      },
-      -- tabs
-      tab = { fg = colors.beautiful_black, bg = colors.beautiful_black },
-      tab_selected = {
-        fg = colors.beautiful_black,
-        bg = colors.beautiful_black,
-      },
-      tab_close = { fg = colors.red, bg = colors.beautiful_black },
-      -- Style for the numbers in the tab
-      numbers = {
-        fg = colors.grey,
-        bg = colors.beautiful_black,
-        bold = true,
-      },
+        -- separators
+        separator = {
+          fg = colors.beautiful_black,
+          bg = colors.beautiful_black,
+        },
+        separator_visible = {
+          fg = colors.beautiful_black,
+          bg = colors.beautiful_black,
+        },
+        separator_selected = {
+          -- fg = colors.black2,
+          fg = colors.beautiful_black,
+          bg = colors.beautiful_black,
+        },
+        -- tabs
+        tab = { fg = colors.beautiful_black, bg = colors.beautiful_black },
+        tab_selected = {
+          fg = colors.beautiful_black,
+          bg = colors.beautiful_black,
+        },
+        tab_close = { fg = colors.red, bg = colors.beautiful_black },
+        -- Style for the numbers in the tab
+        numbers = {
+          fg = colors.grey,
+          bg = colors.beautiful_black,
+          bold = true,
+        },
 
-      numbers_visible = { fg = colors.grey, bg = colors.beautiful_black },
-      numbers_selected = {
-        fg = colors.blue_e,
-        bg = colors.beautiful_black,
-        bold = true,
-        -- italic = true,
-      },
-      pick_selected = {
-        fg = colors.red,
-        -- bg = '<colour-value-here>',
-        bold = true,
-        italic = true,
-      },
-      pick_visible = {
-        fg = colors.red,
-        -- bg = '<colour-value-here>',
-        bold = true,
-        italic = true,
-      },
-      pick = {
-        fg = colors.red,
-        -- bg = '<colour-value-here>',
-        bold = true,
-        italic = true,
-      },
-      -- pick_visible = {
-      --   fg = '<colour-value-here>',
-      --   bg = '<colour-value-here>',
-      --   bold = true,
-      --   italic = true,
-      -- },
-      -- pick = {
-      --   fg = '<colour-value-here>',
-      --   bg = '<colour-value-here>',
-      --   bold = true,
-      --   italic = true,
-      -- },
-    },
+        numbers_visible = { fg = colors.grey, bg = colors.beautiful_black },
+        numbers_selected = {
+          fg = colors.blue_e,
+          bg = colors.beautiful_black,
+          bold = true,
+          -- italic = true,
+        },
+        pick_selected = {
+          fg = colors.red,
+          -- bg = '<colour-value-here>',
+          bold = true,
+          italic = true,
+        },
+        pick_visible = {
+          fg = colors.red,
+          -- bg = '<colour-value-here>',
+          bold = true,
+          italic = true,
+        },
+        pick = {
+          fg = colors.red,
+          -- bg = '<colour-value-here>',
+          bold = true,
+          italic = true,
+        },
+        -- pick_visible = {
+        --   fg = '<colour-value-here>',
+        --   bg = '<colour-value-here>',
+        --   bold = true,
+        --   italic = true,
+        -- },
+        -- pick = {
+        --   fg = '<colour-value-here>',
+        --   bg = '<colour-value-here>',
+        --   bold = true,
+        --   italic = true,
+        -- },
+      }
+    end,
   }
 end
 

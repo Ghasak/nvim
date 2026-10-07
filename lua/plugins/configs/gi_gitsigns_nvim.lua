@@ -4,30 +4,16 @@ if not status_ok then return end
 
 -- helper that actually applies the highlights
 local function apply_github_gitsigns()
-  local name = vim.g.colors_name
-  local cfg
+  if vim.o.background ~= "dark" then return end -- light: the theme's GitSigns* (c.panel bg, Primer fg)
 
-  if name == "github_dark" or name == "onedark" then
-    cfg = {
-      bg = "#2c333c",
-      Add = "#048BA8",
-      Change = "#ffff00",
-      ChangeDelete = "#ff4500",
-      Delete = "#ff0000",
-      Topdelete = "#ff6347",
-    }
-  elseif name == "github_light" then
-    cfg = {
-      bg = "#f0f0f0",
-      Add = "#026670",
-      Change = "#daaa00",
-      ChangeDelete = "#cc5500",
-      Delete = "#cc0000",
-      Topdelete = "#c1440e",
-    }
-  else
-    return
-  end
+  local cfg = {
+    bg = "#2c333c",
+    Add = "#048BA8",
+    Change = "#ffff00",
+    ChangeDelete = "#ff4500",
+    Delete = "#ff0000",
+    Topdelete = "#ff6347",
+  }
 
   -- loop over each kind + the Ln/Nr suffixes
   for kind, fg in pairs(cfg) do
@@ -40,9 +26,9 @@ end
 -- apply once immediately (so your initial colorscheme gets it)
 apply_github_gitsigns()
 
--- then re-apply whenever you switch themes
+-- then re-apply whenever the theme or 'background' changes (scheme is always "onedark")
 vim.api.nvim_create_autocmd("ColorScheme", {
-  pattern = { "github_dark", "github_light" },
+  pattern = "*",
   callback = apply_github_gitsigns,
 })
 --

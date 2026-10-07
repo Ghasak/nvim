@@ -79,12 +79,10 @@ if vim.g.transparent_enabled then
   -- transparent.clear_prefix("lualine")
 end
 
--- set the indent guide to a soft green, no bg
-vim.api.nvim_set_hl(0, "SnacksIndentScope", { fg = "#eef6fb", bg = "NONE" })
+-- indent guide colour now comes from the theme (githubG.nvim, palette key 'indent_scope')
 
 -- temp error with nvim.progress and nvim.lspsaga [to be updated ]
 ---@diagnostic disable-next-line: duplicate-set-field
 vim.deprecate = function() end
-
 
 

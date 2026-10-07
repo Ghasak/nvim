@@ -48,7 +48,7 @@ M.neovide_config = function()
   vim.opt.linespace = -1
   -- vim.g.neovide_transparency = 0.0
   vim.g.neovide_opacity = 1.0
-  vim.g.neovide_background_color = "#343a43"
+  vim.g.neovide_background_color = vim.o.background == "light" and "#ffffff" or "#343a43"
   vim.g.neovide_floating_blur_amount_x = 2.0
   vim.g.neovide_floating_blur_amount_y = 2.0
   vim.g.neovide_cursor_trail_size = 0.94

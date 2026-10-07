@@ -98,7 +98,9 @@ M.settings = function()
     use_trouble_qf = false, -- Quickfix action will open trouble.nvim instead of built-in quickfix list
   }
 
-  vim.api.nvim_set_hl(0, "GlancePreviewMatch", { bg = "#323d45", bold = true })
+  if vim.o.background == "dark" then -- light: the theme's GlancePreviewMatch (c.diff_text)
+    vim.api.nvim_set_hl(0, "GlancePreviewMatch", { bg = "#323d45", bold = true })
+  end
 end
 
 return M

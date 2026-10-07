@@ -78,6 +78,31 @@ M.config = function()
   end, { desc = "Peek Fold" })
 
   -- *****************************
+  -- CUSTOME THEME FOR THE UFO
+  -- *****************************
+  -- `hi` merges fg only (theme bg kept); re-applied on ColorScheme so <leader>ub switches live.
+  -- Registered before ufo's own ColorScheme handler, whose `hi default link` then leaves these alone.
+  local function set_fold_hl()
+    local fg = vim.o.background == "light" and "#0550ae" or "#7faed5"
+    for _, group in ipairs {
+      "UfoPreviewThumb", "UfoPreviewWinBar", "UfoPreviewSbar", "UfoPreviewCursorLine",
+      "UfoFoldedEllipsis", "UfoCursorFoldedLine",
+    } do
+      vim.cmd(("hi %s guifg=%s"):format(group, fg))
+    end
+    if vim.o.background == "dark" then -- light: Folded/FoldColumn come from the theme (c.blue)
+      for _, group in ipairs { "Folded", "FoldColumn" } do
+        vim.cmd(("hi %s guifg=%s"):format(group, fg))
+      end
+    end
+  end
+  set_fold_hl()
+  vim.api.nvim_create_autocmd("ColorScheme", {
+    group = vim.api.nvim_create_augroup("GiUfoFoldColors", { clear = true }),
+    callback = set_fold_hl,
+  })
+
+  -- *****************************
   --    UFO MAIN SETUP FUNCTION
   -- *****************************
   require("ufo").setup {
@@ -97,20 +122,6 @@ M.config = function()
         jumpBot = "]",
       },
     },
-    -- *****************************
-    -- CUSTOME THEME FOR THE UFO
-    -- *****************************
-    vim.cmd [[
-          hi UfoPreviewThumb guifg='#7faed5'
-          hi UfoPreviewWinBar guifg='#7faed5'
-          hi UfoPreviewSbar guifg='#7faed5'
-          hi UfoPreviewCursorLine guifg='#7faed5'
-          hi UfoFoldedEllipsis guifg='#7faed5'
-          hi UfoPreviewThumb guifg='#7faed5'
-          hi UfoCursorFoldedLine guifg='#7faed5'
-          hi Folded guifg='#7faed5'
-          highlight FoldColumn  guifg='#7faed5'
-          ]],
     -- *****************************
     -- TYPE OF PROVIDER FOR FOLDING
     -- *****************************

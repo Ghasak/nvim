@@ -366,29 +366,58 @@ end
 -- #                                                                   #
 -- #####################################################################
 
--- Check .local/share/nvim/site/pack/packer/opt/lualine.nvim/lua/lualine/themes/onedark.lua
-local custom_onedark = require "lualine.themes.onedark"
--- Change the background of lualine_c section for normal mode
--- custom_onedark.normal.c.bg = "#2c373e"
--- When we open/switch to another buffer (such as vsplit, nvimtree), it will be inactive
--- In orginal common style for stausline without the (lualine) it has a name called NC
--- (StatusLineNC = { fg = '$beautiful_black' ,bg = '$beautiful_black' } which can be added to the config of Onedark
--- custom_onedark.inactive.a.bg = '$black'
--- custom_onedark.inactive.b.bg = '$black'
--- custom_onedark.inactive.c.bg = '$black'
--- Configuations for the colors of the Normal mode
--- custom_onedark.normal.a.fg= '#00A9A5'    -- background color
--- custom_onedark.normal.a.bg = '#94C9A9' -- lightgreen
-custom_onedark.normal.a.bg = "#65A8EC" -- lightgreen
-custom_onedark.insert.a.bg = "#E18CA4" --
-custom_onedark.visual.a.bg = "#DCBDFB" --
+-- Light: GitHub Primer. Mode colours mirror the dark ones (blue/pink/purple/red/yellow/teal), white text >= 4.8:1.
+local primer_light = {
+  normal = {
+    a = { fg = "#ffffff", bg = "#0969da", gui = "bold" },
+    b = { fg = "#1f2328", bg = "#eaeef2" },
+    c = { fg = "#1f2328", bg = "#f6f8fa" },
+  },
+  insert = { a = { fg = "#ffffff", bg = "#bf3989", gui = "bold" } },
+  visual = { a = { fg = "#ffffff", bg = "#8250df", gui = "bold" } },
+  replace = { a = { fg = "#ffffff", bg = "#cf222e", gui = "bold" } },
+  command = { a = { fg = "#ffffff", bg = "#9a6700", gui = "bold" } },
+  terminal = { a = { fg = "#ffffff", bg = "#1b7c83", gui = "bold" } },
+  inactive = {
+    a = { fg = "#59636e", bg = "#f6f8fa", gui = "bold" },
+    b = { fg = "#59636e", bg = "#f6f8fa" },
+    c = { fg = "#59636e", bg = "#f6f8fa" },
+  },
+}
+
+-- lualine calls this on setup and again on every ColorScheme / OptionSet background (lualine.lua:279-280),
+-- so the statusline follows <leader>ub live. Dark = the original theme + overrides, required at call time
+-- (the require resolves to lualine's or githubG's onedark.lua depending on load order, same as before).
+local function theme()
+  if vim.o.background == "light" then return primer_light end
+  -- Check .local/share/nvim/site/pack/packer/opt/lualine.nvim/lua/lualine/themes/onedark.lua
+  local custom_onedark = require "lualine.themes.onedark"
+  -- Change the background of lualine_c section for normal mode
+  -- custom_onedark.normal.c.bg = "#2c373e"
+  -- When we open/switch to another buffer (such as vsplit, nvimtree), it will be inactive
+  -- In orginal common style for stausline without the (lualine) it has a name called NC
+  -- (StatusLineNC = { fg = '$beautiful_black' ,bg = '$beautiful_black' } which can be added to the config of Onedark
+  -- custom_onedark.inactive.a.bg = '$black'
+  -- custom_onedark.inactive.b.bg = '$black'
+  -- custom_onedark.inactive.c.bg = '$black'
+  -- Configuations for the colors of the Normal mode
+  -- custom_onedark.normal.a.fg= '#00A9A5'    -- background color
+  -- custom_onedark.normal.a.bg = '#94C9A9' -- lightgreen
+  custom_onedark.normal.a.bg = "#65A8EC" -- lightgreen
+  custom_onedark.insert.a.bg = "#E18CA4" --
+  custom_onedark.visual.a.bg = "#DCBDFB" --
+  return custom_onedark
+end
+-- keep the original load-time require: it decides which onedark.lua is cached; theme() reuses it until
+-- `colorscheme onedark` drops it from package.loaded (githubG colors/onedark.lua), then re-requires fresh
+require "lualine.themes.onedark"
 
 function M.setup()
   require("lualine").setup {
     options = {
       icons_enabled = true,
       globalstatus = false, -- this will make the statusline expand vertically across all other opened buffered such as nvimtree
-      theme = custom_onedark,
+      theme = theme,
       -- theme = "github_dimmed",
       disabled_filetypes = {
         statusline = {

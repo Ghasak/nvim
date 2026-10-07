@@ -6,7 +6,31 @@ if not status_ok then return end
 
 local actions = fzf_lua_actions
 
-vim.api.nvim_set_hl(0, "FzfLuaSel", { bg = "#4fb9ff", fg = "#2c373e" }) -- custom highlight
+-- Light-only fzf colors (Primer, >= 4.5:1 on #ffffff and on FzfLuaSel #b6e3ff). They are empty under dark,
+-- and fzf-lua skips a fzf_colors flag whose group has no color, so dark keeps fzf's own defaults.
+local light_fzf_hl = {
+  FzfLuaLightHl = "#0550ae", -- hl
+  FzfLuaLightHlCur = "#0550ae", -- hl+
+  FzfLuaLightInfo = "#59636e", -- info
+  FzfLuaLightPrompt = "#0969da", -- prompt
+  FzfLuaLightPointer = "#a40e26", -- pointer
+  FzfLuaLightMarker = "#116329", -- marker
+  FzfLuaLightSpinner = "#8250df", -- spinner
+  FzfLuaLightBorder = "#6e7781", -- border (+ separator, scrollbar, preview-border)
+  FzfLuaLightLabel = "#59636e", -- label
+}
+
+local function set_sel_hl() -- custom highlight; re-applied on ColorScheme so <leader>ub switches live
+  local light = vim.o.background == "light"
+  for group, fg in pairs(light_fzf_hl) do
+    vim.api.nvim_set_hl(0, group, light and { fg = fg } or {})
+  end
+end
+set_sel_hl()
+vim.api.nvim_create_autocmd("ColorScheme", {
+  group = vim.api.nvim_create_augroup("GiFzfLuaSel", { clear = true }),
+  callback = set_sel_hl,
+})
 
 fzf_lua.setup {
 
@@ -178,6 +202,16 @@ fzf_lua.setup {
     ["fg+"] = { "fg", "FzfLuaSel" },
     ["gutter"] = { "bg", "Normal" },
     ["header"] = { "fg", "Comment" },
+    -- light only (groups are empty under dark): see light_fzf_hl
+    ["hl"] = { "fg", "FzfLuaLightHl" },
+    ["hl+"] = { "fg", "FzfLuaLightHlCur" },
+    ["info"] = { "fg", "FzfLuaLightInfo" },
+    ["prompt"] = { "fg", "FzfLuaLightPrompt" },
+    ["pointer"] = { "fg", "FzfLuaLightPointer" },
+    ["marker"] = { "fg", "FzfLuaLightMarker" },
+    ["spinner"] = { "fg", "FzfLuaLightSpinner" },
+    ["border"] = { "fg", "FzfLuaLightBorder" },
+    ["label"] = { "fg", "FzfLuaLightLabel" },
     -- keep other colors as they are
   },
   -- fzf '--color=' options (optional)
@@ -201,7 +235,8 @@ fzf_lua.setup {
     bat = {
       cmd = "bat",
       args = "--style=numbers,changes --color always",
-      theme = "Coldark-Dark", -- bat preview theme (bat --list-themes)
+      -- bat preview theme (bat --list-themes); fzf-lua calls a function on every preview
+      theme = function() return vim.o.background == "light" and "GitHub" or "Coldark-Dark" end,
       config = nil, -- nil uses $BAT_CONFIG_PATH
     },
     head = { cmd = "head", args = nil },

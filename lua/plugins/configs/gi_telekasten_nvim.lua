@@ -12,9 +12,12 @@ M.config = function()
   }
   vim.cmd [[
           " Example
+          " the theme owns tk* in light; dark keeps the config's values
+          if &background ==# 'dark'
           hi tkLink ctermfg=lightmagenta cterm=bold,underline guifg=#75ABBC gui=bold,underline
           hi tkTag ctermfg=lightblue cterm=bold,underline  guifg=#E2C2FF gui=bold,underline
           hi tkBrackets ctermfg=gray guifg=gray
+          endif
       ]]
 end
 

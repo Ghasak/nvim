@@ -41,20 +41,30 @@ M.setup = function()
   )
 
   -- 5) Dynamic highlight color swapping
-  local orig_search = vim.api.nvim_get_hl(0, { name = "Search" })
-  local orig_incsearch = vim.api.nvim_get_hl(0, { name = "IncSearch" })
+  -- captured on every LeapEnter, so LeapLeave restores the current theme's colors (not the startup ones)
+  local orig_search, orig_incsearch
+  -- cterm = {} keeps the restore exact: nvim_set_hl copies gui attrs (bold...) into cterm when cterm is absent
+  local function get_hl(name) return vim.tbl_extend("keep", vim.api.nvim_get_hl(0, { name = name }), { cterm = {} }) end
 
   vim.api.nvim_create_autocmd("User", {
     pattern = "LeapEnter",
     callback = function()
-      vim.api.nvim_set_hl(0, "Search", { bg = "#4fb9ff", fg = "#e9f6fb" })
-      vim.api.nvim_set_hl(0, "IncSearch", { bg = "#fd6963", fg = "#e9f6fb" })
+      orig_search = get_hl "Search"
+      orig_incsearch = get_hl "IncSearch"
+      if vim.o.background == "light" then
+        vim.api.nvim_set_hl(0, "Search", { bg = "#0969da", fg = "#ffffff" })
+        vim.api.nvim_set_hl(0, "IncSearch", { bg = "#cf222e", fg = "#ffffff" })
+      else
+        vim.api.nvim_set_hl(0, "Search", { bg = "#4fb9ff", fg = "#e9f6fb" })
+        vim.api.nvim_set_hl(0, "IncSearch", { bg = "#fd6963", fg = "#e9f6fb" })
+      end
     end,
   })
 
   vim.api.nvim_create_autocmd("User", {
     pattern = "LeapLeave",
     callback = function()
+      if not orig_search then return end -- LeapLeave without a LeapEnter: nothing to restore
       vim.api.nvim_set_hl(0, "Search", orig_search)
       vim.api.nvim_set_hl(0, "IncSearch", orig_incsearch)
     end,

@@ -1,10 +1,13 @@
 return {
   {
-    "ghasak/githubG.nvim",
+    -- "ghasak/githubG.nvim", -- TEMP(T9): restore after push
+    dir = "/Users/gmbp/Desktop/devCode/programmingLanguages/luaHub/githubG.nvim",
+    name = "githubG.nvim",
     cond = true, -- load this plugin
     priority = 1000, -- make sure to load this before all the other start plugins
     init = function()
-      require("onedark").setup { style = "gdark" }
+      vim.o.background = "light" -- light by default; <leader>ub flips to dark
+      require("onedark").setup { style = "glight" }
       vim.cmd [[colorscheme onedark]]
     end,
     config = function() vim.opt.termguicolors = true end,
