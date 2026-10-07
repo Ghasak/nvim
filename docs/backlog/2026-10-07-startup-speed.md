@@ -4,7 +4,7 @@ date: 2026-10-07
 title: Startup speed - tools load on first use, dead code removed
 status: done
 scope: [config, docs]
-commit: nvim 891db25 on feature/startup-speed
+commit: nvim 891db25 + 64a4245 on feature/startup-speed, merged into main as 019ab10
 ---
 
 ## What changed
@@ -131,8 +131,10 @@ Measured on `NVIM v0.11.5`, fresh processes, against a `git archive main` (3272d
 
 ## Rollback
 
-**Whole change:** `git revert -m 1 <merge-sha>` after the merge, or
-`git checkout 3272d2c -- <paths>` for any part before it (3272d2c = `main` before this work).
+**Whole change:** `git revert -m 1 019ab10` — 019ab10 is the merge commit on `main`, so this
+returns every file below to 3272d2c (verified live in a scratch clone: the revert is clean and
+`git diff 3272d2c HEAD` is empty afterwards). For any part instead:
+`git checkout 3272d2c -- <paths>` (3272d2c = `main` before this work).
 Every file in this entry is one `git checkout 3272d2c -- <path>` away from its old state.
 
 Per change, for surgical reverts:
@@ -148,9 +150,12 @@ Per change, for surgical reverts:
 | " | windsurf comment (:1126) | delete the comment line |
 | `lua/plugins/lazyPluginsManager.lua` | `rest` + 6 duplicates removed | re-add `rest = true,` and the six duplicate strings |
 | `lua/settings/options.lua` | duplicate `BufWritePre` removed | re-add banner + `vim.cmd [[au BufWritePre * :%s/\s\+$//e]]` |
-| " | hoisted block (:365-410) | wrap the `vim.cmd [[ ... ]]` in the old `nvim_create_autocmd("BufEnter", {nested=true, callback=function() ... end,})` |
-| " | `createdir` removed | restore the function text (see 3272d2c) |
+| " | hoisted block (:365-410) | wrap the `vim.cmd [[ ... ]]` in the old `nvim_create_autocmd("BufEnter", {nested=true, callback=function() ... end,})`, or restore the file: `git checkout 3272d2c -- lua/settings/options.lua` |
+| " | `createdir` removed | restore the file: `git checkout 3272d2c -- lua/settings/options.lua` (or copy the function from `git show 3272d2c:lua/settings/options.lua`) |
 | 8 deleted files | deletion | `git checkout 3272d2c -- <path>` each (paths above) |
+
+> 2026-10-08: completed after the merge — the merge commit is now recorded (frontmatter and the
+> whole-change revert), and the two prose steps (hoist, createdir) carry runnable commands.
 
 ## Follow-ups
 
