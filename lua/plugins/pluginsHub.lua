@@ -41,6 +41,11 @@ return {
     config = function(_, opts)
       require("snacks").setup(opts)
 
+      -- Preload the notifier module: a fast-event caller (e.g. the LSP client exiting)
+      -- must not trigger its load, because its top-level nvim_create_namespace would
+      -- fail with E5560 and poison the module cache.
+      require("snacks.notifier")
+
       -- NOW setup the keymaps AFTER snacks is initialized
       require("core.keymappings").setup_snacks_keymaps()
     end,
