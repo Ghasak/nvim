@@ -4,7 +4,7 @@ date: 2026-10-11
 title: snacks notifier preloaded — fast-event callers can no longer poison it
 status: done
 scope: [config, plugins]
-commit: nvim 20aa223 on hotfix/snacks-notifier-fast-event
+commit: nvim 20aa223 + 9446deb on hotfix/snacks-notifier-fast-event, merged into main as 83bdcb1
 ---
 
 # 2026-10-11 — snacks notifier preload
