@@ -75,10 +75,15 @@ and then restore from that snapshot whenever you like.
 4. **Restore** a backup:
    ```bash
    cp ~/.local/share/nvim/lazy-snapshots/2025-04-30T18:15:42.json \
-      ~/.config/nvim/lazy-lock.json
+      ~/.local/share/nvim/lazy/lazy-lock.json
    # Then inside Neovim:
    :Lazy restore
    ```
+
+> **Note — this config:** `lua/plugins/lazyPluginsManager.lua:10` overrides lazy.nvim's
+> default lockfile location. The live lockfile is
+> `~/.local/share/nvim/lazy/lazy-lock.json`; generic examples below that use
+> `~/.config/nvim/lazy-lock.json` do not apply to this config.
 
 ---
 
@@ -255,7 +260,7 @@ A concise guide to automatically snapshotting and restoring your plugin lockfile
 4. **Restoring a snapshot**:
    ```bash
    # Overwrite current lockfile with a specific backup
-   cp ~/.local/share/nvim/lazy-snapshots/2025-04-30T18:15:42.json ~/.config/nvim/lazy-lock.json
+   cp ~/.local/share/nvim/lazy-snapshots/2025-04-30T18:15:42.json ~/.local/share/nvim/lazy/lazy-lock.json
    # Then in Neovim…
    :Lazy restore
    ```
