@@ -42,6 +42,7 @@ One line per finished task, oldest first:
 - 2026-10-07 · memory rules · made the memory update mandatory after every finished task, with a one-line work record and dead ends that are never retried; an adversarial read, then Rick himself, confirmed a fresh reader can state every rule from source · dead end: granting the theme folder only inside the profile left the grant void, because the hard rules outrank the profile — the carve-out had to be written into `CLAUDE.md` itself
 - 2026-10-07 · memory routing · made `docs/rick/memory.md` the only memory for this repo, in `CLAUDE.md` § Hard rules § Memory; the harness memory at `~/.claude/projects/` was never used and does not exist · dead end: the first pass put the rule in § Rick, where it read as a description of Rick rather than a rule for every session — the repo's own lesson *a permission must be written into the law* sent it to § Hard rules
 - 2026-10-07 · startup speed · deferred telescope/fzf-lua/devicons to first use (killed the gi_telescope extension cascade), fixed mason's init-require, removed 8 dead files + duplicate BufWritePre + createdir, dropped the patches deferral · dead end: undotree's VimEnter cannot be removed — its config turns on undofile/undodir, so removal would silently disable persistent undo
+- 2026-10-11 · nvim 0.12.6 + telescope repair · built v0.12.6 from source (tag 779c36969e, sha 02819703…) and installed; telescope keys restored with lazy `keys` placeholders + Snacks dedup; blink build guard fixed; avante's <0.12 gate (getchar + :quit) was the picker-typing blocker; text objects broken on 0.12 → treesitter master→main migration queued as the next task · dead end: the saved v0.11.5 binary alone cannot roll back — `make install` replaced the shared runtime, only a rebuild works
 
 ## Lessons
 
@@ -144,3 +145,16 @@ working light style. Never "fix" it by reverting the palette.
 **Why:** It hid in plain sight — the telescope extension loader pulled the whole DAP stack into VimEnter via `pcall(require, "dap")`, and mason's `init` loaded mason at startup, both defeating their declared triggers.
 **Evidence:** `gi_telescope.lua:269-282`; mason's spec `init` before commit 891db25; lazy `core/loader.lua:529-548`; tracer: 20 VimEnter-rooted requires before, 0 after.
 **Applies when:** reading or writing any plugin spec; any "is this plugin installed?" check.
+
+### Keymap and typing complaints are load-order complaints
+
+**Lesson:** When a key "does not work" or typing is blocked in a prompt, check WHAT loads on the
+trigger and WHO owns the key at that moment before touching the mapping itself.
+**Why:** Both of the 2026-10-11 telescope symptoms had nothing to do with telescope's own mappings:
+a plugin loaded by `InsertEnter` (avante) ate the keystroke and quit the window on nvim < 0.12, and
+after 891db25 an eager plugin (Snacks) owned the startup keys while the lazy one registered later.
+**Evidence:** `avante.nvim/plugin/avante.lua:1-9` (getchar + :quit) blocked the first picker; the
+`ff` owner at startup was Snacks (`keymappings.lua:623`) because telescope's maps register only on
+load (`gi_telescope.lua:255`); fixed with lazy `keys` placeholders (`pluginsHub.lua:136-143`) +
+deleting the colliding eager maps.
+**Applies when:** any "key does not work" or "cannot type" report.

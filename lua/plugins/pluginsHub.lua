@@ -133,7 +133,14 @@ return {
     branch = "master",
     lazy = true,
     cmd = "Telescope",
-    init = function() require("core.utils").load_mappings "telescope" end,
+    keys = {
+      { "<leader>ff", desc = "Find Files (telescope)" },
+      { "<leader>fb", desc = "Buffers (telescope)" },
+      { "<leader>fg", desc = "Live Grep (telescope)" },
+      { "<leader>fh", desc = "Help Tags (telescope)" },
+      { "<leader>U", desc = "Undo History (telescope)" },
+      { ";e", desc = "Diagnostics (telescope)" },
+    },
     config = function() require("plugins.configs.gi_telescope").config() end,
     -- Dependencies are for the telescope extensions, check last segement of the telescope.
     dependencies = {
@@ -227,7 +234,7 @@ return {
     -- build = "cargo build --release", -- for optional Rust speedups
     build = function()
       if
-        vim.fn.empty(vim.fn.glob(vim.fn.stdpath "data" .. "/lazy/blink.cmp/target/release/libblink_cmp.dylib")) == 1
+        vim.fn.empty(vim.fn.glob(vim.fn.stdpath "data" .. "/lazy/blink.cmp/target/release/libblink_cmp_fuzzy.dylib")) == 1
       then
         vim.fn.system "cargo build --release"
       end

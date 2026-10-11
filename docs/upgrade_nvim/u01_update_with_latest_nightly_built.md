@@ -204,3 +204,26 @@ Great! It looks like you successfully checked out `NVIM 0.10.4`, which is the la
    ```
 
 If everything looks good, you're **now on the latest stable Neovim release!** 🚀🎉
+
+---
+
+## 2026-10-11 — actual v0.12.6 run
+
+The commands that actually worked on this machine:
+
+```sh
+git -C ~/dev/neovim fetch --all --tags
+git -C ~/dev/neovim checkout v0.12.6
+make -C ~/dev/neovim distclean
+make -C ~/dev/neovim CMAKE_BUILD_TYPE=Release
+sudo make -C ~/dev/neovim install
+```
+
+- The installed binary is a copied FILE from `make install` (sha256-checked), not a
+  symlink — the `ln -s` step above is not how this machine is set up.
+- Rollback to v0.11.5 = re-checkout the tag and rebuild + install
+  (`git checkout v0.11.5`, `make distclean`, `make CMAKE_BUILD_TYPE=Release`,
+  `sudo make install`). The saved binary `/Users/gmbp/.local/share/nvim/nvim-v0.11.5-backup`
+  (sha256 `0a9bbfff…`) is NOT enough on its own: `make install` also replaced the shared
+  runtime in `/usr/local/share/nvim/runtime`, which the old binary cannot load
+  (tester finding, 2026-10-11).
