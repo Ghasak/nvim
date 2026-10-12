@@ -44,6 +44,8 @@ One line per finished task, oldest first:
 - 2026-10-07 · startup speed · deferred telescope/fzf-lua/devicons to first use (killed the gi_telescope extension cascade), fixed mason's init-require, removed 8 dead files + duplicate BufWritePre + createdir, dropped the patches deferral · dead end: undotree's VimEnter cannot be removed — its config turns on undofile/undodir, so removal would silently disable persistent undo
 - 2026-10-11 · nvim 0.12.6 + telescope repair · built v0.12.6 from source (tag 779c36969e, sha 02819703…) and installed; telescope keys restored with lazy `keys` placeholders + Snacks dedup; blink build guard fixed; avante's <0.12 gate (getchar + :quit) was the picker-typing blocker; text objects broken on 0.12 → treesitter master→main migration queued as the next task · dead end: the saved v0.11.5 binary alone cannot roll back — `make install` replaced the shared runtime, only a rebuild works
 - 2026-10-11 · snacks notifier preload · reproduced the fast-event E5560 (notify on LSP exit loaded snacks.notifier in a fast context) and fixed it by preloading the module at setup; deterministic timer fail→pass pair in `docs/backlog/2026-10-11-snacks-notifier-preload.md`
+- 2026-10-12 · avante mega deps · added ColinKennedy/mega.cmdparse + mega.logging to the avante spec (upstream README:211); after the 4f49656 update the plugin file died at its top-level `require("mega.cmdparse")` and lazy showed "Failed to source" on the first InsertEnter — the owner's screenshot
+- 2026-10-12 · treesitter 0.12 directive fix · reproduced the decoration-provider crash (telescope markdown previews, 2/3 baseline runs) and re-registered master's six predicates/directives with the 0.12 list unwrap; 9/9 clean after; upstream nvim-treesitter#8636
 
 ## Lessons
 

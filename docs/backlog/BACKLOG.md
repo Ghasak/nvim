@@ -36,6 +36,8 @@ commit: <repo> <sha> on <branch>
 | [2026-10-07-02](2026-10-07-startup-speed.md) | 2026-10-07 | Startup speed - tools load on first use, dead code removed | config, docs | done |
 | [2026-10-11-01](2026-10-11-nvim-0.12-upgrade.md) | 2026-10-11 | nvim v0.12.6 upgrade + Telescope key/typing repair | config, plugins, docs | done |
 | [2026-10-11-02](2026-10-11-snacks-notifier-preload.md) | 2026-10-11 | snacks notifier preloaded (fast-event E5560 fix) | config, plugins | done |
+| [2026-10-12-01](2026-10-12-avante-mega-deps.md) | 2026-10-12 | avante spec: add missing mega.cmdparse + mega.logging deps | config, plugins | done |
+| [2026-10-12-02](2026-10-12-treesitter-master-012-directives.md) | 2026-10-12 | nvim-treesitter master on 0.12: predicate/directive unwrap fix | config | done |
 
 ## Open follow-ups
 
@@ -54,6 +56,6 @@ commit: <repo> <sha> on <branch>
 | 2026-10-07-02 | windsurf spec is malformed; fix or strip is an owner decision | owner |
 | 2026-10-07-02 | Theme: default `dark` style crashes on load; root `onedark_config.lua` is unreferenced | later |
 | 2026-10-07-02 | Stale docs: `Fundamentals.md:440`, `tabnine.md`, `nvim_tree_cheat_sheet.md` | later |
-| 2026-10-11-01 | nvim-treesitter master→main migration: text objects broken on 0.12 (E5108); needs CLI ≥0.26.1 + config rewrite; fold in the `move`-nested-in-`select` bug | next task |
+| 2026-10-11-01 | nvim-treesitter master→main migration: needs CLI ≥0.26.1 + config rewrite; fold in the `move`-nested-in-`select` bug. Decoration-provider crash fixed by 2026-10-12-02; text objects still crash on 0.12 (`tsrange.lua:27`) | next task |
 | 2026-10-11-01 | Snacks notifier E5560 on LSP client exit on 0.12.6 (fast event context) | closed by 2026-10-11-02 |
 | 2026-10-11-01 | Snacks duplicate keys: `<leader>/` (keymappings.lua:610/615), `<leader>n` (:617/:679) | later |
