@@ -1,7 +1,6 @@
 return {
   {
-    -- "ghasak/githubG.nvim", -- TEMP(T9): restore after push
-    dir = "/Users/gmbp/Desktop/devCode/programmingLanguages/luaHub/githubG.nvim",
+    "ghasak/githubG.nvim",
     name = "githubG.nvim",
     cond = true, -- load this plugin
     priority = 1000, -- make sure to load this before all the other start plugins

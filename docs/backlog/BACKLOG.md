@@ -38,6 +38,7 @@ commit: <repo> <sha> on <branch>
 | [2026-10-11-02](2026-10-11-snacks-notifier-preload.md) | 2026-10-11 | snacks notifier preloaded (fast-event E5560 fix) | config, plugins | done |
 | [2026-10-12-01](2026-10-12-avante-mega-deps.md) | 2026-10-12 | avante spec: add missing mega.cmdparse + mega.logging deps | config, plugins | done |
 | [2026-10-12-02](2026-10-12-treesitter-master-012-directives.md) | 2026-10-12 | nvim-treesitter master on 0.12: predicate/directive unwrap fix | config | done |
+| [2026-10-12-03](2026-10-12-glight-indent-guides.md) | 2026-10-12 | Light-theme indent guides go faint; theme spec back on GitHub | theme, config, docs | done |
 
 ## Open follow-ups
 
@@ -49,8 +50,8 @@ commit: <repo> <sha> on <branch>
 | 2026-10-07-01 | `Method` and `Struct` have no colour in either mode | later |
 | 2026-10-07-01 | The bufferline palette is still owned by the config | later |
 | 2026-10-07-01 | `scripts/check.lua` in the theme has no dark mode | later |
-| 2026-10-07-01 | `TEMP(T9)` path override in `pluginsHub.lua` stays until the theme branch is merged | owner |
-| 2026-10-07-01 | `feature/glight` in the theme repo is pushed but not merged into its `main` | owner |
+| 2026-10-07-01 | `TEMP(T9)` path override in `pluginsHub.lua` stays until the theme branch is merged | closed by 2026-10-12-03 |
+| 2026-10-07-01 | `feature/glight` in the theme repo is pushed but not merged into its `main` | closed by 2026-10-12-03 |
 | 2026-10-07-02 | 8 more provably dead items and inert config found by the ponytail review (list in the entry) | later |
 | 2026-10-07-02 | Transparency branch, third-terminal config, parked copilot watcher, three pickers - usage calls | owner |
 | 2026-10-07-02 | windsurf spec is malformed; fix or strip is an owner decision | owner |
@@ -59,3 +60,5 @@ commit: <repo> <sha> on <branch>
 | 2026-10-11-01 | nvim-treesitter master→main migration: needs CLI ≥0.26.1 + config rewrite; fold in the `move`-nested-in-`select` bug. Decoration-provider crash fixed by 2026-10-12-02; text objects still crash on 0.12 (`tsrange.lua:27`) | next task |
 | 2026-10-11-01 | Snacks notifier E5560 on LSP client exit on 0.12.6 (fast event context) | closed by 2026-10-11-02 |
 | 2026-10-11-01 | Snacks duplicate keys: `<leader>/` (keymappings.lua:610/615), `<leader>n` (:617/:679) | later |
+| 2026-10-12-03 | Theme `KNOWN` waives both directions for `SnacksIndent`/`SnacksIndentScope`; a darker drift stays green | later |
+| 2026-10-12-03 | Theme `feature/glight` is merged but still exists locally and on origin | owner |
