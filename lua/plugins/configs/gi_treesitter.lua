@@ -144,6 +144,119 @@ function M.setup()
     },
     indent = { enable = true, disable = { "yaml", "python" } },
   }
+
+  M.fix_nvim_treesitter_master_on_012()
+end
+
+-- nvim-treesitter `master` is incompatible with nvim 0.12: every handler below assumes
+-- `match[id]` is a node, but 0.12 always passes a LIST of nodes ("correct match behavior"),
+-- so get_node_text/get_range crash with `attempt to call method 'range' (a nil value)`
+-- (upstream: nvim-treesitter/nvim-treesitter#8636; seen here on markdown fenced code blocks
+-- in Telescope previews). Re-register fixed versions -- a later registration with
+-- { force = true } replaces the plugin's own. DELETE THIS WHOLE BLOCK when the config
+-- migrates to the `main` branch (queued in docs/backlog/BACKLOG.md).
+function M.fix_nvim_treesitter_master_on_012()
+  local q = vim.treesitter.query
+  pcall(require, "nvim-treesitter") -- ensure the plugin's own registrations exist first
+  local force = { force = true }
+
+  local html_script_type_languages = {
+    ["importmap"] = "json",
+    ["module"] = "javascript",
+    ["application/ecmascript"] = "javascript",
+    ["text/ecmascript"] = "javascript",
+  }
+
+  local non_filetype_match_injection_language_aliases = {
+    ex = "elixir",
+    pl = "perl",
+    sh = "bash",
+    uxn = "uxntal",
+    ts = "typescript",
+  }
+
+  local function get_parser_from_markdown_info_string(injection_alias)
+    local match = vim.filetype.match { filename = "a." .. injection_alias }
+    return match or non_filetype_match_injection_language_aliases[injection_alias] or injection_alias
+  end
+
+  local function valid_args(name, pred, count, strict_count)
+    local arg_count = #pred - 1
+    if strict_count then
+      if arg_count ~= count then
+        vim.api.nvim_err_writeln(string.format("%s must have exactly %d arguments", name, count))
+        return false
+      end
+    elseif arg_count < count then
+      vim.api.nvim_err_writeln(string.format("%s must have at least %d arguments", name, count))
+      return false
+    end
+    return true
+  end
+
+  -- 0.12: match[id] is a list of nodes; use its first node (the upstream-suggested unwrap).
+  local function first(match, id)
+    local val = match[id]
+    if type(val) == "table" then return val[1] end
+    return val
+  end
+
+  q.add_predicate("nth?", function(match, _pattern, _bufnr, pred)
+    if not valid_args("nth?", pred, 2, true) then return end
+    local node = first(match, pred[2])
+    local n = tonumber(pred[3])
+    if node and node:parent() and node:parent():named_child_count() > n then
+      return node:parent():named_child(n) == node
+    end
+    return false
+  end, force)
+
+  q.add_predicate("is?", function(match, _pattern, bufnr, pred)
+    if not valid_args("is?", pred, 2) then return end
+    local locals = require "nvim-treesitter.locals"
+    local node = first(match, pred[2])
+    local types = { unpack(pred, 3) }
+    if not node then return true end
+    local _, _, kind = locals.find_definition(node, bufnr)
+    return vim.tbl_contains(types, kind)
+  end, force)
+
+  q.add_predicate("kind-eq?", function(match, _pattern, _bufnr, pred)
+    if not valid_args(pred[1], pred, 2) then return end
+    local node = first(match, pred[2])
+    local types = { unpack(pred, 3) }
+    if not node then return true end
+    return vim.tbl_contains(types, node:type())
+  end, force)
+
+  q.add_directive("set-lang-from-mimetype!", function(match, _, bufnr, pred, metadata)
+    local node = first(match, pred[2])
+    if not node then return end
+    local type_attr_value = vim.treesitter.get_node_text(node, bufnr)
+    local configured = html_script_type_languages[type_attr_value]
+    if configured then
+      metadata["injection.language"] = configured
+    else
+      local parts = vim.split(type_attr_value, "/", {})
+      metadata["injection.language"] = parts[#parts]
+    end
+  end, force)
+
+  q.add_directive("set-lang-from-info-string!", function(match, _, bufnr, pred, metadata)
+    local node = first(match, pred[2])
+    if not node then return end
+    local injection_alias = vim.treesitter.get_node_text(node, bufnr):lower()
+    metadata["injection.language"] = get_parser_from_markdown_info_string(injection_alias)
+  end, force)
+
+  q.add_directive("downcase!", function(match, _, bufnr, pred, metadata)
+    local id = pred[2]
+    local node = first(match, id)
+    if not node then return end
+    local text = vim.treesitter.get_node_text(node, bufnr, { metadata = metadata[id] }) or ""
+    if not metadata[id] then metadata[id] = {} end
+    metadata[id].text = string.lower(text)
+  end, force)
 end
 
 return M
