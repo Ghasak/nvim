@@ -46,6 +46,7 @@ One line per finished task, oldest first:
 - 2026-10-11 · snacks notifier preload · reproduced the fast-event E5560 (notify on LSP exit loaded snacks.notifier in a fast context) and fixed it by preloading the module at setup; deterministic timer fail→pass pair in `docs/backlog/2026-10-11-snacks-notifier-preload.md`
 - 2026-10-12 · avante mega deps · added ColinKennedy/mega.cmdparse + mega.logging to the avante spec (upstream README:211); after the 4f49656 update the plugin file died at its top-level `require("mega.cmdparse")` and lazy showed "Failed to source" on the first InsertEnter — the owner's screenshot
 - 2026-10-12 · treesitter 0.12 directive fix · reproduced the decoration-provider crash (telescope markdown previews, 2/3 baseline runs) and re-registered master's six predicates/directives with the 0.12 list unwrap; 9/9 clean after; upstream nvim-treesitter#8636
+- 2026-10-12 · glight faint indent guides · traced the solid dark bars to `SnacksIndent`, a group the theme never defined, so snacks lent it `NonText` = `#636c76` (5.33:1); the theme now owns it and glight uses `bg3` `#d0d7de` (1.45:1), the block bar went `#59636e` → `#afb8c1`, both as reasoned `KNOWN` entries; merged `feature/glight` into the theme `main` (`ce469ff`, pushed), restored the GitHub spec and let lazy fetch it · dead end: predicting the checker's `checked` tally would hold at 736 — `SnacksIndentScope` leaves the checked set when it enters `KNOWN`, so it reads 735
 
 ## Lessons
 
@@ -104,36 +105,57 @@ own colours.
 **Why:** It catches what the eye misses: text equal to its own background, backgrounds equal to the page,
 and anything under 4.5:1.
 **Evidence:** `nvim --clean --headless -i NONE --cmd "set rtp^=<theme>" -c "luafile <theme>/scripts/check.lua"`
-→ `RESULT style=glight groups=711 checked=736 known=11 fails=0`. It audits `glight` only, so a clean run
-does not vouch for dark.
+→ `RESULT style=glight groups=712 checked=735 known=13 fails=0`. It audits `glight` only, so a clean run
+does not vouch for dark. (Before 2026-10-12 the same line read `groups=711 checked=736 known=11`; the
+tallys move whenever a group is added or enters `KNOWN`.)
 **Applies when:** any palette or highlight edit.
 
-### `TEMP(T9)` means look before you clean
+### `KNOWN` in the theme's checker waives enforcement outright
 
-**Lesson:** The commented `"ghasak/githubG.nvim"` spec at `lua/plugins/pluginsHub.lua:3-4` must stay
-commented until the theme's `feature/glight` is merged into its `main`.
-**Why:** The config loads the theme from the local `dir =` path, which has the repair. The published
-`main` is older, so restoring the spec would silently bring the old colours back.
-**Evidence:** the open follow-ups table in `docs/backlog/BACKLOG.md`.
-**Applies when:** tidying plugin specs.
+**Lesson:** A group listed in `KNOWN` is not tested at all, in either direction. Making a guide fainter
+there also stops the checker noticing if it later drifts *darker*.
+**Why:** `KNOWN` prints the group with its measured ratio and skips the threshold test entirely
+(`scripts/check.lua:95-99`). It is a visibility tool, not an assertion. Adding an entry is still the
+right move when the value is a deliberate decoration and no threshold should move — but the waiver is
+total, so say so when you use it.
+**Evidence:** 2026-10-12 — `SnacksIndent` and `SnacksIndentScope` joined `KNOWN` at 1.45:1 and 2.01:1.
+With the old `#59636e` put back, the entry still printed 6.11:1 and `fails` stayed 0. Removing both
+entries makes it `fails=2`, which is the proof the checker is alive.
+**Applies when:** reaching for `KNOWN` to quiet a contrast failure.
 
-### Two copies of the theme exist
+### `TEMP(T9)` is resolved — the theme comes from GitHub now
 
-**Lesson:** Only the `dir =` folder is live. `~/.local/share/nvim/lazy/githubG.nvim` is a stale, detached
-copy, and editing it changes nothing.
-**Why:** An edit in the wrong copy looks like a fix that did not work.
-**Evidence:** `lazy-lock.json` pins `d0c0893` on `main` while the live tree is `feature/glight` at
-`209ab19`.
+**Lesson:** The config loads the theme from `"ghasak/githubG.nvim"` at `main`. A local `dir =` override
+must not come back.
+**Why:** A local override serves unreviewed code and silently diverges from what GitHub has. The
+2026-10-07 session kept it only until `feature/glight` reached `main`; that merge happened on
+2026-10-12. To change the theme now: edit `main`, push, then let lazy fetch it.
+**Evidence:** `lua/plugins/pluginsHub.lua:3`; `lazy-lock.json` pins `githubG.nvim` at `ce469ff`.
+**Applies when:** editing the theme, or tidying plugin specs.
+
+### Only the lazy clone is live, and it flipped
+
+**Lesson:** The live theme is `~/.local/share/nvim/lazy/githubG.nvim`. The dev folder at
+`~/Desktop/devCode/programmingLanguages/luaHub/githubG.nvim` is detached today — editing it changes
+nothing in the editor, and a change pushed from it reaches the editor only after a lazy fetch.
+**Why:** An edit in the wrong copy looks like a fix that did not work. The live copy **changed sides**
+on 2026-10-12 when the spec went back to the GitHub URL — before that, the `dir =` folder was the live
+one. Any note written before that date has it backwards.
+**Evidence:** `lazy-lock.json` pins `githubG.nvim` `ce469ff` on `main`; the clone carries the same
+commit.
 **Applies when:** editing any theme file.
 
-### `style = "light"` is broken on purpose
+### `style = "light"` and `style = "dark"` are both broken on purpose
 
-**Lesson:** `style = "light"` crashes on load because 58 palette keys are missing. `glight` is the
-working light style. Never "fix" it by reverting the palette.
-**Why:** The missing keys are a tracked open item, not a mystery.
-**Evidence:** `lua/onedark/colors.lua:5` calls `tbl_extend` with nil; the follow-ups table in
-`docs/backlog/BACKLOG.md`.
-**Applies when:** working on light styling.
+**Lesson:** `style = "light"` and `style = "dark"` crash on load. `glight` is the working light style
+and `gdark` the working dark one; they are the pair on the `<leader>ub` toggle path. A per-style sweep
+must skip `dark`.
+**Why:** The missing keys are a tracked open item, not a mystery. A sweep that includes `dark` dies
+with `colors.lua:5: expected table, got nil`, which reads as if your own change broke it.
+**Evidence:** `lua/onedark/colors.lua:5` calls `tbl_extend` with nil; `palette.lua:205` has the `dark`
+block commented out while `init.lua:3` still lists it; 58 keys are missing from `light`; the
+follow-ups table in `docs/backlog/BACKLOG.md`.
+**Applies when:** working on styling, or sweeping every style.
 
 ### Measure launch the way the editor is launched
 
