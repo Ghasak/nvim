@@ -5,8 +5,53 @@ return {
     cond = true, -- load this plugin
     priority = 1000, -- make sure to load this before all the other start plugins
     init = function()
-      vim.o.background = "light" -- light by default; <leader>ub flips to dark
-      require("onedark").setup { style = "glight" }
+      -- Follow the OS appearance; a manual <leader>ub flip is kept until the OS itself changes.
+      -- shortcut: if the OS flipped while nvim was closed, the first frame uses the cached value and flips right after startup.
+      local mac, win = vim.fn.has("mac") == 1, vim.fn.has("win32") == 1
+      local system = mac and {
+        cmd = { "defaults", "read", "-g", "AppleInterfaceStyle" },
+        dark = function(s) return vim.startswith(s, "Dark") end,
+      } or win and {
+        cmd = { "reg", "query", [[HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize]], "/v", "AppsUseLightTheme" },
+        dark = function(s) return s:match("REG_DWORD%s+(%S+)") == "0x0" end,
+      }
+      local sysbg = "light"
+      if system then
+        local function bg(o) return o and o.code == 0 and system.dark(o.stdout or "") and "dark" or "light" end
+        local path = vim.fn.stdpath("state") .. "/theme_background"
+        local fh = io.open(path)
+        local cached = fh and fh:read("*l")
+        if fh then fh:close() end
+        sysbg = cached == "dark" and "dark" or "light"
+        local function save(v)
+          local f = io.open(path, "w")
+          if f then
+            f:write(v)
+            f:close()
+          end
+        end
+        local function refresh(ensure)
+          pcall(vim.system, system.cmd, { text = true }, function(o)
+            vim.schedule(function()
+              local v = bg(o)
+              if v ~= sysbg then
+                sysbg = v
+                vim.o.background = v
+                save(v)
+              elseif ensure then
+                save(v)
+              end
+            end)
+          end)
+        end
+        vim.defer_fn(function() refresh(cached == nil) end, 0)
+        vim.api.nvim_create_autocmd("FocusGained", { callback = function() refresh() end })
+        local timer = vim.uv.new_timer() -- the OS sends no event when its appearance changes, so poll
+        timer:start(60000, 60000, function() vim.schedule(refresh) end)
+        timer:unref()
+      end
+      vim.o.background = sysbg
+      require("onedark").setup { style = sysbg == "dark" and "gdark" or "glight" }
       vim.cmd [[colorscheme onedark]]
     end,
     config = function() vim.opt.termguicolors = true end,
@@ -974,6 +1019,9 @@ return {
         },
       },
 
+      -- render-markdown draws markdown; obsidian's ui would double-render it
+      ui = { enable = false },
+
       -- see below for full list of options 👇
     },
   },
@@ -1184,80 +1232,6 @@ return {
         },
         code = { adapter = "ollama" },
         -- add more if you later use "workflow", "cmd", etc.
-      },
-    },
-  },
-
-  {
-    "yetone/avante.nvim",
-    -- event = "VeryLazy",
-    event = "InsertEnter",
-    version = false, -- Never set this value to "*"! Never!
-    opts = {
-      -- add any opts here
-      -- for example
-      provider = "ollama",
-      providers = {
-        ollama = {
-          endpoint = "http://127.0.0.1:11434", -- Note that there is no /v1 at the end.
-          model = "gpt-oss:20b", -- "llama3.3:latest",
-          -- mode = "agentic", -- use the tool-based planner
-          -- you can tweak timeouts, debounce, sidebar position, etc. here
-        },
-        -- provider = "openai",
-        -- openai = {
-        --   endpoint = "https://api.openai.com/v1",
-        --   model = "gpt-4o", -- your desired model (or use gpt-4o, etc.)
-        --   timeout = 30000, -- Timeout in milliseconds, increase this for reasoning models
-        --   temperature = 0,
-        --   max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
-        --   --reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
-        -- },
-      },
-    },
-    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-    build = "make",
-    -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "stevearc/dressing.nvim",
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-      { "ColinKennedy/mega.cmdparse", dependencies = { "ColinKennedy/mega.logging" } }, -- required by AvanteSwitchProvider (README:211)
-      --- The below dependencies are optional,
-      "echasnovski/mini.pick", -- for file_selector provider mini.pick
-      "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-      "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
-      "ibhagwan/fzf-lua", -- for file_selector provider fzf
-      "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-      "zbirenbaum/copilot.lua", -- for providers='copilot'
-      "stevearc/dressing.nvim", -- for input provider dressing
-      "folke/snacks.nvim", -- for input provider snacks
-
-      {
-        -- support for image pasting
-        "HakonHarnes/img-clip.nvim",
-        event = "VeryLazy",
-        opts = {
-          -- recommended settings
-          default = {
-            embed_image_as_base64 = false,
-            prompt_for_file_name = false,
-            drag_and_drop = {
-              insert_mode = true,
-            },
-            -- required for Windows users
-            use_absolute_path = true,
-          },
-        },
-      },
-      {
-        -- Make sure to set this up properly if you have lazy=true
-        "MeanderingProgrammer/render-markdown.nvim",
-        opts = {
-          file_types = { "markdown", "Avante" },
-        },
-        ft = { "markdown", "Avante" },
       },
     },
   },

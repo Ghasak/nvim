@@ -47,6 +47,7 @@ One line per finished task, oldest first:
 - 2026-10-12 · avante mega deps · added ColinKennedy/mega.cmdparse + mega.logging to the avante spec (upstream README:211); after the 4f49656 update the plugin file died at its top-level `require("mega.cmdparse")` and lazy showed "Failed to source" on the first InsertEnter — the owner's screenshot
 - 2026-10-12 · treesitter 0.12 directive fix · reproduced the decoration-provider crash (telescope markdown previews, 2/3 baseline runs) and re-registered master's six predicates/directives with the 0.12 list unwrap; 9/9 clean after; upstream nvim-treesitter#8636
 - 2026-10-12 · glight faint indent guides · traced the solid dark bars to `SnacksIndent`, a group the theme never defined, so snacks lent it `NonText` = `#636c76` (5.33:1); the theme now owns it and glight uses `bg3` `#d0d7de` (1.45:1), the block bar went `#59636e` → `#afb8c1`, both as reasoned `KNOWN` entries; merged `feature/glight` into the theme `main` (`ce469ff`, pushed), restored the GitHub spec and let lazy fetch it · dead end: predicting the checker's `checked` tally would hold at 736 — `SnacksIndentScope` leaves the checked set when it enters `KNOWN`, so it reads 735
+- 2026-11-08 · OS-following theme + avante removal · theme picks `gdark`/`glight` from a cached `theme_background` file and asks the OS after startup, on `FocusGained` and on a 60 s poll; avante and six other plugins removed (113→106), obsidian ui off clears the render-markdown health error · dead end: reading `defaults` synchronously at startup cost ~8 ms (64.0 ms vs the 54.4 ms baseline) — the cached-then-async version measures 51.6-51.9 ms
 
 ## Lessons
 
@@ -183,3 +184,15 @@ after 891db25 an eager plugin (Snacks) owned the startup keys while the lazy one
 load (`gi_telescope.lua:255`); fixed with lazy `keys` placeholders (`pluginsHub.lua:136-143`) +
 deleting the colliding eager maps.
 **Applies when:** any "key does not work" or "cannot type" report.
+
+### A copied config shares lazy's plugin dir and lockfile
+
+**Lesson:** When testing a branch with a copy of the config, redirect `XDG_DATA_HOME` as well as
+`XDG_CONFIG_HOME` and the state dir. Config alone still points lazy at the shared
+`~/.local/share/nvim/lazy`, and it installs and locks for whatever spec the copy has.
+**Why:** lazy.nvim keeps one plugin dir and one lockfile per data dir, not per config. A tester's
+copy of `main` reinstalled the seven plugins this branch had just removed.
+**Evidence:** 2026-11-08 — repaired to byte-identical with the post-sync lock:
+`cmp t5/lazy-lock.restored.json update/lazy-lock.after.json` exit 0, 106 entries; the live lock
+matches too. Recorded in `docs/backlog/2026-11-08-auto-background-avante-removal.md`.
+**Applies when:** launching nvim with a copied config or any `XDG_CONFIG_HOME` override.
