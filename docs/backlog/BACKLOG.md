@@ -39,6 +39,7 @@ commit: <repo> <sha> on <branch>
 | [2026-10-12-01](2026-10-12-avante-mega-deps.md) | 2026-10-12 | avante spec: add missing mega.cmdparse + mega.logging deps | config, plugins | done |
 | [2026-10-12-02](2026-10-12-treesitter-master-012-directives.md) | 2026-10-12 | nvim-treesitter master on 0.12: predicate/directive unwrap fix | config | done |
 | [2026-10-12-03](2026-10-12-glight-indent-guides.md) | 2026-10-12 | Light-theme indent guides go faint; theme spec back on GitHub | theme, config, docs | done |
+| [2026-11-08-01](2026-11-08-auto-background-avante-removal.md) | 2026-11-08 | Theme follows the OS light/dark setting; avante removed and plugins updated | config, plugins, docs | done |
 
 ## Open follow-ups
 
@@ -62,3 +63,9 @@ commit: <repo> <sha> on <branch>
 | 2026-10-11-01 | Snacks duplicate keys: `<leader>/` (keymappings.lua:610/615), `<leader>n` (:617/:679) | later |
 | 2026-10-12-03 | Theme `KNOWN` waives both directions for `SnacksIndent`/`SnacksIndentScope`; a darker drift stays green | later |
 | 2026-10-12-03 | Theme `feature/glight` is merged but still exists locally and on origin | owner |
+| 2026-11-08-01 | 14 stale 0.11 files in `/usr/local/share/nvim/runtime` (Runtime + four provider ERRORs); fix needs owner sudo reinstall | owner |
+| 2026-11-08-01 | `~/.local/state/nvim/avante/` and `avante.log` leftovers after the removal | owner |
+| 2026-11-08-01 | `lua/plugins/configs/others.lua:5,12` `myAutopairs` would throw without nvim-cmp; never called | later |
+| 2026-11-08-01 | Windows branch only tested against a simulated `reg`; never run on real Windows | later |
+| 2026-11-08-01 | render-markdown `latex`/`yaml` tree-sitter parsers not installed (checkhealth warnings) | later |
+| 2026-11-08-01 | A corrupt `theme_background` file is only rewritten when the OS value differs | later |
