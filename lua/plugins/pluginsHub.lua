@@ -452,8 +452,7 @@ return {
     "saecki/crates.nvim",
     lazy = true,
     ft = { "rust", "toml" },
-    tag = "v0.3.0",
-    dependencies = { { "nvim-lua/plenary.nvim" }, { "neovim/nvim-lspconfig" } },
+    tag = "stable",
     config = function() require("crates").setup { popup = { border = "double" } } end,
   },
 
