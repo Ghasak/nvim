@@ -1019,6 +1019,9 @@ return {
         },
       },
 
+      -- render-markdown draws markdown; obsidian's ui would double-render it
+      ui = { enable = false },
+
       -- see below for full list of options 👇
     },
   },
