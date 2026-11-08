@@ -6,29 +6,38 @@ return {
     priority = 1000, -- make sure to load this before all the other start plugins
     init = function()
       -- Follow macOS appearance; a manual <leader>ub flip is kept until macOS itself changes.
+      -- shortcut: if macOS flipped while nvim was closed, the first frame uses the cached value and flips right after startup.
       local sysbg = "light"
       local function bg(o) return o and o.code == 0 and vim.startswith(o.stdout or "", "Dark") and "dark" or "light" end
-      local function read(cb)
-        local ok, r = pcall(vim.system, { "defaults", "read", "-g", "AppleInterfaceStyle" }, { text = true },
-          cb and function(o) vim.schedule(function() cb(bg(o)) end) end)
-        if not ok then
-          if cb then cb("light") end
-          return "light"
-        end
-        if cb then return end
-        return bg(r:wait(500))
-      end
       if vim.fn.has("mac") == 1 then
-        sysbg = read()
-        local function refresh()
-          read(function(v)
-            if v ~= sysbg then
-              sysbg = v
-              vim.o.background = v
-            end
+        local path = vim.fn.stdpath("state") .. "/theme_background"
+        local fh = io.open(path)
+        local cached = fh and fh:read("*l")
+        if fh then fh:close() end
+        sysbg = cached == "dark" and "dark" or "light"
+        local function save(v)
+          local f = io.open(path, "w")
+          if f then
+            f:write(v)
+            f:close()
+          end
+        end
+        local function refresh(ensure)
+          pcall(vim.system, { "defaults", "read", "-g", "AppleInterfaceStyle" }, { text = true }, function(o)
+            vim.schedule(function()
+              local v = bg(o)
+              if v ~= sysbg then
+                sysbg = v
+                vim.o.background = v
+                save(v)
+              elseif ensure then
+                save(v)
+              end
+            end)
           end)
         end
-        vim.api.nvim_create_autocmd("FocusGained", { callback = refresh })
+        vim.defer_fn(function() refresh(cached == nil) end, 0)
+        vim.api.nvim_create_autocmd("FocusGained", { callback = function() refresh() end })
         local timer = vim.uv.new_timer() -- macOS sends no event when appearance changes, so poll
         timer:start(60000, 60000, function() vim.schedule(refresh) end)
         timer:unref()
