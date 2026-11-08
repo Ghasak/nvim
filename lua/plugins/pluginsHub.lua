@@ -5,11 +5,19 @@ return {
     cond = true, -- load this plugin
     priority = 1000, -- make sure to load this before all the other start plugins
     init = function()
-      -- Follow macOS appearance; a manual <leader>ub flip is kept until macOS itself changes.
-      -- shortcut: if macOS flipped while nvim was closed, the first frame uses the cached value and flips right after startup.
+      -- Follow the OS appearance; a manual <leader>ub flip is kept until the OS itself changes.
+      -- shortcut: if the OS flipped while nvim was closed, the first frame uses the cached value and flips right after startup.
+      local mac, win = vim.fn.has("mac") == 1, vim.fn.has("win32") == 1
+      local system = mac and {
+        cmd = { "defaults", "read", "-g", "AppleInterfaceStyle" },
+        dark = function(s) return vim.startswith(s, "Dark") end,
+      } or win and {
+        cmd = { "reg", "query", [[HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize]], "/v", "AppsUseLightTheme" },
+        dark = function(s) return s:match("REG_DWORD%s+(%S+)") == "0x0" end,
+      }
       local sysbg = "light"
-      local function bg(o) return o and o.code == 0 and vim.startswith(o.stdout or "", "Dark") and "dark" or "light" end
-      if vim.fn.has("mac") == 1 then
+      if system then
+        local function bg(o) return o and o.code == 0 and system.dark(o.stdout or "") and "dark" or "light" end
         local path = vim.fn.stdpath("state") .. "/theme_background"
         local fh = io.open(path)
         local cached = fh and fh:read("*l")
@@ -23,7 +31,7 @@ return {
           end
         end
         local function refresh(ensure)
-          pcall(vim.system, { "defaults", "read", "-g", "AppleInterfaceStyle" }, { text = true }, function(o)
+          pcall(vim.system, system.cmd, { text = true }, function(o)
             vim.schedule(function()
               local v = bg(o)
               if v ~= sysbg then
@@ -38,7 +46,7 @@ return {
         end
         vim.defer_fn(function() refresh(cached == nil) end, 0)
         vim.api.nvim_create_autocmd("FocusGained", { callback = function() refresh() end })
-        local timer = vim.uv.new_timer() -- macOS sends no event when appearance changes, so poll
+        local timer = vim.uv.new_timer() -- the OS sends no event when its appearance changes, so poll
         timer:start(60000, 60000, function() vim.schedule(refresh) end)
         timer:unref()
       end
